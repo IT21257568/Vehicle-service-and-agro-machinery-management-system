@@ -1,5 +1,4 @@
-# Vehicle-service-and-agro-machinery-managment-system
-ITP Project
+# ITP Project
 # Vehicle-service-and-agro-machinery-managment-system
 ## _Group TW10_
 
@@ -10,6 +9,8 @@ ITP Project
 MERN is one of several variations of the MEAN stack (MongoDB Express Angular Node), where the traditional Angular.js front-end framework is replaced with React.js. Other variants include MEVN (MongoDB, Express, Vue, Node), and really any front-end JavaScript framework can work.
 
 - This MERN Project based on Vehicle-service-and-agro-machinery-managment-system Functions...
+
+
 ✨Vehicle service booking management (Janindu)
 
 ✨User/admin account management (Pawan)
