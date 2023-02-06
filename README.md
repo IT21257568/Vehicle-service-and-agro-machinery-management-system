@@ -110,12 +110,11 @@ Instructions on how to use them in your own application are linked below.
 
 | Plugin | README |
 | ------ | ------ |
-| VsCode | [plugins/dropbox/README.md][PlDb] |
+| VsCode | [[plugins/dropbox/README.md](https://github.com/Microsoft/vscode-tips-and-tricks/blob/master/README.md)] |
 | GitHub | [plugins/github/README.md][PlGh] |
 | Google Drive | [plugins/googledrive/README.md][PlGd] |
 | Postman | [https://github.com/postmanlabs/postman-app-support/blob/support/README.md] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+
 
 
 
