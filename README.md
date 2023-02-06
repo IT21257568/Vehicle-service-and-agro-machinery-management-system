@@ -110,10 +110,10 @@ Instructions on how to use them in your own application are linked below.
 
 | Plugin | README |
 | ------ | ------ |
-| VsCode | https://github.com/Microsoft/vscode-tips-and-tricks/blob/master/README.md |
+| VsCode | [plugins/vscode-tips-and-tricks/blob/master/README.md][PlVc]|
 | GitHub | [plugins/github/README.md][PlGh] |
 | Google Drive | [plugins/googledrive/README.md][PlGd] |
-| Postman | https://github.com/postmanlabs/postman-app-support/blob/support/README.md |
+| Postman |[plugins/postman-app-support/blob/support/README.md][PlPm] |
 
 
 
@@ -145,6 +145,8 @@ Instructions on how to use them in your own application are linked below.
    [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
    [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
    [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
+   [PlVc]: <https://github.com/Microsoft/vscode-tips-and-tricks/blob/master/README.md>
+   [PlPm]: <https://github.com/postmanlabs/postman-app-support/blob/support/README.md>
    
    
 
