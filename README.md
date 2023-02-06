@@ -113,7 +113,7 @@ Instructions on how to use them in your own application are linked below.
 | VsCode | [plugins/dropbox/README.md][PlDb] |
 | GitHub | [plugins/github/README.md][PlGh] |
 | Google Drive | [plugins/googledrive/README.md][PlGd] |
-| Postman | [https://github.com/postmanlabs/postman-app-support/blob/support/README.md][PlOd] |
+| Postman | [https://github.com/postmanlabs/postman-app-support/blob/support/README.md] |
 | Medium | [plugins/medium/README.md][PlMe] |
 | Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
 
