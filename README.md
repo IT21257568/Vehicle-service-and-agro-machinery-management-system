@@ -79,16 +79,6 @@ MERN is one of several variations of the MEAN stack (MongoDB Express Angular Nod
    0768472460
 
 
-
-
-
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework [@tjholowaychuk]
-- [jQuery] - duh
-
-
-
-
 ## Plugins
 
 Dillinger is currently extended with the following plugins.
