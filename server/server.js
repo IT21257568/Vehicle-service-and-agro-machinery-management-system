@@ -7,16 +7,19 @@ const workoutRoutes = require('./routes/workouts')
 const app = express()
 
 //middleware
+app.use(express.json())
+
 app.use((req, res, next) => {
     console.log(req.path, req.method)
     next()
 
 })
 
+
 //routes
-app.get('/', (req, res) => {
-    res.json({ mssg: 'Welcome to the app' })
-})
+//1
+app.use('/api/workouts', workoutRoutes)
+
 
 //listen for requests
 app.listen(process.env.PORT, () => {
