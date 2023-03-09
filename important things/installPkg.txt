@@ -1,3 +1,7 @@
 //server
 
 npm i express nodemon dotenv mongoose
+
+
+//client
+npm i react-router-dom
