@@ -83,7 +83,7 @@ MERN is one of several variations of the MEAN stack (MongoDB Express Angular Nod
    ## File structure
 #### `client` - Holds the client application
 - #### `public` - This holds all of our static files
-- #### `src`
+- #### `client`
     - #### `assets` - This folder holds assets such as images, docs, and fonts
     - #### `components` - This folder holds all of the different components that will make up our views
     - #### `views` - These represent a unique page on the website i.e. Home or About. These are still normal react components.
