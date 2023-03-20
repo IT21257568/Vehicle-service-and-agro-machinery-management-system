@@ -163,13 +163,13 @@ In the project directory, you can run:
 Runs both the client app and the server app in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
-### `npm run-script client`
+### `npm start`
 
 Runs just the client app in development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
+Open [http://localhost:4000](http://localhost:4000) to view the client in the browser.
 
 
-### `npm run-script server`
+### `npm run dev`
 
 Runs just the server in development mode.<br>
 
