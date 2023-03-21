@@ -1,6 +1,9 @@
 import { useState } from "react"
+import { useVacancyContext } from '../hooks/useVacancyContext';
+
 
 const VacancyForm = () => { 
+    const {dispatch} = useVacancyContext()
     const [vacncy_title, setTitle] = useState('')
     const [vacancy_count, setCount] = useState('')
     const [vacncy_type, setType] = useState('')
@@ -31,6 +34,7 @@ const VacancyForm = () => {
             setRequirements('')
             setError(null)
             console.log('New Vacancy Added')
+            dispatch({type: 'CREATE_VACANCY', payload: json})
         }
 
     }

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useVacancyContext } from '../hooks/useVacancyContext';
 
 
 //components
@@ -6,14 +7,14 @@ import VacancyDetails from '../components/VacancyDetails'
 import VacancyForm from '../components/VacancyForm'
 
 const Carrer = () => {
-    const [vacancies,setWorouts] = useState(null)
+    const {vacancies,dispatch} = useVacancyContext()
 useEffect(() => {
     const fetchVacancies = async () => {
         const response = await fetch('/api/vacancies')
         const json = await response.json()
 
         if(response.ok) {
-            setWorouts(json)
+            dispatch({type: 'SET_VACANCIES', payload: json})
         }
     }
    fetchVacancies()
