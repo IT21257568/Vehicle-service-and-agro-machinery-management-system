@@ -1,5 +1,8 @@
 import { useVacancyContext } from '../hooks/useVacancyContext';
 
+//date fns
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+
 const VacanyDetails = ({ vacancies }) => { 
     const {dispatch} = useVacancyContext()
 
@@ -19,7 +22,7 @@ const VacanyDetails = ({ vacancies }) => {
             <p><strong>Vacancy Type: </strong> {vacancies.vacncy_type}</p>
             <p><strong>Vacancy Count: </strong> {vacancies.vacancy_count}</p>
             <p><strong>Requiremnts: </strong> {vacancies.vacncy_requirements}</p>
-            <p>{vacancies.createdAt}</p>
+            <p>{formatDistanceToNow(new Date(vacancies.createdAt), {addSuffix:true})}</p>
             
             <button className="updateBtn">Update Vacancy</button>
             <button onClick={handleClick} className="deleteBtn">Delete Vacancy</button>

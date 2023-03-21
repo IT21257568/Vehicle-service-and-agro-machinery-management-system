@@ -8,7 +8,8 @@ const VacancyForm = () => {
     const [vacancy_count, setCount] = useState('')
     const [vacncy_type, setType] = useState('')
     const [vacncy_requirements, setRequirements] = useState('')
-    const [error,setError] = useState(null)
+    const [error, setError] = useState(null)
+    const [emptyFields, setEmptyFields] = useState([])
 
     const handleSubmit = async (e) => { 
         e.preventDefault()
@@ -26,6 +27,7 @@ const VacancyForm = () => {
 
         if (!response.ok) { 
             setError(json.error)
+            setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
             setTitle('')
@@ -33,8 +35,9 @@ const VacancyForm = () => {
             setType('')
             setRequirements('')
             setError(null)
+            setEmptyFields([])
             console.log('New Vacancy Added')
-            dispatch({type: 'CREATE_VACANCY', payload: json})
+            dispatch({type: 'CREATE_VACANCY', payload: json.vacancy})
         }
 
     }
@@ -48,6 +51,7 @@ const VacancyForm = () => {
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
                 value={vacncy_title}
+                className={emptyFields.includes('vacncy_title') ? 'error' : ''}
             />
             <label>Vacancy Type:</label>
             <label class="radiocontainer">Full Time
@@ -55,14 +59,18 @@ const VacancyForm = () => {
                     type="radio"
                     name="radio"
                     onChange={(e) => setType(e.target.value)}
-                    value={"Full Time"}/>
+                    value={"Full Time"}
+                    className={emptyFields.includes('vacncy_type') ? 'error' : ''}
+                    />
                 <span class="radiocheckmark"></span>
             </label>
 
             <label class="radiocontainer">Part Time
                 <input type="radio"
                     name="radio" onChange={(e) => setType(e.target.value)}
-                    value={"Part Time"}/>
+                    value={"Part Time"}
+                    className={emptyFields.includes('vacncy_type') ? 'error' : ''}
+                    />
                 <span class="radiocheckmark"></span>
             </label>
             
@@ -71,11 +79,13 @@ const VacancyForm = () => {
                 type="number"
                 onChange={(e) => setCount(e.target.value)}
                 value={vacancy_count}
+                className={emptyFields.includes('vacancy_count') ? 'error' : ''}
             />
             <label>Requiremnts</label>
              <textarea
                 onChange={(e) => setRequirements(e.target.value)}
                 value={vacncy_requirements}
+                className={emptyFields.includes('vacncy_requirements') ? 'error' : ''}
             /><br></br>
 
             <button>Add Vacancy</button>

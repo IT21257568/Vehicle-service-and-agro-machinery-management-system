@@ -18,7 +18,7 @@ useEffect(() => {
         }
     }
    fetchVacancies()
-}, []);
+}, [dispatch]);
 
     return (
         <div className="carrer">

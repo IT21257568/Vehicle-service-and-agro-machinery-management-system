@@ -26,6 +26,26 @@ const getVacancy = async(req, res) => {
     //create new vacancy
 const ceateVacancy = async(req, res) => {
     const { vacncy_title, vacncy_type, vacancy_count, vacncy_requirements } = req.body;
+
+    let emptyFields = [];
+
+    //validation for empty fields
+    if (!vacncy_title) {
+        emptyFields.push('vacncy_title');
+    }
+    if (!vacncy_type) {
+        emptyFields.push('vacncy_type');
+    }
+    if (!vacancy_count) {
+        emptyFields.push('vacancy_count');
+    }
+    if (!vacncy_requirements) {
+        emptyFields.push('vacncy_requirements');
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
+    }
+
     //add to db
     try {
         const vacancy = await Vacancy.create({ vacncy_title, vacncy_type, vacancy_count, vacncy_requirements });
@@ -46,7 +66,8 @@ const deleteVacancy = async(req, res) => {
         if (!vacancy) {
             return res.status(404).json({ error: 'Vacancy not found' });
         } else {
-            res.status(200).json({ message: 'Vacancy deleted' });
+            res.status(200).json(vacancy);
+
         }
     }
     //update a vacancy

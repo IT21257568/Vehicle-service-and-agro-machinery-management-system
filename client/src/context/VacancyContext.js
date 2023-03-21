@@ -14,7 +14,7 @@ export const vacancyReducer = (state, action) => {
             }
         case 'DELETE_VACANCY':
             return {
-                vacancies: state.vacancies.filter((v) => v._id !== action.payload)
+                vacancies: state.vacancies.filter((W) => W._id !== action.payload._id)
             }
         default:
             return state;
