@@ -1,4 +1,18 @@
+import { useVacancyContext } from '../hooks/useVacancyContext';
+
 const VacanyDetails = ({ vacancies }) => { 
+    const {dispatch} = useVacancyContext()
+
+    const handleClick = async() => {
+        const response = await fetch('/api/vacancies/' + vacancies._id, {
+            method: 'DELETE'
+        })
+        const json = await response.json()
+        if (response.ok){
+            dispatch({type: 'DELETE_VACANCY', payload: json})
+        }
+    }
+
     return (
         <div className="vacancies-details">
             <h4>{vacancies.vacncy_title}</h4>
@@ -8,7 +22,7 @@ const VacanyDetails = ({ vacancies }) => {
             <p>{vacancies.createdAt}</p>
             
             <button className="updateBtn">Update Vacancy</button>
-            <button className="deleteBtn">Delete Vacancy</button>
+            <button onClick={handleClick} className="deleteBtn">Delete Vacancy</button>
 
         </div>
     )
