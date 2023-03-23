@@ -9,16 +9,18 @@
     --update: #1aac83;
     --delete: #e7195a;
     --error: #e7195a;
+    --header: #fff;
+    --body: #f1f1f1;
 }
 
 body {
-    background: #f1f1f1;
+    background: var(--body);
     margin: 0;
     font-family: "Poppins";
 }
 
 header {
-    background: #fff;
+    background: var(--header);
 }
 
 header .container {
@@ -42,7 +44,7 @@ header a {
 }
 
 
-/* Home Page  */
+/* Career Page  */
 
 .carrer {
     display: grid;
