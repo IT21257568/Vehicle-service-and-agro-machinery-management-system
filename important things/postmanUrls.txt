@@ -1,8 +1,0 @@
-
-<<Nisal>>
-1.Carrer section Admine section CRUD
-    insert : POST :localhost:4000/api/vacancies/
-    selectAll : GET : localhost:4000/api/vacancies/
-    selectOne : GET : localhost:4000/api/vacancies/:id
-    update : PATCH : localhost:4000/api/vacancies/:id
-    delete : DELETE : localhost:4000/api/vacancies/:id
