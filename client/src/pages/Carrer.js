@@ -10,7 +10,7 @@ const Carrer = () => {
   useEffect(() => {
     const fetchVacancies = async () => {
       const response = await fetch(
-        `http://localhost:${process.env.REACT_APP_SERVER_PORT}/api/vacancies`
+        `/api/vacancies`
       );
       const json = await response.json();
 
