@@ -3,6 +3,8 @@ import { useVacancyContext } from '../hooks/useVacancyContext';
 //date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
+import { useNavigate } from "react-router-dom";
+
 const VacanyDetails = ({ vacancies }) => { 
     const {dispatch} = useVacancyContext()
 
@@ -15,6 +17,11 @@ const VacanyDetails = ({ vacancies }) => {
             dispatch({type: 'DELETE_VACANCY', payload: json})
         }
     }
+    let navigate = useNavigate(); 
+    const routeChange = () =>{ 
+      let path = `UpdateVacancy`; 
+      navigate(path);
+    }
 
     return (
         <div className="vacancies-details">
@@ -24,7 +31,7 @@ const VacanyDetails = ({ vacancies }) => {
             <p><strong>Requiremnts: </strong> {vacancies.vacncy_requirements}</p>
             <p>{formatDistanceToNow(new Date(vacancies.createdAt), {addSuffix:true})}</p>
             
-            <button className="updateBtn">Update Vacancy</button>
+            <button  onClick={routeChange} className="updateBtn">Update Vacancy</button>
             <button onClick={handleClick} className="deleteBtn">Delete Vacancy</button>
 
         </div>
