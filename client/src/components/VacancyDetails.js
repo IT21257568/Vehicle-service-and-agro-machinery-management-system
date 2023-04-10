@@ -17,6 +17,7 @@ const VacanyDetails = ({ vacancies }) => {
       dispatch({ type: "DELETE_VACANCY", payload: json });
     }
   };
+
   let navigate = useNavigate();
   const routeChange = () => {
     let path = `UpdateVacancy/${vacancies._id}`;
