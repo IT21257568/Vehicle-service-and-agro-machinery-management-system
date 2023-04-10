@@ -1,122 +1,96 @@
 import { useEffect, useState } from "react";
 import { useVacancyContext } from "../hooks/useVacancyContext";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const UpdateVacancyForm = () => {
-  const { dispatch } = useVacancyContext();
-  const [vacncy_title, setTitle] = useState("");
-  const [vacancy_count, setCount] = useState("");
-  const [vacncy_type, setType] = useState("");
-  const [vacncy_requirements, setRequirements] = useState("");
-  const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
+  // const { dispatch } = useVacancyContext();
   const { id } = useParams();
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+
+  // states for the form
+  const [vacancyTitle, setVacancyTitle] = useState("");
+  const [vacancyType, setVacancyType] = useState("");
+  const [vacancyCount, setVacancyCount] = useState("");
+  const [vacancyRequirements, setVacancyRequirements] = useState("");
 
   useEffect(() => {
-    console.log(id);
-    const fetchData = async () => {
-      const response = await fetch("/api/vacancies/" + id, {
-        method: "GET",
+    const getVacancy = async () => {
+      const res = await axios.get(`/api/vacancies/${id}`);
+      console.log(res.data);
+      setData(res.data);
+
+      setVacancyTitle(res.data.vacncy_title);
+      setVacancyType(res.data.vacncy_type);
+      setVacancyCount(res.data.vacancy_count);
+      setVacancyRequirements(res.data.vacncy_requirements);
+    };
+    getVacancy();
+  }, [id]);
+
+  const handleUpdate = () => {
+    axios
+      .patch(`/api/vacancies/${id}`, {
+        vacncy_title: vacancyTitle,
+        vacncy_type: vacancyType,
+        vacancy_count: vacancyCount,
+        vacncy_requirements: vacancyRequirements,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/");
       });
-      const json = await response.json();
-      if (response.ok) {
-        setTitle(json.vacncy_title);
-        setCount(json.vacancy_count);
-        setType(json.vacncy_type);
-        setRequirements(json.vacncy_requirements);
-      }
-    };
-    fetchData();
-  });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const vacancy = {
-      vacncy_title,
-      vacancy_count,
-      vacncy_type,
-      vacncy_requirements,
-    };
-
-    const response = await fetch("/api/vacancies", {
-      method: "POST",
-      body: JSON.stringify(vacancy),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const json = await response.json();
-
-    if (!response.ok) {
-      setError(json.error);
-      setEmptyFields(json.emptyFields);
-    }
-    if (response.ok) {
-      setTitle("");
-      setCount("");
-      setType("");
-      setRequirements("");
-      setError(null);
-      setEmptyFields([]);
-      console.log("New Vacancy Added");
-      dispatch({ type: "CREATE_VACANCY", payload: json.vacancy });
-    }
   };
 
   return (
-    <form className="creat" /*onSubmit={handleSubmit}*/>
+    <Form>
       <h3>Update Vacancy</h3>
       <label>Vacancy Title:</label>
       <input
         type="text"
-        onChange={(e) => setTitle(e.target.value)}
-        value={vacncy_title}
-        className={emptyFields.includes("vacncy_title") ? "error" : ""}
+        defaultValue={data.vacncy_title}
+        onChange={(e) => {
+          setVacancyTitle(e.target.value);
+        }}
       />
       <label>Vacancy Type:</label>
       <label class="radiocontainer">
         Full Time
-        <input
-          type="radio"
-          name="radio"
-          onChange={(e) => setType(e.target.value)}
-          value={"Full Time"}
-          className={emptyFields.includes("vacncy_type") ? "error" : ""}
-        />
+        <input type="radio" name="radio" />
         <span class="radiocheckmark"></span>
       </label>
-
       <label class="radiocontainer">
         Part Time
-        <input
-          type="radio"
-          name="radio"
-          onChange={(e) => setType(e.target.value)}
-          value={"Part Time"}
-          className={emptyFields.includes("vacncy_type") ? "error" : ""}
-        />
+        <input type="radio" name="radio" />
         <span class="radiocheckmark"></span>
       </label>
 
       <label>Available Count</label>
       <input
         type="number"
-        onChange={(e) => setCount(e.target.value)}
-        value={vacancy_count}
-        className={emptyFields.includes("vacancy_count") ? "error" : ""}
+        defaultValue={data.vacancy_count}
+        onChange={(e) => {
+          setVacancyCount(e.target.value);
+        }}
       />
-      <label>Requiremnts</label>
+      <label>Requirements</label>
       <textarea
-        onChange={(e) => setRequirements(e.target.value)}
-        value={vacncy_requirements}
-        className={emptyFields.includes("vacncy_requirements") ? "error" : ""}
+        defaultValue={data.vacncy_requirements}
+        onChange={(e) => {
+          setVacancyRequirements(e.target.value);
+        }}
       />
       <br></br>
 
-      <button>Update Vacancy</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+      <Button variant="" onClick={handleUpdate}>
+        Update Vacancy
+      </Button>
+    </Form>
   );
 };
 
