@@ -21,6 +21,8 @@ app.use((req, res, next) => {
 //routes
 //1
 app.use("/api/vacancies", vanaciesRoute);
+//Pehesaranni
+app.use('/api/spareParts', sparePartsRoutes);
 
 //connect to db
 mongoose
