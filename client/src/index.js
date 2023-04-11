@@ -12,4 +12,3 @@ root.render(
     </VacancyContextProvider>
   </React.StrictMode>
 );
-
