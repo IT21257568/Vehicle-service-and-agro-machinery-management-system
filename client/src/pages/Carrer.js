@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useVacancyContext } from "../hooks/useVacancyContext";
+import { useVacancyContext } from "../hooks/USeVacancyContext";
 
 //components
 import VacancyDetails from "../components/VacancyDetails";
