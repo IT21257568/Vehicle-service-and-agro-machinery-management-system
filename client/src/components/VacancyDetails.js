@@ -1,4 +1,4 @@
-import { useVacancyContext } from "../hooks/useVacancyContext";
+import { useAllContext } from "../hooks/useAllContext";
 
 //date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
@@ -6,7 +6,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useNavigate } from "react-router-dom";
 
 const VacanyDetails = ({ vacancies }) => {
-  const { dispatch } = useVacancyContext();
+  const { dispatch } = useAllContext();
 
   const handleClick = async () => {
     const response = await fetch("/api/vacancies/" + vacancies._id, {
