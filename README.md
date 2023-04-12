@@ -185,7 +185,7 @@ npm i date-fns
 
 
 ### Nisal
-1.Carrer section Admine section CRUD
+1.Career section Admin section CRUD
     insert : POST :localhost:4000/api/vacancies/
     selectAll : GET : localhost:4000/api/vacancies/
     selectOne : GET : localhost:4000/api/vacancies/:id
