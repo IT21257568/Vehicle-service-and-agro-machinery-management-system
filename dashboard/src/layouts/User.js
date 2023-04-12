@@ -9,7 +9,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
 
-const Admin = (props) => {
+const User = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -49,16 +49,8 @@ const Admin = (props) => {
 
   return (
     <>
-      <Sidebar
-        {...props}
-        routes={routes}
-        logo={{
-          innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/argon-react.png"),
-          imgAlt: "...",
-        }}
-      />
       <div className="main-content" ref={mainContent}>
+        {/* create a user navbar */}
         <AdminNavbar
           {...props}
           brandText={getBrandText(props.location.pathname)}
@@ -68,6 +60,7 @@ const Admin = (props) => {
           <Redirect from="*" to="/admin/index" />
         </Switch>
         <Container fluid>
+          {/* User footer */}
           <AdminFooter />
         </Container>
       </div>
@@ -75,4 +68,4 @@ const Admin = (props) => {
   );
 };
 
-export default Admin;
+export default User;

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 //pages & components
 import Carrer from "./pages/Carrer";
 import Navbar from "./components/Navbar";
-import UpdateVacancy from "./components/updateVacancyForm";
+import Nisal from "./components/updateVacancyForm";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <div className="pages">
           <Routes>
             <Route path="/" element={<Carrer />} />
-            <Route path="/UpdateVacancy/:id" element={<UpdateVacancy />} />
+            <Route path="/UpdateVacancy/:id" element={<Nisal />} />
           </Routes>
         </div>
       </BrowserRouter>
