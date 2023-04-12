@@ -1,8 +1,8 @@
 import { createContext,useReducer } from 'react';
 
-export const VacancyContext = createContext();
+export const AllContext = createContext();
 
-export const vacancyReducer = (state, action) => {
+export const AllReducer = (state, action) => {
     switch (action.type) {
         case 'SET_VACANCIES':
             return {
@@ -27,14 +27,14 @@ export const vacancyReducer = (state, action) => {
 
 
 
-export const VacancyContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(vacancyReducer, {
+export const AllContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(AllReducer, {
         vacancies: null
     });
  
   return (
-      <VacancyContext.Provider value={{...state, dispatch }}>
+      <AllContext.Provider value={{...state, dispatch }}>
       {children}
-    </VacancyContext.Provider>
+    </AllContext.Provider>
   );
 }

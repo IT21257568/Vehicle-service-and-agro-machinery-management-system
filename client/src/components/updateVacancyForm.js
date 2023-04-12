@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useVacancyContext } from "../hooks/UseVacancyContext";
+import { useVacancyContext } from "../hooks/useVacancyContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

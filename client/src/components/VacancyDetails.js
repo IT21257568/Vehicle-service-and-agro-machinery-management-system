@@ -1,4 +1,4 @@
-import { useVacancyContext } from "../hooks/UseVacancyContext";
+import { useVacancyContext } from "../hooks/useVacancyContext";
 
 //date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
