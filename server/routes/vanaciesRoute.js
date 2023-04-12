@@ -1,12 +1,11 @@
 const express = require("express");
-const Vacancy = require("../models/vacanciesModel");
 const router = express.Router();
 const {
-  getVacancies,
-  getVacancy,
-  ceateVacancy,
-  deleteVacancy,
-  updateVacancy,
+    getVacancies,
+    getVacancy,
+    ceateVacancy,
+    deleteVacancy,
+    updateVacancy,
 } = require("../controllers/vacanciesController");
 
 //Get all of the workouts (1)

@@ -61,12 +61,16 @@ const UpdateVacancyForm = () => {
       <label>Vacancy Type:</label>
       <label class="radiocontainer">
         Full Time
-        <input type="radio" name="radio" />
+        <input type="radio" name="radio" 
+          
+        />
         <span class="radiocheckmark"></span>
       </label>
       <label class="radiocontainer">
         Part Time
-        <input type="radio" name="radio" />
+        <input type="radio" name="radio" 
+          
+        />
         <span class="radiocheckmark"></span>
       </label>
 
