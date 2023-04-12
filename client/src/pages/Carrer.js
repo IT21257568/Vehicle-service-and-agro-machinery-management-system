@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useVacancyContext } from "../hooks/useVacancyContext";
+import { useAllContext } from "../hooks/useAllContext";
 
 //components
 import VacancyDetails from "../components/VacancyDetails";
 import VacancyForm from "../components/VacancyForm";
 
 const Carrer = () => {
-  const { vacancies, dispatch } = useVacancyContext();
+  const { vacancies, dispatch } = useAllContext();
   useEffect(() => {
     const fetchVacancies = async () => {
       const response = await fetch(

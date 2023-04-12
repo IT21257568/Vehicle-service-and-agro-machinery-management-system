@@ -1,7 +1,7 @@
 import { AllContext } from "../context/AllContext";
 import { useContext } from "react";
 
-export const useVacancyContext = () => {
+export const useAllContext = () => {
     const context = useContext(AllContext);
 
     if (!context) {

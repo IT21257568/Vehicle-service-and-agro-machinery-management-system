@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { useVacancyContext } from '../hooks/useVacancyContext';
+import { useAllContext } from '../hooks/useAllContext';
 
 
 const VacancyForm = () => { 
-    const {dispatch} = useVacancyContext()
+    const {dispatch} = useAllContext()
     const [vacncy_title, setTitle] = useState('')
     const [vacancy_count, setCount] = useState('')
     const [vacncy_type, setType] = useState('')

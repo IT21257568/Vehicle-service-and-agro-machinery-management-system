@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useVacancyContext } from "../hooks/useVacancyContext";
+import { useAllContext } from "../hooks/useAllContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const UpdateVacancyForm = () => {
-  // const { dispatch } = useVacancyContext();
+  // const { dispatch } = useAllContext();
   const { id } = useParams();
   const [data, setData] = useState([]);
   const navigate = useNavigate();
