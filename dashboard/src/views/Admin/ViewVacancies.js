@@ -59,6 +59,15 @@ const ViewVacancies = () => {
     fetchAllVacancies();
   }, []);
 
+  const handleDelete = (id) => {
+    axios.delete(`/api/vacancies/${id}`).then((res) => {
+      console.log(res.data);
+      setAllVacancies((prevData) =>
+        prevData.filter((vacancy) => vacancy._id !== id)
+      );
+    });
+  };
+
   return (
     <>
       <Header />
@@ -88,8 +97,8 @@ const ViewVacancies = () => {
                     </tr>
                   )}
                   {allVacancies.slice(0, visible).map((vacancy, index) => (
-                    <tr>
-                      <th scope="row" key={vacancy._id}>
+                    <tr key={vacancy._id}>
+                      <th scope="row">
                         <span className="mb-0 text-sm">
                           {vacancy.vacncy_title}
                         </span>
@@ -125,7 +134,11 @@ const ViewVacancies = () => {
                         >
                           Update
                         </Button>
-                        <Button size="sm" color="danger">
+                        <Button
+                          size="sm"
+                          color="danger"
+                          onClick={() => handleDelete(vacancy._id)}
+                        >
                           Delete
                         </Button>
                       </td>
