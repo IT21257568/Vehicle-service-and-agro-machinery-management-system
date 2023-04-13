@@ -78,7 +78,27 @@ const ViewVacancies = () => {
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
-                <h3 className="mb-0">Vacancies</h3>
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h3 className="mb-0">All Vacancies</h3>
+                  </div>
+                  <div className="col text-right">
+                    <Button
+                      className="btn-icon btn-3"
+                      color="success"
+                      type="button"
+                      onClick={() => navigate("/admin/create-vacancy")}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-planet" />
+                      </span>
+                      <span className="btn-inner--text">Add</span>
+                    </Button>
+                  </div>
+                </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
