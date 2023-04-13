@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -13,10 +13,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-      <Redirect from="/" to="/admin/index" />
-    </Switch>
+    <Routes>
+      {/* <Route path="/admin" render={(props) => <AdminLayout {...props} />} /> */}
+      <Route path="/admin/*" element={<AdminLayout />} />
+      <Route path="/auth/*" element={<AuthLayout />} />
+      <Route path="/" element={<Navigate to="/admin/index" />} />
+      {/* <Route path="*" element={<p>Error nested route</p>} /> */}
+    </Routes>
   </BrowserRouter>
 );

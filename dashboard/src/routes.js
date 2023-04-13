@@ -8,7 +8,7 @@ import Icons from "views/examples/Icons.js";
 import ViewVacancies from "views/Admin/ViewVacancies.js";
 import UpdateVacancy from "views/Admin/UpdateVacancy.js";
 
-var routes = [
+const routes = [
   {
     path: "/index",
     name: "Dashboard",
