@@ -48,7 +48,7 @@ const ViewVacancies = () => {
   useEffect(() => {
     const fetchAllVacancies = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/vacancies");
+        const res = await axios.get("/api/vacancies");
         setAllVacancies(res.data);
         setIsLoading(false);
       } catch (err) {
@@ -89,7 +89,7 @@ const ViewVacancies = () => {
                   )}
                   {allVacancies.slice(0, visible).map((vacancy, index) => (
                     <tr>
-                      <th scope="row">
+                      <th scope="row" key={vacancy._id}>
                         <span className="mb-0 text-sm">
                           {vacancy.vacncy_title}
                         </span>

@@ -32,27 +32,41 @@ const UpdateVacancy = () => {
   const navigate = useNavigate();
 
   // form states
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState();
-  const [description, setDescription] = useState("");
-  const [error, setError] = useState(null);
+  const [data, setData] = useState([]);
+  const [vacancyTitle, setVacancyTitle] = useState("");
+  const [vacancyType, setVacancyType] = useState("");
+  const [vacancyCount, setVacancyCount] = useState("");
+  const [vacancyRequirements, setVacancyRequirements] = useState("");
 
-  // retrieve vacancy details from database
   useEffect(() => {
-    const fetchVacancyDetails = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:4000/api/vacancies/${id}`
-        );
-        setTitle(res.data.title);
-        setType(res.data.type);
-        setDescription(res.data.description);
-      } catch (err) {
-        setError(err);
-      }
+    const getVacancy = async () => {
+      const res = await axios.get(`/api/vacancies/${id}`);
+      console.log(res.data);
+      setData(res.data);
+
+      setVacancyTitle(res.data.vacncy_title);
+      setVacancyType(res.data.vacncy_type);
+      setVacancyCount(res.data.vacancy_count);
+      setVacancyRequirements(res.data.vacncy_requirements);
     };
-    fetchVacancyDetails();
-  });
+    getVacancy();
+  }, [id]);
+
+  const handleUpdate = () => {
+    console.log("lol");
+
+    axios
+      .patch(`/api/vacancies/${id}`, {
+        vacncy_title: vacancyTitle,
+        vacncy_type: vacancyType,
+        vacancy_count: vacancyCount,
+        vacncy_requirements: vacancyRequirements,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate(-1);
+      });
+  };
 
   return (
     <>
@@ -86,10 +100,12 @@ const UpdateVacancy = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue=""
-                            id="input-username"
+                            defaultValue={data.vacncy_title}
                             placeholder="Title"
                             type="text"
+                            onChange={(e) => {
+                              setVacancyTitle(e.target.value);
+                            }}
                           />
                         </FormGroup>
                       </Col>
@@ -107,13 +123,13 @@ const UpdateVacancy = () => {
                             toggle={toggle}
                           >
                             <DropdownToggle caret>
-                              {type ? type : "Select Type"}
+                              {vacancyType ? vacancyType : "Select Type"}
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem
                                 value="Full Time"
                                 onClick={(e) => {
-                                  setType(e.target.value);
+                                  setVacancyType(e.target.value);
                                 }}
                               >
                                 Full Time
@@ -121,7 +137,7 @@ const UpdateVacancy = () => {
                               <DropdownItem
                                 value="Part Time"
                                 onClick={(e) => {
-                                  setType(e.target.value);
+                                  setVacancyType(e.target.value);
                                 }}
                               >
                                 Part Time
@@ -129,7 +145,7 @@ const UpdateVacancy = () => {
                               <DropdownItem
                                 value="Internship"
                                 onClick={(e) => {
-                                  setType(e.target.value);
+                                  setVacancyType(e.target.value);
                                 }}
                               >
                                 Internship
@@ -194,12 +210,7 @@ const UpdateVacancy = () => {
                         type="textarea"
                       />
                     </FormGroup>
-                    <Button
-                      color="primary"
-                      onClick={(e) => {
-                        e.preventDefault();
-                      }}
-                    >
+                    <Button color="primary" onClick={handleUpdate}>
                       Save
                     </Button>
                     <Button
