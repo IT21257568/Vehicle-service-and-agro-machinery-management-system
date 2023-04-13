@@ -39,24 +39,22 @@ const CreateVacancy = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
-    const vacancy = {
-      vacancyTitle,
-      vacancyType,
-      vacancyCount,
-      vacancyRequirements,
-    };
-
     try {
-      const response = await axios
-        .post("/api/vacancies", vacancy)
+      await axios
+        .post("/api/vacancies", {
+          vacncy_title: vacancyTitle,
+          vacncy_type: vacancyType,
+          vacancy_count: vacancyCount,
+          vacncy_requirements: vacancyRequirements,
+        })
         .then((res) => {
-          console.log("New sparepart added", response.data);
+          console.log("New sparepart added", res.data);
           setVacancyTitle("");
           setVacancyType("");
           setVacancyCount("");
           setVacancyRequirements("");
           setError(null);
-          navigate("/admin/view-vacancies");
+          navigate("/admin/vacancies");
         });
     } catch (error) {
       setError(error.message);
@@ -200,7 +198,7 @@ const CreateVacancy = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate(-1);
+                        navigate("/admin/vacancies");
                       }}
                     >
                       Cancel
