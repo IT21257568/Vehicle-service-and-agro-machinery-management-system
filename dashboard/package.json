@@ -1,28 +1,22 @@
 {
-  "name": "argon-dashboard-react",
-  "version": "1.2.2",
-  "description": "React version of Argon Dashboard by Creative Tim",
+  "name": "wheelmasters",
+  "version": "0.1.0",
+  "description": "Wheelmasters Service Station Management System + Ecommerce Store",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/argon-dashboard-react.git"
+    "url": ""
   },
   "keywords": [
     "react",
-    "reactjs",
-    "argon",
-    "argon-react",
-    "dashboard",
-    "dashboard-react",
-    "argon-dashboard",
-    "argon-dashboard-react"
+    "reactjs"
   ],
-  "author": "Creative Tim",
+  "author": "Chicago Software LLC",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/argon-dashboard-react/issues"
+    "url": ""
   },
-  "homepage": "https://demos.creative-tim.com/argon-dashboard-react/",
+  "homepage": "",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
