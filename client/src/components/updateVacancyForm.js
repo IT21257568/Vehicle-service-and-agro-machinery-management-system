@@ -43,7 +43,7 @@ const UpdateVacancyForm = () => {
       })
       .then((res) => {
         console.log(res.data);
-        navigate("/");
+        navigate("/carrer");
       });
   };
 

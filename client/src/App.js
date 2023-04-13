@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Carrer from "./pages/Carrer";
 import MeetTheTeam from "./pages/MeetTheTeam";
 import Navbar from "./components/Navbar";
-import UpdateVacancy from "./components/UpdateVacancyForm";
+import UpdateVacancy from "./components/updateVacancyForm";
 
 function App() {
   return (
