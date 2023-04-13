@@ -72,7 +72,7 @@ const UpdateVacancy = () => {
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Vacancy Details - ID: {id}
+                    Vacancy Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
