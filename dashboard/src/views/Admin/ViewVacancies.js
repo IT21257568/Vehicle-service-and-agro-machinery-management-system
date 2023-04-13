@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -33,7 +34,11 @@ const ViewVacancies = () => {
   const [allVacancies, setAllVacancies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visible, setVisible] = useState(1);
+
+  // set visible rows
+  const [visible, setVisible] = useState(10);
+
+  const navigate = useNavigate();
 
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 3);
@@ -111,7 +116,13 @@ const ViewVacancies = () => {
                         <Button size="sm" color="primary">
                           View
                         </Button>
-                        <Button size="sm" color="warning">
+                        <Button
+                          size="sm"
+                          color="warning"
+                          onClick={() =>
+                            navigate(`/admin/update-vacancy/${vacancy._id}`)
+                          }
+                        >
                           Update
                         </Button>
                         <Button size="sm" color="danger">

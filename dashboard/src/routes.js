@@ -7,6 +7,7 @@ import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import ViewVacancies from "views/Admin/ViewVacancies.js";
 import UpdateVacancy from "views/Admin/UpdateVacancy.js";
+import CreateVacancy from "views/Admin/CreateVacancy.js";
 
 const routes = [
   {
@@ -72,6 +73,15 @@ const routes = [
     name: "Update Vacancy",
     icon: "ni ni-ruler-pencil text-pink",
     component: UpdateVacancy,
+    layout: "/admin",
+  },
+
+  // nisal
+  {
+    path: "/create-vacancy",
+    name: "Create Vacancy",
+    icon: "ni ni-calendar-grid-58 text-blue",
+    component: CreateVacancy,
     layout: "/admin",
   },
 ];

@@ -56,7 +56,7 @@ const Admin = () => {
           )}
           <Route path="/" element={<Navigate to="/admin/index" />} />
         </Routes>
-        <Outlet />
+        {/* <Outlet /> */}
         {/* <Outlet /> */}
         <Container fluid>
           <AdminFooter />

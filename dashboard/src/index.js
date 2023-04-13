@@ -14,11 +14,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
-      {/* <Route path="/admin" render={(props) => <AdminLayout {...props} />} /> */}
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/auth/*" element={<AuthLayout />} />
       <Route path="/" element={<Navigate to="/admin/index" />} />
-      {/* <Route path="*" element={<p>Error nested route</p>} /> */}
     </Routes>
   </BrowserRouter>
 );

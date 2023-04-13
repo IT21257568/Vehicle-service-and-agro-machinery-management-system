@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 // reactstrap components
 import {
@@ -22,37 +20,14 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const UpdateVacancy = () => {
+const CreateVacancy = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-
-  // get vacancy id from url
-  const { id } = useParams();
-
-  const navigate = useNavigate();
 
   // form states
   const [title, setTitle] = useState("");
   const [type, setType] = useState();
   const [description, setDescription] = useState("");
-  const [error, setError] = useState(null);
-
-  // retrieve vacancy details from database
-  useEffect(() => {
-    const fetchVacancyDetails = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:4000/api/vacancies/${id}`
-        );
-        setTitle(res.data.title);
-        setType(res.data.type);
-        setDescription(res.data.description);
-      } catch (err) {
-        setError(err);
-      }
-    };
-    fetchVacancyDetails();
-  });
 
   return (
     <>
@@ -72,7 +47,7 @@ const UpdateVacancy = () => {
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Vacancy Details - ID: {id}
+                    Vacancy Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -206,7 +181,6 @@ const UpdateVacancy = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate(-1);
                       }}
                     >
                       Cancel
@@ -222,4 +196,4 @@ const UpdateVacancy = () => {
   );
 };
 
-export default UpdateVacancy;
+export default CreateVacancy;
