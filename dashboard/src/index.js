@@ -15,9 +15,10 @@ root.render(
   <BrowserRouter>
     <Routes>
       {/* <Route path="/admin" render={(props) => <AdminLayout {...props} />} /> */}
-      <Route path="/admin" element={(props) => <AdminLayout {...props} />} />
-      <Route path="/auth" element={(props) => <AuthLayout {...props} />} />
-      <Route path="/" element={<Navigate to="/admin/index" />} />{" "}
+      <Route path="/admin/*" element={<AdminLayout />} />
+      <Route path="/auth/*" element={<AuthLayout />} />
+      <Route path="/" element={<Navigate to="/admin/index" />} />
+      {/* <Route path="*" element={<p>Error nested route</p>} /> */}
     </Routes>
   </BrowserRouter>
 );
