@@ -64,7 +64,7 @@ const UpdateVacancy = () => {
       })
       .then((res) => {
         console.log(res.data);
-        navigate(-1);
+        navigate("/admin/vacancies");
       });
   };
 
@@ -217,7 +217,7 @@ const UpdateVacancy = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate(-1);
+                        navigate("/admin/vacancies");
                       }}
                     >
                       Cancel
