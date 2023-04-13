@@ -43,7 +43,7 @@ const ViewVacancies = () => {
   useEffect(() => {
     const fetchAllVacancies = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/vacancies");
+        const res = await axios.get("/api/vacancies");
         setAllVacancies(res.data);
         setIsLoading(false);
       } catch (err) {

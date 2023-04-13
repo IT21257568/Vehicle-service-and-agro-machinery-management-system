@@ -1,4 +1,5 @@
 {
+  "proxy": "http://localhost:4000",
   "name": "wheelmasters",
   "version": "0.1.0",
   "description": "Wheelmasters Service Station Management System + Ecommerce Store",
