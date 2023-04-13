@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -17,17 +19,49 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+
 // core components
 import Header from "components/Headers/Header.js";
 
 const CreateVacancy = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const navigate = useNavigate();
 
   // form states
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState();
-  const [description, setDescription] = useState("");
+  const [data, setData] = useState([]);
+  const [vacancyTitle, setVacancyTitle] = useState("");
+  const [vacancyType, setVacancyType] = useState("");
+  const [vacancyCount, setVacancyCount] = useState("");
+  const [vacancyRequirements, setVacancyRequirements] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // prevent page refresh
+
+    const vacancy = {
+      vacancyTitle,
+      vacancyType,
+      vacancyCount,
+      vacancyRequirements,
+    };
+
+    try {
+      const response = await axios
+        .post("/api/vacancies", vacancy)
+        .then((res) => {
+          console.log("New sparepart added", response.data);
+          setVacancyTitle("");
+          setVacancyType("");
+          setVacancyCount("");
+          setVacancyRequirements("");
+          setError(null);
+          navigate("/admin/view-vacancies");
+        });
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   return (
     <>
@@ -40,14 +74,14 @@ const CreateVacancy = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Update Vacancy</h3>
+                    <h3 className="mb-0">Create Vacancy</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Vacancy Details
+                    Vacancy Title
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -61,10 +95,12 @@ const CreateVacancy = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue=""
                             id="input-username"
                             placeholder="Title"
                             type="text"
+                            onChange={(e) => {
+                              setVacancyTitle(e.target.value);
+                            }}
                           />
                         </FormGroup>
                       </Col>
@@ -82,13 +118,13 @@ const CreateVacancy = () => {
                             toggle={toggle}
                           >
                             <DropdownToggle caret>
-                              {type ? type : "Select Type"}
+                              {vacancyType ? vacancyType : "Select Type"}
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem
                                 value="Full Time"
                                 onClick={(e) => {
-                                  setType(e.target.value);
+                                  setVacancyType(e.target.value);
                                 }}
                               >
                                 Full Time
@@ -96,7 +132,7 @@ const CreateVacancy = () => {
                               <DropdownItem
                                 value="Part Time"
                                 onClick={(e) => {
-                                  setType(e.target.value);
+                                  setVacancyType(e.target.value);
                                 }}
                               >
                                 Part Time
@@ -104,7 +140,7 @@ const CreateVacancy = () => {
                               <DropdownItem
                                 value="Internship"
                                 onClick={(e) => {
-                                  setType(e.target.value);
+                                  setVacancyType(e.target.value);
                                 }}
                               >
                                 Internship
@@ -121,7 +157,7 @@ const CreateVacancy = () => {
                             className="form-control-label"
                             htmlFor="input-first-name"
                           >
-                            First name
+                            Vacancy Count
                           </label>
                           <Input
                             className="form-control-alternative"
@@ -129,23 +165,9 @@ const CreateVacancy = () => {
                             id="input-first-name"
                             placeholder="First name"
                             type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-last-name"
-                          >
-                            Last name
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Jesse"
-                            id="input-last-name"
-                            placeholder="Last name"
-                            type="text"
+                            onChange={(e) => {
+                              setVacancyCount(e.target.value);
+                            }}
                           />
                         </FormGroup>
                       </Col>
@@ -165,22 +187,20 @@ const CreateVacancy = () => {
                         className="form-control-alternative"
                         placeholder="A brief description of the vacancy"
                         rows="4"
-                        defaultValue=""
                         type="textarea"
+                        onChange={(e) => {
+                          setVacancyRequirements(e.target.value);
+                        }}
                       />
                     </FormGroup>
-                    <Button
-                      color="primary"
-                      onClick={(e) => {
-                        e.preventDefault();
-                      }}
-                    >
-                      Save
+                    <Button color="primary" onClick={handleSubmit}>
+                      Create
                     </Button>
                     <Button
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
+                        navigate(-1);
                       }}
                     >
                       Cancel
