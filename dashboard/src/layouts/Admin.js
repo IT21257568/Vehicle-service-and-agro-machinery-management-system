@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
@@ -25,7 +25,9 @@ const Admin = (props) => {
         return (
           <Route
             path={prop.layout + prop.path}
-            component={prop.component}
+            element={prop.component}
+            // path={prop.layout + prop.path}
+            // component={prop.component}
             key={key}
           />
         );
@@ -63,10 +65,11 @@ const Admin = (props) => {
           {...props}
           brandText={getBrandText(props.location.pathname)}
         />
-        <Switch>
+        <Routes>
           {getRoutes(routes)}
-          <Redirect from="*" to="/admin/index" />
-        </Switch>
+          {/* <Redirect from="*" to="/admin/index" /> */}
+          <Route path="*" element={<Navigate to="/admin/index" />} />
+        </Routes>
         <Container fluid>
           <AdminFooter />
         </Container>
