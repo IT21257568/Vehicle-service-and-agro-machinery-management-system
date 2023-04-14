@@ -157,38 +157,25 @@ const UpdateVacancy = () => {
                     </Row>
                     <Row>
                       <Col lg="6">
-                        <FormGroup>
+                      <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-first-name"
+                            htmlFor="input-username"
                           >
-                            First name
+                            Vacancy Count
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="First name"
-                            type="text"
+                            defaultValue={data.vacancy_count}
+                            placeholder="select count"
+                            type="number"
+                            onChange={(e) => {
+                              setVacancyCount(e.target.value);
+                            }}
                           />
                         </FormGroup>
                       </Col>
                       <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-last-name"
-                          >
-                            Last name
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Jesse"
-                            id="input-last-name"
-                            placeholder="Last name"
-                            type="text"
-                          />
-                        </FormGroup>
                       </Col>
                     </Row>
                   </div>
@@ -206,7 +193,10 @@ const UpdateVacancy = () => {
                         className="form-control-alternative"
                         placeholder="A brief description of the vacancy"
                         rows="4"
-                        defaultValue=""
+                        defaultValue={data.vacncy_requirements}
+                        onChange={(e) => {
+                          setVacancyRequirements(e.target.value);
+                        }}
                         type="textarea"
                       />
                     </FormGroup>
