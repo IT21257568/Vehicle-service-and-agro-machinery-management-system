@@ -8,6 +8,7 @@ import Icons from "views/examples/Icons.js";
 import ViewVacancies from "views/Admin/ViewVacancies.js";
 import UpdateVacancy from "views/Admin/UpdateVacancy.js";
 import CreateVacancy from "views/Admin/CreateVacancy.js";
+import AdminLogin from "views/Admin/AdminLogin";
 
 const routes = [
   {
@@ -74,6 +75,13 @@ const routes = [
     icon: "ni ni-ruler-pencil text-pink",
     component: UpdateVacancy,
     layout: "/admin",
+  },
+  {
+    path: "/admin-login",
+    name: "Admin/ Staff Login",
+    icon: "ni ni-circle-08 text-green",
+    component: AdminLogin,
+    layout: "/auth",
   },
 
   // nisal
