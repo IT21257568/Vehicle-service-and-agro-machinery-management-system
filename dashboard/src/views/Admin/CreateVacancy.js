@@ -161,8 +161,8 @@ const CreateVacancy = () => {
                             className="form-control-alternative"
                             defaultValue="Lucky"
                             id="input-first-name"
-                            placeholder="First name"
-                            type="text"
+                            placeholder="select count"
+                            type="number"
                             onChange={(e) => {
                               setVacancyCount(e.target.value);
                             }}
@@ -183,7 +183,7 @@ const CreateVacancy = () => {
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description of the vacancy"
+                        placeholder="A brief description about the vacancy"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
