@@ -1,28 +1,23 @@
 {
-  "name": "argon-dashboard-react",
-  "version": "1.2.2",
-  "description": "React version of Argon Dashboard by Creative Tim",
+  "proxy": "http://localhost:4000",
+  "name": "wheelmasters",
+  "version": "0.1.0",
+  "description": "Wheelmasters Service Station Management System + Ecommerce Store",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/argon-dashboard-react.git"
+    "url": ""
   },
   "keywords": [
     "react",
-    "reactjs",
-    "argon",
-    "argon-react",
-    "dashboard",
-    "dashboard-react",
-    "argon-dashboard",
-    "argon-dashboard-react"
+    "reactjs"
   ],
-  "author": "Creative Tim",
+  "author": "Chicago Software LLC",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/argon-dashboard-react/issues"
+    "url": ""
   },
-  "homepage": "https://demos.creative-tim.com/argon-dashboard-react/",
+  "homepage": "",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -44,17 +39,18 @@
   ],
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.3",
+    "axios": "^1.3.5",
     "bootstrap": "4.6.0",
     "chart.js": "2.9.4",
     "classnames": "2.3.1",
     "moment": "2.29.4",
     "nouislider": "15.2.0",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-chartjs-2": "2.11.1",
     "react-copy-to-clipboard": "5.1.0",
     "react-datetime": "3.1.1",
-    "react-dom": "18.2.0",
-    "react-router-dom": "5.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "reactstrap": "8.9.0",
     "sass": "1.54.5"
@@ -62,10 +58,6 @@
   "devDependencies": {
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9"
-  },
-  "peerDependencies": {
-    "react": ">=16.0.0",
-    "react-dom": ">=16.0.0"
   },
   "optionalDependencies": {
     "eslint-plugin-flowtype": "8.0.3",
