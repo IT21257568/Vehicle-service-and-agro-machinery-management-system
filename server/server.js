@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const vanaciesRoute = require("./routes/vanaciesRoute");
 const sparePartsRoutes = require('./routes/spareParts');
 const meetTeamRoute = require("./routes/MeetTeamRoute");
+const bookingsRoute = require("./routes/BookingsRoute");
 
 // setup cors
 const cors = require("cors");
@@ -27,6 +28,9 @@ app.use("/api/vacancies", vanaciesRoute);
 app.use("/api/mTeams", meetTeamRoute);
 //Pehesarani
 app.use('/api/spareParts', sparePartsRoutes);
+
+//Janindu 
+app.use('/api/bookings', bookingsRoute);
 
 //connect to db
 mongoose
