@@ -14,6 +14,7 @@ import {
   Container,
   Row,
   Col,
+  Media,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -26,7 +27,7 @@ const UpdateTechnician = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-  // get vacancy id from url
+  // get Technician id from url
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const UpdateTechnician = () => {
   const [technician_age, setTechnicianAge] = useState("");
   const [technician_experiences, SetTechnicianExperiences] = useState("");
   const [technician_expertise, SetTechnicianExpertise] = useState("");
-  //const [technician_picture_url, SetTechnicianPictureUrl] = useState("");
+  const [technician_picture_url, SetTechnicianPictureUrl] = useState("");
   
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const UpdateTechnician = () => {
       setTechnicianAge(res.data.technician_age);
       SetTechnicianExperiences(res.data.technician_experiences);
       SetTechnicianExpertise(res.data.technician_expertise);
-      //SetTechnicianPictureUrl(res.data.technician_picture_url);
+      SetTechnicianPictureUrl(res.data.technician_picture_url);
     };
     getTechnician();
   }, [id]);
@@ -64,7 +65,7 @@ const UpdateTechnician = () => {
         technician_age: technician_age,
         technician_experiences: technician_experiences,
         technician_expertise: technician_expertise,
-        //technician_picture_url: techntechnician_picture_urlician_expertise,
+        technician_picture_url: technician_picture_url,
       })
       .then((res) => {
         console.log(res.data);
@@ -135,6 +136,26 @@ const UpdateTechnician = () => {
                     </Row>
                     <Row>
                       <Col lg="6">
+                        <Media className="align-items-center">
+                          <span className="avatar avatar-sm rounded-circle">
+                            <img
+                              alt="..."
+                              src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                            />
+                          </span>
+                        </Media>
+                        <br>                  
+                        </br>
+                        <Input
+                          type="file"
+                          defaultValue={data.technician_picture_url}
+                          className="form-control-alternative"
+                          onChange={(e) => {
+                            SetTechnicianPictureUrl(e.target.value);
+                          }}
+                        />
+                      </Col>
+                      <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -153,7 +174,6 @@ const UpdateTechnician = () => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6"></Col>
                     </Row>
                   </div>
 
