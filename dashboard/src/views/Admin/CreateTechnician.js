@@ -72,14 +72,14 @@ const CreateVacancy = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Vacancy</h3>
+                    <h3 className="mb-0">Add Technician</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Vacancy Details
+                    Technician Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -89,7 +89,7 @@ const CreateVacancy = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Vacancy Title
+                            Technician Name
                           </label>
                           <Input
                             className="form-control-alternative"
@@ -108,43 +108,9 @@ const CreateVacancy = () => {
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            Vacancy Type
+                            Technician Picture
                           </label>
-                          <Dropdown
-                            isOpen={dropdownOpen}
-                            color="primary"
-                            toggle={toggle}
-                          >
-                            <DropdownToggle caret>
-                              {vacancyType ? vacancyType : "Select Type"}
-                            </DropdownToggle>
-                            <DropdownMenu>
-                              <DropdownItem
-                                value="Full Time"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Full Time
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Part Time"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Part Time
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Internship"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Internship
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </Dropdown>
+                          <Input type="file" />
                         </FormGroup>
                       </Col>
                     </Row>
