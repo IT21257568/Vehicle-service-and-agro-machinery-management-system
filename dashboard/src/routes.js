@@ -9,6 +9,7 @@ import ViewVacancies from "views/Admin/ViewVacancies.js";
 import UpdateVacancy from "views/Admin/UpdateVacancy.js";
 import CreateVacancy from "views/Admin/CreateVacancy.js";
 import CreateTechnician from "views/Admin/CreateTechnician.js";
+import ViewTechnicians from "views/Admin/ViewTechnicians.js";
 
 const routes = [
   {
@@ -90,6 +91,13 @@ const routes = [
     name: "Create Technician",
     icon: "ni ni-calendar-grid-58 text-blue",
     component: CreateTechnician,
+    layout: "/admin",
+  },
+  {
+    path: "/technicians",
+    name: "Technicians",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewTechnicians,
     layout: "/admin",
   },
 ];

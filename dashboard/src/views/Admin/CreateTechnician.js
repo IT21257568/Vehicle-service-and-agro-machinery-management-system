@@ -57,7 +57,7 @@ const CreateVacancy = () => {
           setTechnicianExpertise("");
           setTechnicianPictureUrl("");
           setError(null);
-          navigate("/admin/vacancies");
+          navigate("/admin/technicians");
         });
     } catch (error) {
       setError(error.message);
