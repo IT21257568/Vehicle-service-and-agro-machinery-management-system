@@ -30,10 +30,11 @@ const CreateVacancy = () => {
 
   // form states
   const [data, setData] = useState([]);
-  const [vacancyTitle, setVacancyTitle] = useState("");
-  const [vacancyType, setVacancyType] = useState("");
-  const [vacancyCount, setVacancyCount] = useState("");
-  const [vacancyRequirements, setVacancyRequirements] = useState("");
+  const [technician_name, setTechnicianName] = useState("");
+  const [technician_age, setTechnicianAge] = useState("");
+  const [technician_experiences, setTechnicianExperiences] = useState("");
+  const [technician_expertise, setTechnicianExpertise] = useState("");
+  const [technician_picture_url, setTechnicianPictureUrl] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -41,18 +42,20 @@ const CreateVacancy = () => {
 
     try {
       await axios
-        .post("/api/vacancies", {
-          vacncy_title: vacancyTitle,
-          vacncy_type: vacancyType,
-          vacancy_count: vacancyCount,
-          vacncy_requirements: vacancyRequirements,
+        .post("/api/mTeams", {
+          technician_name: technician_name,
+          technician_age: technician_age,
+          technician_experiences: technician_experiences,
+          technician_expertise: technician_expertise,
+          technician_picture_url: technician_picture_url,
         })
         .then((res) => {
-          console.log("New sparepart added", res.data);
-          setVacancyTitle("");
-          setVacancyType("");
-          setVacancyCount("");
-          setVacancyRequirements("");
+          console.log("New Technician added", res.data);
+          setTechnicianName("");
+          setTechnicianAge("");
+          setTechnicianExperiences("");
+          setTechnicianExpertise("");
+          setTechnicianPictureUrl("");
           setError(null);
           navigate("/admin/vacancies");
         });
@@ -94,10 +97,10 @@ const CreateVacancy = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-username"
-                            placeholder="Title"
+                            placeholder="Enter Name"
                             type="text"
                             onChange={(e) => {
-                              setVacancyTitle(e.target.value);
+                              setTechnicianName(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -110,10 +113,17 @@ const CreateVacancy = () => {
                           >
                             Technician Picture
                           </label>
-                          <Input type="file" />
+                          <Input
+                            type="file"
+                            className="form-control-alternative"
+                            onChange={(e) => {
+                              setTechnicianPictureUrl(e.target.value);
+                            }}
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
+
                     <Row>
                       <Col lg="6">
                         <FormGroup>
@@ -121,16 +131,36 @@ const CreateVacancy = () => {
                             className="form-control-label"
                             htmlFor="input-first-name"
                           >
-                            Vacancy Count
+                            Technician Age
                           </label>
                           <Input
                             className="form-control-alternative"
                             defaultValue="Lucky"
                             id="input-first-name"
-                            placeholder="select count"
+                            placeholder="select age"
                             type="number"
                             onChange={(e) => {
-                              setVacancyCount(e.target.value);
+                              setTechnicianAge(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Technician Expirence
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            defaultValue="Lucky"
+                            id="input-first-name"
+                            placeholder="select number of years working on this field"
+                            type="number"
+                            onChange={(e) => {
+                              setTechnicianExperiences(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -145,7 +175,7 @@ const CreateVacancy = () => {
                         className="form-control-label"
                         htmlFor="input-last-name"
                       >
-                        Requirements
+                        Techinician Expertice
                       </label>
                       <Input
                         className="form-control-alternative"
@@ -153,7 +183,7 @@ const CreateVacancy = () => {
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
-                          setVacancyRequirements(e.target.value);
+                          setTechnicianExpertise(e.target.value);
                         }}
                       />
                     </FormGroup>
