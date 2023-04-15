@@ -204,7 +204,9 @@ const ViewTechnicians = () => {
                           size="sm"
                           color="warning"
                           onClick={() =>
-                            navigate(`/admin/update-vacancy/${technician._id}`)
+                            navigate(
+                              `/admin/update-technician/${technician._id}`
+                            )
                           }
                         >
                           Update

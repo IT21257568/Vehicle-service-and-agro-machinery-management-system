@@ -10,6 +10,7 @@ import UpdateVacancy from "views/Admin/UpdateVacancy.js";
 import CreateVacancy from "views/Admin/CreateVacancy.js";
 import CreateTechnician from "views/Admin/CreateTechnician.js";
 import ViewTechnicians from "views/Admin/ViewTechnicians.js";
+import UpdateTechnician from "views/Admin/UpdateTechnician.js";
 
 const routes = [
   {
@@ -62,7 +63,15 @@ const routes = [
     layout: "/auth",
   },
 
-  // added by pawan
+  // nisal
+  //Vacancy Routes
+  {
+    path: "/create-vacancy",
+    name: "Create Vacancy",
+    icon: "ni ni-calendar-grid-58 text-blue",
+    component: CreateVacancy,
+    layout: "/admin",
+  },
   {
     path: "/vacancies",
     name: "Vacancies",
@@ -77,15 +86,7 @@ const routes = [
     component: UpdateVacancy,
     layout: "/admin",
   },
-
-  // nisal
-  {
-    path: "/create-vacancy",
-    name: "Create Vacancy",
-    icon: "ni ni-calendar-grid-58 text-blue",
-    component: CreateVacancy,
-    layout: "/admin",
-  },
+//Meet the team routes
   {
     path: "/create-technician",
     name: "Create Technician",
@@ -98,6 +99,13 @@ const routes = [
     name: "Technicians",
     icon: "ni ni-notification-70 text-pink",
     component: ViewTechnicians,
+    layout: "/admin",
+  },
+  {
+    path: "/update-technician/:id",
+    name: "Update Technician",
+    icon: "ni ni-ruler-pencil text-pink",
+    component: UpdateTechnician,
     layout: "/admin",
   },
 ];
