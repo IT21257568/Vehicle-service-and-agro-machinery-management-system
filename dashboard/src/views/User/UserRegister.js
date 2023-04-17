@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+// dotenv config
+// import dotenv from "dotenv";
 
 // reactstrap components
 import {
@@ -16,58 +18,70 @@ import {
   InputGroup,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 
-const Register = () => {
+// dotenv.config();
+
+const handleCreate = async (e, navigate) => {
+  e.preventDefault();
+  const json = {};
+  const response = await axios.post("/api/users", json);
+  if (response.status === 201) {
+    navigate("/admin/users");
+  }
+};
+
+const UserRegister = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [image, setImage] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "agd0dlhj");
+    // formData.append("public_id", "your_public_id");
+    formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
+
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        setUploadProgress(percentCompleted);
+      },
+    };
+
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+        formData,
+        options
+      )
+      .then((response) => {
+        setImage(response.data.secure_url);
+        setUploadProgress(0);
+      })
+      .catch((error) => {
+        console.error(error);
+        setUploadProgress(0);
+      });
+  };
+
   return (
     <>
       <Col lg="6" md="8">
         <Card className="bg-secondary shadow border-0">
-          <CardHeader className="bg-transparent pb-5">
-            <div className="text-muted text-center mt-2 mb-4">
-              <small>Sign up with</small>
-            </div>
-            <div className="text-center">
-              <Button
-                className="btn-neutral btn-icon mr-4"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/github.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Github</span>
-              </Button>
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/google.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Google</span>
-              </Button>
-            </div>
-          </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <small>Or sign up with credentials</small>
+              <small>Register to Wheelmasters</small>
             </div>
+            {image && <img src={image} alt="Uploaded" />}
+            <Input type="file" onChange={handleImageUpload} />
+            {uploadProgress > 0 && <div>Uploading... {uploadProgress}%</div>}
             <Form role="form">
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
@@ -107,6 +121,20 @@ const Register = () => {
                   />
                 </InputGroup>
               </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-lock-circle-open" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Confirm Password"
+                    type="password"
+                    autoComplete="new-password"
+                  />
+                </InputGroup>
+              </FormGroup>
               <div className="text-muted font-italic">
                 <small>
                   password strength:{" "}
@@ -136,8 +164,19 @@ const Register = () => {
                 </Col>
               </Row>
               <div className="text-center">
-                <Button className="mt-4" color="primary" type="button">
-                  Create account
+                <Button
+                  className="mt-4"
+                  color="primary"
+                  type="button"
+                  onClick={handleCreate}
+                >
+                  {isLoading && (
+                    <>
+                      <Spinner size="sm"></Spinner>
+                      <span> Creating Account</span>{" "}
+                    </>
+                  )}
+                  {!isLoading && <>Create account</>}
                 </Button>
               </div>
             </Form>
@@ -148,4 +187,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default UserRegister;

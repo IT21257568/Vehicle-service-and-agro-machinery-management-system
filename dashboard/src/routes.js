@@ -9,6 +9,7 @@ import ViewVacancies from "views/Admin/ViewVacancies.js";
 import UpdateVacancy from "views/Admin/UpdateVacancy.js";
 import CreateVacancy from "views/Admin/CreateVacancy.js";
 import AdminLogin from "views/Admin/AdminLogin";
+import UserRegister from "views/User/UserRegister";
 
 const routes = [
   {
@@ -53,13 +54,13 @@ const routes = [
     component: Login,
     layout: "/auth",
   },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: Register,
-    layout: "/auth",
-  },
+  // {
+  //   path: "/register",
+  //   name: "Register",
+  //   icon: "ni ni-circle-08 text-pink",
+  //   component: Register,
+  //   layout: "/auth",
+  // },
 
   // added by pawan
   {
@@ -81,6 +82,13 @@ const routes = [
     name: "Admin/ Staff Login",
     icon: "ni ni-circle-08 text-green",
     component: AdminLogin,
+    layout: "/auth",
+  },
+  {
+    path: "/register",
+    name: "User Registration",
+    icon: "ni ni-circle-08 text-yellow",
+    component: UserRegister,
     layout: "/auth",
   },
 
