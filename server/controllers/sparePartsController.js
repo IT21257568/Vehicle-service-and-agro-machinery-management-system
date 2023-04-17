@@ -25,13 +25,13 @@ const getSparePart = async (req, res) => {
    
 }
 
-//create a workout
+//create a SparePart
 const createSparePart = async (req, res) => {
-    const{name, price, discount, description} = req.body
+    const{name, price, discount, description, status} = req.body
 
     //add doc to db
     try{
-        const sparePart = await SparePart.create({name, price, discount, description})
+        const sparePart = await SparePart.create({name, price, discount, description, status})
         res.status(200).json(sparePart)
     }catch(error){
         res.status(400).json({error: error.message})

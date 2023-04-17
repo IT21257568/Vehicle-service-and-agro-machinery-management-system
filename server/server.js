@@ -3,23 +3,24 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const vanaciesRoute = require("./routes/vanaciesRoute");
-const sparePartsRoutes = require('./routes/spareParts');
+const sparePartsRoutes = require("./routes/spareParts");
 const meetTeamRoute = require("./routes/MeetTeamRoute");
 const promotionRoute = require("./routes/promotionRoute");
+const userRoutes = require("./routes/userRoutes");
 
 // setup cors
 const cors = require("cors");
 
-//express app
+// express app
 const app = express();
 
-//middleware
+// middleware
 app.use(express.json());
 app.use(cors());
 
 app.use((req, res, next) => {
-    console.log(req.path, req.method);
-    next();
+  console.log(req.path, req.method);
+  next();
 });
 
 //routes
@@ -27,18 +28,20 @@ app.use((req, res, next) => {
 app.use("/api/vacancies", vanaciesRoute);
 app.use("/api/mTeams", meetTeamRoute);
 //Pehesarani
-app.use('/api/spareParts', sparePartsRoutes);
+app.use("/api/spareParts", sparePartsRoutes);
+// Pawan
+app.use("/api/users", userRoutes);
 
 //sithija
 app.use('/api/promotions', promotionRoute);
 
 //connect to db
 mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => {
-        //listen for requests
-        app.listen(process.env.PORT, () => {
-            console.log("Connect to the DB and listening on port", process.env.PORT);
-        });
-    })
-    .catch((err) => console.log(err));
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    //listen for requests
+    app.listen(process.env.PORT, () => {
+      console.log("Connect to the DB and listening on port", process.env.PORT);
+    });
+  })
+  .catch((err) => console.log(err));
