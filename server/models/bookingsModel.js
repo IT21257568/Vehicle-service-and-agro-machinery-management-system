@@ -3,23 +3,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const bookingSchema = new Schema({
-    location: {
+
+    client_name: {
         type: String,
-        required: true,
+        required:true,
     },
     service_type: {
         type: String,
         required: true,
     },
-    client_name: {
-        type: String,
-        required:true,
-    },
-    email: {
+    location: {
         type: String,
         required: true,
     },
     phone: {
+        type: String,
+        required: true,
+    },
+    email: {
         type: String,
         required: true,
     },

@@ -32,6 +32,9 @@ app.use('/api/spareParts', sparePartsRoutes);
 //Janindu 
 app.use('/api/bookings', bookingsRoute);
 
+
+
+
 //connect to db
 mongoose
     .connect(process.env.MONGO_URI)

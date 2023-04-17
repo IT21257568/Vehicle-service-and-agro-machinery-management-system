@@ -9,6 +9,10 @@ import ViewVacancies from "views/Admin/ViewVacancies.js";
 import UpdateVacancy from "views/Admin/UpdateVacancy.js";
 import CreateVacancy from "views/Admin/CreateVacancy.js";
 import AdminLogin from "views/Admin/AdminLogin";
+import CreateBooking from "views/Admin/CreateBookings";
+import ViewBookings from "views/Admin/ViewBookings.js";
+import UpdateBooking from "views/Admin/UpdateBooking";
+
 
 const routes = [
   {
@@ -92,5 +96,32 @@ const routes = [
     component: CreateVacancy,
     layout: "/admin",
   },
+
+  //Janindu 
+
+  {
+    path: "/create-bookings",
+    name: "Create Booking",
+    icon: "ni ni-box-2 text-blue",
+    component: CreateBooking,
+    layout: "/admin",
+  },
+
+  {
+    path: "/bookings",
+    name: "Bookings",
+    icon: "ni ni-box-2 text-blue",
+    component: ViewBookings,
+    layout: "/admin",
+  },
+
+  {
+    path: "/update-bookings/:id",
+    name: "Update Bookings",
+    icon: "ni ni-box-2 text-blue",
+    component: UpdateBooking,
+    layout: "/admin",
+  },
+
 ];
 export default routes;
