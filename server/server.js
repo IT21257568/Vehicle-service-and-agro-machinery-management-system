@@ -4,11 +4,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const vanaciesRoute = require("./routes/vanaciesRoute");
 const sparePartsRoutes = require("./routes/spareParts");
+const sparePartsRoutes = require("./routes/spareParts");
 const meetTeamRoute = require("./routes/MeetTeamRoute");
-<<<<<<< HEAD
 const promotionRoute = require("./routes/promotionRoute");
-=======
->>>>>>> 5801c7cd90ba1c7ba7502a0e9f2744b0faa4c14b
+const userRoutes = require("./routes/userRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 // setup cors
@@ -31,15 +30,7 @@ app.use((req, res, next) => {
 app.use("/api/vacancies", vanaciesRoute);
 app.use("/api/mTeams", meetTeamRoute);
 //Pehesarani
-app.use("/api/spareParts", sparePartsRoutes);
-// Pawan
-app.use("/api/users", userRoutes);
-<<<<<<< HEAD
-
-//sithija
-app.use('/api/promotions', promotionRoute);
-=======
->>>>>>> 5801c7cd90ba1c7ba7502a0e9f2744b0faa4c14b
+app.use('/api/spareParts', sparePartsRoutes);
 
 //connect to db
 mongoose
