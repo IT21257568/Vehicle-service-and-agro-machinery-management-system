@@ -8,19 +8,19 @@ const {
     updateSparePart
  } = require('../controllers/sparePartsController')
 
-//GET all workouts
+//GET all SpareParts
 router.get('/', getAllSpareParts)
 
-//GET a single workout
+//GET a single SparePart
 router.get('/:id', getSparePart)
 
-//POST a new workout
+//POST a new SparePart
 router.post('/', createSparePart)
 
-//DELETE a workout
+//DELETE a SparePart
 router.delete('/:id', deleteSparePart)
 
-//UPDATE a workout
+//UPDATE a SparePart
 router.patch('/:id', updateSparePart)
 
 module.exports = router;
