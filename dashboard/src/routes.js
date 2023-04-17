@@ -11,6 +11,8 @@ import CreateVacancy from "views/Admin/CreateVacancy.js";
 import CreateTechnician from "views/Admin/CreateTechnician.js";
 import ViewTechnicians from "views/Admin/ViewTechnicians.js";
 import UpdateTechnician from "views/Admin/UpdateTechnician.js";
+import AdminLogin from "views/Admin/AdminLogin";
+
 
 const routes = [
   {
@@ -86,7 +88,17 @@ const routes = [
     component: UpdateVacancy,
     layout: "/admin",
   },
+
 //Meet the team routes
+  {
+    path: "/admin-login",
+    name: "Admin/ Staff Login",
+    icon: "ni ni-circle-08 text-green",
+    component: AdminLogin,
+    layout: "/auth",
+  },
+
+  // nisal
   {
     path: "/create-technician",
     name: "Create Technician",
