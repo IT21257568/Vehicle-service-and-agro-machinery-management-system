@@ -12,6 +12,7 @@ import CreateTechnician from "views/Admin/CreateTechnician.js";
 import ViewTechnicians from "views/Admin/ViewTechnicians.js";
 import UpdateTechnician from "views/Admin/UpdateTechnician.js";
 import AdminLogin from "views/Admin/AdminLogin";
+import UserRegister from "views/User/UserRegister";
 
 
 const routes = [
@@ -57,13 +58,13 @@ const routes = [
     component: Login,
     layout: "/auth",
   },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: Register,
-    layout: "/auth",
-  },
+  // {
+  //   path: "/register",
+  //   name: "Register",
+  //   icon: "ni ni-circle-08 text-pink",
+  //   component: Register,
+  //   layout: "/auth",
+  // },
 
   // nisal
   //Vacancy Routes
@@ -95,6 +96,13 @@ const routes = [
     name: "Admin/ Staff Login",
     icon: "ni ni-circle-08 text-green",
     component: AdminLogin,
+    layout: "/auth",
+  },
+  {
+    path: "/register",
+    name: "User Registration",
+    icon: "ni ni-circle-08 text-yellow",
+    component: UserRegister,
     layout: "/auth",
   },
 
