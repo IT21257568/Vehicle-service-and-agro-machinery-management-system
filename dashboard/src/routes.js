@@ -12,9 +12,6 @@ import CreateTechnician from "views/Admin/CreateTechnician.js";
 import ViewTechnicians from "views/Admin/ViewTechnicians.js";
 import UpdateTechnician from "views/Admin/UpdateTechnician.js";
 import AdminLogin from "views/Admin/AdminLogin";
-import CreatePromotion from "views/Admin/CreatePromotion";
-import UserRegister from "views/User/UserRegister";
-
 
 const routes = [
   {

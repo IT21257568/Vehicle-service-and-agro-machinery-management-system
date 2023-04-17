@@ -5,7 +5,10 @@ const mongoose = require("mongoose");
 const vanaciesRoute = require("./routes/vanaciesRoute");
 const sparePartsRoutes = require("./routes/spareParts");
 const meetTeamRoute = require("./routes/MeetTeamRoute");
+<<<<<<< HEAD
 const promotionRoute = require("./routes/promotionRoute");
+=======
+>>>>>>> 5801c7cd90ba1c7ba7502a0e9f2744b0faa4c14b
 const userRoutes = require("./routes/userRoutes");
 
 // setup cors
@@ -31,9 +34,12 @@ app.use("/api/mTeams", meetTeamRoute);
 app.use("/api/spareParts", sparePartsRoutes);
 // Pawan
 app.use("/api/users", userRoutes);
+<<<<<<< HEAD
 
 //sithija
 app.use('/api/promotions', promotionRoute);
+=======
+>>>>>>> 5801c7cd90ba1c7ba7502a0e9f2744b0faa4c14b
 
 //connect to db
 mongoose
