@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -14,51 +14,63 @@ import {
   Container,
   Row,
   Col,
+  Media,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateVacancy = () => {
+const UpdateTechnician = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  // get Technician id from url
+  const { id } = useParams();
+
   const navigate = useNavigate();
 
   // form states
   const [data, setData] = useState([]);
-  const [vacancyTitle, setVacancyTitle] = useState("");
-  const [vacancyType, setVacancyType] = useState("");
-  const [vacancyCount, setVacancyCount] = useState("");
-  const [vacancyRequirements, setVacancyRequirements] = useState("");
-  const [error, setError] = useState(null);
+  const [technician_name, SetTechnicianName] = useState("");
+  const [technician_age, setTechnicianAge] = useState("");
+  const [technician_experiences, SetTechnicianExperiences] = useState("");
+  const [technician_expertise, SetTechnicianExpertise] = useState("");
+  const [technician_picture_url, SetTechnicianPictureUrl] = useState("");
+  
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page refresh
+  useEffect(() => {
+    const getTechnician = async () => {
+      const res = await axios.get(`/api/mTeams/${id}`);
+      console.log(res.data);
+      setData(res.data);
 
-    try {
-      await axios
-        .post("/api/vacancies", {
-          vacncy_title: vacancyTitle,
-          vacncy_type: vacancyType,
-          vacancy_count: vacancyCount,
-          vacncy_requirements: vacancyRequirements,
-        })
-        .then((res) => {
-          console.log("New sparepart added", res.data);
-          setVacancyTitle("");
-          setVacancyType("");
-          setVacancyCount("");
-          setVacancyRequirements("");
-          setError(null);
-          navigate("/admin/vacancies");
-        });
-    } catch (error) {
-      setError(error.message);
-    }
+      SetTechnicianName(res.data.technician_name);
+      setTechnicianAge(res.data.technician_age);
+      SetTechnicianExperiences(res.data.technician_experiences);
+      SetTechnicianExpertise(res.data.technician_expertise);
+      SetTechnicianPictureUrl(res.data.technician_picture_url);
+    };
+    getTechnician();
+  }, [id]);
+
+  const handleUpdate = () => {
+    console.log("lol");
+
+    axios
+      .patch(`/api/mTeams/${id}`, {
+        technician_name: technician_name,
+        technician_age: technician_age,
+        technician_experiences: technician_experiences,
+        technician_expertise: technician_expertise,
+        technician_picture_url: technician_picture_url,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/admin/technicians");
+      });
   };
 
   return (
@@ -72,14 +84,14 @@ const CreateVacancy = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Vacancy</h3>
+                    <h3 className="mb-0">Update Technician</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Vacancy Details
+                    Technician Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -89,15 +101,15 @@ const CreateVacancy = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Vacancy Title
+                            Technician Name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-username"
-                            placeholder="Title"
+                            defaultValue={data.technician_name}
+                            placeholder="Name"
                             type="text"
                             onChange={(e) => {
-                              setVacancyTitle(e.target.value);
+                              SetTechnicianName(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -108,63 +120,56 @@ const CreateVacancy = () => {
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            Vacancy Type
+                            Technician Age
                           </label>
-                          <Dropdown
-                            isOpen={dropdownOpen}
-                            color="primary"
-                            toggle={toggle}
-                          >
-                            <DropdownToggle caret>
-                              {vacancyType ? vacancyType : "Select Type"}
-                            </DropdownToggle>
-                            <DropdownMenu>
-                              <DropdownItem
-                                value="Full Time"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Full Time
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Part Time"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Part Time
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Internship"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Internship
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </Dropdown>
+                          <Input
+                            className="form-control-alternative"
+                            defaultValue={data.technician_age}
+                            placeholder="Age"
+                            type="text"
+                            onChange={(e) => {
+                              setTechnicianAge(e.target.value);
+                            }}
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
                     <Row>
                       <Col lg="6">
+                        <Media className="align-items-center">
+                          <span className="avatar avatar-sm rounded-circle">
+                            <img
+                              alt="..."
+                              src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                            />
+                          </span>
+                        </Media>
+                        <br>                  
+                        </br>
+                        <Input
+                          type="file"
+                          defaultValue={data.technician_picture_url}
+                          className="form-control-alternative"
+                          onChange={(e) => {
+                            SetTechnicianPictureUrl(e.target.value);
+                          }}
+                        />
+                      </Col>
+                      <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-first-name"
+                            htmlFor="input-username"
                           >
-                            Vacancy Count
+                            Experiences
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
+                            defaultValue={data.technician_experiences}
                             placeholder="select count"
                             type="number"
                             onChange={(e) => {
-                              setVacancyCount(e.target.value);
+                              SetTechnicianExperiences(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -179,26 +184,27 @@ const CreateVacancy = () => {
                         className="form-control-label"
                         htmlFor="input-last-name"
                       >
-                        Requirements
+                        Expertice
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
+                        placeholder="A brief description of the vacancy"
                         rows="4"
-                        type="textarea"
+                        defaultValue={data.technician_expertise}
                         onChange={(e) => {
-                          setVacancyRequirements(e.target.value);
+                          SetTechnicianExpertise(e.target.value);
                         }}
+                        type="textarea"
                       />
                     </FormGroup>
-                    <Button color="primary" onClick={handleSubmit}>
-                      Create
+                    <Button color="primary" onClick={handleUpdate}>
+                      Save
                     </Button>
                     <Button
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/vacancies");
+                        navigate("/admin/technicians");
                       }}
                     >
                       Cancel
@@ -214,4 +220,4 @@ const CreateVacancy = () => {
   );
 };
 
-export default CreateVacancy;
+export default UpdateTechnician;

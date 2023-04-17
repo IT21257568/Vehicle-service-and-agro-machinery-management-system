@@ -2,27 +2,31 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const mTeamSchema = new Schema({
-    member_name: {
-        type: String,
-        required: true,
-
+const mTeamSchema = new Schema(
+  {
+    technician_name: {
+      type: String,
+      required: true,
     },
-    member_age: {
-        type: Number,
-        required: true,
-
+    technician_age: {
+      type: Number,
+      required: true,
     },
-    member_experiences: {
-        type: Number,
-        required: true,
+    technician_experiences: {
+      type: Number,
+      required: true,
     },
-    member_expertise: {
-        type: String,
-        required: true,
-
+    technician_expertise: {
+      type: String,
+      required: true,
     },
-}, { timestamps: true })
+    technician_picture_url: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 //const Vacancy = mongoose.model('Workout', workoutSchema)
 
