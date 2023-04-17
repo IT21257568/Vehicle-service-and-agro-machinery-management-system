@@ -25,7 +25,7 @@ const getPromotion = async(req, res) => {
 }
 //create new promotion
 const createPromotion = async(req, res) => {
-const { promo_title, promo_code, promo_discount, promo_description, promo_duration } = req.body;
+const { promo_title, promo_code, promo_discount, promo_description, promo_startDate, promo_endDate } = req.body;
 
 let emptyFields = [];
 
@@ -42,8 +42,11 @@ if(!promo_discount){
 if (!promo_description) {
     emptyFields.push('promo_description');
 }
-if (!promo_duration) {
-    emptyFields.push('promo_duration');
+if (!promo_startDate) {
+    emptyFields.push('promo_startDate');
+}
+if (!promo_endDate) {
+    emptyFields.push('promo_endDate');
 }
 if (emptyFields.length > 0) {
     return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
@@ -51,7 +54,7 @@ if (emptyFields.length > 0) {
 
 //add promotions to database
 try {
-    const promotion = await Promotion.create({ promo_title, promo_code, promo_discount, promo_description, promo_duration });
+    const promotion = await Promotion.create({ promo_title, promo_code, promo_discount, promo_description, promo_startDate, promo_endDate });
     res.status(200).json({ promotion });
 } catch (error) {
     res.status(400).json({ error: error.message });

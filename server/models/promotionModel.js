@@ -21,7 +21,11 @@ const promotionSchema = new Schema(
         type: String,
         required: true,
       },
-      promo_duration: {
+      promo_startDate: {
+        type: String,
+        required: true,
+      },
+      promo_endDate: {
         type: String,
         required: true,
       },

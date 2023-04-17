@@ -9,6 +9,7 @@ import ViewVacancies from "views/Admin/ViewVacancies.js";
 import UpdateVacancy from "views/Admin/UpdateVacancy.js";
 import CreateVacancy from "views/Admin/CreateVacancy.js";
 import AdminLogin from "views/Admin/AdminLogin";
+import CreatePromotion from "views/Admin/CreatePromotion";
 
 const routes = [
   {
@@ -92,5 +93,14 @@ const routes = [
     component: CreateVacancy,
     layout: "/admin",
   },
+
+  //sithija
+  {
+    path: "/create-promotion",
+    name: "Create Promotion",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreatePromotion,
+    layout: "/admin",
+  }
 ];
 export default routes;
