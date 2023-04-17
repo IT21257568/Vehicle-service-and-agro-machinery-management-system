@@ -25,7 +25,7 @@ const getSparePart = async (req, res) => {
    
 }
 
-//create a workout
+//create a SparePart
 const createSparePart = async (req, res) => {
     const{name, price, discount, description} = req.body
 
