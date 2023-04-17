@@ -26,7 +26,7 @@ const getBooking = async(req, res) => {
 
 //create new booking
 const createBooking = async(req, res) => {
-    const { location, service_type, client_name, email, phone, special_note} = req.body;
+    const { location, service_type, client_name, email, phone, special_note,date_time} = req.body;
 
     let emptyFields = [];
 
@@ -43,6 +43,9 @@ const createBooking = async(req, res) => {
     if(!email){
         emptyFields.push('email');
     }
+    if(!date_time){
+        emptyFields.push('date_time');
+    }
     if(!phone){
         emptyFields.push('phone');
     }
@@ -55,7 +58,7 @@ const createBooking = async(req, res) => {
 
     //add to db
     try{
-        const booking = await Booking.create({location, service_type, client_name, email, phone, special_note});
+        const booking = await Booking.create({location, service_type, client_name, email, phone,date_time, special_note});
         res.status(200).json({ booking });
     } catch (error) {
         res.status(400).json({error: error.message});

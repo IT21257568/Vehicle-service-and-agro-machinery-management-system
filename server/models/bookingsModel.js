@@ -24,6 +24,10 @@ const bookingSchema = new Schema({
         type: String,
         required: true,
     },
+    date_time: {
+        type: String,
+        required: true,
+    },
     special_note: {
         type: String,
         required: true,

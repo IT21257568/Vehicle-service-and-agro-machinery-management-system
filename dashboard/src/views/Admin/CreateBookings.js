@@ -35,6 +35,7 @@ const CreateBooking = () => {
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [date_time, setDateTime] = useState("");
   const [specialNote, setSpecialNote] = useState("");
   const [error, setError] = useState(null);
 
@@ -49,6 +50,7 @@ const CreateBooking = () => {
           location: location,
           phone: phone,
           email: email,
+          date_time: date_time,
           special_note: specialNote
         })
         .then((res) => {
@@ -58,6 +60,7 @@ const CreateBooking = () => {
           setClientName("");
           setEmail("");
           setPhone("");
+          setDateTime("");
           setSpecialNote("");
           setError(null);
           navigate("/admin/bookings");
@@ -217,8 +220,31 @@ const CreateBooking = () => {
                           />
                         </FormGroup>
                       </Col>
-
                     </Row>
+
+                    <Row>
+                    <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Date and Time
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            defaultValue=""
+                            id="input-first-name"
+                            placeholder="Date and Time"
+                            type="date"
+                            onChange={(e) => {
+                            setDateTime(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+
                   </div>
 
                   {/* Description */}

@@ -65,6 +65,8 @@ const routes = [
     layout: "/auth",
   },
 
+
+
   // added by pawan
   {
     path: "/vacancies",
@@ -98,7 +100,6 @@ const routes = [
   },
 
   //Janindu 
-
   {
     path: "/create-bookings",
     name: "Create Booking",
@@ -106,6 +107,8 @@ const routes = [
     component: CreateBooking,
     layout: "/admin",
   },
+
+
 
   {
     path: "/bookings",

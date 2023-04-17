@@ -63,7 +63,7 @@ const ViewBookings = () => {
     axios.delete(`/api/bookings/${id}`).then((res) => {
       console.log(res.data);
       setAllBookings((prevData) =>
-        prevData.filter((vacancy) => vacancy._id !== id)
+        prevData.filter((booking) => booking._id !== id)
       );
     });
   };
@@ -108,8 +108,11 @@ const ViewBookings = () => {
                     <th scope="col">Location</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Date and Time</th>
                     <th scope="col">Notes</th>
+                    <th scope="col">Actions</th>
                   </tr>
+
                 </thead>
                 <tbody>
                   {isLoading && (
@@ -130,6 +133,7 @@ const ViewBookings = () => {
                       <td>{booking.location}</td>
                       <td> {booking.phone} </td>
                       <td> {booking.email} </td>
+                      <td> {booking.date_time} </td>
                       <td> {booking.special_note} </td>
                       <td>
                         <Button size="sm" color="primary">
@@ -139,7 +143,7 @@ const ViewBookings = () => {
                           size="sm"
                           color="warning"
                           onClick={() =>
-                            navigate(`/admin/update-vacancy/${booking._id}`)
+                            navigate(`/admin/update-bookings/${booking._id}`)
                           }
                         >
                           Update

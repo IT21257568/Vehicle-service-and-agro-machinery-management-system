@@ -38,6 +38,7 @@ const UpdateBooking = () => {
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [date_time, setDateTime] = useState("");
   const [specialNote, setSpecialNote] = useState("");
  
 
@@ -52,6 +53,7 @@ const UpdateBooking = () => {
       setClientName(res.data.client_name);
       setEmail(res.data.email);
       setPhone(res.data.phone);
+      setDateTime(res.data.date_time);
       setSpecialNote(res.data.special_note);
 
 
@@ -69,6 +71,7 @@ const UpdateBooking = () => {
         client_name: clientName,
         email: email,
         phone: phone,
+        date_time: date_time,
         special_note: specialNote
       })
       .then((res) => {
@@ -226,6 +229,29 @@ const UpdateBooking = () => {
                       </Col>
 
                     </Row>
+                    <Row>
+                    <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Date and Time
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            defaultValue={data.date_time}
+                            id="input-first-name"
+                            placeholder="Date and Time"
+                            type="Date"
+                            onChange={(e) => {
+                            setDateTime(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+
                   </div>
 
                   {/* Description */}
