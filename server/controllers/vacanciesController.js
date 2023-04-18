@@ -25,21 +25,21 @@ const getVacancy = async(req, res) => {
     }
     //create new vacancy
 const ceateVacancy = async(req, res) => {
-    const { vacncy_title, vacncy_type, vacancy_count, vacncy_requirements } = req.body;
+    const { vacancy_title, vacancy_type, vacancy_count, vacancy_requirements } = req.body;
 
     let emptyFields = [];
 
     //validation for empty fields
-    if (!vacncy_title) {
+    if (!vacancy_title) {
         emptyFields.push('vacncy_title');
     }
-    if (!vacncy_type) {
+    if (!vacancy_type) {
         emptyFields.push('vacncy_type');
     }
     if (!vacancy_count) {
         emptyFields.push('vacancy_count');
     }
-    if (!vacncy_requirements) {
+    if (!vacancy_requirements) {
         emptyFields.push('vacncy_requirements');
     }
     if (emptyFields.length > 0) {
@@ -48,7 +48,7 @@ const ceateVacancy = async(req, res) => {
 
     //add to db
     try {
-        const vacancy = await Vacancy.create({ vacncy_title, vacncy_type, vacancy_count, vacncy_requirements });
+        const vacancy = await Vacancy.create({ vacancy_title, vacancy_type, vacancy_count, vacancy_requirements });
         res.status(200).json({ vacancy });
     } catch (error) {
         res.status(400).json({ error: error.message });
