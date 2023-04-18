@@ -14,6 +14,7 @@ import {
   Container,
   Row,
   Col,
+  Media,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -28,6 +29,11 @@ const CreateVacancy = () => {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
 
+  //const [isLoading, setIsLoading] = useState(false);
+
+  const [image, setImage] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
   // form states
   const [data, setData] = useState([]);
   const [technician_name, setTechnicianName] = useState("");
@@ -36,6 +42,41 @@ const CreateVacancy = () => {
   const [technician_expertise, setTechnicianExpertise] = useState("");
   const [technician_picture_url, setTechnicianPictureUrl] = useState("");
   const [error, setError] = useState(null);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "agd0dlhj");
+    // formData.append("public_id", "your_public_id");
+    formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
+
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        setUploadProgress(percentCompleted);
+      },
+    };
+
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+        formData,
+        options
+      )
+      .then((response) => {
+        setImage(response.data.secure_url);
+        setUploadProgress(0);
+      })
+      .catch((error) => {
+        console.error(error);
+        setUploadProgress(0);
+      });
+  };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
@@ -47,7 +88,7 @@ const CreateVacancy = () => {
           technician_age: technician_age,
           technician_experiences: technician_experiences,
           technician_expertise: technician_expertise,
-          technician_picture_url: technician_picture_url,
+          technician_picture_url: image,
         })
         .then((res) => {
           console.log("New Technician added", res.data);
@@ -112,14 +153,26 @@ const CreateVacancy = () => {
                             htmlFor="input-email"
                           >
                             Technician Picture
-                          </label>
+                          </label> <br></br>
+                          <Media className="align-items-center">
+                            <span className="avatar avatar-sm rounded-circle">
+                              {image && (
+                                <img
+                                  //className="rounded-circle"
+                                  src={image}
+                                  alt="Uploaded"
+                                />
+                              )}
+                            </span>
+                          </Media><br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
-                            onChange={(e) => {
-                              setTechnicianPictureUrl(e.target.value);
-                            }}
+                            onChange={handleImageUpload}
                           />
+                          {uploadProgress > 0 && (
+                            <div>Uploading... {uploadProgress}%</div>
+                          )}
                         </FormGroup>
                       </Col>
                     </Row>
