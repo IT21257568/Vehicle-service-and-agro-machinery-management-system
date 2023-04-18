@@ -31,8 +31,8 @@ const UpdatePromotion = () => {
 
   const navigate = useNavigate();
 
-  //image upload section
-  const [image, setImage] = useState(null);
+  //image upload progress load
+  
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
@@ -61,6 +61,9 @@ const UpdatePromotion = () => {
     };
     getPromotion();
   }, [id]);
+
+  //setting current image url in pudate form
+  const [image, setImage] = useState(data.promo_picture_url);
 
   //handling image upload
   const handleImageUpload = (event) => {
@@ -251,10 +254,18 @@ const UpdatePromotion = () => {
                           >
                             Change Picture
                           </label> <br></br>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Current Picture : {data.promo_picture_url}
+                          </label> <br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
                             onChange={handleImageUpload}
+                            defaultValue={data.promo_picture_url}
+                            
                           />
                           {uploadProgress > 0 && (
                             <div>Uploading... {uploadProgress}%</div>
