@@ -18,6 +18,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Media
 } from "reactstrap";
 
 // core components
@@ -28,6 +29,10 @@ const CreatePromotion = () => {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
 
+  //image uploading section
+  const [image, setImage] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
   // form states
   const [data, setData] = useState([]);
   const [promoTitle, setPromoTitle] = useState("");
@@ -36,7 +41,43 @@ const CreatePromotion = () => {
   const [promoDiscription, setPromoDescription] = useState("");
   const [promoStartDate, setPromoStartDate] = useState("");
   const [promoEndDate, setPromoEndDate] = useState("");
+  const [promotionPictureUrl, setPromotionPictureUrl] = useState("");
   const [error, setError] = useState(null);
+
+  //handling image upload
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "agd0dlhj");
+    // formData.append("public_id", "your_public_id");
+    formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
+
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        setUploadProgress(percentCompleted);
+      },
+    };
+
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+        formData,
+        options
+      )
+      .then((response) => {
+        setImage(response.data.secure_url);
+        setUploadProgress(0);
+      })
+      .catch((error) => {
+        console.error(error);
+        setUploadProgress(0);
+      });
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
@@ -50,6 +91,7 @@ const CreatePromotion = () => {
             promo_description : promoDiscription,
             promo_startDate : promoStartDate,
             promo_endDate : promoEndDate,
+            promo_picture_url: image,
         })
         .then((res) => {
           console.log("New promotion added", res.data);
@@ -59,6 +101,7 @@ const CreatePromotion = () => {
           setPromoDescription("");
           setPromoStartDate("");
           setPromoEndDate("");
+          setPromotionPictureUrl("");
           setError(null);
           navigate("/admin/promotions");
         });
@@ -191,6 +234,26 @@ const CreatePromotion = () => {
                         </FormGroup>
                       </Col>
                      </Row>
+                  <Row>
+                  <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Post Picture
+                          </label> <br></br>
+                          <Input
+                            type="file"
+                            className="form-control-alternative"
+                            onChange={handleImageUpload}
+                          />
+                          {uploadProgress > 0 && (
+                            <div>Uploading... {uploadProgress}%</div>
+                          )}
+                        </FormGroup>
+                      </Col>
+                  </Row>
                   </div>
 
                    {/* Description */}

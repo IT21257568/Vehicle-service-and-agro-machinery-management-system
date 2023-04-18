@@ -31,6 +31,10 @@ const UpdatePromotion = () => {
 
   const navigate = useNavigate();
 
+  //image upload section
+  const [image, setImage] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
   // form states
   const [data, setData] = useState([]);
   const [promotionTitle, setPromotionTitle] = useState("");
@@ -39,6 +43,7 @@ const UpdatePromotion = () => {
   const [promotionDescription, setPromotionDescription] = useState("");
   const [promotionStartDate, setPromotionStartDate] = useState("");
   const [promotionEndDate, setPromotionEndDate] = useState("");
+  const [promotionPictureUrl, SetPromotionPictureUrl] = useState("");
 
   useEffect(() => {
     const getPromotion = async () => {
@@ -52,9 +57,45 @@ const UpdatePromotion = () => {
       setPromotionDescription(res.data.promo_description);
       setPromotionStartDate(res.data.promo_startDate);
       setPromotionEndDate(res.data.promo_endDate);
+      SetPromotionPictureUrl(res.data.promo_picture_url);
     };
     getPromotion();
   }, [id]);
+
+  //handling image upload
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "agd0dlhj");
+    // formData.append("public_id", "your_public_id");
+    formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
+  
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        setUploadProgress(percentCompleted);
+      },
+    };
+  
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+        formData,
+        options
+      )
+      .then((response) => {
+        setImage(response.data.secure_url);
+        setUploadProgress(0);
+      })
+      .catch((error) => {
+        console.error(error);
+        setUploadProgress(0);
+      });
+  };
+  
 
   const handleUpdate = () => {
     console.log("lol");
@@ -67,6 +108,7 @@ const UpdatePromotion = () => {
         promo_description: promotionDescription,
         promo_startDate: promotionStartDate,
         promo_endDate: promotionEndDate,
+        promo_picture_url: image,
       })
       .then((res) => {
         console.log(res.data);
@@ -200,6 +242,26 @@ const UpdatePromotion = () => {
                         </FormGroup>
                       </Col>
                      </Row>
+                     <Row>
+                     <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Change Picture
+                          </label> <br></br>
+                          <Input
+                            type="file"
+                            className="form-control-alternative"
+                            onChange={handleImageUpload}
+                          />
+                          {uploadProgress > 0 && (
+                            <div>Uploading... {uploadProgress}%</div>
+                          )}
+                        </FormGroup>
+                      </Col>
+                    </Row>
                   </div>
 
                    {/* Description */}
