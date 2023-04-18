@@ -2,32 +2,32 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const sparePartsSchema = new Schema({
-    name:{
+const agroSchema = new Schema({
+    p_name:{
         type: String,
         required: true
     },
-    image:{
+    p_image:{
         type: String,
         required: true
     },
-    price:{
+    p_price:{
         type: Number,
         required: true
     },
-    discount:{
+    p_discount:{
         type: String,
         required: true
     },
-    description:{
+    p_description:{
         type: String,
         required: true
     },
-    status:{
+    p_status:{
         type: String,
         required: true
     },
 
 }, {timestamps: true })
 
-module.exports = mongoose.model('SparePart', sparePartsSchema)
+module.exports = mongoose.model('AgroProduct', agroSchema)
