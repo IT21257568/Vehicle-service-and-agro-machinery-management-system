@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const vanaciesRoute = require("./routes/vanaciesRoute");
 const sparePartsRoutes = require("./routes/spareParts");
 const meetTeamRoute = require("./routes/MeetTeamRoute");
+const promotionRoute = require("./routes/promotionRoute");
 const userRoutes = require("./routes/userRoutes");
 
 // setup cors
@@ -27,10 +28,9 @@ app.use((req, res, next) => {
 app.use("/api/vacancies", vanaciesRoute);
 app.use("/api/mTeams", meetTeamRoute);
 //Pehesarani
-app.use("/api/spareParts", sparePartsRoutes);
-// Pawan
-app.use("/api/users", userRoutes);
-
+app.use('/api/spareParts', sparePartsRoutes);
+//Sithija
+app.use("/api/promotions", promotionRoute);
 //connect to db
 mongoose
   .connect(process.env.MONGO_URI)
