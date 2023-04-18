@@ -43,6 +43,7 @@ const UpdateTechnician = () => {
   const [technician_experiences, SetTechnicianExperiences] = useState("");
   const [technician_expertise, SetTechnicianExpertise] = useState("");
   const [technician_picture_url, SetTechnicianPictureUrl] = useState("");
+  const [technician_specialize_in, setTechnicianSpecializeIn] = useState("");
   
 
   useEffect(() => {
@@ -56,6 +57,7 @@ const UpdateTechnician = () => {
       SetTechnicianExperiences(res.data.technician_experiences);
       SetTechnicianExpertise(res.data.technician_expertise);
       SetTechnicianPictureUrl(res.data.technician_picture_url);
+      setTechnicianSpecializeIn(res.data.technician_specialize_in);
     };
     getTechnician();
   }, [id]);
@@ -97,19 +99,36 @@ const handleImageUpload = (event) => {
 
   const handleUpdate = () => {
     console.log("lol");
-
-    axios
-      .patch(`/api/mTeams/${id}`, {
-        technician_name: technician_name,
-        technician_age: technician_age,
-        technician_experiences: technician_experiences,
-        technician_expertise: technician_expertise,
-        technician_picture_url: image,
-      })
-      .then((res) => {
-        console.log(res.data);
-        navigate("/admin/technicians");
-      });
+    //if handle image upload is not called and called only when no image is selected
+    if (image === null) {
+      axios
+        .patch(`/api/mTeams/${id}`, {
+          technician_name: technician_name,
+          technician_age: technician_age,
+          technician_experiences: technician_experiences,
+          technician_expertise: technician_expertise,
+          technician_specialize_in: technician_specialize_in,
+        })
+        .then((res) => {
+          console.log(res.data);
+          navigate("/admin/technicians");
+        });
+    } else {
+      axios
+        .patch(`/api/mTeams/${id}`, {
+          technician_name: technician_name,
+          technician_age: technician_age,
+          technician_experiences: technician_experiences,
+          technician_expertise: technician_expertise,
+          technician_picture_url: image,
+          technician_specialize_in: technician_specialize_in,
+        })
+        .then((res) => {
+          console.log(res.data);
+          navigate("/admin/technicians");
+        });
+    } 
+     
   };
 
   return (
@@ -154,6 +173,28 @@ const handleImageUpload = (event) => {
                         </FormGroup>
                       </Col>
                       <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Technician Specialize In
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            defaultValue={data.technician_specialize_in }
+                            id="input-first-name"
+                            placeholder="Enter Technician's main expertise"
+                            type="text"
+                            onChange={(e) => {
+                              setTechnicianSpecializeIn(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
@@ -165,14 +206,34 @@ const handleImageUpload = (event) => {
                             className="form-control-alternative"
                             defaultValue={data.technician_age}
                             placeholder="Age"
-                            type="text"
+                            type="number"
                             onChange={(e) => {
                               setTechnicianAge(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-username"
+                          >
+                            Experiences
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            defaultValue={data.technician_experiences}
+                            placeholder="select count"
+                            type="number"
+                            onChange={(e) => {
+                              SetTechnicianExperiences(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
                     </Row>
+
                     <Row>
                       <Col lg="6">
                         <Media className="align-items-center">
@@ -203,26 +264,8 @@ const handleImageUpload = (event) => {
                           <div>Uploading... {uploadProgress}%</div>
                         )}
                       </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-username"
-                          >
-                            Experiences
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue={data.technician_experiences}
-                            placeholder="select count"
-                            type="number"
-                            onChange={(e) => {
-                              SetTechnicianExperiences(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
                     </Row>
+                    <br></br>
                   </div>
 
                   {/* Description */}

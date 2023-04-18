@@ -26,11 +26,12 @@ const getmTeam = async(req, res) => {
     //create new Member Profile
 const ceatemTeam = async(req, res) => {
     const {
-        technician_name,
-        technician_age,
-        technician_experiences,
-        technician_expertise,
-        technician_picture_url
+      technician_name,
+      technician_age,
+      technician_experiences,
+      technician_expertise,
+      technician_picture_url,
+      technician_specialize_in,
     } = req.body;
 
     let emptyFields = [];
@@ -50,6 +51,8 @@ const ceatemTeam = async(req, res) => {
     }
     if (!technician_picture_url) {
       emptyFields.push("technican_picture_url");
+    } if (!technician_specialize_in) {
+      emptyFields.push("technician_specialize_in");
     }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
@@ -63,6 +66,7 @@ const ceatemTeam = async(req, res) => {
           technician_experiences,
           technician_expertise,
           technician_picture_url,
+          technician_specialize_in,
         });
         res.status(200).json({ mTeam });
     } catch (error) {

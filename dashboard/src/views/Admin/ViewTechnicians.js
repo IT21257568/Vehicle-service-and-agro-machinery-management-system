@@ -37,13 +37,13 @@ import {
 import Header from "components/Headers/Header.js";
 
 
- //card
-  function CardExpertice({ expertise, onClose }) {
+//card
+  function CardRequiremnts({ vacancyd, onClose }) {
     return (
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Expertice</h5>
-          <p className="card-text">{expertise}</p>
+          <h5 className="card-title">Ratings</h5>
+          <p className="card-text">{vacancyd}</p>
           <Button size="sm" color="primary" onClick={onClose}>
             Close
           </Button>
@@ -61,6 +61,18 @@ const ViewTechnicians = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showCard, setShowCard] = useState(false);
+  
+
+  function handleViewClick() {
+    console.log("View button clicked");
+    setShowCard(true);
+  }
+
+  function handleCloseClick() {
+    console.log("Close button clicked");
+    setShowCard(false);
+  }
+  console.log("Rendering App component with showCard = ", showCard);
 
   function handleViewClick() {
     console.log("View button clicked");
@@ -158,13 +170,44 @@ const ViewTechnicians = () => {
                         <CardTitle tag="h2">
                           {technician.technician_name}
                         </CardTitle>
-                        <CardSubtitle className="mb-2 text-muted" tag="h3">
-                          {technician.technician_age}
+                        <CardSubtitle className="mb-3 text-muted" tag="h3">
+                          {technician.technician_specialize_in}
                         </CardSubtitle>
-                        <CardText>{technician.technician_experiences}</CardText>
-                        <CardSubtitle className="mb-2 text-muted" tag="h4">
-                          Offer ends on {technician.technician_expertise}
-                        </CardSubtitle>
+                        <CardText className="mb-1 text-muted" tag="h4">
+                          Age :{technician.technician_age}
+                        </CardText>
+                        <CardText className="mb-1 text-muted" tag="h4">
+                          Year of Experience :{" "}
+                          {technician.technician_experiences} Years
+                        </CardText>
+                        <CardText className="mb-2 text-muted" tag="h4">
+                          Expertice : {technician.technician_expertise}
+                        </CardText>
+                        <Row className="mb-2">
+                          <div className="container">
+                            <Button
+                              size="sm"
+                              color="primary"
+                              onClick={handleViewClick}
+                            >
+                              <span
+                                className="btn-inner--icon"
+                                style={{ width: "20px" }}
+                              >
+                                <i className="ni ni-like-2" />
+                              </span>
+                              <span className="btn-inner--text">
+                                Ratings & Reviews
+                              </span>
+                            </Button>
+                            {showCard && (
+                              <CardRequiremnts
+                                vacancyd="Sample data"
+                                onClose={handleCloseClick}
+                              />
+                            )}
+                          </div>
+                        </Row>
 
                         <Row>
                           <Button
