@@ -31,7 +31,7 @@ const createAgroProduct = async (req, res) => {
 
     //add doc to db
     try{
-        const agroProduct = await AgroProduct.create(p_name, p_image, p_price, p_discount, p_description, p_status)
+        const agroProduct = await AgroProduct.create({p_name, p_image, p_price, p_discount, p_description, p_status})
         res.status(200).json(agroProduct)
     }catch(error){
         res.status(400).json({error: error.message})
