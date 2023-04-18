@@ -29,11 +29,40 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
+ //card
+  function CardRequiremnts({ vacancyd, onClose }) {
+    return (
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">Requirements</h5>
+          <p className="card-text">{vacancyd}</p>
+          <Button size="sm" color="primary" onClick={onClose}>
+            Close
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+
+
 const ViewVacancies = () => {
   // states
   const [allVacancies, setAllVacancies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showCard, setShowCard] = useState(false);
+
+   function handleViewClick() {
+     console.log("View button clicked");
+     setShowCard(true);
+   }
+
+   function handleCloseClick() {
+     console.log("Close button clicked");
+     setShowCard(false);
+   }
+   console.log("Rendering App component with showCard = ", showCard);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -106,6 +135,7 @@ const ViewVacancies = () => {
                     <th scope="col">Title</th>
                     <th scope="col">Type</th>
                     <th scope="col">Count</th>
+                    <th scope="col">Requiremnts</th>
                     <th scope="col">Applicants</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -128,6 +158,23 @@ const ViewVacancies = () => {
                       </td>
                       <td>{vacancy.vacancy_count}</td>
                       <td>
+                        <div className="container">
+                          <Button
+                            size="sm"
+                            color="primary"
+                            onClick={handleViewClick}
+                          >
+                            View
+                          </Button>
+                          {showCard && (
+                            <CardRequiremnts
+                              vacancyd={vacancy.vacncy_requirements}
+                              onClose={handleCloseClick}
+                            />
+                          )}
+                        </div>
+                      </td>
+                      <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">
                             1/{vacancy.vacancy_count}
@@ -142,9 +189,6 @@ const ViewVacancies = () => {
                         </div>
                       </td>
                       <td>
-                        <Button size="sm" color="primary">
-                          View
-                        </Button>
                         <Button
                           size="sm"
                           color="warning"
