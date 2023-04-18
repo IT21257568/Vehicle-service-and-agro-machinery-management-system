@@ -6,6 +6,7 @@ const vanaciesRoute = require("./routes/vanaciesRoute");
 const sparePartsRoutes = require("./routes/spareParts");
 const meetTeamRoute = require("./routes/MeetTeamRoute");
 const userRoutes = require("./routes/userRoutes");
+const bookingsRoute = require("./routes/bookingsRoute");
 
 // setup cors
 const cors = require("cors");
@@ -30,7 +31,8 @@ app.use("/api/mTeams", meetTeamRoute);
 app.use("/api/spareParts", sparePartsRoutes);
 // Pawan
 app.use("/api/users", userRoutes);
-
+//Janindu
+app.use("/api/bookings", bookingsRoute);
 //connect to db
 mongoose
   .connect(process.env.MONGO_URI)
