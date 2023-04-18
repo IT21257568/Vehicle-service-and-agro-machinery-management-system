@@ -153,9 +153,8 @@ const routes = [
     name: "Update Bookings",
     icon: "ni ni-ruler-pencil text-purple",
     component: UpdateBooking,
+    layout: "/admin",
   },
-
- 
 
   //sithija promotions
   {
