@@ -31,6 +31,7 @@ app.use("/api/mTeams", meetTeamRoute);
 app.use('/api/spareParts', sparePartsRoutes);
 //Sithija
 app.use("/api/promotions", promotionRoute);
+
 //connect to db
 mongoose
   .connect(process.env.MONGO_URI)
