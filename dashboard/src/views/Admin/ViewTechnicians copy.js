@@ -24,13 +24,6 @@ import {
   UncontrolledTooltip,
   Button,
   Chip,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  CardGroup,
-  CardImg,
-  CardImgOverlay,
 } from "reactstrap";
 
 // core components
@@ -138,65 +131,103 @@ const ViewTechnicians = () => {
                   </div>
                 </Row>
               </CardHeader>
-              <Container>
-                <Row>
+              <Table className="align-items-center table-flush" responsive>
+                <thead className="thead-light">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Experiences</th>
+                    <th scope="col">Expertice</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {isLoading && (
+                    <tr>
+                      <td>Loading...</td>
+                    </tr>
+                  )}
                   {allTechnicians.slice(0, visible).map((technician, index) => (
-                    <Card
-                      key={technician._id}
-                      style={{
-                        width: "22rem",
-                        borderRadius: "0.2rem",
-                        margin: "0.8rem",
-                      }}
-                    >
-                      <CardImg
-                        width="100%"
-                        alt="technicianpicture"
-                        src={technician.technician_picture_url}
-                      />
-                      <CardBody>
-                        <CardTitle tag="h2">
+                    <tr key={technician._id}>
+                      <th scope="row">
+                        <span className="mb-0 text-sm">
                           {technician.technician_name}
-                        </CardTitle>
-                        <CardSubtitle className="mb-2 text-muted" tag="h3">
-                          {technician.technician_age}
-                        </CardSubtitle>
-                        <CardText>{technician.technician_experiences}</CardText>
-                        <CardSubtitle className="mb-2 text-muted" tag="h4">
-                          Offer ends on {technician.technician_expertise}
-                        </CardSubtitle>
-
-                        <Row>
+                        </span>
+                      </th>
+                      <td>
+                        {/* <Badge color="success">{vacancy.vacncy_type}</Badge> */}
+                        <Media className="align-items-center">
+                          <span className="avatar avatar-sm rounded-circle">
+                            <img
+                              alt="..."
+                              src={technician.technician_picture_url}
+                            />
+                          </span>
+                        </Media>
+                      </td>
+                      <td>{technician.technician_age}</td>
+                      <td>
+                        {/* <div className="d-flex align-items-center">
+                          <span className="mr-2">
+                            1/{vacancy.vacancy_count}
+                          </span>
+                          <div>
+                            <Progress
+                              max="10"
+                              value="4"
+                              barClassName="bg-success"
+                            />
+                          </div>
+                        </div> */}
+                        {technician.technician_experiences}
+                      </td>
+                      <td>
+                        <div className="container">
                           <Button
                             size="sm"
-                            color="warning"
-                            onClick={() =>
-                              navigate(
-                                `/admin/update-technician/${technician._id}`
-                              )
-                            }
+                            color="primary"
+                            onClick={handleViewClick}
                           >
-                            Update
+                            View
                           </Button>
-                          <Button
-                            size="sm"
-                            color="danger"
-                            onClick={() => handleDelete(technician._id)}
-                          >
-                            Delete
-                          </Button>
-                        </Row>
-                      </CardBody>
-                    </Card>
+                          {showCard && (
+                            <CardExpertice
+                              expertise={technician.technician_expertise}
+                              onClose={handleCloseClick}
+                            />
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <Button
+                          size="sm"
+                          color="warning"
+                          onClick={() =>
+                            navigate(
+                              `/admin/update-technician/${technician._id}`
+                            )
+                          }
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          size="sm"
+                          color="danger"
+                          onClick={() => handleDelete(technician._id)}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
                   ))}
-
                   {visible < allTechnicians.length && (
-                    <Button color="secondary" size="sm" onClick={showMoreItems}>
+                    <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
                   )}
-                </Row>
-              </Container>
+                </tbody>
+              </Table>
               <CardFooter className="py-4">
                 <nav aria-label="...">
                   <Pagination
