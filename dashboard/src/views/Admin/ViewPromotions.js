@@ -127,7 +127,8 @@ const ViewPromotions = () => {
                     <CardImg
                       width="100%"
                       alt="Sample"
-                      src="https://picsum.photos/300/200"
+                      height="250rem"
+                      src={promotion.promo_picture_url}
                     />
                     <CardBody>
                       <CardTitle tag="h2">
