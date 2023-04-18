@@ -25,7 +25,7 @@ const getPromotion = async(req, res) => {
 }
 //create new promotion
 const createPromotion = async(req, res) => {
-const { promo_title, promo_code, promo_discount, promo_description, promo_startDate, promo_endDate } = req.body;
+const { promo_title, promo_code, promo_discount, promo_description, promo_startDate, promo_endDate, promo_picture_url } = req.body;
 
 let emptyFields = [];
 
@@ -48,13 +48,16 @@ if (!promo_startDate) {
 if (!promo_endDate) {
     emptyFields.push('promo_endDate');
 }
+if (!promo_picture_url) {
+    emptyFields.push("promo_picture_url");
+  }
 if (emptyFields.length > 0) {
     return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
 }
 
 //add promotions to database
 try {
-    const promotion = await Promotion.create({ promo_title, promo_code, promo_discount, promo_description, promo_startDate, promo_endDate });
+    const promotion = await Promotion.create({ promo_title, promo_code, promo_discount, promo_description, promo_startDate, promo_endDate, promo_picture_url });
     res.status(200).json({ promotion });
 } catch (error) {
     res.status(400).json({ error: error.message });
