@@ -1,18 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const {
-  createprogress,
   getAllProgresses,
-  getProgressByVID,
+  getProgress,
+  ceateProgress,
+  deleteProgress,
+  updateProgress,
 } = require("../controllers/ProgressController");
 
-//GET all progress
+//Get all of the workouts (1)
 router.get("/", getAllProgresses);
 
-//GET a single progress
-router.get("/:nic", getProgressByVID);
+//Get single workout (2)
+router.get("/:id", getProgress);
 
-//POST a new progress
-router.post("/", createprogress);
+//Post a new workout (3)
+router.post("/", ceateProgress);
+
+//Delete a workout (4)
+router.delete("/:id", deleteProgress);
+
+//Update workout (5)
+router.patch("/:id", updateProgress);
 
 module.exports = router;

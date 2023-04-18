@@ -8,7 +8,7 @@ const ProgressTrackingSchema = mongoose.Schema(
         type: String,
         required: true,
     },
-    vid: {
+    vehi_number: {
         type: String,
         required: true,
       },
