@@ -17,6 +17,9 @@ import CreateBooking from "views/Admin/CreateBookings";
 import ViewBookings from "views/Admin/ViewBookings";
 import UpdateBooking from "views/Admin/UpdateBooking";
 
+import CreatePromotion from "views/Admin/CreatePromotion";
+import ViewPromotions from "views/Admin/ViewPromotions";
+import UpdatePromotion from "views/Admin/UpdatePromotion";
 
 const routes = [
   {
@@ -150,6 +153,30 @@ const routes = [
     name: "Update Bookings",
     icon: "ni ni-ruler-pencil text-purple",
     component: UpdateBooking,
+  },
+
+ 
+
+  //sithija promotions
+  {
+    path: "/create-promotion",
+    name: "Create Promotion",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreatePromotion,
+    layout: "/admin",
+  },
+  {
+    path: "/promotions",
+    name: "Promotions",
+    icon: "ni ni-notification-70 text-blue",
+    component: ViewPromotions,
+    layout: "/admin",
+  },
+  {
+    path: "/update-promotion/:id",
+    name: "Update Promotion",
+    icon: "ni ni-ruler-pencil text-green",
+    component: UpdatePromotion,
     layout: "/admin",
   },
 
