@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 
 const vacancySchema = new Schema(
   {
-    vacncy_title: {
+    vacancy_title: {
       type: String,
       required: true,
     },
-    vacncy_type: {
+    vacancy_type: {
       type: String,
       required: true,
     },
@@ -16,7 +16,7 @@ const vacancySchema = new Schema(
       type: Number,
       required: true,
     },
-    vacncy_requirements: {
+    vacancy_requirements: {
       type: String,
       required: true,
     },
