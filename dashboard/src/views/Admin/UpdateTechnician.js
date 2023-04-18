@@ -31,6 +31,10 @@ const UpdateTechnician = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
+  // const [isLoading, setIsLoading] = useState(false);
+
+   const [image, setImage] = useState(null);
+   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
   const [data, setData] = useState([]);
@@ -56,6 +60,41 @@ const UpdateTechnician = () => {
     getTechnician();
   }, [id]);
 
+const handleImageUpload = (event) => {
+  const file = event.target.files[0];
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "agd0dlhj");
+  // formData.append("public_id", "your_public_id");
+  formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
+
+  const options = {
+    onUploadProgress: (progressEvent) => {
+      const percentCompleted = Math.round(
+        (progressEvent.loaded * 100) / progressEvent.total
+      );
+      setUploadProgress(percentCompleted);
+    },
+  };
+
+  axios
+    .post(
+      `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+      formData,
+      options
+    )
+    .then((response) => {
+      setImage(response.data.secure_url);
+      setUploadProgress(0);
+    })
+    .catch((error) => {
+      console.error(error);
+      setUploadProgress(0);
+    });
+};
+
+
+
   const handleUpdate = () => {
     console.log("lol");
 
@@ -65,7 +104,7 @@ const UpdateTechnician = () => {
         technician_age: technician_age,
         technician_experiences: technician_experiences,
         technician_expertise: technician_expertise,
-        technician_picture_url: technician_picture_url,
+        technician_picture_url: image,
       })
       .then((res) => {
         console.log(res.data);
@@ -138,22 +177,31 @@ const UpdateTechnician = () => {
                       <Col lg="6">
                         <Media className="align-items-center">
                           <span className="avatar avatar-sm rounded-circle">
-                            <img
-                              alt="..."
-                              src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                            />
+                            <img alt="..." src={data.technician_picture_url} />
                           </span>
                         </Media>
-                        <br>                  
-                        </br>
+                        <br></br>
+                        <br></br>
+                        <Media className="align-items-center">
+                          <span className="avatar avatar-sm rounded-circle">
+                            {image && (
+                              <img
+                                //className="rounded-circle"
+                                src={image}
+                                alt="Uploaded"
+                              />
+                            )}
+                          </span>
+                        </Media>
+                        <br></br>
                         <Input
                           type="file"
-                          defaultValue={data.technician_picture_url}
                           className="form-control-alternative"
-                          onChange={(e) => {
-                            SetTechnicianPictureUrl(e.target.value);
-                          }}
+                          onChange={handleImageUpload}
                         />
+                        {uploadProgress > 0 && (
+                          <div>Uploading... {uploadProgress}%</div>
+                        )}
                       </Col>
                       <Col lg="6">
                         <FormGroup>

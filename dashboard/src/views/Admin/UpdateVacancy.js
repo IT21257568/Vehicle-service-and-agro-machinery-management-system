@@ -44,10 +44,10 @@ const UpdateVacancy = () => {
       console.log(res.data);
       setData(res.data);
 
-      setVacancyTitle(res.data.vacncy_title);
-      setVacancyType(res.data.vacncy_type);
+      setVacancyTitle(res.data.vacancy_title);
+      setVacancyType(res.data.vacancy_type);
       setVacancyCount(res.data.vacancy_count);
-      setVacancyRequirements(res.data.vacncy_requirements);
+      setVacancyRequirements(res.data.vacancy_requirements);
     };
     getVacancy();
   }, [id]);
@@ -57,10 +57,10 @@ const UpdateVacancy = () => {
 
     axios
       .patch(`/api/vacancies/${id}`, {
-        vacncy_title: vacancyTitle,
-        vacncy_type: vacancyType,
+        vacancy_title: vacancyTitle,
+        vacancy_type: vacancyType,
         vacancy_count: vacancyCount,
-        vacncy_requirements: vacancyRequirements,
+        vacancy_requirements: vacancyRequirements,
       })
       .then((res) => {
         console.log(res.data);
@@ -100,7 +100,7 @@ const UpdateVacancy = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={data.vacncy_title}
+                            defaultValue={data.vacancy_title}
                             placeholder="Title"
                             type="text"
                             onChange={(e) => {
@@ -193,7 +193,7 @@ const UpdateVacancy = () => {
                         className="form-control-alternative"
                         placeholder="A brief description of the vacancy"
                         rows="4"
-                        defaultValue={data.vacncy_requirements}
+                        defaultValue={data.vacancy_requirements}
                         onChange={(e) => {
                           setVacancyRequirements(e.target.value);
                         }}

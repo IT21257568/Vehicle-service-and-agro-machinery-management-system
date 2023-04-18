@@ -31,12 +31,12 @@ import Header from "components/Headers/Header.js";
 
 
  //card
-  function CardExpertice({ vacancyd, onClose }) {
+  function CardExpertice({ expertise, onClose }) {
     return (
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Expertice</h5>
-          <p className="card-text">{vacancyd}</p>
+          <p className="card-text">{expertise}</p>
           <Button size="sm" color="primary" onClick={onClose}>
             Close
           </Button>
@@ -161,7 +161,7 @@ const ViewTechnicians = () => {
                           <span className="avatar avatar-sm rounded-circle">
                             <img
                               alt="..."
-                              src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                              src={technician.technician_picture_url}
                             />
                           </span>
                         </Media>
@@ -193,7 +193,7 @@ const ViewTechnicians = () => {
                           </Button>
                           {showCard && (
                             <CardExpertice
-                              vacancyd={technician.technician_expertise}
+                              expertise={technician.technician_expertise}
                               onClose={handleCloseClick}
                             />
                           )}
