@@ -13,6 +13,10 @@ import ViewTechnicians from "views/Admin/ViewTechnicians.js";
 import UpdateTechnician from "views/Admin/UpdateTechnician.js";
 import AdminLogin from "views/Admin/AdminLogin";
 import UserRegister from "views/User/UserRegister";
+import CreateBooking from "views/Admin/CreateBookings";
+import ViewBookings from "views/Admin/ViewBookings";
+import UpdateBooking from "views/Admin/UpdateBooking";
+
 import CreatePromotion from "views/Admin/CreatePromotion";
 import ViewPromotions from "views/Admin/ViewPromotions";
 import UpdatePromotion from "views/Admin/UpdatePromotion";
@@ -131,13 +135,26 @@ const routes = [
     layout: "/admin",
   },
   {
-    path: "/technicians",
-    name: "Technicians",
-    icon: "ni ni-notification-70 text-pink",
-    component: ViewTechnicians,
+    path: "/create-bookings",
+    name: "Create Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: CreateBooking,
     layout: "/admin",
   },
- 
+  {
+    path: "/bookings",
+    name: "Bookings",
+    icon: "ni ni-bell-55 text-purple",
+    component: ViewBookings,
+    layout: "/admin",
+  },
+  {
+    path: "/update-bookings/:id",
+    name: "Update Bookings",
+    icon: "ni ni-ruler-pencil text-purple",
+    component: UpdateBooking,
+    layout: "/admin",
+  },
 
   //sithija promotions
   {
