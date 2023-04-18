@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const vanaciesRoute = require("./routes/vanaciesRoute");
 const sparePartsRoutes = require("./routes/spareParts");
+const agroProductRoutes = require("./routes/agroRoute");
 const meetTeamRoute = require("./routes/MeetTeamRoute");
 const promotionRoute = require("./routes/promotionRoute");
 const userRoutes = require("./routes/userRoutes");
@@ -28,7 +29,10 @@ app.use((req, res, next) => {
 app.use("/api/vacancies", vanaciesRoute);
 app.use("/api/mTeams", meetTeamRoute);
 //Pehesarani
-app.use('/api/spareParts', sparePartsRoutes);
+app.use("/api/spareParts", sparePartsRoutes);
+app.use("/api/agroProducts", agroProductRoutes);
+// Pawan
+app.use("/api/users", userRoutes);
 //Sithija
 app.use("/api/promotions", promotionRoute);
 //connect to db
