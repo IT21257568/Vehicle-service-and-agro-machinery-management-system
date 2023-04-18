@@ -31,7 +31,7 @@ const UpdatePromotion = () => {
 
   const navigate = useNavigate();
 
-  //image upload section
+  //image upload progress load
   
   const [uploadProgress, setUploadProgress] = useState(0);
 
