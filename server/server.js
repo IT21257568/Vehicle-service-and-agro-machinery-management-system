@@ -34,11 +34,8 @@ app.use("/api/spareParts", sparePartsRoutes);
 app.use("/api/agroProducts", agroProductRoutes);
 // Pawan
 app.use("/api/users", userRoutes);
-
 //Janindu
 app.use("/api/bookings", bookingsRoute);
-
-
 //Sithija
 app.use("/api/promotions", promotionRoute);
 
