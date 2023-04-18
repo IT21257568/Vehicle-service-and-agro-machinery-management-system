@@ -25,7 +25,7 @@ const getProgress = async(req, res) => {
     }
     //create new progress
 const ceateProgress = async(req, res) => {
-    const { name, vehi_number, status, description } = req.body;
+    const { name, vehi_number, status, date, description } = req.body;
 
     let emptyFields = [];
 
@@ -39,6 +39,9 @@ const ceateProgress = async(req, res) => {
     if (!status) {
         emptyFields.push('status');
     }
+    if (!date) {
+        emptyFields.push('date');
+    }
     if (!description) {
         emptyFields.push('description');
     }
@@ -48,7 +51,7 @@ const ceateProgress = async(req, res) => {
 
     //add to db
     try {
-        const progress = await Progress.create({ name, vehi_number, status, description });
+        const progress = await Progress.create({ name, vehi_number, status, date, description });
         res.status(200).json({ progress: progress });
     } catch (error) {
         res.status(400).json({ error: error.message });
