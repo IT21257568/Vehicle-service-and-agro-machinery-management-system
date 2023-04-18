@@ -6,6 +6,7 @@ const vanaciesRoute = require("./routes/vanaciesRoute");
 const sparePartsRoutes = require("./routes/spareParts");
 const agroProductRoutes = require("./routes/agroRoute");
 const meetTeamRoute = require("./routes/MeetTeamRoute");
+const promotionRoute = require("./routes/promotionRoute");
 const userRoutes = require("./routes/userRoutes");
 
 // setup cors
@@ -32,7 +33,8 @@ app.use("/api/spareParts", sparePartsRoutes);
 app.use("/api/agroProducts", agroProductRoutes);
 // Pawan
 app.use("/api/users", userRoutes);
-
+//Sithija
+app.use("/api/promotions", promotionRoute);
 //connect to db
 mongoose
   .connect(process.env.MONGO_URI)

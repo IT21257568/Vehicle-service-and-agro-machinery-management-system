@@ -13,7 +13,9 @@ import ViewTechnicians from "views/Admin/ViewTechnicians.js";
 import UpdateTechnician from "views/Admin/UpdateTechnician.js";
 import AdminLogin from "views/Admin/AdminLogin";
 import UserRegister from "views/User/UserRegister";
-
+import CreatePromotion from "views/Admin/CreatePromotion";
+import ViewPromotions from "views/Admin/ViewPromotions";
+import UpdatePromotion from "views/Admin/UpdatePromotion";
 
 const routes = [
   {
@@ -128,5 +130,37 @@ const routes = [
     component: UpdateTechnician,
     layout: "/admin",
   },
+  {
+    path: "/technicians",
+    name: "Technicians",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewTechnicians,
+    layout: "/admin",
+  },
+ 
+
+  //sithija promotions
+  {
+    path: "/create-promotion",
+    name: "Create Promotion",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreatePromotion,
+    layout: "/admin",
+  },
+  {
+    path: "/promotions",
+    name: "Promotions",
+    icon: "ni ni-notification-70 text-blue",
+    component: ViewPromotions,
+    layout: "/admin",
+  },
+  {
+    path: "/update-promotion/:id",
+    name: "Update Promotion",
+    icon: "ni ni-ruler-pencil text-green",
+    component: UpdatePromotion,
+    layout: "/admin",
+  },
+
 ];
 export default routes;
