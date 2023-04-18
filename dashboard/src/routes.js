@@ -15,6 +15,7 @@ import AdminLogin from "views/Admin/AdminLogin";
 import UserRegister from "views/User/UserRegister";
 import CreatePromotion from "views/Admin/CreatePromotion";
 import ViewPromotions from "views/Admin/ViewPromotions";
+import UpdatePromotion from "views/Admin/UpdatePromotion";
 
 const routes = [
   {
@@ -151,6 +152,13 @@ const routes = [
     name: "Promotions",
     icon: "ni ni-notification-70 text-blue",
     component: ViewPromotions,
+    layout: "/admin",
+  },
+  {
+    path: "/update-promotion/:id",
+    name: "Update Promotion",
+    icon: "ni ni-ruler-pencil text-green",
+    component: UpdatePromotion,
     layout: "/admin",
   },
 

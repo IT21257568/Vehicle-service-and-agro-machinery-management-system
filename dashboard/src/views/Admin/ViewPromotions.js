@@ -30,6 +30,8 @@ import {
   CardSubtitle,
   CardText,
   CardGroup,
+  CardImg,
+  CardImgOverlay,
   
 } from "reactstrap";
 
@@ -77,14 +79,14 @@ const ViewPromotions = () => {
 
   return (
     <>
-      <Header />
+      <Header/>
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Light Table */}
         <Row>
           <div className="col">
-            <Card className="shadow">
-              <CardHeader className="border-0">
+            <Card className="shadow" color="lighter">
+              <CardHeader className="border-0" style={{marginBottom: '1.8rem'}}>
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Promotions</h3>
@@ -115,34 +117,45 @@ const ViewPromotions = () => {
                   <Card key={promotion._id}
                     
                     style={{
-                      width: '23rem',
-                      padding: '0.5rem',
-                      margin: '0.3rem'
+                      width: '22rem',
+                      borderRadius:'0.2rem',
+                      margin: '0.8rem'
                       
                     }}
                     
                   >
-                    <img
+                    <CardImg
+                      width="100%"
                       alt="Sample"
                       src="https://picsum.photos/300/200"
                     />
                     <CardBody>
-                      <CardTitle tag="h5">
+                      <CardTitle tag="h2">
                         {promotion.promo_title}
                       </CardTitle>
                       <CardSubtitle
                         className="mb-2 text-muted"
-                        tag="h6"
+                        tag="h3"
                       >
                         {promotion.promo_discount}% Off
                       </CardSubtitle>
                       <CardText>
                         {promotion.promo_description}
                       </CardText>
+                      <CardSubtitle
+                        className="mb-2 text-muted"
+                        tag="h4"
+                      >
+                        Offer ends on {promotion.promo_endDate}
+                      </CardSubtitle>
+
                       <Row>
                       <Button
                           size="sm"
                           color="warning"
+                          onClick={() =>
+                            navigate(`/admin/update-promotion/${promotion._id}`)
+                          }
                          
                       >
                           Update
@@ -172,7 +185,7 @@ const ViewPromotions = () => {
              
                 
               
-              <CardFooter className="py-4">
+              <CardFooter className="py-4" style={{marginTop: '1.8rem'}}>
                 <nav aria-label="...">
                   <Pagination
                     className="pagination justify-content-end mb-0"

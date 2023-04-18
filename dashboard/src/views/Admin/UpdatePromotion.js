@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -19,52 +19,59 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreatePromotion = () => {
+const UpdatePromotion = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  // get vacancy id from url
+  const { id } = useParams();
+
   const navigate = useNavigate();
 
   // form states
   const [data, setData] = useState([]);
-  const [promoTitle, setPromoTitle] = useState("");
-  const [promoCode, setPromoCode] = useState("");
-  const [promoDiscount, setPromoDiscount] = useState("");
-  const [promoDiscription, setPromoDescription] = useState("");
-  const [promoStartDate, setPromoStartDate] = useState("");
-  const [promoEndDate, setPromoEndDate] = useState("");
-  const [error, setError] = useState(null);
+  const [promotionTitle, setPromotionTitle] = useState("");
+  const [promotionCode, setPromotionCode] = useState("");
+  const [promotionDiscount, setPromotionDiscount] = useState("");
+  const [promotionDescription, setPromotionDescription] = useState("");
+  const [promotionStartDate, setPromotionStartDate] = useState("");
+  const [promotionEndDate, setPromotionEndDate] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page refresh
+  useEffect(() => {
+    const getPromotion = async () => {
+      const res = await axios.get(`/api/promotions/${id}`);
+      console.log(res.data);
+      setData(res.data);
 
-    try {
-      await axios
-        .post("/api/promotions", {
-            promo_title : promoTitle,
-            promo_code : promoCode,
-            promo_discount : promoDiscount,
-            promo_description : promoDiscription,
-            promo_startDate : promoStartDate,
-            promo_endDate : promoEndDate,
-        })
-        .then((res) => {
-          console.log("New promotion added", res.data);
-          setPromoTitle("");
-          setPromoCode("");
-          setPromoDiscount("");
-          setPromoDescription("");
-          setPromoStartDate("");
-          setPromoEndDate("");
-          setError(null);
-          navigate("/admin/promotions");
-        });
-    } catch (error) {
-      setError(error.message);
-    }
+      setPromotionTitle(res.data.promo_title);
+      setPromotionCode(res.data.promo_code);
+      setPromotionDiscount(res.data.promo_discount);
+      setPromotionDescription(res.data.promo_description);
+      setPromotionStartDate(res.data.promo_startDate);
+      setPromotionEndDate(res.data.promo_endDate);
+    };
+    getPromotion();
+  }, [id]);
+
+  const handleUpdate = () => {
+    console.log("lol");
+
+    axios
+      .patch(`/api/promotions/${id}`, {
+        promo_title: promotionTitle,
+        promo_code: promotionCode,
+        promo_discount: promotionDiscount,
+        promo_description: promotionDescription,
+        promo_startDate: promotionStartDate,
+        promo_endDate: promotionEndDate,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/admin/promotions");
+      });
   };
 
   return (
@@ -78,7 +85,7 @@ const CreatePromotion = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Promotion</h3>
+                    <h3 className="mb-0">Update Promotion</h3>
                   </Col>
                 </Row>
               </CardHeader>
@@ -99,11 +106,12 @@ const CreatePromotion = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-title"
+                            id="update-title"
+                            defaultValue={data.promo_title}
                             placeholder="Promotion Title"
                             type="text"
                             onChange={(e) => {
-                              setPromoTitle(e.target.value);
+                              setPromotionTitle(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -118,11 +126,12 @@ const CreatePromotion = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-promo-code"
+                            id="update-promo-code"
+                            defaultValue={data.promo_code}
                             placeholder="enter promo code"
                             type="text"
                             onChange={(e) => {
-                              setPromoCode(e.target.value);
+                              setPromotionCode(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -139,12 +148,12 @@ const CreatePromotion = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            
-                            id="input-discount"
+                            id="update-discount"
+                            defaultValue={data.promo_discount}
                             placeholder="select discount"
                             type="number"
                             onChange={(e) => {
-                              setPromoDiscount(e.target.value);
+                              setPromotionDiscount(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -161,11 +170,11 @@ const CreatePromotion = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-start-date"
-                            
+                            id="update-start-date"
+                            defaultValue={data.promo_startDate}
                             type="date"
                             onChange={(e) => {
-                              setPromoStartDate(e.target.value);
+                              setPromotionStartDate(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -182,10 +191,10 @@ const CreatePromotion = () => {
                             className="form-control-alternative"
                             
                             id="input-end-date"
-                           
+                            defaultValue={data.promo_endDate}
                             type="date"
                             onChange={(e) => {
-                              setPromoEndDate(e.target.value);
+                              setPromotionEndDate(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -205,15 +214,16 @@ const CreatePromotion = () => {
                       <Input
                         className="form-control-alternative"
                         placeholder="A brief description about the promotion"
+                        defaultValue={data.promo_description}
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
-                          setPromoDescription(e.target.value);
+                          setPromotionDescription(e.target.value);
                         }}
                       />
                     </FormGroup>
-                    <Button color="primary" onClick={handleSubmit}>
-                      Create
+                    <Button color="primary" onClick={handleUpdate}>
+                      Save Changes
                     </Button>
                     <Button
                       color="warning"
@@ -235,4 +245,4 @@ const CreatePromotion = () => {
   );
 };
 
-export default CreatePromotion;
+export default UpdatePromotion;
