@@ -42,10 +42,10 @@ const CreateVacancy = () => {
     try {
       await axios
         .post("/api/vacancies", {
-          vacncy_title: vacancyTitle,
-          vacncy_type: vacancyType,
+          vacancy_title: vacancyTitle,
+          vacancy_type: vacancyType,
           vacancy_count: vacancyCount,
-          vacncy_requirements: vacancyRequirements,
+          vacancy_requirements: vacancyRequirements,
         })
         .then((res) => {
           console.log("New sparepart added", res.data);

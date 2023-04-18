@@ -150,11 +150,11 @@ const ViewVacancies = () => {
                     <tr key={vacancy._id}>
                       <th scope="row">
                         <span className="mb-0 text-sm">
-                          {vacancy.vacncy_title}
+                          {vacancy.vacancy_title}
                         </span>
                       </th>
                       <td>
-                        <Badge color="success">{vacancy.vacncy_type}</Badge>
+                        <Badge color="success">{vacancy.vacancy_type}</Badge>
                       </td>
                       <td>{vacancy.vacancy_count}</td>
                       <td>
@@ -168,7 +168,7 @@ const ViewVacancies = () => {
                           </Button>
                           {showCard && (
                             <CardRequiremnts
-                              vacancyd={vacancy.vacncy_requirements}
+                              vacancyd={vacancy.vacancy_requirements}
                               onClose={handleCloseClick}
                             />
                           )}
