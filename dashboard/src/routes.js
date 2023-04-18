@@ -13,6 +13,9 @@ import ViewTechnicians from "views/Admin/ViewTechnicians.js";
 import UpdateTechnician from "views/Admin/UpdateTechnician.js";
 import AdminLogin from "views/Admin/AdminLogin";
 import UserRegister from "views/User/UserRegister";
+import CreateBooking from "views/Admin/CreateBookings";
+import ViewBookings from "views/Admin/ViewBookings";
+import UpdateBooking from "views/Admin/UpdateBooking";
 
 
 const routes = [
@@ -128,5 +131,27 @@ const routes = [
     component: UpdateTechnician,
     layout: "/admin",
   },
+  {
+    path: "/create-bookings",
+    name: "Create Bookings",
+    icon: "ni ni-ruler-pencil text-pink",
+    component: CreateBooking,
+    layout: "/admin",
+  },
+  {
+    path: "/bookings",
+    name: "Bookings",
+    icon: "ni ni-ruler-pencil text-pink",
+    component: ViewBookings,
+    layout: "/admin",
+  },
+  {
+    path: "/update-bookings/:id",
+    name: "Update Bookings",
+    icon: "ni ni-ruler-pencil text-pink",
+    component: UpdateBooking,
+    layout: "/admin",
+  },
+
 ];
 export default routes;
