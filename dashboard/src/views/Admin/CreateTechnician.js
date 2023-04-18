@@ -41,6 +41,7 @@ const CreateVacancy = () => {
   const [technician_experiences, setTechnicianExperiences] = useState("");
   const [technician_expertise, setTechnicianExpertise] = useState("");
   const [technician_picture_url, setTechnicianPictureUrl] = useState("");
+  const [technician_specialize_in, setTechnicianSpecializeIn] = useState("");
   const [error, setError] = useState(null);
 
   const handleImageUpload = (event) => {
@@ -89,6 +90,7 @@ const CreateVacancy = () => {
           technician_experiences: technician_experiences,
           technician_expertise: technician_expertise,
           technician_picture_url: image,
+          technician_specialize_in: technician_specialize_in,
         })
         .then((res) => {
           console.log("New Technician added", res.data);
@@ -97,6 +99,7 @@ const CreateVacancy = () => {
           setTechnicianExperiences("");
           setTechnicianExpertise("");
           setTechnicianPictureUrl("");
+          setTechnicianSpecializeIn("");
           setError(null);
           navigate("/admin/technicians");
         });
@@ -147,32 +150,23 @@ const CreateVacancy = () => {
                         </FormGroup>
                       </Col>
                       <Col lg="6">
-                        <FormGroup className="d-flex flex-column">
+                        <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-email"
+                            htmlFor="input-first-name"
                           >
-                            Technician Picture
-                          </label> <br></br>
-                          <Media className="align-items-center">
-                            <span className="avatar avatar-sm rounded-circle">
-                              {image && (
-                                <img
-                                  //className="rounded-circle"
-                                  src={image}
-                                  alt="Uploaded"
-                                />
-                              )}
-                            </span>
-                          </Media><br></br>
+                            Technician Specialize In
+                          </label>
                           <Input
-                            type="file"
                             className="form-control-alternative"
-                            onChange={handleImageUpload}
+                            //defaultValue="Lucky"
+                            id="input-first-name"
+                            placeholder="Enter Technician's main expertise"
+                            type="text"
+                            onChange={(e) => {
+                              setTechnicianSpecializeIn(e.target.value);
+                            }}
                           />
-                          {uploadProgress > 0 && (
-                            <div>Uploading... {uploadProgress}%</div>
-                          )}
                         </FormGroup>
                       </Col>
                     </Row>
@@ -216,6 +210,39 @@ const CreateVacancy = () => {
                               setTechnicianExperiences(e.target.value);
                             }}
                           />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Technician Picture
+                          </label>{" "}
+                          <br></br>
+                          <Media className="align-items-center">
+                            <span className="avatar avatar-sm rounded-circle">
+                              {image && (
+                                <img
+                                  //className="rounded-circle"
+                                  src={image}
+                                  alt="Uploaded"
+                                />
+                              )}
+                            </span>
+                          </Media>
+                          <br></br>
+                          <Input
+                            type="file"
+                            className="form-control-alternative"
+                            onChange={handleImageUpload}
+                          />
+                          {uploadProgress > 0 && (
+                            <div>Uploading... {uploadProgress}%</div>
+                          )}
                         </FormGroup>
                       </Col>
                     </Row>
