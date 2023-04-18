@@ -161,7 +161,7 @@ const ViewTechnicians = () => {
                           <span className="avatar avatar-sm rounded-circle">
                             <img
                               alt="..."
-                              src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                              src={technician.technician_picture_url}
                             />
                           </span>
                         </Media>
