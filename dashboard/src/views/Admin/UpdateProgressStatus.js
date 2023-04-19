@@ -266,7 +266,7 @@ const UpdateProgressStatus = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/promotions");
+                        navigate("/admin/progress");
                       }}
                     >
                       Cancel
