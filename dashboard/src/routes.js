@@ -38,6 +38,9 @@ import ViewRepairJobs from "views/Admin/ViewRepairJobs";
 // User views
 import DummyPage from "views/User/DummyPage";
 
+// User views
+import DummyPage from "views/User/DummyPage";
+
 const routes = [
   {
     path: "/index",
