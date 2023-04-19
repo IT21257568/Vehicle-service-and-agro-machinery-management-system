@@ -28,6 +28,11 @@ import UpdateSparePart from "views/Admin/UpdateSparePart";
 import CreateProgressTracking from "views/Admin/CreateProgressTracking";
 import ViewProgressStatus from "views/Admin/ViewProgressStatus";
 import UpdateProgressStatus from "views/Admin/UpdateProgressStatus";
+
+import CreateAgroProduct from "views/Admin/CreateAgroProduct";
+import ViewAgroProducts from "views/Admin/ViewAgroProducts";
+import UpdateAgroProduct from "views/Admin/UpdateAgroProduct";
+
 const routes = [
   {
     path: "/index",
@@ -229,6 +234,29 @@ const routes = [
     name: "Update Progress Status",
     icon: "ni ni-ruler-pencil text-green",
     component: UpdateProgressStatus,
+    layout: "/admin",
+  },
+
+  //Pehesarani Agro Products
+  {
+    path: "/agro-products",
+    name: "Agro Products",
+    icon: "ni ni-notification-70 text-blue",
+    component: ViewAgroProducts,
+    layout: "/admin",
+  },
+  {
+    path: "/create-agro-product",
+    name: "Create Agro Product",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreateAgroProduct,
+    layout: "/admin",
+  },
+  {
+    path: "/update-agro-product/:id",
+    name: "Update Agro Product",
+    icon: "ni ni-ruler-pencil text-green",
+    component: UpdateAgroProduct,
     layout: "/admin",
   },
 
