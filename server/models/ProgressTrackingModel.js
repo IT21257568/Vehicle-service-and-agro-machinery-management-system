@@ -24,6 +24,10 @@ const ProgressTrackingSchema = mongoose.Schema(
         type: String,
         required: true,
     },
+    progress_picture_url: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

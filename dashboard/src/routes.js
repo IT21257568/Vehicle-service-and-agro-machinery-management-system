@@ -20,7 +20,7 @@ import UpdateBooking from "views/Admin/UpdateBooking";
 import CreatePromotion from "views/Admin/CreatePromotion";
 import ViewPromotions from "views/Admin/ViewPromotions";
 import UpdatePromotion from "views/Admin/UpdatePromotion";
-
+import CreateProgressTracking from "views/Admin/CreateProgressTracking";
 const routes = [
   {
     path: "/index",
@@ -179,5 +179,13 @@ const routes = [
     layout: "/admin",
   },
 
+  //Nethum progress tracking
+  {
+    path: "/create-progress",
+    name: "Create Progress Status",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreateProgressTracking,
+    layout: "/admin",
+  },
 ];
 export default routes;

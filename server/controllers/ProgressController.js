@@ -25,7 +25,7 @@ const getProgress = async(req, res) => {
     }
     //create new progress
 const ceateProgress = async(req, res) => {
-    const { name, vehi_number, status, date, description } = req.body;
+    const { name, vehi_number, status, date, description, progress_picture_url } = req.body;
 
     let emptyFields = [];
 
@@ -45,13 +45,16 @@ const ceateProgress = async(req, res) => {
     if (!description) {
         emptyFields.push('description');
     }
+    if (!progress_picture_url) {
+        emptyFields.push("progress_picture_url");
+      }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
     }
 
     //add to db
     try {
-        const progress = await Progress.create({ name, vehi_number, status, date, description });
+        const progress = await Progress.create({ name, vehi_number, status, date, description, progress_picture_url });
         res.status(200).json({ progress: progress });
     } catch (error) {
         res.status(400).json({ error: error.message });
