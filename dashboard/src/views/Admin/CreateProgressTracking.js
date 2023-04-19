@@ -238,7 +238,7 @@ const CreateProgressTracking = () => {
                         className="form-control-label"
                         htmlFor="input-description"
                       >
-                      Promotion Description
+                      Servise Progress Status Description
                       </label>
                       <Input
                         className="form-control-alternative"

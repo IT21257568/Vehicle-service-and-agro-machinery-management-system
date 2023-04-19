@@ -127,7 +127,7 @@ const UpdateProgressStatus = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Progress Status</h3>
+                    <h3 className="mb-0">Update Progress Status</h3>
                   </Col>
                 </Row>
               </CardHeader>
@@ -247,7 +247,7 @@ const UpdateProgressStatus = () => {
                         className="form-control-label"
                         htmlFor="input-description"
                       >
-                      Promotion Description
+                      Service Progress Status Description
                       </label>
                       <Input
                         className="form-control-alternative"
