@@ -14,37 +14,36 @@ import {
   Container,
   Row,
   Col,
-  Media,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Media
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateSparePart= () => {
+const CreateProgressTracking = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
 
-  //const [isLoading, setIsLoading] = useState(false);
-
-  // image upload states
+  //image uploading section
   const [image, setImage] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
   const [data, setData] = useState([]);
-  const [SparePart_name, setSparePartName] = useState("");
-  const [SparePart_price, setSparePartPrice] = useState("");
-  const [SparePart_discount, setSparePartDiscount] = useState("");
-  const [SparePart_description, setSparePartDescription] = useState("");
-  const [SparePart_status, setSparePartStatus] = useState("");
-  const [SparePart_picture_url, setSparePartPictureUrl] = useState("");
+  const [name, setName] = useState("");
+  const [vehiNumber, setVehiNumber] = useState("");
+  const [status, setStatus] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [progressPictureUrl, setProgressPictureUrl] = useState("");
   const [error, setError] = useState(null);
 
+  //handling image upload
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
@@ -79,30 +78,29 @@ const CreateSparePart= () => {
   };
 
 
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
     try {
       await axios
-        .post("/api/spareParts", {
-          sp_name : SparePart_name,
-          sp_image : image,
-          sp_price : SparePart_price,
-          sp_discount : SparePart_discount,
-          sp_description : SparePart_description,
-          sp_status : SparePart_status,
+        .post("/api/progress", {
+            name : name,
+            vehi_number : vehiNumber,
+            status : status,
+            date  : date,
+            description  : description,
+            progress_picture_url: image,
         })
         .then((res) => {
-          console.log("New sparePart added", res.data);
-          setSparePartName("");
-          setSparePartPrice("");
-          setSparePartDiscount("");
-          setSparePartDescription("");
-          setSparePartPictureUrl("");
-          setSparePartStatus("");
+          console.log("New progress status added", res.data);
+          setName("");
+          setVehiNumber("");
+          setStatus("");
+          setDate("");
+          setDescription("");
+          setProgressPictureUrl("");
           setError(null);
-          navigate("/admin/spare-parts");
+          navigate("/admin/progress");
         });
     } catch (error) {
       setError(error.message);
@@ -120,14 +118,14 @@ const CreateSparePart= () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Add Spare Part</h3>
+                    <h3 className="mb-0">Create Progress Status</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Spare part Details
+                  Progress Status Title
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -135,38 +133,91 @@ const CreateSparePart= () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username">
-                            Spare Part Name
+                            htmlFor="input-title"
+                          >
+                            Customer Name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-username"
-                            placeholder="Enter spare part Name"
+                            id="input-title"
+                            placeholder="customer name"
                             type="text"
                             onChange={(e) => {
-                              setSparePartName(e.target.value);
+                              setName(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
                       <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-promo-code"
+                          >
+                            Vehicle Registration Number
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-promo-code"
+                            placeholder="enter vehicle number"
+                            type="text"
+                            onChange={(e) => {
+                              setVehiNumber(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                     </Row>
+                    <Row>
+                    <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-title"
+                          >
+                            Progress Status
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-title"
+                            placeholder="enter status"
+                            type="text"
+                            onChange={(e) => {
+                              setStatus(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-start-date"
+                          >
+                            Service Date
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-start-date"
+                            
+                            type="date"
+                            onChange={(e) => {
+                              setDate(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  <Row>
+                  <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
-                            htmlFor="input-email">
-                            Spare Part Picture
+                            htmlFor="input-email"
+                          >
+                            Post Picture
                           </label> <br></br>
-                          <Media className="align-items-center">
-                            <span className="avatar avatar-sm rounded-circle">
-                              {image && (
-                                <img
-                                  //className="rounded-circle"
-                                  src={image}
-                                  alt="Uploaded"
-                                />
-                              )}
-                            </span>
-                          </Media><br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
@@ -177,105 +228,25 @@ const CreateSparePart= () => {
                           )}
                         </FormGroup>
                       </Col>
-                    </Row>
-
-                    <Row>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Spare Part Price
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="Enter spare part price"
-                            type="number"
-                            onChange={(e) => {
-                              setSparePartPrice(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Discount
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            //defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="Enter spare part discount"
-                            type="number"
-                            onChange={(e) => {
-                              setSparePartDiscount(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="4">
-                        <FormGroup className="d-flex flex-column">
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Status
-                          </label>
-                          <Dropdown
-                            isOpen={dropdownOpen}
-                            color="primary"
-                            toggle={toggle}
-                          >
-                            <DropdownToggle caret>
-                              {SparePart_status ? SparePart_status : "Select Status"}
-                            </DropdownToggle>
-                            <DropdownMenu>
-                              <DropdownItem
-                                value="Available"
-                                onClick={(e) => {
-                                  setSparePartStatus(e.target.value);
-                                }}
-                              >
-                                Available
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Out of Stock"
-                                onClick={(e) => {
-                                  setSparePartStatus(e.target.value);
-                                }}
-                              >
-                                Out of Stock
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </Dropdown>
-                        </FormGroup>
-                      </Col>
-                    </Row>
+                  </Row>
                   </div>
 
-                  {/* Description */}
+                   {/* Description */}
                   <div className="pl-lg-4">
                     <FormGroup>
                       <label
                         className="form-control-label"
-                        htmlFor="input-last-name"
+                        htmlFor="input-description"
                       >
-                        Description
+                      Promotion Description
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
+                        placeholder="A brief description about the Service Progress Status"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
-                          setSparePartDescription(e.target.value);
+                          setDescription(e.target.value);
                         }}
                       />
                     </FormGroup>
@@ -286,7 +257,7 @@ const CreateSparePart= () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/spare-parts");
+                        navigate("/admin/progress");
                       }}
                     >
                       Cancel
@@ -302,4 +273,4 @@ const CreateSparePart= () => {
   );
 };
 
-export default CreateSparePart;
+export default CreateProgressTracking;

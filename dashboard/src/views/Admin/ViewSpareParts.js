@@ -117,12 +117,14 @@ const ViewSpareParts = () => {
                   <Card key={sparePart._id}
                     
                     style={{
-                      width: '22rem',
+                      height: '30rem',
+                      width: '20rem',
                       borderRadius:'0.2rem',
                       margin: '0.8rem'
                       
                     }} >
                     <CardImg
+                      height= '200rem'
                       width="100%"
                       alt="Sample"
                       src={sparePart.sp_image}
