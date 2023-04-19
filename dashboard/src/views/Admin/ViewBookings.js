@@ -223,6 +223,7 @@ const ViewBookings = () => {
       </Container>
     </>
   );
+
 };
 
 export default ViewBookings;
