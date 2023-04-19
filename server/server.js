@@ -3,13 +3,20 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const vanaciesRoute = require("./routes/vanaciesRoute");
+const sparePartsRoutes = require("./routes/spareParts");
+const agroProductRoutes = require("./routes/agroRoute");
+const meetTeamRoute = require("./routes/MeetTeamRoute");
+const promotionRoute = require("./routes/promotionRoute");
+const userRoutes = require("./routes/userRoutes");
+const bookingsRoute = require("./routes/bookingsRoute");
+const ProgressTrackingRoute = require("./routes/ProgressTrackingRoute");
 // setup cors
 const cors = require("cors");
 
-//express app
+// express app
 const app = express();
 
-//middleware
+// middleware
 app.use(express.json());
 app.use(cors());
 
@@ -19,9 +26,20 @@ app.use((req, res, next) => {
 });
 
 //routes
-//1
+//Nisal
 app.use("/api/vacancies", vanaciesRoute);
-
+app.use("/api/mTeams", meetTeamRoute);
+//Pehesarani
+app.use("/api/spareParts", sparePartsRoutes);
+app.use("/api/agroProducts", agroProductRoutes);
+// Pawan
+app.use("/api/users", userRoutes);
+//Janindu
+app.use("/api/bookings", bookingsRoute);
+//Sithija
+app.use("/api/promotions", promotionRoute);
+//Nethum
+app.use("/api/progress", ProgressTrackingRoute);
 //connect to db
 mongoose
   .connect(process.env.MONGO_URI)
