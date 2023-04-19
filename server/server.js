@@ -9,6 +9,7 @@ const meetTeamRoute = require("./routes/MeetTeamRoute");
 const promotionRoute = require("./routes/promotionRoute");
 const userRoutes = require("./routes/userRoutes");
 const bookingsRoute = require("./routes/bookingsRoute");
+const faqRoute = require("./routes/faqRoute");
 
 // setup cors
 const cors = require("cors");
@@ -38,6 +39,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/bookings", bookingsRoute);
 //Sithija
 app.use("/api/promotions", promotionRoute);
+app.use("/api/faqs", faqRoute);
 
 //connect to db
 mongoose
