@@ -32,6 +32,7 @@ import UpdateProgressStatus from "views/Admin/UpdateProgressStatus";
 import CreateAgroProduct from "views/Admin/CreateAgroProduct";
 import ViewAgroProducts from "views/Admin/ViewAgroProducts";
 import UpdateAgroProduct from "views/Admin/UpdateAgroProduct";
+import CreateRepairJob from "views/Admin/CreateRepairJob";
 
 const routes = [
   {
@@ -260,5 +261,13 @@ const routes = [
     layout: "/admin",
   },
 
+  //Tharusha Create repair jobs
+  {
+    path: "/ceate-repair-job",
+    name: "Create Repair Job",
+    icon: "ni ni-notification-70 text-blue",
+    component: CreateRepairJob,
+    layout: "/admin",
+  },
 ];
 export default routes;
