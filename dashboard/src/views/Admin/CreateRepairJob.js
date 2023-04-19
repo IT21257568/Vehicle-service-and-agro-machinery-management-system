@@ -282,14 +282,20 @@ const CreateRepairjob = () => {
                         }}
                       />
                     </FormGroup>
-                    <Button color="primary" onClick={handleSubmit}>
+                    <Button
+                      color="primary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/admin/view-repair-jobs");
+                      }}
+                    >
                       Create
                     </Button>
                     <Button
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/damageValuation");
+                        navigate("/admin/view-repair-jobs");
                       }}
                     >
                       Cancel

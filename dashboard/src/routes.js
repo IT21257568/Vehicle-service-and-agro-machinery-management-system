@@ -33,6 +33,7 @@ import CreateAgroProduct from "views/Admin/CreateAgroProduct";
 import ViewAgroProducts from "views/Admin/ViewAgroProducts";
 import UpdateAgroProduct from "views/Admin/UpdateAgroProduct";
 import CreateRepairJob from "views/Admin/CreateRepairJob";
+import ViewRepairJobs from "views/Admin/ViewRepairJobs";
 
 const routes = [
   {
@@ -267,6 +268,13 @@ const routes = [
     name: "Create Repair Job",
     icon: "ni ni-notification-70 text-blue",
     component: CreateRepairJob,
+    layout: "/admin",
+  },
+  {
+    path: "/view-repair-jobs",
+    name: "View Repair Jobs",
+    icon: "ni ni-notification-70 text-blue",
+    component: ViewRepairJobs,
     layout: "/admin",
   },
 ];
