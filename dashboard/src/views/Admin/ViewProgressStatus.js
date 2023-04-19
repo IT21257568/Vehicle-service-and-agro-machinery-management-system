@@ -38,9 +38,9 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const ViewPromotions = () => {
+const ViewProgressStatus = () => {
   // states
-  const [allPromotions, setAllPromotions] = useState([]);
+  const [allProgresses, setAllProgresses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -55,24 +55,24 @@ const ViewPromotions = () => {
 
   // retrieve all vacancies from database
   useEffect(() => {
-    const fetchAllPromotions = async () => {
+    const fetchAllProgresses = async () => {
       try {
-        const res = await axios.get("/api/promotions");
-        setAllPromotions(res.data);
+        const res = await axios.get("/api/progress");
+        setAllProgresses(res.data);
         setIsLoading(false);
       } catch (err) {
         setError(err);
         setIsLoading(false);
       }
     };
-    fetchAllPromotions();
+    fetchAllProgresses();
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`/api/promotions/${id}`).then((res) => {
+    axios.delete(`/api/progress/${id}`).then((res) => {
       console.log(res.data);
-      setAllPromotions((prevData) =>
-        prevData.filter((promotion) => promotion._id !== id)
+      setAllProgresses((prevData) =>
+        prevData.filter((progress) => progress._id !== id)
       );
     });
   };
@@ -89,14 +89,14 @@ const ViewPromotions = () => {
               <CardHeader className="border-0" style={{marginBottom: '1.8rem'}}>
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Promotions</h3>
+                    <h3 className="mb-0">All Progress Status</h3>
                   </div>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={() => navigate("/admin/create-promotion")}
+                      onClick={() => navigate("/admin/create-progress")}
                     >
                       <span
                         className="btn-inner--icon"
@@ -104,7 +104,7 @@ const ViewPromotions = () => {
                       >
                         <i className="ni ni-planet" />
                       </span>
-                      <span className="btn-inner--text">Add Promotion</span>
+                      <span className="btn-inner--text">Add New Status</span>
                     </Button>
                   </div>
                 </Row>
@@ -112,9 +112,9 @@ const ViewPromotions = () => {
 
               <Container>
                 <Row>
-                  {allPromotions.slice(0, visible).map((promotion, index) => (
+                  {allProgresses.slice(0, visible).map((progress, index) => (
                   
-                  <Card key={promotion._id}
+                  <Card key={progress._id}
                     
                     style={{
                       width: '22rem',
@@ -128,34 +128,42 @@ const ViewPromotions = () => {
                       width="100%"
                       alt="Sample"
                       height="250rem"
-                      src={promotion.promo_picture_url}
+                      src={progress.progress_picture_url}
                     />
                     <CardBody>
                       <CardTitle tag="h2">
-                        {promotion.promo_title}
+                        Customer Name: {progress.name}
                       </CardTitle>
+
+                      <CardText>
+                        Vehi Number: {progress.vehi_number}
+                      </CardText>
+
                       <CardSubtitle
                         className="mb-2 text-muted"
                         tag="h3"
                       >
-                        {promotion.promo_discount}% Off
+                        Status: {progress.status}
                       </CardSubtitle>
+
                       <CardText>
-                        {promotion.promo_description}
+                        {progress.description}
                       </CardText>
+
                       <CardSubtitle
                         className="mb-2 text-muted"
                         tag="h4"
                       >
-                        Offer ends on {promotion.promo_endDate}
+                        Date: {progress.date}
                       </CardSubtitle>
+
 
                       <Row>
                       <Button
                           size="sm"
                           color="warning"
                           onClick={() =>
-                            navigate(`/admin/update-promotion/${promotion._id}`)
+                            navigate(`/admin/update-progress/${progress._id}`)
                           }
                          
                       >
@@ -164,7 +172,7 @@ const ViewPromotions = () => {
                         <Button
                           size="sm"
                           color="danger"
-                          onClick={() => handleDelete(promotion._id)}
+                          onClick={() => handleDelete(progress._id)}
                         >
                           Delete
                         </Button>
@@ -174,7 +182,7 @@ const ViewPromotions = () => {
                  
                 ))}
 
-                {visible < allPromotions.length && (
+                {visible < allProgresses.length && (
                     <Button color="secondary" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
@@ -246,4 +254,4 @@ const ViewPromotions = () => {
   );
 };
 
-export default ViewPromotions;
+export default ViewProgressStatus;
