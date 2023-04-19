@@ -23,6 +23,9 @@ const mTeamSchema = new Schema(
     technician_picture_url: {
       type: String,
       required: true,
+    },technician_specialize_in: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

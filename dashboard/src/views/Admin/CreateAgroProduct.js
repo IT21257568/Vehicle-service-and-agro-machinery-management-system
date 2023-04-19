@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -24,26 +24,27 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateVacancy = () => {
+const CreateAgroProduct= () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
 
   //const [isLoading, setIsLoading] = useState(false);
 
+  // image upload states
   const [image, setImage] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
-  const [data, setData] = useState([]);
-  const [technician_name, setTechnicianName] = useState("");
-  const [technician_age, setTechnicianAge] = useState("");
-  const [technician_experiences, setTechnicianExperiences] = useState("");
-  const [technician_expertise, setTechnicianExpertise] = useState("");
-  const [technician_picture_url, setTechnicianPictureUrl] = useState("");
-  const [technician_specialize_in, setTechnicianSpecializeIn] = useState("");
+  const [AgroProduct_name, setAgroProductName] = useState("");
+  const [AgroProduct_price, setAgroProductPrice] = useState("");
+  const [AgroProduct_discount, setAgroProductDiscount] = useState("");
+  const [AgroProduct_description, setAgroProductDescription] = useState("");
+  const [AgroProduct_status, setAgroProductStatus] = useState("");
+  const [AgroProduct_picture_url, setAgroProductPictureUrl] = useState("");
   const [error, setError] = useState(null);
 
+  // handle image upload
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
@@ -84,24 +85,24 @@ const CreateVacancy = () => {
 
     try {
       await axios
-        .post("/api/mTeams", {
-          technician_name: technician_name,
-          technician_age: technician_age,
-          technician_experiences: technician_experiences,
-          technician_expertise: technician_expertise,
-          technician_picture_url: image,
-          technician_specialize_in: technician_specialize_in,
+        .post("/api/agroProducts", {
+          p_name : AgroProduct_name,
+          p_image : image,
+          p_price : AgroProduct_price,
+          p_discount : AgroProduct_discount,
+          p_description : AgroProduct_description,
+          p_status : AgroProduct_status,
         })
         .then((res) => {
-          console.log("New Technician added", res.data);
-          setTechnicianName("");
-          setTechnicianAge("");
-          setTechnicianExperiences("");
-          setTechnicianExpertise("");
-          setTechnicianPictureUrl("");
-          setTechnicianSpecializeIn("");
+          console.log("New AgroProduct added", res.data);
+          setAgroProductName("");
+          setAgroProductPrice("");
+          setAgroProductDiscount("");
+          setAgroProductDescription("");
+          setAgroProductPictureUrl("");
+          setAgroProductStatus("");
           setError(null);
-          navigate("/admin/technicians");
+          navigate("/admin/agro-products");
         });
     } catch (error) {
       setError(error.message);
@@ -119,14 +120,14 @@ const CreateVacancy = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Add Technician</h3>
+                    <h3 className="mb-0">Add Agro Product</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Technician Details
+                    Agro Product Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -134,95 +135,27 @@ const CreateVacancy = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username"
-                          >
-                            Technician Name
+                            htmlFor="input-username">
+                            Agro Product Name
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-username"
-                            placeholder="Enter Name"
+                            placeholder="Enter Agro Product Name"
                             type="text"
                             onChange={(e) => {
-                              setTechnicianName(e.target.value);
+                              setAgroProductName(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Technician Specialize In
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            //defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="Enter Technician's main expertise"
-                            type="text"
-                            onChange={(e) => {
-                              setTechnicianSpecializeIn(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Technician Age
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="select age"
-                            type="number"
-                            onChange={(e) => {
-                              setTechnicianAge(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Technician Expirence
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="select number of years working on this field"
-                            type="number"
-                            onChange={(e) => {
-                              setTechnicianExperiences(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
                       <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Technician Picture
-                          </label>{" "}
-                          <br></br>
+                            htmlFor="input-email">
+                            Agro Product Picture
+                          </label> <br></br>
                           <Media className="align-items-center">
                             <span className="avatar avatar-sm rounded-circle">
                               {image && (
@@ -233,8 +166,7 @@ const CreateVacancy = () => {
                                 />
                               )}
                             </span>
-                          </Media>
-                          <br></br>
+                          </Media><br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
@@ -243,6 +175,84 @@ const CreateVacancy = () => {
                           {uploadProgress > 0 && (
                             <div>Uploading... {uploadProgress}%</div>
                           )}
+                        </FormGroup>
+                      </Col>
+                    </Row>
+
+                    <Row>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Agro Product Price
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-first-name"
+                            placeholder="Enter Agro Product price"
+                            type="number"
+                            onChange={(e) => {
+                              setAgroProductPrice(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Discount
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-first-name"
+                            placeholder="Enter Agro Product discount"
+                            type="number"
+                            onChange={(e) => {
+                              setAgroProductDiscount(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Status
+                          </label>
+                          <Dropdown
+                            isOpen={dropdownOpen}
+                            color="primary"
+                            toggle={toggle}
+                          >
+                            <DropdownToggle caret>
+                              {AgroProduct_status ? AgroProduct_status : "Select Status"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem
+                                value="Available"
+                                onClick={(e) => {
+                                  setAgroProductStatus(e.target.value);
+                                }}
+                              >
+                                Available
+                              </DropdownItem>
+                              <DropdownItem
+                                value="Out of Stock"
+                                onClick={(e) => {
+                                  setAgroProductStatus(e.target.value);
+                                }}
+                              >
+                                Out of Stock
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
                         </FormGroup>
                       </Col>
                     </Row>
@@ -255,15 +265,15 @@ const CreateVacancy = () => {
                         className="form-control-label"
                         htmlFor="input-last-name"
                       >
-                        Techinician Expertice
+                        Description
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
+                        placeholder="A brief description about the Agro Product"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
-                          setTechnicianExpertise(e.target.value);
+                          setAgroProductDescription(e.target.value);
                         }}
                       />
                     </FormGroup>
@@ -274,7 +284,7 @@ const CreateVacancy = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/vacancies");
+                        navigate("/admin/agro-products");
                       }}
                     >
                       Cancel
@@ -290,4 +300,4 @@ const CreateVacancy = () => {
   );
 };
 
-export default CreateVacancy;
+export default CreateAgroProduct;

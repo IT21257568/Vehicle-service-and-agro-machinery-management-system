@@ -29,6 +29,10 @@ const promotionSchema = new Schema(
         type: String,
         required: true,
       },
+      promo_picture_url: {
+        type: String,
+        required: true,
+      },
     },
     { timestamps: true }
   );
