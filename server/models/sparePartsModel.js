@@ -3,27 +3,27 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const sparePartsSchema = new Schema({
-    name:{
+    sp_name:{
         type: String,
         required: true
     },
-    image:{
+    sp_image:{
         type: String,
         required: true
     },
-    price:{
+    sp_price:{
         type: Number,
         required: true
     },
-    discount:{
+    sp_discount:{
+        type: Number,
+        required: true
+    },
+    sp_description:{
         type: String,
         required: true
     },
-    description:{
-        type: String,
-        required: true
-    },
-    status:{
+    sp_status:{
         type: String,
         required: true
     },

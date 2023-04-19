@@ -21,6 +21,10 @@ import CreatePromotion from "views/Admin/CreatePromotion";
 import ViewPromotions from "views/Admin/ViewPromotions";
 import UpdatePromotion from "views/Admin/UpdatePromotion";
 
+import CreateSparePart from "views/Admin/CreateSparePart";
+import ViewSpareParts from "views/Admin/ViewSpareParts";
+import UpdateSparePart from "views/Admin/UpdateSparePart";
+
 const routes = [
   {
     path: "/index",
@@ -176,6 +180,29 @@ const routes = [
     name: "Update Promotion",
     icon: "ni ni-ruler-pencil text-green",
     component: UpdatePromotion,
+    layout: "/admin",
+  },
+
+  //Pehesarai spare parts
+  {
+    path: "/spare-parts",
+    name: "Spare Parts",
+    icon: "ni ni-notification-70 text-blue",
+    component: ViewSpareParts,
+    layout: "/admin",
+  },
+  {
+    path: "/create-spare-part",
+    name: "Create Spare Part",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreateSparePart,
+    layout: "/admin",
+  },
+  {
+    path: "/update-spare-part/:id",
+    name: "Update Promotion",
+    icon: "ni ni-ruler-pencil text-green",
+    component: UpdateSparePart,
     layout: "/admin",
   },
 
