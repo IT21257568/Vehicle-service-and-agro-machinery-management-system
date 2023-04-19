@@ -45,7 +45,7 @@ const ViewSpareParts = () => {
   const [error, setError] = useState(null);
 
   // set visible rows
-  const [visible, setVisible] = useState(2);
+  const [visible, setVisible] = useState(3);
 
   const navigate = useNavigate();
 

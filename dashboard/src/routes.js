@@ -203,7 +203,7 @@ const routes = [
   },
   {
     path: "/update-spare-part/:id",
-    name: "Update Promotion",
+    name: "Update Spare Part",
     icon: "ni ni-ruler-pencil text-green",
     component: UpdateSparePart,
     layout: "/admin",

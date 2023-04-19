@@ -32,7 +32,6 @@ const UpdatePromotion = () => {
   const navigate = useNavigate();
 
   //image upload progress load
-  
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
@@ -99,7 +98,6 @@ const UpdatePromotion = () => {
       });
   };
   
-
   const handleUpdate = () => {
     console.log("lol");
 
