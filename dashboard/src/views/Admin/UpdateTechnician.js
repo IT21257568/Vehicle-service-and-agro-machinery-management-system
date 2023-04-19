@@ -33,8 +33,8 @@ const UpdateTechnician = () => {
   const navigate = useNavigate();
   // const [isLoading, setIsLoading] = useState(false);
 
-   const [image, setImage] = useState(null);
-   const [uploadProgress, setUploadProgress] = useState(0);
+  //const [image, setImage] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
   const [data, setData] = useState([]);
@@ -44,7 +44,6 @@ const UpdateTechnician = () => {
   const [technician_expertise, SetTechnicianExpertise] = useState("");
   const [technician_picture_url, SetTechnicianPictureUrl] = useState("");
   const [technician_specialize_in, setTechnicianSpecializeIn] = useState("");
-  
 
   useEffect(() => {
     const getTechnician = async () => {
@@ -62,73 +61,57 @@ const UpdateTechnician = () => {
     getTechnician();
   }, [id]);
 
-const handleImageUpload = (event) => {
-  const file = event.target.files[0];
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "agd0dlhj");
-  // formData.append("public_id", "your_public_id");
-  formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
+  //setting current image url in pudate form
+  const [image, setImage] = useState(data.technician_picture_url);
 
-  const options = {
-    onUploadProgress: (progressEvent) => {
-      const percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total
-      );
-      setUploadProgress(percentCompleted);
-    },
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "agd0dlhj");
+    // formData.append("public_id", "your_public_id");
+    formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
+
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        setUploadProgress(percentCompleted);
+      },
+    };
+
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+        formData,
+        options
+      )
+      .then((response) => {
+        setImage(response.data.secure_url);
+        setUploadProgress(0);
+      })
+      .catch((error) => {
+        console.error(error);
+        setUploadProgress(0);
+      });
   };
-
-  axios
-    .post(
-      `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
-      formData,
-      options
-    )
-    .then((response) => {
-      setImage(response.data.secure_url);
-      setUploadProgress(0);
-    })
-    .catch((error) => {
-      console.error(error);
-      setUploadProgress(0);
-    });
-};
-
-
 
   const handleUpdate = () => {
     console.log("lol");
-    //if handle image upload is not called and called only when no image is selected
-    if (image === null) {
-      axios
-        .patch(`/api/mTeams/${id}`, {
-          technician_name: technician_name,
-          technician_age: technician_age,
-          technician_experiences: technician_experiences,
-          technician_expertise: technician_expertise,
-          technician_specialize_in: technician_specialize_in,
-        })
-        .then((res) => {
-          console.log(res.data);
-          navigate("/admin/technicians");
-        });
-    } else {
-      axios
-        .patch(`/api/mTeams/${id}`, {
-          technician_name: technician_name,
-          technician_age: technician_age,
-          technician_experiences: technician_experiences,
-          technician_expertise: technician_expertise,
-          technician_picture_url: image,
-          technician_specialize_in: technician_specialize_in,
-        })
-        .then((res) => {
-          console.log(res.data);
-          navigate("/admin/technicians");
-        });
-    } 
-     
+    axios
+      .patch(`/api/mTeams/${id}`, {
+        technician_name: technician_name,
+        technician_age: technician_age,
+        technician_experiences: technician_experiences,
+        technician_expertise: technician_expertise,
+        technician_picture_url: image,
+        technician_specialize_in: technician_specialize_in,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/admin/technicians");
+      });
   };
 
   return (
@@ -182,7 +165,7 @@ const handleImageUpload = (event) => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={data.technician_specialize_in }
+                            defaultValue={data.technician_specialize_in}
                             id="input-first-name"
                             placeholder="Enter Technician's main expertise"
                             type="text"
