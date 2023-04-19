@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -18,19 +18,21 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Media
 } from "reactstrap";
-
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateProgressTracking = () => {
+const UpdateProgressStatus = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  // get vacancy id from url
+  const { id } = useParams();
+
   const navigate = useNavigate();
 
-  //image uploading section
-  const [image, setImage] = useState(null);
+  //image upload progress load
+  
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
@@ -41,7 +43,25 @@ const CreateProgressTracking = () => {
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [progressPictureUrl, setProgressPictureUrl] = useState("");
-  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getProgress = async () => {
+      const res = await axios.get(`/api/progress/${id}`);
+      console.log(res.data);
+      setData(res.data);
+
+      setName(res.data.name);
+      setVehiNumber(res.data.vehi_number);
+      setStatus(res.data.status);
+      setDate(res.data.date);
+      setDescription(res.data.description);
+      setProgressPictureUrl(res.data.progress_picture_url);
+    };
+    getProgress();
+  }, [id]);
+
+  //setting current image url in pudate form
+  const [image, setImage] = useState(data.progress_picture_url);
 
   //handling image upload
   const handleImageUpload = (event) => {
@@ -51,7 +71,7 @@ const CreateProgressTracking = () => {
     formData.append("upload_preset", "agd0dlhj");
     // formData.append("public_id", "your_public_id");
     formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
-
+  
     const options = {
       onUploadProgress: (progressEvent) => {
         const percentCompleted = Math.round(
@@ -60,7 +80,7 @@ const CreateProgressTracking = () => {
         setUploadProgress(percentCompleted);
       },
     };
-
+  
     axios
       .post(
         `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
@@ -76,35 +96,24 @@ const CreateProgressTracking = () => {
         setUploadProgress(0);
       });
   };
+  
 
+  const handleUpdate = () => {
+    console.log("lol");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page refresh
-
-    try {
-      await axios
-        .post("/api/progress", {
-            name : name,
-            vehi_number : vehiNumber,
-            status : status,
-            date  : date,
-            description  : description,
-            progress_picture_url: image,
-        })
-        .then((res) => {
-          console.log("New progress status added", res.data);
-          setName("");
-          setVehiNumber("");
-          setStatus("");
-          setDate("");
-          setDescription("");
-          setProgressPictureUrl("");
-          setError(null);
-          navigate("/admin/progress");
-        });
-    } catch (error) {
-      setError(error.message);
-    }
+    axios
+      .patch(`/api/progress/${id}`, {
+        name : name,
+        vehi_number : vehiNumber,
+        status : status,
+        date  : date,
+        description  : description,
+        progress_picture_url: image,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/admin/progress");
+      });
   };
 
   return (
@@ -250,14 +259,14 @@ const CreateProgressTracking = () => {
                         }}
                       />
                     </FormGroup>
-                    <Button color="primary" onClick={handleSubmit}>
-                      Create
+                    <Button color="primary" onClick={handleUpdate}>
+                      Save Changes
                     </Button>
                     <Button
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/progress");
+                        navigate("/admin/promotions");
                       }}
                     >
                       Cancel
@@ -273,4 +282,4 @@ const CreateProgressTracking = () => {
   );
 };
 
-export default CreateProgressTracking;
+export default UpdateProgressStatus;

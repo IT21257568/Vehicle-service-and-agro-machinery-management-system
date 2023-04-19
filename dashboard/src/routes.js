@@ -22,6 +22,7 @@ import ViewPromotions from "views/Admin/ViewPromotions";
 import UpdatePromotion from "views/Admin/UpdatePromotion";
 import CreateProgressTracking from "views/Admin/CreateProgressTracking";
 import ViewProgressStatus from "views/Admin/ViewProgressStatus";
+import UpdateProgressStatus from "views/Admin/UpdateProgressStatus";
 const routes = [
   {
     path: "/index",
@@ -193,6 +194,13 @@ const routes = [
     name: "All Progress Status",
     icon: "ni ni-notification-70 text-blue",
     component: ViewProgressStatus,
+    layout: "/admin",
+  },
+  {
+    path: "/update-progress/:id",
+    name: "Update Progress Status",
+    icon: "ni ni-ruler-pencil text-green",
+    component: UpdateProgressStatus,
     layout: "/admin",
   },
 
