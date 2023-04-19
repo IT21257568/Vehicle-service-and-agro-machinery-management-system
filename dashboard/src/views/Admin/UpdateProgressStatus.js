@@ -14,7 +14,6 @@ import {
   Container,
   Row,
   Col,
-  Media,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -23,47 +22,48 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const UpdateTechnician = () => {
+const UpdateProgressStatus = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-  // get Technician id from url
+  // get vacancy id from url
   const { id } = useParams();
 
   const navigate = useNavigate();
-  // const [isLoading, setIsLoading] = useState(false);
 
-  //const [image, setImage] = useState(null);
+  //image upload progress load
+  
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
   const [data, setData] = useState([]);
-  const [technician_name, SetTechnicianName] = useState("");
-  const [technician_age, setTechnicianAge] = useState("");
-  const [technician_experiences, SetTechnicianExperiences] = useState("");
-  const [technician_expertise, SetTechnicianExpertise] = useState("");
-  const [technician_picture_url, SetTechnicianPictureUrl] = useState("");
-  const [technician_specialize_in, setTechnicianSpecializeIn] = useState("");
+  const [name, setName] = useState("");
+  const [vehiNumber, setVehiNumber] = useState("");
+  const [status, setStatus] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [progressPictureUrl, setProgressPictureUrl] = useState("");
 
   useEffect(() => {
-    const getTechnician = async () => {
-      const res = await axios.get(`/api/mTeams/${id}`);
+    const getProgress = async () => {
+      const res = await axios.get(`/api/progress/${id}`);
       console.log(res.data);
       setData(res.data);
 
-      SetTechnicianName(res.data.technician_name);
-      setTechnicianAge(res.data.technician_age);
-      SetTechnicianExperiences(res.data.technician_experiences);
-      SetTechnicianExpertise(res.data.technician_expertise);
-      SetTechnicianPictureUrl(res.data.technician_picture_url);
-      setTechnicianSpecializeIn(res.data.technician_specialize_in);
+      setName(res.data.name);
+      setVehiNumber(res.data.vehi_number);
+      setStatus(res.data.status);
+      setDate(res.data.date);
+      setDescription(res.data.description);
+      setProgressPictureUrl(res.data.progress_picture_url);
     };
-    getTechnician();
+    getProgress();
   }, [id]);
 
   //setting current image url in pudate form
-  const [image, setImage] = useState(data.technician_picture_url);
+  const [image, setImage] = useState(data.progress_picture_url);
 
+  //handling image upload
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
@@ -71,7 +71,7 @@ const UpdateTechnician = () => {
     formData.append("upload_preset", "agd0dlhj");
     // formData.append("public_id", "your_public_id");
     formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
-
+  
     const options = {
       onUploadProgress: (progressEvent) => {
         const percentCompleted = Math.round(
@@ -80,7 +80,7 @@ const UpdateTechnician = () => {
         setUploadProgress(percentCompleted);
       },
     };
-
+  
     axios
       .post(
         `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
@@ -96,21 +96,23 @@ const UpdateTechnician = () => {
         setUploadProgress(0);
       });
   };
+  
 
   const handleUpdate = () => {
     console.log("lol");
+
     axios
-      .patch(`/api/mTeams/${id}`, {
-        technician_name: technician_name,
-        technician_age: technician_age,
-        technician_experiences: technician_experiences,
-        technician_expertise: technician_expertise,
-        technician_picture_url: image,
-        technician_specialize_in: technician_specialize_in,
+      .patch(`/api/progress/${id}`, {
+        name : name,
+        vehi_number : vehiNumber,
+        status : status,
+        date  : date,
+        description  : description,
+        progress_picture_url: image,
       })
       .then((res) => {
         console.log(res.data);
-        navigate("/admin/technicians");
+        navigate("/admin/progress");
       });
   };
 
@@ -125,14 +127,14 @@ const UpdateTechnician = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Update Technician</h3>
+                    <h3 className="mb-0">Create Progress Status</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Technician Details
+                  Progress Status Title
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -140,17 +142,17 @@ const UpdateTechnician = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username"
+                            htmlFor="input-title"
                           >
-                            Technician Name
+                            Customer Name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={data.technician_name}
-                            placeholder="Name"
+                            id="input-title"
+                            placeholder="customer name"
                             type="text"
                             onChange={(e) => {
-                              SetTechnicianName(e.target.value);
+                              setName(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -159,126 +161,112 @@ const UpdateTechnician = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-first-name"
+                            htmlFor="input-promo-code"
                           >
-                            Technician Specialize In
+                            Vehicle Registration Number
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={data.technician_specialize_in}
-                            id="input-first-name"
-                            placeholder="Enter Technician's main expertise"
+                            id="input-promo-code"
+                            placeholder="enter vehicle number"
                             type="text"
                             onChange={(e) => {
-                              setTechnicianSpecializeIn(e.target.value);
+                              setVehiNumber(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                     </Row>
+                    <Row>
+                    <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-title"
+                          >
+                            Progress Status
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-title"
+                            placeholder="enter status"
+                            type="text"
+                            onChange={(e) => {
+                              setStatus(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-start-date"
+                          >
+                            Service Date
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-start-date"
+                            
+                            type="date"
+                            onChange={(e) => {
+                              setDate(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Row>
-                      <Col lg="6">
+                  <Row>
+                  <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            Technician Age
-                          </label>
+                            Post Picture
+                          </label> <br></br>
                           <Input
+                            type="file"
                             className="form-control-alternative"
-                            defaultValue={data.technician_age}
-                            placeholder="Age"
-                            type="number"
-                            onChange={(e) => {
-                              setTechnicianAge(e.target.value);
-                            }}
+                            onChange={handleImageUpload}
                           />
+                          {uploadProgress > 0 && (
+                            <div>Uploading... {uploadProgress}%</div>
+                          )}
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-username"
-                          >
-                            Experiences
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue={data.technician_experiences}
-                            placeholder="select count"
-                            type="number"
-                            onChange={(e) => {
-                              SetTechnicianExperiences(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col lg="6">
-                        <Media className="align-items-center">
-                          <span className="avatar avatar-sm rounded-circle">
-                            <img alt="..." src={data.technician_picture_url} />
-                          </span>
-                        </Media>
-                        <br></br>
-                        <br></br>
-                        <Media className="align-items-center">
-                          <span className="avatar avatar-sm rounded-circle">
-                            {image && (
-                              <img
-                                //className="rounded-circle"
-                                src={image}
-                                alt="Uploaded"
-                              />
-                            )}
-                          </span>
-                        </Media>
-                        <br></br>
-                        <Input
-                          type="file"
-                          className="form-control-alternative"
-                          onChange={handleImageUpload}
-                        />
-                        {uploadProgress > 0 && (
-                          <div>Uploading... {uploadProgress}%</div>
-                        )}
-                      </Col>
-                    </Row>
-                    <br></br>
+                  </Row>
                   </div>
 
-                  {/* Description */}
+                   {/* Description */}
                   <div className="pl-lg-4">
                     <FormGroup>
                       <label
                         className="form-control-label"
-                        htmlFor="input-last-name"
+                        htmlFor="input-description"
                       >
-                        Expertice
+                      Promotion Description
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description of the vacancy"
+                        placeholder="A brief description about the Service Progress Status"
                         rows="4"
-                        defaultValue={data.technician_expertise}
-                        onChange={(e) => {
-                          SetTechnicianExpertise(e.target.value);
-                        }}
                         type="textarea"
+                        onChange={(e) => {
+                          setDescription(e.target.value);
+                        }}
                       />
                     </FormGroup>
                     <Button color="primary" onClick={handleUpdate}>
-                      Save
+                      Save Changes
                     </Button>
                     <Button
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/technicians");
+                        navigate("/admin/progress");
                       }}
                     >
                       Cancel
@@ -294,4 +282,4 @@ const UpdateTechnician = () => {
   );
 };
 
-export default UpdateTechnician;
+export default UpdateProgressStatus;

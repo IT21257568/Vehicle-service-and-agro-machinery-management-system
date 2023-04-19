@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -18,51 +18,30 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Media
 } from "reactstrap";
+
 // core components
 import Header from "components/Headers/Header.js";
 
-const UpdatePromotion = () => {
+const CreateProgressTracking = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-
-  // get vacancy id from url
-  const { id } = useParams();
-
   const navigate = useNavigate();
 
-  //image upload progress load
+  //image uploading section
+  const [image, setImage] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
   const [data, setData] = useState([]);
-  const [promotionTitle, setPromotionTitle] = useState("");
-  const [promotionCode, setPromotionCode] = useState("");
-  const [promotionDiscount, setPromotionDiscount] = useState("");
-  const [promotionDescription, setPromotionDescription] = useState("");
-  const [promotionStartDate, setPromotionStartDate] = useState("");
-  const [promotionEndDate, setPromotionEndDate] = useState("");
-  const [promotionPictureUrl, SetPromotionPictureUrl] = useState("");
-
-  useEffect(() => {
-    const getPromotion = async () => {
-      const res = await axios.get(`/api/promotions/${id}`);
-      console.log(res.data);
-      setData(res.data);
-
-      setPromotionTitle(res.data.promo_title);
-      setPromotionCode(res.data.promo_code);
-      setPromotionDiscount(res.data.promo_discount);
-      setPromotionDescription(res.data.promo_description);
-      setPromotionStartDate(res.data.promo_startDate);
-      setPromotionEndDate(res.data.promo_endDate);
-      SetPromotionPictureUrl(res.data.promo_picture_url);
-    };
-    getPromotion();
-  }, [id]);
-
-  //setting current image url in pudate form
-  const [image, setImage] = useState(data.promo_picture_url);
+  const [name, setName] = useState("");
+  const [vehiNumber, setVehiNumber] = useState("");
+  const [status, setStatus] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [progressPictureUrl, setProgressPictureUrl] = useState("");
+  const [error, setError] = useState(null);
 
   //handling image upload
   const handleImageUpload = (event) => {
@@ -72,7 +51,7 @@ const UpdatePromotion = () => {
     formData.append("upload_preset", "agd0dlhj");
     // formData.append("public_id", "your_public_id");
     formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
-  
+
     const options = {
       onUploadProgress: (progressEvent) => {
         const percentCompleted = Math.round(
@@ -81,7 +60,7 @@ const UpdatePromotion = () => {
         setUploadProgress(percentCompleted);
       },
     };
-  
+
     axios
       .post(
         `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
@@ -97,24 +76,35 @@ const UpdatePromotion = () => {
         setUploadProgress(0);
       });
   };
-  
-  const handleUpdate = () => {
-    console.log("lol");
 
-    axios
-      .patch(`/api/promotions/${id}`, {
-        promo_title: promotionTitle,
-        promo_code: promotionCode,
-        promo_discount: promotionDiscount,
-        promo_description: promotionDescription,
-        promo_startDate: promotionStartDate,
-        promo_endDate: promotionEndDate,
-        promo_picture_url: image,
-      })
-      .then((res) => {
-        console.log(res.data);
-        navigate("/admin/promotions");
-      });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // prevent page refresh
+
+    try {
+      await axios
+        .post("/api/progress", {
+            name : name,
+            vehi_number : vehiNumber,
+            status : status,
+            date  : date,
+            description  : description,
+            progress_picture_url: image,
+        })
+        .then((res) => {
+          console.log("New progress status added", res.data);
+          setName("");
+          setVehiNumber("");
+          setStatus("");
+          setDate("");
+          setDescription("");
+          setProgressPictureUrl("");
+          setError(null);
+          navigate("/admin/progress");
+        });
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
@@ -128,14 +118,14 @@ const UpdatePromotion = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Update Promotion</h3>
+                    <h3 className="mb-0">Create Progress Status</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Promotion Title
+                  Progress Status Title
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -145,16 +135,15 @@ const UpdatePromotion = () => {
                             className="form-control-label"
                             htmlFor="input-title"
                           >
-                            Promotion Title
+                            Customer Name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="update-title"
-                            defaultValue={data.promo_title}
-                            placeholder="Promotion Title"
+                            id="input-title"
+                            placeholder="customer name"
                             type="text"
                             onChange={(e) => {
-                              setPromotionTitle(e.target.value);
+                              setName(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -165,112 +154,81 @@ const UpdatePromotion = () => {
                             className="form-control-label"
                             htmlFor="input-promo-code"
                           >
-                            Promotion Code
+                            Vehicle Registration Number
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="update-promo-code"
-                            defaultValue={data.promo_code}
-                            placeholder="enter promo code"
+                            id="input-promo-code"
+                            placeholder="enter vehicle number"
                             type="text"
                             onChange={(e) => {
-                              setPromotionCode(e.target.value);
+                              setVehiNumber(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
                      </Row>
                     <Row>
-                      <Col lg="6">
+                    <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-discount"
+                            htmlFor="input-title"
                           >
-                            Promotion discount
+                            Progress Status
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="update-discount"
-                            defaultValue={data.promo_discount}
-                            placeholder="select discount"
-                            type="number"
+                            id="input-title"
+                            placeholder="enter status"
+                            type="text"
                             onChange={(e) => {
-                              setPromotionDiscount(e.target.value);
+                              setStatus(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
-                    <Row>
+
                       <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="input-start-date"
                           >
-                            Starting Date
+                            Service Date
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="update-start-date"
-                            defaultValue={data.promo_startDate}
-                            type="date"
-                            onChange={(e) => {
-                              setPromotionStartDate(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-end-date"
-                          >
-                            Ending Date
-                          </label>
-                          <Input
-                            className="form-control-alternative"
+                            id="input-start-date"
                             
-                            id="input-end-date"
-                            defaultValue={data.promo_endDate}
                             type="date"
                             onChange={(e) => {
-                              setPromotionEndDate(e.target.value);
+                              setDate(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
-                     </Row>
-                     <Row>
-                     <Col lg="6">
+                    </Row>
+                  <Row>
+                  <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            Change Picture
-                          </label> <br></br>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Current Picture : {data.promo_picture_url}
+                            Post Picture
                           </label> <br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
                             onChange={handleImageUpload}
-                            defaultValue={data.promo_picture_url}
-                            
                           />
                           {uploadProgress > 0 && (
                             <div>Uploading... {uploadProgress}%</div>
                           )}
                         </FormGroup>
                       </Col>
-                    </Row>
+                  </Row>
                   </div>
 
                    {/* Description */}
@@ -284,23 +242,22 @@ const UpdatePromotion = () => {
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the promotion"
-                        defaultValue={data.promo_description}
+                        placeholder="A brief description about the Service Progress Status"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
-                          setPromotionDescription(e.target.value);
+                          setDescription(e.target.value);
                         }}
                       />
                     </FormGroup>
-                    <Button color="primary" onClick={handleUpdate}>
-                      Save Changes
+                    <Button color="primary" onClick={handleSubmit}>
+                      Create
                     </Button>
                     <Button
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/promotions");
+                        navigate("/admin/progress");
                       }}
                     >
                       Cancel
@@ -316,4 +273,4 @@ const UpdatePromotion = () => {
   );
 };
 
-export default UpdatePromotion;
+export default CreateProgressTracking;
