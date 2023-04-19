@@ -38,7 +38,7 @@ import Header from "components/Headers/Header.js";
 
 
 //card
-  function CardRequiremnts({ vacancyd, onClose }) {
+  function CardRatings({ vacancyd, onClose }) {
     return (
       <div className="card">
         <div className="card-body">
@@ -86,13 +86,13 @@ const ViewTechnicians = () => {
   console.log("Rendering App component with showCard = ", showCard);
 
   // set visible rows
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(3);
 
   const navigate = useNavigate();
 
-  const showMoreItems = () => {
-    setVisible((prevValue) => prevValue + 3);
-  };
+ const showMoreItems = () => {
+   setVisible((prevValue) => prevValue + 3);
+ };
 
   // retrieve all technicians from database
   useEffect(() => {
@@ -126,8 +126,11 @@ const ViewTechnicians = () => {
         {/* Light Table */}
         <Row>
           <div className="col">
-            <Card className="shadow">
-              <CardHeader className="border-0">
+            <Card className="shadow" color="lighter">
+              <CardHeader
+                className="border-0"
+                style={{ marginBottom: "1.8rem" }}
+              >
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">Technicians</h3>
@@ -145,7 +148,7 @@ const ViewTechnicians = () => {
                       >
                         <i className="ni ni-planet" />
                       </span>
-                      <span className="btn-inner--text">Add</span>
+                      <span className="btn-inner--text">Add Technician</span>
                     </Button>
                   </div>
                 </Row>
@@ -162,6 +165,7 @@ const ViewTechnicians = () => {
                       }}
                     >
                       <CardImg
+                        height="200rem"
                         width="100%"
                         alt="technicianpicture"
                         src={technician.technician_picture_url}
@@ -201,7 +205,7 @@ const ViewTechnicians = () => {
                               </span>
                             </Button>
                             {showCard && (
-                              <CardRequiremnts
+                              <CardRatings
                                 vacancyd="Sample data"
                                 onClose={handleCloseClick}
                               />
@@ -232,65 +236,17 @@ const ViewTechnicians = () => {
                       </CardBody>
                     </Card>
                   ))}
-
-                  {visible < allTechnicians.length && (
-                    <Button color="secondary" size="sm" onClick={showMoreItems}>
-                      Load More
-                    </Button>
-                  )}
                 </Row>
               </Container>
-              <CardFooter className="py-4">
-                <nav aria-label="...">
-                  <Pagination
-                    className="pagination justify-content-end mb-0"
-                    listClassName="justify-content-end mb-0"
-                  >
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        tabIndex="-1"
-                      >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        3
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className="fas fa-angle-right" />
-                        <span className="sr-only">Next</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                  </Pagination>
-                </nav>
+              <CardFooter
+                className="col text-right"
+                style={{ marginTop: "1.8rem" }}
+              >
+                {visible < allTechnicians.length && (
+                  <Button color="info" size="sm" onClick={showMoreItems}>
+                    Load More
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </div>
