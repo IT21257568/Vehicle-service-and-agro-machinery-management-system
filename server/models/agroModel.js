@@ -16,7 +16,7 @@ const agroSchema = new Schema({
         required: true
     },
     p_discount:{
-        type: String,
+        type: Number,
         required: true
     },
     p_description:{
