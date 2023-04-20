@@ -39,6 +39,7 @@ import CreateGeneralIssue from "views/Admin/CreateGeneralIssues";
 
 // User views
 import DummyPage from "views/User/DummyPage";
+import SparePartsPage from "views/User/SparePartsPage";
 
 // nisal
 import ViewCVSubmissions from "views/Admin/ViewCVSubmissions";
@@ -302,6 +303,16 @@ const routes = [
     component: UpdateRepairJob,
     layout: "/admin",
   },
+
+  //User - Pehesasarani Spare Parts
+  {
+    path: "/spareParts",
+    name: "Spare Parts Page",
+    icon: "ni ni-ruler-pencil text-green",
+    component: SparePartsPage,
+    layout: "/user",
+  },
+
   //Nisal CV Submission
   {
     path: "/cv-submission",
