@@ -121,7 +121,7 @@ const CreateGeneralIssue = () => {
                             toggle={toggle}
                           >
                             <DropdownToggle caret>
-                              {gnDiscription ? gnDiscription : "Select Type"}
+                              {issueStatus ? issueStatus : "Select Type"}
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem
