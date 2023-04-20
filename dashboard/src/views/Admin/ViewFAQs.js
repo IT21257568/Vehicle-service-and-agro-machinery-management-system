@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -37,7 +37,8 @@ import {
   UncontrolledCollapse,
   Toast,
   ToastHeader,
-  ToastBody
+  ToastBody,
+  ButtonToggle
   
 } from "reactstrap";
 
@@ -92,14 +93,15 @@ const ViewFAQs = () => {
   const onEntered = () => setStatus('Close');
   const onExiting = () => setStatus('Closing...');
   const onExited = () => setStatus('View');
+
   const toggle = (id) => {
-      
-      
-      axios.get(`/api/faqs/${id}`, {
-        faq_collapse:faqCollapse
-      }).then(() => {
-          setCollapse(!faqCollapse);
-        });
+        
+        
+    axios.get(`/api/faqs/${id}`, {
+      faq_collapse:faqCollapse
+    }).then(() => {
+        setCollapse(!faqCollapse);
+      });
   }
 
     return (

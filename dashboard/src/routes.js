@@ -38,6 +38,7 @@ import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 
 import CreateFAQ from "views/Admin/CreateFAQ";
 import ViewFAQs from "views/Admin/ViewFAQs";
+import UpdateFAQ from "views/Admin/updateFAQ";
 
 // User views
 import DummyPage from "views/User/DummyPage";
@@ -315,12 +316,19 @@ const routes = [
     layout: "/admin",
   },
   {
-    path: "/view-faqs",
-    name: "View FAQs",
+    path: "/faqs",
+    name: "FAQ Section",
     icon: "ni ni-notification-70 text-pink",
     component: ViewFAQs,
     layout: "/admin",
-  }
+  },
+  {
+    path: "/update-faq/:id",
+    name: "Update FAQs",
+    icon: "ni ni-notification-70 text-pink",
+    component: UpdateFAQ,
+    layout: "/admin",
+  },
 
   //Nisal CV Submission
   {
