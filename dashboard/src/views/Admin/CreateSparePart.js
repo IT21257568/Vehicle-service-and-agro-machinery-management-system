@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -29,14 +29,11 @@ const CreateSparePart= () => {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
 
-  //const [isLoading, setIsLoading] = useState(false);
-
   // image upload states
   const [image, setImage] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
-  const [data, setData] = useState([]);
   const [SparePart_name, setSparePartName] = useState("");
   const [SparePart_price, setSparePartPrice] = useState("");
   const [SparePart_discount, setSparePartDiscount] = useState("");
@@ -44,7 +41,6 @@ const CreateSparePart= () => {
   const [SparePart_status, setSparePartStatus] = useState("");
   const [SparePart_picture_url, setSparePartPictureUrl] = useState("");
   const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -79,8 +75,6 @@ const CreateSparePart= () => {
       });
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
@@ -103,7 +97,6 @@ const CreateSparePart= () => {
           setSparePartPictureUrl("");
           setSparePartStatus("");
           setError(null);
-          setEmptyFields([]);
           navigate("/admin/spare-parts");
         });
     } catch (error) {
@@ -140,7 +133,7 @@ const CreateSparePart= () => {
                   <div className="pl-lg-4">
                     <Row>
                       <Col lg="6">
-                        <FormGroup controlId="sparePartName">
+                        <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="input-username">
@@ -150,12 +143,11 @@ const CreateSparePart= () => {
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Enter spare part Name"
-                            required
                             type="text"
                             onChange={(e) => {
                               setSparePartName(e.target.value);
                             }}
-                            style={emptyFields.includes('sp_name') ? {borderColor: 'red'} : {}}
+                            //style={emptyFields.includes('sp_name') ? {borderColor: 'red'} : {}}
                           />
                         </FormGroup>
                       </Col>
@@ -202,7 +194,6 @@ const CreateSparePart= () => {
                             className="form-control-alternative"
                             id="input-first-name"
                             placeholder="Enter spare part price"
-                            required
                             type="number"
                             onChange={(e) => {
                               setSparePartPrice(e.target.value);
@@ -222,7 +213,6 @@ const CreateSparePart= () => {
                             className="form-control-alternative"
                             id="input-first-name"
                             placeholder="Enter spare part discount"
-                            required
                             type="number"
                             onChange={(e) => {
                               setSparePartDiscount(e.target.value);
@@ -242,7 +232,6 @@ const CreateSparePart= () => {
                             isOpen={dropdownOpen}
                             color="primary"
                             toggle={toggle}
-                            required
                           >
                             <DropdownToggle caret>
                               {SparePart_status ? SparePart_status : "Select Status"}
@@ -282,14 +271,23 @@ const CreateSparePart= () => {
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
-                        required
+                        placeholder="A brief description about the spare part"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
                           setSparePartDescription(e.target.value);
                         }}
                       />
+                      {error && (
+                        <div style={{ 
+                          backgroundColor: "red", 
+                          color: "white", 
+                          padding: "10px", 
+                          marginTop: "10px", 
+                        }}>
+                          <p>{error}</p>
+                        </div>
+                      )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create
