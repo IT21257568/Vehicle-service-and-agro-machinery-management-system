@@ -298,5 +298,6 @@ const routes = [
     component: UpdateRepairJob,
     layout: "/admin",
   },
+
 ];
 export default routes;
