@@ -29,7 +29,6 @@ const CreateVacancy = () => {
   const navigate = useNavigate();
 
   // form states
-  const [data, setData] = useState([]);
   const [vacancyTitle, setVacancyTitle] = useState("");
   const [vacancyType, setVacancyType] = useState("");
   const [vacancyCount, setVacancyCount] = useState("");
@@ -48,7 +47,7 @@ const CreateVacancy = () => {
           vacancy_requirements: vacancyRequirements,
         })
         .then((res) => {
-          console.log("New sparepart added", res.data);
+          console.log("New Vacancy added", res.data);
           setVacancyTitle("");
           setVacancyType("");
           setVacancyCount("");
