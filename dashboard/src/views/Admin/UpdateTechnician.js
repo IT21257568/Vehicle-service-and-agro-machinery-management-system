@@ -15,18 +15,16 @@ import {
   Row,
   Col,
   Media,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  //Dropdown,
+  //DropdownToggle,
+  //DropdownMenu,
+  //DropdownItem,
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
 
 const UpdateTechnician = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
-
+ 
   // get Technician id from url
   const { id } = useParams();
 
@@ -61,7 +59,7 @@ const UpdateTechnician = () => {
     getTechnician();
   }, [id]);
 
-  //setting current image url in pudate form
+  //setting current image url in Update form
   const [image, setImage] = useState(data.technician_picture_url);
 
   const handleImageUpload = (event) => {
@@ -98,7 +96,7 @@ const UpdateTechnician = () => {
   };
 
   const handleUpdate = () => {
-    console.log("lol");
+    console.log("Ready to update");
     axios
       .patch(`/api/mTeams/${id}`, {
         technician_name: technician_name,

@@ -53,7 +53,7 @@ const UpdateVacancy = () => {
   }, [id]);
 
   const handleUpdate = () => {
-    console.log("lol");
+    console.log("Ready to update");
 
     axios
       .patch(`/api/vacancies/${id}`, {

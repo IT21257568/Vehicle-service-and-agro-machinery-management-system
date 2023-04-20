@@ -9,11 +9,11 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
+  //DropdownMenu,
+  //DropdownItem,
+  //UncontrolledDropdown,
+  //DropdownToggle,
+  //Media,
   Pagination,
   PaginationItem,
   PaginationLink,
@@ -21,9 +21,9 @@ import {
   Table,
   Container,
   Row,
-  UncontrolledTooltip,
+  //UncontrolledTooltip,
   Button,
-  Chip,
+ //Chip,
 } from "reactstrap";
 
 // core components
