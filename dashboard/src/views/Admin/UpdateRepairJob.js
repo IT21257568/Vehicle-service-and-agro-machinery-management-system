@@ -158,7 +158,7 @@ const UpdateRepairJob = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-username"
-                            placeholder="Title"
+                            placeholder="Enter Customer Name"
                             defaultValue={data.customer_name}
                             type="text"
                             onChange={(e) => {
@@ -249,7 +249,7 @@ const UpdateRepairJob = () => {
                             <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Title"
+                                placeholder="Enter Customer NIC"
                                 defaultValue={data.customer_id}
                                 type="text"
                                 onChange={(e) => {
@@ -362,7 +362,7 @@ const UpdateRepairJob = () => {
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
+                        placeholder="This are no required parts"
                         defaultValue={data.required_parts}
                         rows="4"
                         type="textarea"
