@@ -36,6 +36,7 @@ import CreateRepairJob from "views/Admin/CreateRepairJob";
 import ViewRepairJobs from "views/Admin/ViewRepairJobs";
 import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 import CreateGeneralIssue from "views/Admin/CreateGeneralIssues";
+import ViewGeneralIssues from "views/Admin/ViewGeneralIssues";
 
 // User views
 import DummyPage from "views/User/DummyPage";
@@ -344,6 +345,13 @@ const routes = [
     name: "Create General Issue",
     icon: "ni ni-notification-70 text-pink",
     component: CreateGeneralIssue,
+    layout: "/admin",
+  },
+  {
+    path: "/view-general-issues",
+    name: "View General Issue",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewGeneralIssues,
     layout: "/admin",
   },
 ];
