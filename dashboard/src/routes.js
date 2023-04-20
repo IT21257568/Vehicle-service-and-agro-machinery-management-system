@@ -41,6 +41,8 @@ import DummyPage from "views/User/DummyPage";
 
 // nisal
 import ViewCVSubmissions from "views/Admin/ViewCVSubmissions";
+import Career from "views/User/Career";
+import ApplyNow from "views/User/ApplyNow";
 
 
 const routes = [
@@ -308,6 +310,20 @@ const routes = [
     icon: "ni ni-notification-70 text-pink",
     component: ViewCVSubmissions,
     layout: "/admin",
+  },
+  {
+    path: "/carrerpage",
+    name: "Career",
+    icon: "ni ni-ruler-pencil text-green",
+    component: Career,
+    layout: "/user",
+  },
+  {
+    path: "/applynowpage/:id",
+    name: "Apply Now",
+    icon: "ni ni-ruler-pencil text-green",
+    component: ApplyNow,
+    layout: "/user",
   },
 ];
 export default routes;
