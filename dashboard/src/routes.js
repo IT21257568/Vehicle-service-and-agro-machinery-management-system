@@ -42,6 +42,9 @@ import ViewFAQs from "views/Admin/ViewFAQs";
 // User views
 import DummyPage from "views/User/DummyPage";
 
+// nisal
+import ViewCVSubmissions from "views/Admin/ViewCVSubmissions";
+
 
 
 const routes = [
@@ -319,5 +322,13 @@ const routes = [
     layout: "/admin",
   }
 
+  //Nisal CV Submission
+  {
+    path: "/cv-submission",
+    name: "CV Submissions",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewCVSubmissions,
+    layout: "/admin",
+  },
 ];
 export default routes;
