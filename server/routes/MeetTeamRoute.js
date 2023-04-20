@@ -8,19 +8,19 @@ const {
     updatemTeam,
 } = require("../controllers/MeetTeamController");
 
-//Get all of the workouts (1)
+//Get all of the Technicians (1)
 router.get("/", getmTeams);
 
-//Get single workout (2)
+//Get single Technician (2)
 router.get("/:id", getmTeam);
 
-//Post a new workout (3)
+//Post a new Technician (3)
 router.post("/", ceatemTeam);
 
-//Delete a workout (4)
+//Delete a Technician (4)
 router.delete("/:id", deletemTeam);
 
-//Update workout (5)
+//Update Technician (5)
 router.patch("/:id", updatemTeam);
 
 module.exports = router;

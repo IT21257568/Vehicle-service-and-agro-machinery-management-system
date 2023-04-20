@@ -28,6 +28,6 @@ const vacancySchema = new Schema(
   { timestamps: true }
 );
 
-//const Vacancy = mongoose.model('Workout', workoutSchema)
+
 
 module.exports = mongoose.model("Vacancy", vacancySchema);

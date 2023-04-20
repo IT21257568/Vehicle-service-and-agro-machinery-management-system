@@ -15,18 +15,17 @@ import {
   Row,
   Col,
   Media,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  //Dropdown,
+  //DropdownToggle,
+  //DropdownMenu,
+  //DropdownItem,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
 const CreateVacancy = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  
   const navigate = useNavigate();
 
   //const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +34,6 @@ const CreateVacancy = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
-  const [data, setData] = useState([]);
   const [technician_name, setTechnicianName] = useState("");
   const [technician_age, setTechnicianAge] = useState("");
   const [technician_experiences, setTechnicianExperiences] = useState("");
