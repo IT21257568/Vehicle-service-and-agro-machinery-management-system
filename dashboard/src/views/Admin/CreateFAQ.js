@@ -23,48 +23,42 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateVacancy = () => {
+const CreateFAQ = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
 
   // form states
-  const [vacancyTitle, setVacancyTitle] = useState("");
-  const [vacancyType, setVacancyType] = useState("");
-  const [vacancyCount, setVacancyCount] = useState("");
-  const [vacancyRequirements, setVacancyRequirements] = useState("");
+  const [data, setData] = useState([]);
+  const [faqQuestion, setFaqQuestion] = useState("");
+  const [faqCategory, setFaqCategory] = useState("");
+  const [faqAnswer, setFaqAnswer] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
     try {
-        await axios
-        .post("/api/vacancies", {
-          vacancy_title: vacancyTitle,
-          vacancy_type: vacancyType,
-          vacancy_count: vacancyCount,
-          vacancy_requirements: vacancyRequirements,
+      await axios
+        .post("/api/faqs", {
+          faq_question: faqQuestion,
+          faq_category: faqCategory,
+          faq_answer: faqAnswer,
+          
         })
         .then((res) => {
-          console.log("New Vacancy added", res.data);
-          setVacancyTitle("");
-          setVacancyType("");
-          setVacancyCount("");
-          setVacancyRequirements("");
+          console.log("New FAQ added", res.data);
+          setFaqQuestion("");
+          setFaqCategory("");
+          setFaqAnswer("");
           setError(null);
-          navigate("/admin/vacancies");
+          navigate("/admin/faqs");
         });
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        const { error: errorMessage, emptyFields } = error.response.data;
-        const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
-      } else {
-        console.log(error);
-      }
+      setError(error.message);
     }
   };
+
   return (
     <>
       <Header />
@@ -76,7 +70,7 @@ const CreateVacancy = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Vacancy</h3>
+                    <h3 className="mb-0">Create MCQ</h3>
                   </Col>
                 </Row>
               </CardHeader>
@@ -194,18 +188,6 @@ const CreateVacancy = () => {
                           setVacancyRequirements(e.target.value);
                         }}
                       />
-                      {error && (
-                        <div
-                          style={{
-                            backgroundColor: "red",
-                            color: "white",
-                            padding: "10px",
-                            marginTop: "10px",
-                          }}
-                        >
-                          <p>{error}</p>
-                        </div>
-                      )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create

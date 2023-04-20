@@ -40,6 +40,10 @@ import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 import DummyPage from "views/User/DummyPage";
 import SparePartsPage from "views/User/SparePartsPage";
 
+// nisal
+import ViewCVSubmissions from "views/Admin/ViewCVSubmissions";
+
+
 const routes = [
   {
     path: "/index",
@@ -179,21 +183,21 @@ const routes = [
   {
     path: "/create-promotion",
     name: "Create Promotion",
-    icon: "ni ni-notification-70 text-pink",
+    icon: "ni ni-notification-70 text-orange",
     component: CreatePromotion,
     layout: "/admin",
   },
   {
     path: "/promotions",
     name: "Promotions",
-    icon: "ni ni-notification-70 text-blue",
+    icon: "ni ni-notification-70 text-orange",
     component: ViewPromotions,
     layout: "/admin",
   },
   {
     path: "/update-promotion/:id",
     name: "Update Promotion",
-    icon: "ni ni-ruler-pencil text-green",
+    icon: "ni ni-ruler-pencil text-orange",
     component: UpdatePromotion,
     layout: "/admin",
   },
@@ -308,5 +312,13 @@ const routes = [
     layout: "/user",
   },
 
+  //Nisal CV Submission
+  {
+    path: "/cv-submission",
+    name: "CV Submissions",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewCVSubmissions,
+    layout: "/admin",
+  },
 ];
 export default routes;
