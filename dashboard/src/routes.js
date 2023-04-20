@@ -38,7 +38,7 @@ import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 
 // User views
 import DummyPage from "views/User/DummyPage";
-
+import SparePartsPage from "views/User/SparePartsPage";
 
 const routes = [
   {
@@ -298,5 +298,15 @@ const routes = [
     component: UpdateRepairJob,
     layout: "/admin",
   },
+
+  //User - Pehesasarani Spare Parts
+  {
+    path: "/spareParts",
+    name: "Spare Parts Page",
+    icon: "ni ni-ruler-pencil text-green",
+    component: SparePartsPage,
+    layout: "/user",
+  },
+
 ];
 export default routes;

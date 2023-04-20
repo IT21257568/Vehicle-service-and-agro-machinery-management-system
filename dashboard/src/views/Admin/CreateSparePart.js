@@ -44,6 +44,7 @@ const CreateSparePart= () => {
   const [SparePart_status, setSparePartStatus] = useState("");
   const [SparePart_picture_url, setSparePartPictureUrl] = useState("");
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -102,11 +103,18 @@ const CreateSparePart= () => {
           setSparePartPictureUrl("");
           setSparePartStatus("");
           setError(null);
+          setEmptyFields([]);
           navigate("/admin/spare-parts");
         });
     } catch (error) {
-      setError(error.message);
-    }
+        if (error.response && error.response.status === 400) {
+          const { error: errorMessage, emptyFields } = error.response.data;
+          const fields = emptyFields.join(", ");
+          setError(`Please fill in all fields: ${fields}`);
+        } else {
+          console.log(error);
+        }
+      }
   };
 
   return (
@@ -132,7 +140,7 @@ const CreateSparePart= () => {
                   <div className="pl-lg-4">
                     <Row>
                       <Col lg="6">
-                        <FormGroup>
+                        <FormGroup controlId="sparePartName">
                           <label
                             className="form-control-label"
                             htmlFor="input-username">
@@ -142,10 +150,12 @@ const CreateSparePart= () => {
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Enter spare part Name"
+                            required
                             type="text"
                             onChange={(e) => {
                               setSparePartName(e.target.value);
                             }}
+                            style={emptyFields.includes('sp_name') ? {borderColor: 'red'} : {}}
                           />
                         </FormGroup>
                       </Col>
@@ -190,9 +200,9 @@ const CreateSparePart= () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
                             id="input-first-name"
                             placeholder="Enter spare part price"
+                            required
                             type="number"
                             onChange={(e) => {
                               setSparePartPrice(e.target.value);
@@ -210,9 +220,9 @@ const CreateSparePart= () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            //defaultValue="Lucky"
                             id="input-first-name"
                             placeholder="Enter spare part discount"
+                            required
                             type="number"
                             onChange={(e) => {
                               setSparePartDiscount(e.target.value);
@@ -232,6 +242,7 @@ const CreateSparePart= () => {
                             isOpen={dropdownOpen}
                             color="primary"
                             toggle={toggle}
+                            required
                           >
                             <DropdownToggle caret>
                               {SparePart_status ? SparePart_status : "Select Status"}
@@ -272,6 +283,7 @@ const CreateSparePart= () => {
                       <Input
                         className="form-control-alternative"
                         placeholder="A brief description about the vacancy"
+                        required
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
