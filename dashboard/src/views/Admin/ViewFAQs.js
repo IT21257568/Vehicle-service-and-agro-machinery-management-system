@@ -42,12 +42,16 @@ import {
   
 } from "reactstrap";
 
+import { Accordion } from 'react-bootstrap-accordion';
+import 'react-bootstrap-accordion/dist/index.css';
 // core components
 import Header from "components/Headers/Header.js";
 
+
+
+
 const ViewFAQs = () => {
   // states
-  const [data, setData] = useState([]);
   const [allFAQs, setAllFaqs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -66,7 +70,7 @@ const ViewFAQs = () => {
     const fetchAllFaqs = async () => {
       try {
         const res = await axios.get("/api/faqs");
-        setData(res.data)
+        
         setAllFaqs(res.data);
         setIsLoading(false);
       } catch (err) {
@@ -76,6 +80,16 @@ const ViewFAQs = () => {
     };
     fetchAllFaqs();
   }, []);
+
+  //accordion 
+  const [open, setOpen] = useState('1');
+  const toggle = (id) => {
+    if (open === id) {
+      setOpen();
+    } else {
+      setOpen(id);
+    }
+  }
 
 
   const handleDelete = (id) => {
@@ -87,31 +101,7 @@ const ViewFAQs = () => {
     });
   };
 
-  //faq card collapse 
-
-  const [faqCollapse, setCollapse] = useState(data.faq_collapse);
-  const [status, setStatus] = useState('View');
-
-  const onEntering = () => setStatus('Viewing...');
-  const onEntered = () => setStatus('Close');
-  const onExiting = () => setStatus('Closing...');
-  const onExited = () => setStatus('View');
-
-  const toggle = (id) => {
-        
-        
-    axios.patch(`/api/faqs/${id}`)
-      
-    .then((res) => {
-        res.data.faq_collapse = faqCollapse;
-        console.log(res.data.faq_question);
-        setCollapse(!res.data.faq_collapse);
-        console.log(res.data.faq_collapse);
-      });
-  }
-
-  
-
+ 
     return (
     <>
       <Header/>
@@ -149,47 +139,28 @@ const ViewFAQs = () => {
                 
               {allFAQs.slice(0, visible).map((faq, index) => (
                 
-                <div>
-                <h3>{faq.faq_question}</h3>  
-                <Button color="default" size="medium" onClick={() => toggle(faq._id)} style={{ marginBottom: '1rem'}}>
-                  {status} Solution
-                </Button>
+                <Accordion title={faq.faq_question} open={open} toggle={toggle}>
                 
-                <Collapse
-                  key={faq._id}
-                  defaultValue={faq.faq_collapse}
-                  isOpen={faqCollapse}
-                  onEntering={onEntering}
-                  onEntered={onEntered}
-                  onExiting={onExiting}
-                  onExited={onExited}
-                >
-                  <Card key={faq._id}>
-                    <CardBody>
-                      
-                      {faq.faq_answer}
-                      
-                      <Row>
-                      <Button style={{marginLeft:'21rem', marginTop:'0.8rem'}}
-                        size="sm"
-                        color="warning"
-                        onClick={() =>
-                          navigate(`/admin/update-faq/${faq._id}`)}
-                       >
-                        Update
-                      </Button>
-                      <Button style={{marginTop:'0.8rem'}}
-                        size="sm"
-                        color="danger"
-                        onClick={() => handleDelete(faq._id)}
+                {faq.faq_answer}
+                  <Row style={{marginTop: '1rem'}}>
+                      <Button style={{marginLeft: '0.8rem', marginRight: '1rem'}}
+                          size="sm"
+                          color="warning"
+                          onClick={() =>
+                            navigate(`/admin/update-faq/${faq._id}`)}
+                         
                       >
-                        Delete
-                      </Button>
-                      </Row>
-                    </CardBody>
-                  </Card>
-                </Collapse>
-            </div>
+                          Update
+                        </Button>
+                        <Button
+                          size="sm"
+                          color="danger"
+                          onClick={() => handleDelete(faq._id)}
+                        >
+                          Delete
+                        </Button>
+                    </Row>
+                </Accordion>
 
             ))}
             
