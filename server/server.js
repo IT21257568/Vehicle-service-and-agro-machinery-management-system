@@ -12,6 +12,7 @@ const bookingsRoute = require("./routes/bookingsRoute");
 const ProgressTrackingRoute = require("./routes/ProgressTrackingRoute");
 const damageValuationRoutes = require("./routes/damageValuation");
 const faqRoute = require("./routes/faqRoute");
+const generalIssueRoutes = require("./routes/generalIssue");
 
 // setup cors
 const cors = require("cors");
@@ -46,6 +47,8 @@ app.use("/api/faqs", faqRoute)
 app.use("/api/progress", ProgressTrackingRoute);
 //Tharusha
 app.use("/api/damageValuation", damageValuationRoutes);
+//Piyumi
+app.use("/api/generalIssues", generalIssueRoutes);
 
 
 //connect to db
