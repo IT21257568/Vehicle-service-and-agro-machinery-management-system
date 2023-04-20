@@ -32,9 +32,13 @@ import UpdateProgressStatus from "views/Admin/UpdateProgressStatus";
 import CreateAgroProduct from "views/Admin/CreateAgroProduct";
 import ViewAgroProducts from "views/Admin/ViewAgroProducts";
 import UpdateAgroProduct from "views/Admin/UpdateAgroProduct";
+import CreateRepairJob from "views/Admin/CreateRepairJob";
+import ViewRepairJobs from "views/Admin/ViewRepairJobs";
+import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 
 // User views
 import DummyPage from "views/User/DummyPage";
+
 
 const routes = [
   {
@@ -263,6 +267,21 @@ const routes = [
     layout: "/admin",
   },
 
+  //Tharusha Create repair jobs
+  {
+    path: "/ceate-repair-job",
+    name: "Create Repair Job",
+    icon: "ni ni-notification-70 text-blue",
+    component: CreateRepairJob,
+    layout: "/admin",
+  },
+  {
+    path: "/view-repair-jobs",
+    name: "View Repair Jobs",
+    icon: "ni ni-notification-70 text-blue",
+    component: ViewRepairJobs,
+    layout: "/admin",
+  },
   // USER VIEWS
   {
     path: "/dummypage",
@@ -270,6 +289,14 @@ const routes = [
     icon: "ni ni-ruler-pencil text-green",
     component: DummyPage,
     layout: "/user",
+  },
+  //Tharusha Create repair jobs continued
+  {
+    path: "/update-repair-job/:id",
+    name: "Update Repair Job",
+    icon: "ni ni-notification-70 text-blue",
+    component: UpdateRepairJob,
+    layout: "/admin",
   },
 ];
 export default routes;
