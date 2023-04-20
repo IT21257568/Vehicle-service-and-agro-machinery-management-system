@@ -34,12 +34,11 @@ import ViewAgroProducts from "views/Admin/ViewAgroProducts";
 import UpdateAgroProduct from "views/Admin/UpdateAgroProduct";
 import CreateRepairJob from "views/Admin/CreateRepairJob";
 import ViewRepairJobs from "views/Admin/ViewRepairJobs";
+import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 
 // User views
 import DummyPage from "views/User/DummyPage";
 
-// User views
-import DummyPage from "views/User/DummyPage";
 
 const routes = [
   {
@@ -290,6 +289,14 @@ const routes = [
     icon: "ni ni-ruler-pencil text-green",
     component: DummyPage,
     layout: "/user",
+  },
+  //Tharusha Create repair jobs continued
+  {
+    path: "/update-repair-job/:id",
+    name: "Update Repair Job",
+    icon: "ni ni-notification-70 text-blue",
+    component: UpdateRepairJob,
+    layout: "/admin",
   },
 ];
 export default routes;

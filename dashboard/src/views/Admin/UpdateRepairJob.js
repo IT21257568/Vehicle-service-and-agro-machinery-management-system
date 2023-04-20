@@ -36,47 +36,47 @@ const UpdateRepairJob = () => {
   const [name, setCustomerName] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
   const [customerId, setCustomerId] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [date_time, setDateTime] = useState("");
-  const [specialNote, setSpecialNote] = useState("");
+  const [vehicleNumber, setVehicleNumber] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [estimatedCost, setEstimatedCost] = useState("");
+  const [requiredParts, setRequiredParts] = useState("");
  
 
   useEffect(() => {
-    const getBooking = async () => {
-      const res = await axios.get(`/api/bookings/${id}`);
+    const getRepairJob = async () => {
+      const res = await axios.get(`/api/damageValuation/${id}`);
       console.log(res.data);
       setData(res.data);
 
-      setLocation(res.data.location);
-      setServiceType(res.data.service_type);
-      setClientName(res.data.client_name);
-      setEmail(res.data.email);
-      setPhone(res.data.phone);
-      setDateTime(res.data.date_time);
-      setSpecialNote(res.data.special_note);
+      setCustomerName(res.data.customer_name);
+      setVehicleModel(res.data.vehicle_Model);
+      setCustomerId(res.data.customer_id);
+      setCustomerEmail(res.data.customer_email);
+      setVehicleNumber(res.data.vehicle_Number);
+      setEstimatedCost(res.data.estimated_cost);
+      setRequiredParts(res.data.required_parts);
 
 
     };
-    getBooking();
+    getRepairJob();
   }, [id]);
 
   const handleUpdate = () => {
     console.log("lol");
 
     axios
-      .patch(`/api/bookings/${id}`, {
-        location: name,
-        service_type: vehicleModel,
-        client_name: customerId,
-        email: email,
-        phone: phone,
-        date_time: date_time,
-        special_note: specialNote
+      .patch(`/api/damageValuation/${id}`, {
+        customer_name: name,
+        vehicle_Model: vehicleModel,
+        customer_id: customerId,
+        vehicle_Number: vehicleNumber,
+        customer_email: customerEmail,
+        estimated_cost: estimatedCost,
+        required_parts: requiredParts
       })
       .then((res) => {
         console.log(res.data);
-        navigate("/admin/bookings");
+        navigate("/admin/view-repair-jobs");
       });
   };
 
@@ -292,14 +292,8 @@ const UpdateRepairJob = () => {
                         }}
                       />
                     </FormGroup>
-                    <Button
-                      color="primary"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigate("/admin/view-repair-jobs");
-                      }}
-                    >
-                      Create
+                    <Button color="primary" onClick={handleUpdate}>
+                      Save
                     </Button>
                     <Button
                       color="warning"

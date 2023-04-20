@@ -143,7 +143,7 @@ const ViewRepairJobs = () => {
                           size="sm"
                           color="warning"
                           onClick={() =>
-                            navigate(`/admin/view-repair-jobs/${repairJob._id}`)
+                            navigate(`/admin/update-repair-job/${repairJob._id}`)
                           }
                         >
                           Update
