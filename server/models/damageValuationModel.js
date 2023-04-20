@@ -35,6 +35,10 @@ const damageValuationSchema = new Schema({
         type: String,
 
     },
+    damage_picture_url: {
+        type: String,
+        required: [true, "Please add damage picture"],
+    },
 
 }, { timestamps: true })
 

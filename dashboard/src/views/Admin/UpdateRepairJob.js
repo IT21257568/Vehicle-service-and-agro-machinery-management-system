@@ -22,6 +22,8 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
+
+
 const UpdateRepairJob = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
@@ -30,6 +32,9 @@ const UpdateRepairJob = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
+
+  //image uploading section
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
   const [data, setData] = useState([]);
@@ -40,6 +45,7 @@ const UpdateRepairJob = () => {
   const [customerEmail, setCustomerEmail] = useState("");
   const [estimatedCost, setEstimatedCost] = useState("");
   const [requiredParts, setRequiredParts] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
  
 
   useEffect(() => {
@@ -55,12 +61,50 @@ const UpdateRepairJob = () => {
       setVehicleNumber(res.data.vehicle_Number);
       setEstimatedCost(res.data.estimated_cost);
       setRequiredParts(res.data.required_parts);
+      setImageUrl(res.data.damage_picture_url);
 
 
     };
     getRepairJob();
   }, [id]);
 
+  
+  //setting current image url in pudate form
+  const [image, setImage] = useState(data.damage_picture_url);
+
+  //handling image upload
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "agd0dlhj");
+    // formData.append("public_id", "your_public_id");
+    formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
+  
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        setUploadProgress(percentCompleted);
+      },
+    };
+  
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+        formData,
+        options
+      )
+      .then((response) => {
+        setImage(response.data.secure_url);
+        setUploadProgress(0);
+      })
+      .catch((error) => {
+        console.error(error);
+        setUploadProgress(0);
+      });
+  };
   const handleUpdate = () => {
     console.log("lol");
 
@@ -72,7 +116,8 @@ const UpdateRepairJob = () => {
         vehicle_Number: vehicleNumber,
         customer_email: customerEmail,
         estimated_cost: estimatedCost,
-        required_parts: requiredParts
+        required_parts: requiredParts,
+        damage_picture_url: image,
       })
       .then((res) => {
         console.log(res.data);
@@ -91,7 +136,7 @@ const UpdateRepairJob = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Repair Job</h3>
+                    <h3 className="mb-0">Update Repair Job</h3>
                   </Col>
                 </Row>
               </CardHeader>
@@ -114,6 +159,7 @@ const UpdateRepairJob = () => {
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Title"
+                            defaultValue={data.customer_name}
                             type="text"
                             onChange={(e) => {
                               setCustomerName(e.target.value);
@@ -204,6 +250,7 @@ const UpdateRepairJob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Title"
+                                defaultValue={data.customer_id}
                                 type="text"
                                 onChange={(e) => {
                                 setCustomerId(e.target.value);
@@ -223,6 +270,7 @@ const UpdateRepairJob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Title"
+                                defaultValue={data.vehicle_Number}
                                 type="text"
                                 onChange={(e) => {
                                 setVehicleNumber(e.target.value);
@@ -244,6 +292,7 @@ const UpdateRepairJob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Title"
+                                defaultValue={data.customer_email}
                                 type="text"
                                 onChange={(e) => {
                                 setCustomerEmail(e.target.value);
@@ -263,6 +312,7 @@ const UpdateRepairJob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Title"
+                                defaultValue={data.estimated_cost}
                                 type="text"
                                 onChange={(e) => {
                                 setEstimatedCost(e.target.value);
@@ -270,6 +320,34 @@ const UpdateRepairJob = () => {
                             />
                             </FormGroup>
                         </Col>
+                    </Row>
+                    <Row>
+                     <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Change Picture
+                          </label> <br></br>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Current Picture : {data.damage_picture_url}
+                          </label> <br></br>
+                          <Input
+                            type="file"
+                            className="form-control-alternative"
+                            onChange={handleImageUpload}
+                            defaultValue={data.damage_picture_url}
+                            
+                          />
+                          {uploadProgress > 0 && (
+                            <div>Uploading... {uploadProgress}%</div>
+                          )}
+                        </FormGroup>
+                      </Col>
                     </Row>
                   </div>
 
@@ -285,6 +363,7 @@ const UpdateRepairJob = () => {
                       <Input
                         className="form-control-alternative"
                         placeholder="A brief description about the vacancy"
+                        defaultValue={data.required_parts}
                         rows="4"
                         type="textarea"
                         onChange={(e) => {

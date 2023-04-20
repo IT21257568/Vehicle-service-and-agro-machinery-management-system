@@ -29,7 +29,7 @@ const mongoose = require('mongoose');
 
     //create new repair job
     const createDamageValuation = async(req, res) => {
-        const { customer_id, customer_name, vehicle_Number, vehicle_Model, customer_email, estimated_cost, required_parts } = req.body;
+        const { customer_id, customer_name, vehicle_Number, vehicle_Model, customer_email, estimated_cost, required_parts, damage_picture_url } = req.body;
     
         let emptyFields = [];
     
@@ -52,6 +52,9 @@ const mongoose = require('mongoose');
         if (!estimated_cost) {
             emptyFields.push('estimated_cost');
         }
+        if (!damage_picture_url) {
+            emptyFields.push('damage_picture_url');
+        }
        
         if (emptyFields.length > 0) {
             return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
@@ -59,7 +62,7 @@ const mongoose = require('mongoose');
     
         //add to db
         try {
-            const damageValuation = await DamageValuation.create({ customer_id, customer_name, vehicle_Number, vehicle_Model, customer_email, estimated_cost, required_parts });
+            const damageValuation = await DamageValuation.create({ customer_id, customer_name, vehicle_Number, vehicle_Model, customer_email, estimated_cost, required_parts, damage_picture_url });
             res.status(200).json({ damageValuation });
         } catch (error) {
             res.status(400).json({ error: error.message });
