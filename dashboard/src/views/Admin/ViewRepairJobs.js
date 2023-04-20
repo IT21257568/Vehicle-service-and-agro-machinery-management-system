@@ -133,7 +133,7 @@ const ViewRepairJobs = () => {
                         <Badge color="success">{repairJob.vehicle_Model}</Badge>
                       </td>
                       <td> {repairJob.customer_email} </td>
-                      <td> {repairJob.estimated_cost} </td>
+                      <td> Rs.{repairJob.estimated_cost} </td>
                       <td> {repairJob.required_parts} </td>
                       <td>
                         <Button size="sm" color="primary">

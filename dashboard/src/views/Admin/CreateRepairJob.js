@@ -146,7 +146,7 @@ const CreateRepairjob = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-username"
-                            placeholder="Title"
+                            placeholder="Enter Customer Name"
                             type="text"
                             onChange={(e) => {
                               setCustomerName(e.target.value);
@@ -236,7 +236,7 @@ const CreateRepairjob = () => {
                             <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Title"
+                                placeholder="Enter Customer NIC"
                                 type="text"
                                 onChange={(e) => {
                                 setCustomerId(e.target.value);
@@ -255,7 +255,7 @@ const CreateRepairjob = () => {
                             <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Title"
+                                placeholder="Enter Vehicle Number"
                                 type="text"
                                 onChange={(e) => {
                                 setVehicleNumber(e.target.value);
@@ -276,7 +276,7 @@ const CreateRepairjob = () => {
                             <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Title"
+                                placeholder="Enter Customer Email"
                                 type="text"
                                 onChange={(e) => {
                                 setCustomerEmail(e.target.value);
@@ -295,7 +295,7 @@ const CreateRepairjob = () => {
                             <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Title"
+                                placeholder="Enter Estimated Cost"
                                 type="text"
                                 onChange={(e) => {
                                 setEstimatedCost(e.target.value);
@@ -337,7 +337,7 @@ const CreateRepairjob = () => {
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
+                        placeholder="Enter Required Parts"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
