@@ -35,6 +35,7 @@ import UpdateAgroProduct from "views/Admin/UpdateAgroProduct";
 import CreateRepairJob from "views/Admin/CreateRepairJob";
 import ViewRepairJobs from "views/Admin/ViewRepairJobs";
 import UpdateRepairJob from "views/Admin/UpdateRepairJob";
+import CreateGeneralIssue from "views/Admin/CreateGeneralIssues";
 
 import CreateFAQ from "views/Admin/CreateFAQ";
 import ViewFAQs from "views/Admin/ViewFAQs";
@@ -336,6 +337,14 @@ const routes = [
     name: "CV Submissions",
     icon: "ni ni-notification-70 text-pink",
     component: ViewCVSubmissions,
+    layout: "/admin",
+  },
+  //Piyumi general issues
+  {
+    path: "/create-general-issue",
+    name: "Create General Issue",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreateGeneralIssue,
     layout: "/admin",
   },
 ];
