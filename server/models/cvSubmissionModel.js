@@ -28,6 +28,10 @@ const cvSubSchema = new Schema(
       type: String,
       required: true,
     },
+    vacancy_name: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
