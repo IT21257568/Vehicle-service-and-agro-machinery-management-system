@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
+
 // reactstrap components
 import {
   Badge,
@@ -29,38 +31,16 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-//card
-function CardRequiremnts({ vacancyd, onClose }) {
-  return (
-    <div className="card">
-      <div className="card-body">
-        <h5 className="card-title">Requirements</h5>
-        <p className="card-text">{vacancyd}</p>
-        <Button size="sm" color="primary" onClick={onClose}>
-          Close
-        </Button>
-      </div>
-    </div>
-  );
-}
+
 
 const ViewCVSubmissions = () => {
   // states
   const [allApplicants, setAllSubmissions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showCard, setShowCard] = useState(false);
+  
 
-  function handleViewClick() {
-    console.log("View button clicked");
-    setShowCard(true);
-  }
-
-  function handleCloseClick() {
-    console.log("Close button clicked");
-    setShowCard(false);
-  }
-  console.log("Rendering App component with showCard = ", showCard);
+ 
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -166,19 +146,14 @@ const ViewCVSubmissions = () => {
                         </div>
                       </td>
                       <td>
-                        <Button
-                          size="sm"
-                          color="primary"
-                          onClick={handleViewClick}
+                        <a
+                          href={applicant.applicant_CVFile_url}
+                          style={{ textDecoration: "none" }}
                         >
-                          View
-                        </Button>
-                        {showCard && (
-                          <CardRequiremnts
-                            vacancyd={applicant.applicant_email}
-                            onClose={handleCloseClick}
-                          />
-                        )}
+                          <Button size="sm" color="primary">
+                            View
+                          </Button>
+                        </a>
                       </td>
                       <td>
                         <Button
