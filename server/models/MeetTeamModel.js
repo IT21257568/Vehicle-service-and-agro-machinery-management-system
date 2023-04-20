@@ -31,6 +31,6 @@ const mTeamSchema = new Schema(
   { timestamps: true }
 );
 
-//const Vacancy = mongoose.model('Workout', workoutSchema)
+
 
 module.exports = mongoose.model('MTeam', mTeamSchema)
