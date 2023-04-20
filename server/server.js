@@ -11,6 +11,8 @@ const userRoutes = require("./routes/userRoutes");
 const bookingsRoute = require("./routes/bookingsRoute");
 const ProgressTrackingRoute = require("./routes/ProgressTrackingRoute");
 const damageValuationRoutes = require("./routes/damageValuation");
+const faqRoute = require("./routes/faqRoute");
+
 // setup cors
 const cors = require("cors");
 
@@ -39,10 +41,13 @@ app.use("/api/users", userRoutes);
 app.use("/api/bookings", bookingsRoute);
 //Sithija
 app.use("/api/promotions", promotionRoute);
+app.use("/api/faqs", faqRoute)
 //Nethum
 app.use("/api/progress", ProgressTrackingRoute);
 //Tharusha
 app.use("/api/damageValuation", damageValuationRoutes);
+
+
 //connect to db
 mongoose
   .connect(process.env.MONGO_URI)
