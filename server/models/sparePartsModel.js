@@ -1,33 +1,35 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const sparePartsSchema = new Schema({
     sp_name:{
         type: String,
-        required: true
+        required: true,
     },
     sp_image:{
         type: String,
-        required: true
+        required: true,
     },
     sp_price:{
         type: Number,
-        required: true
+        required: true,
     },
     sp_discount:{
         type: Number,
-        required: true
+        required: true,
     },
     sp_description:{
         type: String,
-        required: true
+        required: true,
     },
     sp_status:{
         type: String,
-        required: true
+        required: true,
     },
 
-}, {timestamps: true })
+}, 
+{timestamps: true }
+);
 
-module.exports = mongoose.model('SparePart', sparePartsSchema)
+module.exports = mongoose.model('SparePart', sparePartsSchema);
