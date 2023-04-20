@@ -100,14 +100,14 @@ const CreateSparePart= () => {
           navigate("/admin/spare-parts");
         });
     } catch (error) {
-        if (error.response && error.response.status === 400) {
-          const { error: errorMessage, emptyFields } = error.response.data;
-          const fields = emptyFields.join(", ");
-          setError(`Please fill in all fields: ${fields}`);
-        } else {
-          console.log(error);
-        }
+      if (error.response && error.response.status === 400) {
+        const { error: errorMessage, emptyFields } = error.response.data;
+        const fields = emptyFields.join(", ");
+        setError(`Please fill in all fields: ${fields}`);
+      } else {
+        console.log(error);
       }
+    }
   };
 
   return (
@@ -147,7 +147,6 @@ const CreateSparePart= () => {
                             onChange={(e) => {
                               setSparePartName(e.target.value);
                             }}
-                            //style={emptyFields.includes('sp_name') ? {borderColor: 'red'} : {}}
                           />
                         </FormGroup>
                       </Col>
@@ -279,12 +278,14 @@ const CreateSparePart= () => {
                         }}
                       />
                       {error && (
-                        <div style={{ 
-                          backgroundColor: "red", 
-                          color: "white", 
-                          padding: "10px", 
-                          marginTop: "10px", 
-                        }}>
+                        <div
+                          style={{
+                            backgroundColor: "red",
+                            color: "white",
+                            padding: "10px",
+                            marginTop: "10px",
+                          }}
+                        >
                           <p>{error}</p>
                         </div>
                       )}

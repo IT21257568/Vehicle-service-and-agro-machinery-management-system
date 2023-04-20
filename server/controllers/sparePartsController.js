@@ -1,11 +1,11 @@
-const SparePart = require('../models/sparePartsModel')
-const mongoose = require('mongoose')
+const SparePart = require('../models/sparePartsModel');
+const mongoose = require('mongoose');
 
 //get all spareParts
 const getAllSpareParts = async (req, res) => {
-    const spareParts = await SparePart.find({}).sort({createdAt: -1})
+    const spareParts = await SparePart.find({}).sort({createdAt: -1});
 
-    res.status(200).json(spareParts)
+    res.status(200).json(spareParts);
 }
 
 //get a single sparePart
@@ -13,79 +13,79 @@ const getSparePart = async (req, res) => {
     const {id} = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such sparePart'})
+        return res.status(404).json({error: 'No such sparePart'});
     }
-    const sparePart = await SparePart.findById(id)
+    const sparePart = await SparePart.findById(id);
         
     if(!sparePart) {
-            return res.status(404).json({error: 'No such sparePart'})
+            return res.status(404).json({error: 'No such sparePart'});
     }
 
-    res.status(200).json(sparePart)
+    res.status(200).json(sparePart);
    
 }
 
 //create a SparePart
 const createSparePart = async (req, res) => {
-    const{sp_name, sp_image,sp_price, sp_discount, sp_description, sp_status} = req.body
+    const{sp_name, sp_image,sp_price, sp_discount, sp_description, sp_status} = req.body;
 
     //check if all fields are filled
-    let emptyFeilds = []
+    let emptyFeilds = [];
 
     if(!sp_name) {
-        emptyFeilds.push('sp_name')
+        emptyFeilds.push('sp_name');
     }
     if(!sp_image) {
-        emptyFeilds.push('sp_image')
+        emptyFeilds.push('sp_image');
     }
     if(!sp_price) {
-        emptyFeilds.push('sp_price')
+        emptyFeilds.push('sp_price');
     }
     if(!sp_discount) {
-        emptyFeilds.push('sp_discount')
+        emptyFeilds.push('sp_discount');
     }
     if(!sp_description) {
-        emptyFeilds.push('sp_description')
+        emptyFeilds.push('sp_description');
     }
     if(!sp_status) {
-        emptyFeilds.push('sp_status')
+        emptyFeilds.push('sp_status');
     }
     if(emptyFeilds.length > 0) {
-        return res.status(400).json({error: `The following fields are empty: ${emptyFeilds}`})
+        return res.status(400).json({error: `The following fields are empty: ${emptyFeilds}`});
     }
 
     //add doc to db
     try{
-        const sparePart = await SparePart.create({sp_name, sp_image,sp_price, sp_discount, sp_description, sp_status})
-        res.status(200).json(sparePart)
+        const sparePart = await SparePart.create({sp_name, sp_image,sp_price, sp_discount, sp_description, sp_status});
+        res.status(200).json({sparePart});
     }catch(error){
-        res.status(400).json({error: error.message})
- }}
+        res.status(400).json({error: error.message});
+ }};
 
 //delete a sparePart
 const deleteSparePart = async (req, res) => {
-    const {id} = req.params
+    const {id} = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such sparePart'})
+        return res.status(404).json({error: 'No such sparePart'});
     }
-    const sparePart = await SparePart.findOneAndDelete({_id: id})
+    const sparePart = await SparePart.findOneAndDelete({_id: id});
         
     if(!sparePart) {
-            return res.status(404).json({error: 'No such sparePart'})
+            return res.status(404).json({error: 'No such sparePart'});
     }
 
-    res.status(200).json(sparePart)
+    res.status(200).json(sparePart);
 }
 
 
 
 //update a sparePart
 const updateSparePart = async (req, res) => {
-    const {id} = req.params
+    const {id} = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such sparePart'})
+        return res.status(404).json({error: 'No such sparePart'});
     }
 
     const sparePart = await SparePart.findOneAndUpdate({_id: id}, {
@@ -93,10 +93,10 @@ const updateSparePart = async (req, res) => {
     })
 
     if(!sparePart) {
-        return res.status(404).json({error: 'No such sparePart'})
+        return res.status(404).json({error: 'No such sparePart'});
     }
 
-    res.status(200).json(sparePart)
+    res.status(200).json(sparePart);
 
 }
 
