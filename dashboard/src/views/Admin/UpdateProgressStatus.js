@@ -127,7 +127,7 @@ const UpdateProgressStatus = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Progress Status</h3>
+                    <h3 className="mb-0">Update Progress Status</h3>
                   </Col>
                 </Row>
               </CardHeader>
@@ -149,6 +149,7 @@ const UpdateProgressStatus = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-title"
+                            defaultValue={data.name}
                             placeholder="customer name"
                             type="text"
                             onChange={(e) => {
@@ -168,6 +169,7 @@ const UpdateProgressStatus = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-promo-code"
+                            defaultValue={data.vehi_number}
                             placeholder="enter vehicle number"
                             type="text"
                             onChange={(e) => {
@@ -189,6 +191,7 @@ const UpdateProgressStatus = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-title"
+                            defaultValue={data.status}
                             placeholder="enter status"
                             type="text"
                             onChange={(e) => {
@@ -209,7 +212,7 @@ const UpdateProgressStatus = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-start-date"
-                            
+                            defaultValue={data.date}
                             type="date"
                             onChange={(e) => {
                               setDate(e.target.value);
@@ -225,12 +228,20 @@ const UpdateProgressStatus = () => {
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            Post Picture
+                            Change Picture
+                          </label> <br></br>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Current Picture : {data.progress_picture_url}
                           </label> <br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
                             onChange={handleImageUpload}
+                            defaultValue={data.progress_picture_url}
+                            
                           />
                           {uploadProgress > 0 && (
                             <div>Uploading... {uploadProgress}%</div>
@@ -247,11 +258,12 @@ const UpdateProgressStatus = () => {
                         className="form-control-label"
                         htmlFor="input-description"
                       >
-                      Promotion Description
+                      Service Progress Status Description
                       </label>
                       <Input
                         className="form-control-alternative"
                         placeholder="A brief description about the Service Progress Status"
+                        defaultValue={data.description}
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
