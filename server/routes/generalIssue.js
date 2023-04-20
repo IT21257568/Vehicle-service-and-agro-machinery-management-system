@@ -4,7 +4,7 @@ const {
     getGeneralIssues,
     getGeneralIssue,
     createGeneralIssue,
-    createGeneralIssue,
+    deleteGeneralIssue,
     updateGeneralIssue,
 
 } = require("../controllers/generalIssueController");
@@ -19,7 +19,7 @@ router.get("/:id", getGeneralIssue);
 router.post("/", createGeneralIssue);
 
 //Delete a general issue
-router.delete("/:id", createGeneralIssue);
+router.delete("/:id", deleteGeneralIssue);
 
 //Update a general issue
 router.patch("/:id", updateGeneralIssue);
