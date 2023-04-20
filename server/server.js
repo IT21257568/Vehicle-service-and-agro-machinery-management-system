@@ -12,10 +12,6 @@ const bookingsRoute = require("./routes/bookingsRoute");
 const ProgressTrackingRoute = require("./routes/ProgressTrackingRoute");
 const damageValuationRoutes = require("./routes/damageValuation");
 const faqRoute = require("./routes/faqRoute");
-<<<<<<< HEAD
-const generalIssueRoutes = require("./routes/generalIssue");
-=======
->>>>>>> 5b78bc522a29215aab29e883cd1e670eaf061b68
 const cvSubmissionRoute = require("./routes/cvSubmissionRoute");
 
 // setup cors
@@ -52,8 +48,6 @@ app.use("/api/faqs", faqRoute)
 app.use("/api/progress", ProgressTrackingRoute);
 //Tharusha
 app.use("/api/damageValuation", damageValuationRoutes);
-//Piyumi
-app.use("/api/generalIssues", generalIssueRoutes);
 
 
 //connect to db
