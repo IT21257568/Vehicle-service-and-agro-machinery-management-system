@@ -5,32 +5,32 @@ import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
-  Badge,
+  //Badge,
   Card,
   CardHeader,
   CardFooter,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Progress,
-  Table,
+  //DropdownMenu,
+  //DropdownItem,
+  //UncontrolledDropdown,
+  //DropdownToggle,
+  //Media,
+  //Pagination,
+  //PaginationItem,
+  //PaginationLink,
+  //Progress,
+  //Table,
   Container,
   Row,
-  UncontrolledTooltip,
+  //UncontrolledTooltip,
   Button,
-  Chip,
+  //Chip,
   CardBody,
   CardTitle,
   CardSubtitle,
   CardText,
-  CardGroup,
+  //CardGroup,
   CardImg,
-  CardImgOverlay,
+  //CardImgOverlay,
 } from "reactstrap";
 
 // core components
@@ -38,12 +38,12 @@ import Header from "components/Headers/Header.js";
 
 
 //card
-  function CardRatings({ vacancyd, onClose }) {
+  function CardRatings({ ratings, onClose }) {
     return (
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Ratings</h5>
-          <p className="card-text">{vacancyd}</p>
+          <p className="card-text">{ratings}</p>
           <Button size="sm" color="primary" onClick={onClose}>
             Close
           </Button>
@@ -206,7 +206,7 @@ const ViewTechnicians = () => {
                             </Button>
                             {showCard && (
                               <CardRatings
-                                vacancyd="Sample data"
+                                ratings="Sample data"
                                 onClose={handleCloseClick}
                               />
                             )}

@@ -9,11 +9,11 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  //DropdownMenu,
-  //DropdownItem,
-  //UncontrolledDropdown,
-  //DropdownToggle,
-  //Media,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  Media,
   Pagination,
   PaginationItem,
   PaginationLink,
@@ -21,48 +21,19 @@ import {
   Table,
   Container,
   Row,
-  //UncontrolledTooltip,
+  UncontrolledTooltip,
   Button,
- //Chip,
+  Chip,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
- //card
-  function CardRequiremnts({ vacancyd, onClose }) {
-    return (
-      <div className="card">
-        <div className="card-body">
-          <h5 className="card-title">Requirements</h5>
-          <p className="card-text">{vacancyd}</p>
-          <Button size="sm" color="primary" onClick={onClose}>
-            Close
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-
-
-const ViewVacancies = () => {
+const ViewRepairJobs = () => { 
   // states
-  const [allVacancies, setAllVacancies] = useState([]);
+  const [allRepairJobs, setAllRepairJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showCard, setShowCard] = useState(false);
-
-   function handleViewClick() {
-     console.log("View button clicked");
-     setShowCard(true);
-   }
-
-   function handleCloseClick() {
-     console.log("Close button clicked");
-     setShowCard(false);
-   }
-   console.log("Rendering App component with showCard = ", showCard);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -75,24 +46,24 @@ const ViewVacancies = () => {
 
   // retrieve all vacancies from database
   useEffect(() => {
-    const fetchAllVacancies = async () => {
+    const fetchAllRepairJobs = async () => {
       try {
-        const res = await axios.get("/api/vacancies");
-        setAllVacancies(res.data);
+        const res = await axios.get("/api/damageValuation");
+        setAllRepairJobs(res.data);
         setIsLoading(false);
       } catch (err) {
         setError(err);
         setIsLoading(false);
       }
     };
-    fetchAllVacancies();
+    fetchAllRepairJobs();
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`/api/vacancies/${id}`).then((res) => {
+    axios.delete(`/api/damageValuation/${id}`).then((res) => {
       console.log(res.data);
-      setAllVacancies((prevData) =>
-        prevData.filter((vacancy) => vacancy._id !== id)
+      setAllRepairJobs((prevData) =>
+        prevData.filter((damagevaluation) => damagevaluation._id !== id)
       );
     });
   };
@@ -109,14 +80,14 @@ const ViewVacancies = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Vacancies</h3>
+                    <h3 className="mb-0">All Repair Jobs</h3>
                   </div>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={() => navigate("/admin/create-vacancy")}
+                      onClick={() => navigate("/admin/ceate-repair-job")}
                     >
                       <span
                         className="btn-inner--icon"
@@ -132,13 +103,16 @@ const ViewVacancies = () => {
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Count</th>
-                    <th scope="col">Requiremnts</th>
-                    <th scope="col">Applicants</th>
+                    <th scope="col">NIC</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Vehicle Number</th>
+                    <th scope="col">Vehicle Type</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Estimated Cost</th>
+                    <th scope="col">Required Parts</th>
                     <th scope="col">Actions</th>
                   </tr>
+
                 </thead>
                 <tbody>
                   {isLoading && (
@@ -146,54 +120,30 @@ const ViewVacancies = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allVacancies.slice(0, visible).map((vacancy, index) => (
-                    <tr key={vacancy._id}>
+                  {allRepairJobs.slice(0, visible).map((repairJob, index) => (
+                    <tr key={repairJob._id}>
                       <th scope="row">
                         <span className="mb-0 text-sm">
-                          {vacancy.vacancy_title}
+                          {repairJob.customer_id}
                         </span>
                       </th>
+                      <td>{repairJob.customer_name}</td>
+                      <td>{repairJob.vehicle_Number}</td>
                       <td>
-                        <Badge color="success">{vacancy.vacancy_type}</Badge>
+                        <Badge color="success">{repairJob.vehicle_Model}</Badge>
                       </td>
-                      <td>{vacancy.vacancy_count}</td>
+                      <td> {repairJob.customer_email} </td>
+                      <td> {repairJob.estimated_cost} </td>
+                      <td> {repairJob.required_parts} </td>
                       <td>
-                        <div className="container">
-                          <Button
-                            size="sm"
-                            color="primary"
-                            onClick={handleViewClick}
-                          >
-                            View
-                          </Button>
-                          {showCard && (
-                            <CardRequiremnts
-                              vacancyd={vacancy.vacancy_requirements}
-                              onClose={handleCloseClick}
-                            />
-                          )}
-                        </div>
-                      </td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">
-                            1/{vacancy.vacancy_count}
-                          </span>
-                          <div>
-                            <Progress
-                              max="10"
-                              value="4"
-                              barClassName="bg-success"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                      <td>
+                        <Button size="sm" color="primary">
+                          View
+                        </Button>
                         <Button
                           size="sm"
                           color="warning"
                           onClick={() =>
-                            navigate(`/admin/update-vacancy/${vacancy._id}`)
+                            navigate(`/admin/update-repair-job/${repairJob._id}`)
                           }
                         >
                           Update
@@ -201,14 +151,14 @@ const ViewVacancies = () => {
                         <Button
                           size="sm"
                           color="danger"
-                          onClick={() => handleDelete(vacancy._id)}
+                          onClick={() => handleDelete(repairJob._id)}
                         >
                           Delete
                         </Button>
                       </td>
                     </tr>
                   ))}
-                  {visible < allVacancies.length && (
+                  {visible < allRepairJobs.length && (
                     <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
@@ -275,4 +225,4 @@ const ViewVacancies = () => {
   );
 };
 
-export default ViewVacancies;
+export default ViewRepairJobs;
