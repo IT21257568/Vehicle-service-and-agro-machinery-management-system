@@ -32,15 +32,21 @@ import {
   CardGroup,
   CardImg,
   CardImgOverlay,
+  Collapse,
+  Alert,
+  UncontrolledCollapse,
+  Toast,
+  ToastHeader,
+  ToastBody
   
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-const ViewPromotions = () => {
+const ViewFAQs = () => {
   // states
-  const [allPromotions, setAllPromotions] = useState([]);
+  const [allFAQs, setAllFaqs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -55,29 +61,48 @@ const ViewPromotions = () => {
 
   // retrieve all vacancies from database
   useEffect(() => {
-    const fetchAllPromotions = async () => {
+    const fetchAllFaqs = async () => {
       try {
-        const res = await axios.get("/api/promotions");
-        setAllPromotions(res.data);
+        const res = await axios.get("/api/faqs");
+        setAllFaqs(res.data);
         setIsLoading(false);
       } catch (err) {
         setError(err);
         setIsLoading(false);
       }
     };
-    fetchAllPromotions();
+    fetchAllFaqs();
   }, []);
 
+
   const handleDelete = (id) => {
-    axios.delete(`/api/promotions/${id}`).then((res) => {
+    axios.delete(`/api/faqs/${id}`).then((res) => {
       console.log(res.data);
-      setAllPromotions((prevData) =>
-        prevData.filter((promotion) => promotion._id !== id)
+      setAllFaqs((prevData) =>
+        prevData.filter((faq) => faq._id !== id)
       );
     });
   };
 
-  return (
+  //faq card collapse 
+  const [faqCollapse, setCollapse] = useState(false);
+  const [status, setStatus] = useState('View');
+
+  const onEntering = () => setStatus('Viewing...');
+  const onEntered = () => setStatus('Close');
+  const onExiting = () => setStatus('Closing...');
+  const onExited = () => setStatus('View');
+  const toggle = (id) => {
+      
+      
+      axios.get(`/api/faqs/${id}`, {
+        faq_collapse:faqCollapse
+      }).then(() => {
+          setCollapse(!faqCollapse);
+        });
+  }
+
+    return (
     <>
       <Header/>
       {/* Page content */}
@@ -89,14 +114,14 @@ const ViewPromotions = () => {
               <CardHeader className="border-0" style={{marginBottom: '1.8rem'}}>
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Promotions</h3>
+                    <h3 className="mb-0">All FAQs</h3>
                   </div>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={() => navigate("/admin/create-promotion")}
+                      onClick={() => navigate("/admin/create-faq")}
                     >
                       <span
                         className="btn-inner--icon"
@@ -104,84 +129,61 @@ const ViewPromotions = () => {
                       >
                         <i className="ni ni-planet" />
                       </span>
-                      <span className="btn-inner--text">Add Promotion</span>
+                      <span className="btn-inner--text">Add FAQ</span>
                     </Button>
                   </div>
                 </Row>
               </CardHeader>
 
-              <Container>
-                <Row>
-                  {allPromotions.slice(0, visible).map((promotion, index) => (
-                  
-                  <Card key={promotion._id}
-                    
-                    style={{
-                      width: '22rem',
-                      borderRadius:'0.2rem',
-                      margin: '0.8rem'
-                      
-                    }}
-                    
-                  >
-                    <CardImg
-                      width="100%"
-                      alt="Sample"
-                      height="250rem"
-                      src={promotion.promo_picture_url}
-                    />
+            <Container>
+                
+              {allFAQs.slice(0, visible).map((faq, index) => (
+                
+                <div>
+                <h3>{faq.faq_question}</h3>  
+                <Button color="default" size="medium" onClick={() => toggle(faq._id)} style={{ marginBottom: '1rem'}}>
+                  {status} Solution
+                </Button>
+                
+                <Collapse
+                  key={faq._id}
+                  isOpen={faqCollapse}
+                  onEntering={onEntering}
+                  onEntered={onEntered}
+                  onExiting={onExiting}
+                  onExited={onExited}
+                >
+                  <Card>
                     <CardBody>
-                      <CardTitle tag="h2">
-                        {promotion.promo_title}
-                      </CardTitle>
-                      <CardSubtitle
-                        className="mb-2 text-muted"
-                        tag="h3"
+                      
+                      {faq.faq_answer}
+                      
+                      <Row>
+                      <Button style={{marginLeft:'21rem', marginTop:'0.8rem'}}
+                        size="sm"
+                        color="warning"
+                        onClick={() =>
+                          navigate(`/admin/update-faq/${faq._id}`)}
+                       >
+                        Update
+                      </Button>
+                      <Button style={{marginTop:'0.8rem'}}
+                        size="sm"
+                        color="danger"
+                        onClick={() => handleDelete(faq._id)}
                       >
-                        {promotion.promo_discount}% Off
-                      </CardSubtitle>
-                      <CardText>
-                        {promotion.promo_description}
-                      </CardText>
-                      <CardSubtitle
-                        className="mb-2 text-muted"
-                        tag="h4"
-                      >
-                        Offer ends on {promotion.promo_endDate}
-                      </CardSubtitle>
-
-                      <Button
-                          size="sm"
-                          color="warning"
-                          onClick={() =>
-                            navigate(`/admin/update-promotion/${promotion._id}`)}
-                         
-                      >
-                          Update
-                        </Button>
-                        <Button
-                          size="sm"
-                          color="danger"
-                          onClick={() => handleDelete(promotion._id)}
-                        >
-                          Delete
-                        </Button>
-                      </CardBody>
+                        Delete
+                      </Button>
+                      </Row>
+                    </CardBody>
                   </Card>
-                 
-                ))}
+                </Collapse>
+            </div>
 
-                {visible < allPromotions.length && (
-                    <Button color="secondary" size="sm" onClick={showMoreItems}>
-                      Load More
-                    </Button>
-                )}
-                </Row>
+            ))}
+            
               </Container>
               
-               
-             
-                
               
               <CardFooter className="py-4" style={{marginTop: '1.8rem'}}>
                 <nav aria-label="...">
@@ -243,4 +245,4 @@ const ViewPromotions = () => {
   );
 };
 
-export default ViewPromotions;
+export default ViewFAQs;

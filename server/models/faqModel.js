@@ -15,8 +15,8 @@ const faqSchema = new Schema(
     faq_answer: {
         type: String,
         required: true,
-    }
-  },
+    },
+ },
   { timestamps: true }
 );
 

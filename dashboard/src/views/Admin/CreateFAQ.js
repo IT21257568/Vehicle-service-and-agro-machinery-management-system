@@ -52,7 +52,7 @@ const CreateFAQ = () => {
           setFaqCategory("");
           setFaqAnswer("");
           setError(null);
-          navigate("/admin/faqs");
+          navigate("/admin/vacancies");
         });
     } catch (error) {
       setError(error.message);
@@ -87,97 +87,28 @@ const CreateFAQ = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Vacancy Title
+                            Enter Question
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Title"
-                            type="text"
+                            type="textarea"
                             onChange={(e) => {
-                              setVacancyTitle(e.target.value);
+                              setFaqQuestion(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
+                      </Row>
+                      <Row>
                       <Col lg="6">
-                        <FormGroup className="d-flex flex-column">
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Vacancy Type
-                          </label>
-                          <Dropdown
-                            isOpen={dropdownOpen}
-                            color="primary"
-                            toggle={toggle}
-                          >
-                            <DropdownToggle caret>
-                              {vacancyType ? vacancyType : "Select Type"}
-                            </DropdownToggle>
-                            <DropdownMenu>
-                              <DropdownItem
-                                value="Full Time"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Full Time
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Part Time"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Part Time
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Internship"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Internship
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </Dropdown>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Vacancy Count
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="select count"
-                            type="number"
-                            onChange={(e) => {
-                              setVacancyCount(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                  </div>
-
-                  {/* Description */}
-                  <div className="pl-lg-4">
-                    <FormGroup>
+                      <FormGroup>
                       <label
                         className="form-control-label"
                         htmlFor="input-last-name"
                       >
-                        Requirements
+                        Enter Answer
                       </label>
                       <Input
                         className="form-control-alternative"
@@ -185,14 +116,75 @@ const CreateFAQ = () => {
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
-                          setVacancyRequirements(e.target.value);
+                          setFaqAnswer(e.target.value);
                         }}
                       />
-                    </FormGroup>
+                      </FormGroup>
+                      </Col>
+                      </Row>
+                      <Row>
+                      <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Select FAQ Category
+                          </label>
+                          <Dropdown
+                            isOpen={dropdownOpen}
+                            color="primary"
+                            toggle={toggle}
+                          >
+                            <DropdownToggle caret>
+                              {faqCategory ? faqCategory : "Select Category"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem
+                                value="User profile related"
+                                onClick={(e) => {
+                                  setFaqCategory(e.target.value);
+                                }}
+                              >
+                                User profile related
+                              </DropdownItem>
+                              <DropdownItem
+                                value="Bookings related"
+                                onClick={(e) => {
+                                  setFaqCategory(e.target.value);
+                                }}
+                              >
+                                Bookings related
+                              </DropdownItem>
+                              <DropdownItem
+                                value="Online shop related"
+                                onClick={(e) => {
+                                  setFaqCategory(e.target.value);
+                                }}
+                              >
+                                Online shop related
+                              </DropdownItem>
+                              <DropdownItem
+                                value="Agro products related"
+                                onClick={(e) => {
+                                  setFaqCategory(e.target.value);
+                                }}
+                              >
+                                Agro products related
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
+                        </FormGroup>
+                        </Col>
+                      </Row>
+                   </div> 
+                    
+                 {/*buttons*/}
+                  <div className="pl-lg-4" style={{marginTop: '0.8rem'}}>
                     <Button color="primary" onClick={handleSubmit}>
-                      Create
+                      Add FAQ 
                     </Button>
-                    <Button
+                    <Button style={{marginLeft: '0.8rem'}}
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
@@ -212,4 +204,4 @@ const CreateFAQ = () => {
   );
 };
 
-export default CreateVacancy;
+export default CreateFAQ;

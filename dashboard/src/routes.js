@@ -36,8 +36,12 @@ import CreateRepairJob from "views/Admin/CreateRepairJob";
 import ViewRepairJobs from "views/Admin/ViewRepairJobs";
 import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 
+import CreateFAQ from "views/Admin/CreateFAQ";
+import ViewFAQs from "views/Admin/ViewFAQs";
+
 // User views
 import DummyPage from "views/User/DummyPage";
+
 
 
 const routes = [
@@ -298,5 +302,22 @@ const routes = [
     component: UpdateRepairJob,
     layout: "/admin",
   },
+
+  //Sithija FAQ section
+  {
+    path: "/create-faq",
+    name: "Create FAQ",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreateFAQ,
+    layout: "/admin",
+  },
+  {
+    path: "/view-faqs",
+    name: "View FAQs",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewFAQs,
+    layout: "/admin",
+  }
+
 ];
 export default routes;
