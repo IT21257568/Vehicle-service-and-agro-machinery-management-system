@@ -39,6 +39,9 @@ import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 // User views
 import DummyPage from "views/User/DummyPage";
 
+// nisal
+import ViewCVSubmissions from "views/Admin/ViewCVSubmissions";
+
 
 const routes = [
   {
@@ -296,6 +299,14 @@ const routes = [
     name: "Update Repair Job",
     icon: "ni ni-notification-70 text-blue",
     component: UpdateRepairJob,
+    layout: "/admin",
+  },
+  //Nisal CV Submission
+  {
+    path: "/cv-submission",
+    name: "CV Submissions",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewCVSubmissions,
     layout: "/admin",
   },
 ];
