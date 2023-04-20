@@ -47,6 +47,7 @@ import Header from "components/Headers/Header.js";
 
 const ViewFAQs = () => {
   // states
+  const [data, setData] = useState([]);
   const [allFAQs, setAllFaqs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,6 +66,7 @@ const ViewFAQs = () => {
     const fetchAllFaqs = async () => {
       try {
         const res = await axios.get("/api/faqs");
+        setData(res.data)
         setAllFaqs(res.data);
         setIsLoading(false);
       } catch (err) {
@@ -86,7 +88,8 @@ const ViewFAQs = () => {
   };
 
   //faq card collapse 
-  const [faqCollapse, setCollapse] = useState(false);
+
+  const [faqCollapse, setCollapse] = useState(data.faq_collapse);
   const [status, setStatus] = useState('View');
 
   const onEntering = () => setStatus('Viewing...');
@@ -97,12 +100,17 @@ const ViewFAQs = () => {
   const toggle = (id) => {
         
         
-    axios.get(`/api/faqs/${id}`, {
-      faq_collapse:faqCollapse
-    }).then(() => {
-        setCollapse(!faqCollapse);
+    axios.patch(`/api/faqs/${id}`)
+      
+    .then((res) => {
+        res.data.faq_collapse = faqCollapse;
+        console.log(res.data.faq_question);
+        setCollapse(!res.data.faq_collapse);
+        console.log(res.data.faq_collapse);
       });
   }
+
+  
 
     return (
     <>
@@ -149,13 +157,14 @@ const ViewFAQs = () => {
                 
                 <Collapse
                   key={faq._id}
+                  defaultValue={faq.faq_collapse}
                   isOpen={faqCollapse}
                   onEntering={onEntering}
                   onEntered={onEntered}
                   onExiting={onExiting}
                   onExited={onExited}
                 >
-                  <Card>
+                  <Card key={faq._id}>
                     <CardBody>
                       
                       {faq.faq_answer}

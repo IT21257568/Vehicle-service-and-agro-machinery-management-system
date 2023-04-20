@@ -16,6 +16,10 @@ const faqSchema = new Schema(
         type: String,
         required: true,
     },
+    faq_collapse: {
+       type: Boolean,
+       default: true,
+    }
  },
   { timestamps: true }
 );
