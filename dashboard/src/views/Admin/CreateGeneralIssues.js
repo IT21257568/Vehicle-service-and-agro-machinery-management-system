@@ -23,48 +23,49 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateVacancy = () => {
+
+
+const CreateGeneralIssue = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
 
   // form states
-  const [vacancyTitle, setVacancyTitle] = useState("");
-  const [vacancyType, setVacancyType] = useState("");
-  const [vacancyCount, setVacancyCount] = useState("");
-  const [vacancyRequirements, setVacancyRequirements] = useState("");
+  const [data, setData] = useState([]);
+  const [customerName, setCustomerName] = useState("");
+  const [customerNIC, setCustomerNIC] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [gnDiscription, setGnDiscription] = useState("");
+  const [issueStatus, setIssueStatus] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
     try {
-        await axios
-        .post("/api/vacancies", {
-          vacancy_title: vacancyTitle,
-          vacancy_type: vacancyType,
-          vacancy_count: vacancyCount,
-          vacancy_requirements: vacancyRequirements,
+      await axios
+        .post("/api/generalIssues", {
+          customer_name: customerName,
+          customer_NIC: customerNIC,
+          contact_number: contactNumber,
+          GN_discription: gnDiscription,
+          issue_status: issueStatus,
         })
         .then((res) => {
-          console.log("New Vacancy added", res.data);
-          setVacancyTitle("");
-          setVacancyType("");
-          setVacancyCount("");
-          setVacancyRequirements("");
+          console.log("New general issue is added", res.data);
+          setCustomerName("");
+          setCustomerNIC("");
+          setContactNumber("");
+          setGnDiscription("");
+          setIssueStatus("");
           setError(null);
-          navigate("/admin/vacancies");
+          navigate("/admin/view-general-issues");
         });
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        const { error: errorMessage, emptyFields } = error.response.data;
-        const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
-      } else {
-        console.log(error);
-      }
+      setError(error.message);
     }
   };
+
   return (
     <>
       <Header />
@@ -76,14 +77,14 @@ const CreateVacancy = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Vacancy</h3>
+                    <h3 className="mb-0">Create General Issue</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Vacancy Details
+                    General Issue Information
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -93,15 +94,15 @@ const CreateVacancy = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Vacancy Title
+                            Customer Name
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-username"
-                            placeholder="Title"
+                            placeholder="Enter Customer Name"
                             type="text"
                             onChange={(e) => {
-                              setVacancyTitle(e.target.value);
+                              setCustomerName(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -112,7 +113,7 @@ const CreateVacancy = () => {
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            Vacancy Type
+                            Issue Status
                           </label>
                           <Dropdown
                             isOpen={dropdownOpen}
@@ -120,32 +121,24 @@ const CreateVacancy = () => {
                             toggle={toggle}
                           >
                             <DropdownToggle caret>
-                              {vacancyType ? vacancyType : "Select Type"}
+                              {gnDiscription ? gnDiscription : "Select Type"}
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem
-                                value="Full Time"
+                                value="Solved"
                                 onClick={(e) => {
-                                  setVacancyType(e.target.value);
+                                  setIssueStatus(e.target.value);
                                 }}
                               >
-                                Full Time
+                                Solved
                               </DropdownItem>
                               <DropdownItem
-                                value="Part Time"
+                                value="Pending"
                                 onClick={(e) => {
-                                  setVacancyType(e.target.value);
+                                  setIssueStatus(e.target.value);
                                 }}
                               >
-                                Part Time
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Internship"
-                                onClick={(e) => {
-                                  setVacancyType(e.target.value);
-                                }}
-                              >
-                                Internship
+                                Pending
                               </DropdownItem>
                             </DropdownMenu>
                           </Dropdown>
@@ -153,26 +146,44 @@ const CreateVacancy = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Vacancy Count
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="select count"
-                            type="number"
-                            onChange={(e) => {
-                              setVacancyCount(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
+                        <Col lg="6">
+                            <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-username"
+                            >
+                                Customer NIC
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                id="input-username"
+                                placeholder="Enter Customer NIC"
+                                type="text"
+                                onChange={(e) => {
+                                setCustomerNIC(e.target.value);
+                                }}
+                            />
+                            </FormGroup>
+                        </Col>
+                        <Col lg="6">
+                            <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-username"
+                            >
+                                Contact Number
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                id="input-username"
+                                placeholder="Enter Contact Number"
+                                type="text"
+                                onChange={(e) => {
+                                setContactNumber(e.target.value);
+                                }}
+                            />
+                            </FormGroup>
+                        </Col>
                     </Row>
                   </div>
 
@@ -183,29 +194,17 @@ const CreateVacancy = () => {
                         className="form-control-label"
                         htmlFor="input-last-name"
                       >
-                        Requirements
+                        Description
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
+                        placeholder="Brief description about the issue"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
-                          setVacancyRequirements(e.target.value);
+                          setGnDiscription(e.target.value);
                         }}
                       />
-                      {error && (
-                        <div
-                          style={{
-                            backgroundColor: "red",
-                            color: "white",
-                            padding: "10px",
-                            marginTop: "10px",
-                          }}
-                        >
-                          <p>{error}</p>
-                        </div>
-                      )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create
@@ -214,7 +213,7 @@ const CreateVacancy = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/vacancies");
+                        navigate("/admin/view-general-issues");
                       }}
                     >
                       Cancel
@@ -230,4 +229,4 @@ const CreateVacancy = () => {
   );
 };
 
-export default CreateVacancy;
+export default CreateGeneralIssue;

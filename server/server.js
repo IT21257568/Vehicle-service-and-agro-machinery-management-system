@@ -13,6 +13,7 @@ const ProgressTrackingRoute = require("./routes/ProgressTrackingRoute");
 const damageValuationRoutes = require("./routes/damageValuation");
 const faqRoute = require("./routes/faqRoute");
 const generalIssueRoutes = require("./routes/generalIssue");
+const cvSubmissionRoute = require("./routes/cvSubmissionRoute");
 
 // setup cors
 const cors = require("cors");
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 //Nisal
 app.use("/api/vacancies", vanaciesRoute);
 app.use("/api/mTeams", meetTeamRoute);
+app.use("/api/cvSub", cvSubmissionRoute);
 //Pehesarani
 app.use("/api/spareParts", sparePartsRoutes);
 app.use("/api/agroProducts", agroProductRoutes);
