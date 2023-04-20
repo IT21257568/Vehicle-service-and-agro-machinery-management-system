@@ -33,6 +33,9 @@ import CreateAgroProduct from "views/Admin/CreateAgroProduct";
 import ViewAgroProducts from "views/Admin/ViewAgroProducts";
 import UpdateAgroProduct from "views/Admin/UpdateAgroProduct";
 
+// User views
+import DummyPage from "views/User/DummyPage";
+
 const routes = [
   {
     path: "/index",
@@ -108,7 +111,7 @@ const routes = [
     layout: "/admin",
   },
 
-//Meet the team routes
+  //Meet the team routes
   {
     path: "/admin-login",
     name: "Admin/ Staff Login",
@@ -260,5 +263,13 @@ const routes = [
     layout: "/admin",
   },
 
+  // USER VIEWS
+  {
+    path: "/dummypage",
+    name: "Dummy Page",
+    icon: "ni ni-ruler-pencil text-green",
+    component: DummyPage,
+    layout: "/user",
+  },
 ];
 export default routes;
