@@ -106,7 +106,7 @@ const UpdateRepairJob = () => {
       });
   };
   const handleUpdate = () => {
-    console.log("lol");
+    console.log("updated");
 
     axios
       .patch(`/api/damageValuation/${id}`, {
