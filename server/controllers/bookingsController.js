@@ -32,25 +32,31 @@ const createBooking = async(req, res) => {
 
     //validation for empty fields
     if(!location){
-        emptyFields.push('location');
+        emptyFields.push('Location');
     }
     if(!service_type){
-        emptyFields.push('service_type');
+        emptyFields.push('Service type');
     }
     if(!client_name){
-        emptyFields.push('client_name');
+        emptyFields.push('Client name');
     }
     if(!email){
-        emptyFields.push('email');
+        emptyFields.push('Email');
+    } else {
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          emptyFields.push("Invalid Email Address");
+        }
     }
     if(!date_time){
-        emptyFields.push('date_time');
+        emptyFields.push('Date & time');
     }
-    if(!phone){
-        emptyFields.push('phone');
+    if(phone.length>10){
+        emptyFields.push('Invalid Contact Number');
     }
     if(!special_note){
-        emptyFields.push('special_note');
+        emptyFields.push('Special note');
     }
     if(emptyFields.length > 0 ){
         return res.status(400).json({ error: 'Please fill in all fields', emptyFields});
