@@ -260,14 +260,19 @@ const CreateProgressTracking = () => {
                           style={{
                             backgroundColor: "#F46D75",
                             color: "white",
-                            padding: "10px",
-                            marginTop: "10px",
+                            // textAlign:"center",
+                            display:"flex",
+                            justifyContent:"center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
+                            padding:"10px",
+                            marginTop: "15px",
                             borderColor : "red",
                             borderRadius : "20px"
-
                           }}
                         >
-                          <p>{error}</p>
+                          <span><b>{error}</b></span>
                         </div>
                       )}
                     </FormGroup>
