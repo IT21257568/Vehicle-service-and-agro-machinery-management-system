@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,7 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateSparePart= () => {
+const CreateSparePart = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
@@ -81,12 +81,12 @@ const CreateSparePart= () => {
     try {
       await axios
         .post("/api/spareParts", {
-          sp_name : SparePart_name,
-          sp_image : image,
-          sp_price : SparePart_price,
-          sp_discount : SparePart_discount,
-          sp_description : SparePart_description,
-          sp_status : SparePart_status,
+          sp_name: SparePart_name,
+          sp_image: image,
+          sp_price: SparePart_price,
+          sp_discount: SparePart_discount,
+          sp_description: SparePart_description,
+          sp_status: SparePart_status,
         })
         .then((res) => {
           console.log("New sparePart added", res.data);
@@ -136,7 +136,8 @@ const CreateSparePart= () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username">
+                            htmlFor="input-username"
+                          >
                             Spare Part Name
                           </label>
                           <Input
@@ -154,9 +155,11 @@ const CreateSparePart= () => {
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
-                            htmlFor="input-email">
+                            htmlFor="input-email"
+                          >
                             Spare Part Picture
-                          </label> <br></br>
+                          </label>{" "}
+                          <br></br>
                           <Media className="align-items-center">
                             <span className="avatar avatar-sm rounded-circle">
                               {image && (
@@ -167,7 +170,8 @@ const CreateSparePart= () => {
                                 />
                               )}
                             </span>
-                          </Media><br></br>
+                          </Media>
+                          <br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
@@ -198,6 +202,18 @@ const CreateSparePart= () => {
                               setSparePartPrice(e.target.value);
                             }}
                           />
+                          {error && (
+                            <div
+                              style={{
+                                backgroundColor: "red",
+                                color: "white",
+                                padding: "10px",
+                                marginTop: "10px",
+                              }}
+                            >
+                              <p>{error}</p>
+                            </div>
+                          )}
                         </FormGroup>
                       </Col>
                       <Col lg="4">
@@ -233,7 +249,9 @@ const CreateSparePart= () => {
                             toggle={toggle}
                           >
                             <DropdownToggle caret>
-                              {SparePart_status ? SparePart_status : "Select Status"}
+                              {SparePart_status
+                                ? SparePart_status
+                                : "Select Status"}
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem
