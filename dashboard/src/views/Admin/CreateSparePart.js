@@ -202,18 +202,7 @@ const CreateSparePart = () => {
                               setSparePartPrice(e.target.value);
                             }}
                           />
-                          {error && (
-                            <div
-                              style={{
-                                backgroundColor: "red",
-                                color: "white",
-                                padding: "10px",
-                                marginTop: "10px",
-                              }}
-                            >
-                              <p>{error}</p>
-                            </div>
-                          )}
+                          
                         </FormGroup>
                       </Col>
                       <Col lg="4">
@@ -296,16 +285,26 @@ const CreateSparePart = () => {
                         }}
                       />
                       {error && (
-                        <div
-                          style={{
-                            backgroundColor: "red",
-                            color: "white",
-                            padding: "10px",
-                            marginTop: "10px",
-                          }}
-                        >
-                          <p>{error}</p>
-                        </div>
+                         <div
+                         style={{
+                           backgroundColor: "#F46D75",
+                           color: "white",
+                           // textAlign:"center",
+                           display: "flex",
+                           justifyContent: "center",
+                           // fontWeight:"bold",
+                           // paddingBottom: "5px",
+                           // paddingTop: "5px",
+                           padding: "10px",
+                           marginTop: "15px",
+                           borderColor: "red",
+                           borderRadius: "20px",
+                         }}
+                       >
+                         <span>
+                           <b>{error}</b>
+                         </span>
+                       </div>
                       )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
