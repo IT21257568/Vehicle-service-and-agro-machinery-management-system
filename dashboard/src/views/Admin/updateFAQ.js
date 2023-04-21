@@ -38,6 +38,8 @@ const UpdateFAQ = () => {
   const [faqQuestion, setFaqQuestion] = useState("");
   const [faqCategory, setFaqCategory] = useState("");
   const [faqAnswer, setFaqAnswer] = useState("");
+  const [vidLink,setVidLink] = useState("");
+  
   
   useEffect(() => {
     const getFAQ = async () => {
@@ -48,26 +50,26 @@ const UpdateFAQ = () => {
       setFaqQuestion(res.data.faq_question);
       setFaqCategory(res.data.faq_category);
       setFaqAnswer(res.data.faq_answer);
-      
+      setVidLink(res.data.vid_link)
     };
     getFAQ();
   }, [id]);
 
   const handleUpdate = async (e) => {
-    
-    console.log("lol");
-
+    console.log("FAQ updated");
     axios
       .patch(`/api/faqs/${id}`, {
         faq_question: faqQuestion,
         faq_category: faqCategory,
         faq_answer: faqAnswer,
+        vid_link: vidLink
       })
       .then((res) => {
         console.log(res.data);
         navigate("/admin/faqs");
       });
-  };
+
+  }
 
   return (
     <>
@@ -129,6 +131,28 @@ const UpdateFAQ = () => {
                         type="textarea"
                         onChange={(e) => {
                           setFaqAnswer(e.target.value);
+                        }}
+                      />
+                      </FormGroup>
+                      </Col>
+                      </Row>
+                      <Row>
+                      <Col lg="6">
+                      <FormGroup>
+                      <label
+                        className="form-control-label"
+                        htmlFor="input-last-name"
+                      >
+                        Tutorial video link (Optional)
+                      </label>
+                      <Input
+                        className="form-control-alternative"
+                        placeholder="Paste video link here"
+                        rows="4"
+                        defaultValue={data.vid_link}
+                        type="text"
+                        onChange={(e) => {
+                          setVidLink(e.target.value);
                         }}
                       />
                       </FormGroup>
