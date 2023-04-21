@@ -39,6 +39,10 @@ import CreateGeneralIssue from "views/Admin/CreateGeneralIssues";
 import ViewGeneralIssues from "views/Admin/ViewGeneralIssues";
 import UpdateGeneralIssue from "views/Admin/UpdateGeneralIssues";
 
+import CreateFAQ from "views/Admin/CreateFAQ";
+import ViewFAQs from "views/Admin/ViewFAQs";
+import UpdateFAQ from "views/Admin/updateFAQ";
+
 // User views
 import DummyPage from "views/User/DummyPage";
 import SparePartsPage from "views/User/SparePartsPage";
@@ -47,6 +51,7 @@ import SparePartsPage from "views/User/SparePartsPage";
 import ViewCVSubmissions from "views/Admin/ViewCVSubmissions";
 import Career from "views/User/Career";
 import ApplyNow from "views/User/ApplyNow";
+
 
 
 const routes = [
@@ -308,6 +313,29 @@ const routes = [
     layout: "/admin",
   },
 
+  //Sithija FAQ section
+  {
+    path: "/create-faq",
+    name: "Create FAQ",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreateFAQ,
+    layout: "/admin",
+  },
+  {
+    path: "/faqs",
+    name: "FAQ Section",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewFAQs,
+    layout: "/admin",
+  },
+  {
+    path: "/update-faq/:id",
+    name: "Update FAQs",
+    icon: "ni ni-notification-70 text-pink",
+    component: UpdateFAQ,
+    layout: "/admin",
+  },
+  
   //User - Pehesasarani Spare Parts
   {
     path: "/spareParts",
