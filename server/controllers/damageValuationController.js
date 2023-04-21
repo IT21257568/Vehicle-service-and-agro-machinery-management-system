@@ -36,18 +36,32 @@ const mongoose = require('mongoose');
         //validation for empty fields
         if (!customer_id) {
             emptyFields.push('Customer ID');
+        } else {
+            if (!customer_id || !/^(\d{7})[vV]$|^\d{12}$/.test(customer_id)) {
+            emptyFields.push('Customer ID should be like 6536004v or 200120103936');
+            }
         }
         if (!customer_name) {
             emptyFields.push('Customer Name');
         }
         if (!vehicle_Number) {
             emptyFields.push('Vehicle Number');
+        }else {
+            if (!/^[a-zA-Z0-9-]{1,8}$/.test(vehicle_Number)) {
+                emptyFields.push('Vehicle Number should contain a maximum of 7 alphanumeric characters or hyphens');
+            }
         }
         if (!vehicle_Model) {
             emptyFields.push('Vehicle Model');
         }
         if (!customer_email) {
             emptyFields.push('Customer Email');
+        } else {
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(customer_email)) {
+              emptyFields.push("Invalid Email Address");
+            }
         }
         if (!estimated_cost) {
             emptyFields.push('Estimated Cost');

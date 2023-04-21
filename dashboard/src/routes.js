@@ -289,14 +289,14 @@ const routes = [
   {
     path: "/ceate-repair-job",
     name: "Create Repair Job",
-    icon: "ni ni-notification-70 text-blue",
+    icon: "ni ni-settings text-blue",
     component: CreateRepairJob,
     layout: "/admin",
   },
   {
     path: "/view-repair-jobs",
     name: "View Repair Jobs",
-    icon: "ni ni-notification-70 text-blue",
+    icon: "ni ni-active-40 text-blue",
     component: ViewRepairJobs,
     layout: "/admin",
   },
@@ -312,7 +312,7 @@ const routes = [
   {
     path: "/update-repair-job/:id",
     name: "Update Repair Job",
-    icon: "ni ni-notification-70 text-blue",
+    icon: "ni ni-ruler-pencil text-blue",
     component: UpdateRepairJob,
     layout: "/admin",
   },
