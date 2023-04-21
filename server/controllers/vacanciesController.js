@@ -31,16 +31,16 @@ const ceateVacancy = async(req, res) => {
 
     //validation for empty fields
     if (!vacancy_title) {
-        emptyFields.push('Vacancy TITLE');
+        emptyFields.push('Vacancy Tittle');
     }
     if (!vacancy_type) {
-        emptyFields.push('vacncy_type');
+        emptyFields.push('Vacancy Type');
     }
     if (!vacancy_count) {
-        emptyFields.push('vacancy_count');
+        emptyFields.push('Vacancy Count');
     }
     if (!vacancy_requirements) {
-        emptyFields.push('vacncy_requirements');
+        emptyFields.push('Vacancy Requirements');
     }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
