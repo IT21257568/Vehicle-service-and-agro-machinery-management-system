@@ -21,7 +21,7 @@ const CareerHeader = () => {
             <Col lg="7" md="10">
               <h1 className="display-2 text-white">Hello Job Seekers</h1>
               <p className="text-white mt-0 mb-5">
-                Build up your career with us. We are here to help you............... 
+                Build up your career with us. We are here to help you ... 
               </p>
             </Col>
           </Row>
