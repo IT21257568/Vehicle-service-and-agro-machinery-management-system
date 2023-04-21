@@ -143,6 +143,7 @@ const CreateSparePart = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-username"
+                            required
                             placeholder="Enter spare part Name"
                             type="text"
                             onChange={(e) => {
@@ -196,13 +197,13 @@ const CreateSparePart = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-first-name"
+                            required
                             placeholder="Enter spare part price"
                             type="number"
                             onChange={(e) => {
                               setSparePartPrice(e.target.value);
                             }}
                           />
-                          
                         </FormGroup>
                       </Col>
                       <Col lg="4">
@@ -216,6 +217,7 @@ const CreateSparePart = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-first-name"
+                            required
                             placeholder="Enter spare part discount"
                             type="number"
                             onChange={(e) => {
@@ -234,6 +236,7 @@ const CreateSparePart = () => {
                           </label>
                           <Dropdown
                             isOpen={dropdownOpen}
+                            required
                             color="primary"
                             toggle={toggle}
                           >
@@ -278,6 +281,7 @@ const CreateSparePart = () => {
                       <Input
                         className="form-control-alternative"
                         placeholder="A brief description about the spare part"
+                        required
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
@@ -285,26 +289,28 @@ const CreateSparePart = () => {
                         }}
                       />
                       {error && (
-                         <div
-                         style={{
-                           backgroundColor: "#F46D75",
-                           color: "white",
-                           // textAlign:"center",
-                           display: "flex",
-                           justifyContent: "center",
-                           // fontWeight:"bold",
-                           // paddingBottom: "5px",
-                           // paddingTop: "5px",
-                           padding: "10px",
-                           marginTop: "15px",
-                           borderColor: "red",
-                           borderRadius: "20px",
-                         }}
-                       >
-                         <span>
-                           <b>{error}</b>
-                         </span>
-                       </div>
+                        <div
+                          style={{
+                            backgroundColor: "#ffffff",
+                            color: "red",
+                            // textAlign:"center",
+                            display: "flex",
+                            justifyContent: "center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
+                            padding: "10px",
+                            marginTop: "15px",
+                            borderStyle: "solid",
+                            borderColor: "red",
+                            borderWidth: "3px",
+                            borderRadius: "20px",
+                          }}
+                        >
+                          <span>
+                            <b>{error}</b>
+                          </span>
+                        </div>
                       )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>

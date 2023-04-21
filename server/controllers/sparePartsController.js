@@ -33,22 +33,22 @@ const createSparePart = async (req, res) => {
     let emptyFields = [];
 
     if(!sp_name) {
-        emptyFields.push('sp_name');
+        emptyFields.push('Spare Part Name');
     }
     if(!sp_image) {
-        emptyFields.push('sp_image');
+        emptyFields.push('Spare Part image');
     }
     if(!sp_price) {
-        emptyFields.push('sp_price');
+        emptyFields.push('Spare Part price');
     }
     if(!sp_discount) {
-        emptyFields.push('sp_discount');
+        emptyFields.push('Spare Part discount');
     }
     if(!sp_description) {
-        emptyFields.push('sp_description');
+        emptyFields.push('Spare Part description');
     }
     if(!sp_status) {
-        emptyFields.push('sp_status');
+        emptyFields.push('Spare Part status');
     }
     if(emptyFields.length > 0) {
         return res.status(400).json({error: "The following fields are empty: ", emptyFields});
