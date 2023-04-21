@@ -31,22 +31,22 @@ const ceateProgress = async(req, res) => {
 
     //validation for empty fields
     if (!name) {
-        emptyFields.push('name');
+        emptyFields.push('customer name');
     }
     if (!vehi_number) {
-        emptyFields.push('vehi_number');
+        emptyFields.push('vehicle number');
     }
     if (!status) {
-        emptyFields.push('status');
+        emptyFields.push('service status');
     }
     if (!date) {
         emptyFields.push('date');
     }
     if (!description) {
-        emptyFields.push('description');
+        emptyFields.push('description about status');
     }
     if (!progress_picture_url) {
-        emptyFields.push("progress_picture_url");
+        emptyFields.push("progress picture");
       }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });

@@ -3,17 +3,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
+
 // reactstrap components
 import {
   Badge,
   Card,
   CardHeader,
   CardFooter,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
+  //DropdownMenu,
+  //DropdownItem,
+  //UncontrolledDropdown,
+  //DropdownToggle,
+  //Media,
   Pagination,
   PaginationItem,
   PaginationLink,
@@ -21,19 +23,24 @@ import {
   Table,
   Container,
   Row,
-  UncontrolledTooltip,
+  //UncontrolledTooltip,
   Button,
-  Chip,
+  //Chip,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-const ViewRepairJobs = () => { 
+
+
+const ViewCVSubmissions = () => {
   // states
-  const [allRepairJobs, setAllRepairJobs] = useState([]);
+  const [allApplicants, setAllSubmissions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+
+ 
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -44,26 +51,26 @@ const ViewRepairJobs = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all repair jobs from database
+  // retrieve all vacancies from database
   useEffect(() => {
-    const fetchAllRepairJobs = async () => {
+    const fetchAllVacancies = async () => {
       try {
-        const res = await axios.get("/api/damageValuation");
-        setAllRepairJobs(res.data);
+        const res = await axios.get("/api/cvSub");
+        setAllSubmissions(res.data);
         setIsLoading(false);
       } catch (err) {
         setError(err);
         setIsLoading(false);
       }
     };
-    fetchAllRepairJobs();
+    fetchAllVacancies();
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`/api/damageValuation/${id}`).then((res) => {
+    axios.delete(`/api/cvSub/${id}`).then((res) => {
       console.log(res.data);
-      setAllRepairJobs((prevData) =>
-        prevData.filter((damagevaluation) => damagevaluation._id !== id)
+      setAllSubmissions((prevData) =>
+        prevData.filter((vacancy) => vacancy._id !== id)
       );
     });
   };
@@ -80,22 +87,22 @@ const ViewRepairJobs = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Repair Jobs</h3>
+                    <h3 className="mb-0">All Applicants</h3>
                   </div>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={() => navigate("/admin/ceate-repair-job")}
+                      //onClick={() => navigate("/admin/create-vacancy")}
                     >
                       <span
                         className="btn-inner--icon"
                         style={{ width: "20px" }}
                       >
-                        <i className="ni ni-planet" />
+                        <i className="ni ni-folder-17" />
                       </span>
-                      <span className="btn-inner--text">Add</span>
+                      <span className="btn-inner--text">Generate Report</span>
                     </Button>
                   </div>
                 </Row>
@@ -103,16 +110,15 @@ const ViewRepairJobs = () => {
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">NIC</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Vehicle Number</th>
-                    <th scope="col">Vehicle Type</th>
+                    <th scope="col">Applied Vacancy</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Contact Number</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Estimated Cost</th>
-                    <th scope="col">Required Parts</th>
+                    <th scope="col">CV</th>
                     <th scope="col">Actions</th>
                   </tr>
-
                 </thead>
                 <tbody>
                   {isLoading && (
@@ -120,45 +126,47 @@ const ViewRepairJobs = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allRepairJobs.slice(0, visible).map((repairJob, index) => (
-                    <tr key={repairJob._id}>
+                  {allApplicants.slice(0, visible).map((applicant, index) => (
+                    <tr key={applicant._id}>
                       <th scope="row">
                         <span className="mb-0 text-sm">
-                          {repairJob.customer_id}
+                          {applicant.applicant_name}
                         </span>
                       </th>
-                      <td>{repairJob.customer_name}</td>
-                      <td>{repairJob.vehicle_Number}</td>
+                      <td>{applicant.vacancy_name}</td>
                       <td>
-                        <Badge color="success">{repairJob.vehicle_Model}</Badge>
+                        <Badge color="success">{applicant.applicant_age}</Badge>
                       </td>
-                      <td> {repairJob.customer_email} </td>
-                      <td> Rs.{repairJob.estimated_cost} </td>
-                      <td> {repairJob.required_parts} </td>
+
+                      <td>{applicant.applicant_gender}</td>
+                      <td>{applicant.applicant_contact}</td>
                       <td>
-                        <Button size="sm" color="primary">
-                          View
-                        </Button>
-                        <Button
-                          size="sm"
-                          color="warning"
-                          onClick={() =>
-                            navigate(`/admin/update-repair-job/${repairJob._id}`)
-                          }
+                        <div className="d-flex align-items-center">
+                          {applicant.applicant_email}
+                        </div>
+                      </td>
+                      <td>
+                        <a
+                          href={applicant.applicant_CVFile_url}
+                          style={{ textDecoration: "none" }}
                         >
-                          Update
-                        </Button>
+                          <Button size="sm" color="primary">
+                            View
+                          </Button>
+                        </a>
+                      </td>
+                      <td>
                         <Button
                           size="sm"
                           color="danger"
-                          onClick={() => handleDelete(repairJob._id)}
+                          onClick={() => handleDelete(applicant._id)}
                         >
                           Delete
                         </Button>
                       </td>
                     </tr>
                   ))}
-                  {visible < allRepairJobs.length && (
+                  {visible < allApplicants.length && (
                     <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
@@ -225,4 +233,4 @@ const ViewRepairJobs = () => {
   );
 };
 
-export default ViewRepairJobs;
+export default ViewCVSubmissions;

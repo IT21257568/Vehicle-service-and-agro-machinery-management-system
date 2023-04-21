@@ -53,7 +53,7 @@ const ViewPromotions = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all vacancies from database
+  // retrieve all promotions from database
   useEffect(() => {
     const fetchAllPromotions = async () => {
       try {
@@ -131,7 +131,7 @@ const ViewPromotions = () => {
                       src={promotion.promo_picture_url}
                     />
                     <CardBody>
-                      <CardTitle tag="h2">
+                      <CardTitle tag="h2" style={{fontSize: '24px'}}>
                         {promotion.promo_title}
                       </CardTitle>
                       <CardSubtitle
@@ -150,13 +150,11 @@ const ViewPromotions = () => {
                         Offer ends on {promotion.promo_endDate}
                       </CardSubtitle>
 
-                      <Row>
                       <Button
                           size="sm"
                           color="warning"
                           onClick={() =>
-                            navigate(`/admin/update-promotion/${promotion._id}`)
-                          }
+                            navigate(`/admin/update-promotion/${promotion._id}`)}
                          
                       >
                           Update
@@ -168,8 +166,7 @@ const ViewPromotions = () => {
                         >
                           Delete
                         </Button>
-                      </Row>
-                    </CardBody>
+                      </CardBody>
                   </Card>
                  
                 ))}

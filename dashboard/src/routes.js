@@ -35,9 +35,27 @@ import UpdateAgroProduct from "views/Admin/UpdateAgroProduct";
 import CreateRepairJob from "views/Admin/CreateRepairJob";
 import ViewRepairJobs from "views/Admin/ViewRepairJobs";
 import UpdateRepairJob from "views/Admin/UpdateRepairJob";
+import CreateGeneralIssue from "views/Admin/CreateGeneralIssues";
+import ViewGeneralIssues from "views/Admin/ViewGeneralIssues";
+import UpdateGeneralIssue from "views/Admin/UpdateGeneralIssues";
+
+import CreateFAQ from "views/Admin/CreateFAQ";
+import ViewFAQs from "views/Admin/ViewFAQs";
+import UpdateFAQ from "views/Admin/updateFAQ";
 
 // User views
 import DummyPage from "views/User/DummyPage";
+import SparePartsPage from "views/User/SparePartsPage";
+
+// nisal
+import ViewCVSubmissions from "views/Admin/ViewCVSubmissions";
+import Career from "views/User/Career";
+import ApplyNow from "views/User/ApplyNow";
+
+// Sithija user views
+import Promotions from "views/User/PromotionsPage";
+import FAQs from "views/User/FAQPage";
+
 
 
 const routes = [
@@ -299,5 +317,98 @@ const routes = [
     layout: "/admin",
   },
 
+  //Sithija FAQ section
+  {
+    path: "/create-faq",
+    name: "Create FAQ",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreateFAQ,
+    layout: "/admin",
+  },
+  {
+    path: "/faqs",
+    name: "FAQ Section",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewFAQs,
+    layout: "/admin",
+  },
+  {
+    path: "/update-faq/:id",
+    name: "Update FAQs",
+    icon: "ni ni-notification-70 text-pink",
+    component: UpdateFAQ,
+    layout: "/admin",
+  },
+  
+  //User - Pehesasarani Spare Parts
+  {
+    path: "/spareParts",
+    name: "Spare Parts Page",
+    icon: "ni ni-ruler-pencil text-green",
+    component: SparePartsPage,
+    layout: "/user",
+  },
+
+  //Nisal CV Submission
+  {
+    path: "/cv-submission",
+    name: "CV Submissions",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewCVSubmissions,
+    layout: "/admin",
+  },
+  {
+    path: "/carrerpage",
+    name: "Career",
+    icon: "ni ni-ruler-pencil text-green",
+    component: Career,
+    layout: "/user",
+  },
+  {
+    path: "/applynowpage/:id",
+    name: "Apply Now",
+    icon: "ni ni-ruler-pencil text-green",
+    component: ApplyNow,
+    layout: "/user",
+  },
+
+  //Piyumi general issues
+  {
+    path: "/create-general-issue",
+    name: "Create General Issue",
+    icon: "ni ni-notification-70 text-pink",
+    component: CreateGeneralIssue,
+    layout: "/admin",
+  },
+  {
+    path: "/view-general-issues",
+    name: "View General Issues",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewGeneralIssues,
+    layout: "/admin",
+  },
+  {
+    path: "/update-general-issues/:id",
+    name: "Update General Issue",
+    icon: "ni ni-notification-70 text-pink",
+    component: UpdateGeneralIssue,
+    layout: "/admin",
+  },
+
+  //sithija user views
+  {
+    path: "/promotions-page",
+    name: "Promotions",
+    icon: "ni ni-notification-70 text-orange",
+    component: Promotions,
+    layout: "/user",
+  },
+  {
+    path: "/faq-page",
+    name: "FAQs",
+    icon: "ni ni-notification-70 text-orange",
+    component: FAQs,
+    layout: "/user",
+  }
 ];
 export default routes;

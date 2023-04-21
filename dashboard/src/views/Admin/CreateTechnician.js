@@ -102,7 +102,13 @@ const CreateVacancy = () => {
           navigate("/admin/technicians");
         });
     } catch (error) {
-      setError(error.message);
+      if (error.response && error.response.status === 400) {
+        const { error: errorMessage, emptyFields } = error.response.data;
+        const fields = emptyFields.join(", ");
+        setError(`Please fill in all fields: ${fields}`);
+      } else {
+        console.log(error);
+      }
     }
   };
 
@@ -264,6 +270,28 @@ const CreateVacancy = () => {
                           setTechnicianExpertise(e.target.value);
                         }}
                       />
+                      {error && (
+                        <div
+                          style={{
+                            backgroundColor: "#F46D75",
+                            color: "white",
+                            // textAlign:"center",
+                            display: "flex",
+                            justifyContent: "center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
+                            padding: "10px",
+                            marginTop: "15px",
+                            borderColor: "red",
+                            borderRadius: "20px",
+                          }}
+                        >
+                          <span>
+                            <b>{error}</b>
+                          </span>
+                        </div>
+                      )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create
