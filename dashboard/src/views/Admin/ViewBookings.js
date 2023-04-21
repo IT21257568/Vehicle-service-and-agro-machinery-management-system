@@ -20,6 +20,10 @@ import {
   Progress,
   Table,
   Container,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input,
   Row,
   UncontrolledTooltip,
   Button,
@@ -82,12 +86,20 @@ const ViewBookings = () => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Bookings</h3>
-                    <input
-                      type="text"
+                    <InputGroup className="input-group-rounded input-group-merge">
+                    <Input
+                      aria-label="Search"
+                      className="form-control-rounded form-control-prepended"
                       placeholder="Search"
-                      className="Search"
+                      type="search"
                       onChange={(e) => setQuery(e.target.value)}
-                    ></input>
+                    />
+                    <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                    <span className="fa fa-search" />
+                    </InputGroupText>
+                    </InputGroupAddon>
+                 </InputGroup>
                   </div>
                   <div className="col text-right">
                     <Button
