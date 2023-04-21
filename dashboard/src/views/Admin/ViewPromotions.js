@@ -53,7 +53,7 @@ const ViewPromotions = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all vacancies from database
+  // retrieve all promotions from database
   useEffect(() => {
     const fetchAllPromotions = async () => {
       try {
