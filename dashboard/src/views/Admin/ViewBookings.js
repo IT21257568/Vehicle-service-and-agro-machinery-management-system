@@ -29,11 +29,12 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const ViewBookings = () => { 
+const ViewBookings = () => {
   // states
   const [allBookings, setAllBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -81,6 +82,12 @@ const ViewBookings = () => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Bookings</h3>
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      className="Search"
+                      onChange={(e) => setQuery(e.target.value)}
+                    ></input>
                   </div>
                   <div className="col text-right">
                     <Button
@@ -112,7 +119,6 @@ const ViewBookings = () => {
                     <th scope="col">Notes</th>
                     <th scope="col">Actions</th>
                   </tr>
-
                 </thead>
                 <tbody>
                   {isLoading && (
@@ -120,44 +126,52 @@ const ViewBookings = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allBookings.slice(0, visible).map((booking, index) => (
-                    <tr key={booking._id}>
-                      <th scope="row">
-                        <span className="mb-0 text-sm">
-                          {booking.client_name}
-                        </span>
-                      </th>
-                      <td>
-                        <Badge color="success">{booking.service_type}</Badge>
-                      </td>
-                      <td>{booking.location}</td>
-                      <td> {booking.phone} </td>
-                      <td> {booking.email} </td>
-                      <td> {booking.date_time} </td>
-                      <td> {booking.special_note} </td>
-                      <td>
-                        <Button size="sm" color="primary">
-                          View
-                        </Button>
-                        <Button
-                          size="sm"
-                          color="warning"
-                          onClick={() =>
-                            navigate(`/admin/update-bookings/${booking._id}`)
-                          }
-                        >
-                          Update
-                        </Button>
-                        <Button
-                          size="sm"
-                          color="danger"
-                          onClick={() => handleDelete(booking._id)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
+                  {allBookings
+                    .filter((booking) =>
+                      booking.client_name
+                        ?.toLowerCase()
+                        .includes(query.toLowerCase())
+                    )
+                    .slice(0, visible)
+                    .map((booking, index) => (
+                      <tr key={booking._id}>
+                        <th scope="row">
+                          <span className="mb-0 text-sm">
+                            {booking.client_name}
+                          </span>
+                        </th>
+                        <td>
+                          <Badge color="success">{booking.service_type}</Badge>
+                        </td>
+                        <td>{booking.location}</td>
+                        <td> {booking.phone} </td>
+                        <td> {booking.email} </td>
+                        <td> {booking.date_time} </td>
+                        <td> {booking.special_note} </td>
+                        <td>
+                          <Button size="sm" color="primary">
+                            View
+                          </Button>
+                          <Button
+                            size="sm"
+                            color="warning"
+                            onClick={() =>
+                              navigate(`/admin/update-bookings/${booking._id}`)
+                            }
+                          >
+                            Update
+                          </Button>
+                          <Button
+                            size="sm"
+                            color="danger"
+                            onClick={() => handleDelete(booking._id)}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+
                   {visible < allBookings.length && (
                     <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
@@ -223,7 +237,6 @@ const ViewBookings = () => {
       </Container>
     </>
   );
-
 };
 
 export default ViewBookings;
