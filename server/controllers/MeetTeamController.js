@@ -38,21 +38,21 @@ const ceatemTeam = async(req, res) => {
 
     //validation for empty fields
     if (!technician_name) {
-      emptyFields.push("technican_name");
+      emptyFields.push("Name");
     }
     if (!technician_age) {
-      emptyFields.push("technican_age");
+      emptyFields.push("Age");
     }
     if (!technician_experiences) {
-      emptyFields.push("technican_experiences");
+      emptyFields.push("Year Of Experiences");
     }
     if (!technician_expertise) {
-      emptyFields.push("technican_expertise");
+      emptyFields.push("Expertice");
     }
     if (!technician_picture_url) {
-      emptyFields.push("technican_picture_url");
+      emptyFields.push("Technician Image");
     } if (!technician_specialize_in) {
-      emptyFields.push("technician_specialize_in");
+      emptyFields.push("Specialize In");
     }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });

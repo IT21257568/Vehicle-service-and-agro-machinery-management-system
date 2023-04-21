@@ -146,7 +146,8 @@ const handleImageUpload = (event) => {
                     <h3 className="mb-0">
                       Apply For The{" "}
                       <Badge color="success">{data.vacancy_title}</Badge>
-                    </h3><br></br>
+                    </h3>
+                    <br></br>
                     <label
                       className="form-control-label"
                       htmlFor="input-last-name"
@@ -347,13 +348,23 @@ const handleImageUpload = (event) => {
                       {error && (
                         <div
                           style={{
-                            backgroundColor: "red",
+                            backgroundColor: "#F46D75",
                             color: "white",
+                            // textAlign:"center",
+                            display: "flex",
+                            justifyContent: "center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
                             padding: "10px",
-                            marginTop: "10px",
+                            marginTop: "15px",
+                            borderColor: "red",
+                            borderRadius: "20px",
                           }}
                         >
-                          <p>{error}</p>
+                          <span>
+                            <b>{error}</b>
+                          </span>
                         </div>
                       )}
                     </FormGroup>
