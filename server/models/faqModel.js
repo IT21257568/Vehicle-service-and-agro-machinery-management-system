@@ -15,8 +15,11 @@ const faqSchema = new Schema(
     faq_answer: {
         type: String,
         required: true,
+    },
+    vid_link: {
+       type: String,
     }
-  },
+ },
   { timestamps: true }
 );
 
