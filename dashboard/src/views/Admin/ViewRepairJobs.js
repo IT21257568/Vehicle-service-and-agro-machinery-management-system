@@ -21,19 +21,25 @@ import {
   Table,
   Container,
   Row,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input,
   UncontrolledTooltip,
   Button,
   Chip,
+  Col,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-const ViewRepairJobs = () => { 
+const ViewRepairJobs = () => {
   // states
   const [allRepairJobs, setAllRepairJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -82,6 +88,17 @@ const ViewRepairJobs = () => {
                   <div className="col">
                     <h3 className="mb-0">All Repair Jobs</h3>
                   </div>
+                  <Col xl="3">
+                    <InputGroup className="input-group-rounded input-group-merge">
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                    </InputGroup>
+                  </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
@@ -112,7 +129,6 @@ const ViewRepairJobs = () => {
                     <th scope="col">Required Parts</th>
                     <th scope="col">Actions</th>
                   </tr>
-
                 </thead>
                 <tbody>
                   {isLoading && (
@@ -120,44 +136,62 @@ const ViewRepairJobs = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allRepairJobs.slice(0, visible).map((repairJob, index) => (
-                    <tr key={repairJob._id}>
-                      <th scope="row">
-                        <span className="mb-0 text-sm">
-                          {repairJob.customer_id}
-                        </span>
-                      </th>
-                      <td>{repairJob.customer_name}</td>
-                      <td>{repairJob.vehicle_Number}</td>
-                      <td>
-                        <Badge color="success">{repairJob.vehicle_Model}</Badge>
-                      </td>
-                      <td> {repairJob.customer_email} </td>
-                      <td> Rs.{repairJob.estimated_cost} </td>
-                      <td> {repairJob.required_parts} </td>
-                      <td>
-                        <Button size="sm" color="primary">
-                          View
-                        </Button>
-                        <Button
-                          size="sm"
-                          color="warning"
-                          onClick={() =>
-                            navigate(`/admin/update-repair-job/${repairJob._id}`)
-                          }
-                        >
-                          Update
-                        </Button>
-                        <Button
-                          size="sm"
-                          color="danger"
-                          onClick={() => handleDelete(repairJob._id)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
+                  {allRepairJobs
+                    .filter(
+                      (repairJob) =>
+                        repairJob.customer_id
+                          ?.toString()
+                          .includes(query.toString()) ||
+                        repairJob.customer_email
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
+                      // repairJob.customer_id
+                      //   ?.toLowerCase()
+                      //   .includes(query.toLowerCase())
+                    )
+                    .slice(0, visible)
+                    .map((repairJob, index) => (
+                      <tr key={repairJob._id}>
+                        <th scope="row">
+                          <span className="mb-0 text-sm">
+                            {repairJob.customer_id}
+                          </span>
+                        </th>
+                        <td>{repairJob.customer_name}</td>
+                        <td>{repairJob.vehicle_Number}</td>
+                        <td>
+                          <Badge color="success">
+                            {repairJob.vehicle_Model}
+                          </Badge>
+                        </td>
+                        <td> {repairJob.customer_email} </td>
+                        <td> Rs.{repairJob.estimated_cost} </td>
+                        <td> {repairJob.required_parts} </td>
+                        <td>
+                          <Button size="sm" color="primary">
+                            View
+                          </Button>
+                          <Button
+                            size="sm"
+                            color="warning"
+                            onClick={() =>
+                              navigate(
+                                `/admin/update-repair-job/${repairJob._id}`
+                              )
+                            }
+                          >
+                            Update
+                          </Button>
+                          <Button
+                            size="sm"
+                            color="danger"
+                            onClick={() => handleDelete(repairJob._id)}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
                   {visible < allRepairJobs.length && (
                     <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
