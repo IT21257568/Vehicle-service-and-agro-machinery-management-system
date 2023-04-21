@@ -35,25 +35,25 @@ const mongoose = require('mongoose');
     
         //validation for empty fields
         if (!customer_id) {
-            emptyFields.push('customer_id');
+            emptyFields.push('Customer ID');
         }
         if (!customer_name) {
-            emptyFields.push('customer_name');
+            emptyFields.push('Customer Name');
         }
         if (!vehicle_Number) {
-            emptyFields.push('vehicle_Number');
+            emptyFields.push('Vehicle Number');
         }
         if (!vehicle_Model) {
-            emptyFields.push('vehicle_Model');
+            emptyFields.push('Vehicle Model');
         }
         if (!customer_email) {
-            emptyFields.push('customer_email');
+            emptyFields.push('Customer Email');
         }
         if (!estimated_cost) {
-            emptyFields.push('estimated_cost');
+            emptyFields.push('Estimated Cost');
         }
         if (!damage_picture_url) {
-            emptyFields.push('damage_picture_url');
+            emptyFields.push('Upload Picture');
         }
        
         if (emptyFields.length > 0) {
