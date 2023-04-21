@@ -131,7 +131,7 @@ const CreateProgressTracking = () => {
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                  Progress Status Title
+                    Progress Status Title
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -173,9 +173,9 @@ const CreateProgressTracking = () => {
                           />
                         </FormGroup>
                       </Col>
-                     </Row>
+                    </Row>
                     <Row>
-                    <Col lg="6">
+                      <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -206,7 +206,6 @@ const CreateProgressTracking = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-start-date"
-                            
                             type="date"
                             onChange={(e) => {
                               setDate(e.target.value);
@@ -215,15 +214,16 @@ const CreateProgressTracking = () => {
                         </FormGroup>
                       </Col>
                     </Row>
-                  <Row>
-                  <Col lg="6">
+                    <Row>
+                      <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
                           >
                             Post Picture
-                          </label> <br></br>
+                          </label>{" "}
+                          <br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
@@ -234,17 +234,17 @@ const CreateProgressTracking = () => {
                           )}
                         </FormGroup>
                       </Col>
-                  </Row>
+                    </Row>
                   </div>
 
-                   {/* Description */}
+                  {/* Description */}
                   <div className="pl-lg-4">
                     <FormGroup>
                       <label
                         className="form-control-label"
                         htmlFor="input-description"
                       >
-                      Service Progress Status Description
+                        Service Progress Status Description
                       </label>
                       <Input
                         className="form-control-alternative"
