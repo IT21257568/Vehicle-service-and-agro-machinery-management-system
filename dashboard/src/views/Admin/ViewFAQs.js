@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -38,7 +38,9 @@ import {
   Toast,
   ToastHeader,
   ToastBody,
-  ButtonToggle
+  ButtonToggle,
+  CardLink,
+  NavLink
   
 } from "reactstrap";
 
@@ -138,10 +140,14 @@ const ViewFAQs = () => {
             <Container>
                 
               {allFAQs.slice(0, visible).map((faq, index) => (
-                
+              
                 <Accordion title={faq.faq_question} open={open} toggle={toggle}>
                 
                 {faq.faq_answer}
+
+                <Row>
+                  <NavLink href={faq.vid_link} style={{ color: 'teal', marginLeft: '0.2rem'}}>Watch Tutorial here</NavLink>
+                </Row>
                   <Row style={{marginTop: '1rem'}}>
                       <Button style={{marginLeft: '0.8rem', marginRight: '1rem'}}
                           size="sm"
@@ -150,18 +156,19 @@ const ViewFAQs = () => {
                             navigate(`/admin/update-faq/${faq._id}`)}
                          
                       >
-                          Update
+                          Update FAQ
                         </Button>
                         <Button
                           size="sm"
                           color="danger"
                           onClick={() => handleDelete(faq._id)}
                         >
-                          Delete
+                          Delete FAQ
                         </Button>
                     </Row>
+                   
                 </Accordion>
-
+                
             ))}
             
               </Container>

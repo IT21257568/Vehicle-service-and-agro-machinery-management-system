@@ -131,7 +131,7 @@ const ViewPromotions = () => {
                       src={promotion.promo_picture_url}
                     />
                     <CardBody>
-                      <CardTitle tag="h2">
+                      <CardTitle tag="h2" style={{fontSize: '24px'}}>
                         {promotion.promo_title}
                       </CardTitle>
                       <CardSubtitle

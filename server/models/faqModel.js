@@ -16,9 +16,8 @@ const faqSchema = new Schema(
         type: String,
         required: true,
     },
-    faq_collapse: {
-       type: Boolean,
-       default: true,
+    vid_link: {
+       type: String,
     }
  },
   { timestamps: true }

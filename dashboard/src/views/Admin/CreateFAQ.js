@@ -33,6 +33,7 @@ const CreateFAQ = () => {
   const [faqQuestion, setFaqQuestion] = useState("");
   const [faqCategory, setFaqCategory] = useState("");
   const [faqAnswer, setFaqAnswer] = useState("");
+  const [faqVidLink, setVidLink] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -44,15 +45,16 @@ const CreateFAQ = () => {
           faq_question: faqQuestion,
           faq_category: faqCategory,
           faq_answer: faqAnswer,
-          
+          vid_link: faqVidLink
         })
         .then((res) => {
           console.log("New FAQ added", res.data);
           setFaqQuestion("");
           setFaqCategory("");
           setFaqAnswer("");
+          setVidLink("");
           setError(null);
-          navigate("/admin/vacancies");
+          navigate("/admin/faqs");
         });
     } catch (error) {
       setError(error.message);
@@ -77,7 +79,7 @@ const CreateFAQ = () => {
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Vacancy Details
+                    FAQ Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -92,7 +94,7 @@ const CreateFAQ = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-username"
-                            placeholder="Title"
+                            placeholder="Enter question here"
                             type="textarea"
                             onChange={(e) => {
                               setFaqQuestion(e.target.value);
@@ -112,11 +114,32 @@ const CreateFAQ = () => {
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
+                        placeholder="Enter solution here"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
                           setFaqAnswer(e.target.value);
+                        }}
+                      />
+                      </FormGroup>
+                      </Col>
+                      </Row>
+                      <Row>
+                      <Col lg="6">
+                      <FormGroup>
+                      <label
+                        className="form-control-label"
+                        htmlFor="input-last-name"
+                      >
+                        Tutorial video link (Optional)
+                      </label>
+                      <Input
+                        className="form-control-alternative"
+                        placeholder="Paste video link here"
+                        rows="4"
+                        type="text"
+                        onChange={(e) => {
+                          setVidLink(e.target.value);
                         }}
                       />
                       </FormGroup>
@@ -188,7 +211,7 @@ const CreateFAQ = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/vacancies");
+                        navigate("/admin/faqs");
                       }}
                     >
                       Cancel
