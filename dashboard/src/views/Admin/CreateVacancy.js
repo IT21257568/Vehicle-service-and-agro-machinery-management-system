@@ -59,7 +59,7 @@ const CreateVacancy = () => {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        setError(`You Need To Fillout ${fields} before submitiing the form` );
       } else {
         console.log(error);
       }
@@ -199,7 +199,7 @@ const CreateVacancy = () => {
                           style={{
                             backgroundColor: "red",
                             color: "white",
-                            padding: "10px",
+                            paddingTop: "10px",
                             marginTop: "10px",
                           }}
                         >
