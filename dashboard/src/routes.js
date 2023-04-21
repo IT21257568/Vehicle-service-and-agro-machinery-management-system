@@ -52,6 +52,10 @@ import ViewCVSubmissions from "views/Admin/ViewCVSubmissions";
 import Career from "views/User/Career";
 import ApplyNow from "views/User/ApplyNow";
 
+// Sithija user views
+import Promotions from "views/User/PromotionsPage";
+import FAQs from "views/User/FAQPage";
+
 
 
 const routes = [
@@ -390,5 +394,21 @@ const routes = [
     component: UpdateGeneralIssue,
     layout: "/admin",
   },
+
+  //sithija user views
+  {
+    path: "/promotions-page",
+    name: "Promotions",
+    icon: "ni ni-notification-70 text-orange",
+    component: Promotions,
+    layout: "/user",
+  },
+  {
+    path: "/faq-page",
+    name: "FAQs",
+    icon: "ni ni-notification-70 text-orange",
+    component: FAQs,
+    layout: "/user",
+  }
 ];
 export default routes;

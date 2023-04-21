@@ -31,25 +31,25 @@ let emptyFields = [];
 
 //validation for empty fields
 if (!promo_title) {
-    emptyFields.push('promotion_title');
+    emptyFields.push('promotion title');
 }
 if (!promo_code) {
-    emptyFields.push('promo_code');
+    emptyFields.push('promotion code');
 }
 if(!promo_discount){
-    emptyFields.push('promo_discount');
+    emptyFields.push('promotion discount');
 }
 if (!promo_description) {
-    emptyFields.push('promo_description');
+    emptyFields.push('promotion description');
 }
 if (!promo_startDate) {
-    emptyFields.push('promo_startDate');
+    emptyFields.push('promotion startDate');
 }
 if (!promo_endDate) {
-    emptyFields.push('promo_endDate');
+    emptyFields.push('promotion endDate');
 }
 if (!promo_picture_url) {
-    emptyFields.push("promo_picture_url");
+    emptyFields.push("promotion picture");
   }
 if (emptyFields.length > 0) {
     return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
