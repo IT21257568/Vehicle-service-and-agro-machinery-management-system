@@ -348,8 +348,8 @@ const handleImageUpload = (event) => {
                       {error && (
                         <div
                           style={{
-                            backgroundColor: "#F46D75",
-                            color: "white",
+                            backgroundColor: "#ffffff",
+                            color: "red",
                             // textAlign:"center",
                             display: "flex",
                             justifyContent: "center",
@@ -358,7 +358,9 @@ const handleImageUpload = (event) => {
                             // paddingTop: "5px",
                             padding: "10px",
                             marginTop: "15px",
+                            borderStyle: "solid",
                             borderColor: "red",
+                            borderWidth: "3px",
                             borderRadius: "20px",
                           }}
                         >
