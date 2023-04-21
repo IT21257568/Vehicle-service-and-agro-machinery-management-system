@@ -39,7 +39,7 @@ const CreateVacancy = () => {
     e.preventDefault(); // prevent page refresh
 
     try {
-        await axios
+      await axios
         .post("/api/vacancies", {
           vacancy_title: vacancyTitle,
           vacancy_type: vacancyType,
@@ -197,13 +197,23 @@ const CreateVacancy = () => {
                       {error && (
                         <div
                           style={{
-                            backgroundColor: "red",
+                            backgroundColor: "#F46D75",
                             color: "white",
+                            // textAlign:"center",
+                            display: "flex",
+                            justifyContent: "center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
                             padding: "10px",
-                            marginTop: "10px",
+                            marginTop: "15px",
+                            borderColor: "red",
+                            borderRadius: "20px",
                           }}
                         >
-                          <p>{error}</p>
+                          <span>
+                            <b>{error}</b>
+                          </span>
                         </div>
                       )}
                     </FormGroup>
