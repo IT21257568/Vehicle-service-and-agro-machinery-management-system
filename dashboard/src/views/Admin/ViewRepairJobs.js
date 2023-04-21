@@ -44,7 +44,7 @@ const ViewRepairJobs = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all vacancies from database
+  // retrieve all repair jobs from database
   useEffect(() => {
     const fetchAllRepairJobs = async () => {
       try {
