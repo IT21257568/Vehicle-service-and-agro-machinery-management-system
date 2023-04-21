@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,7 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateSparePart= () => {
+const CreateSparePart = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
@@ -81,12 +81,12 @@ const CreateSparePart= () => {
     try {
       await axios
         .post("/api/spareParts", {
-          sp_name : SparePart_name,
-          sp_image : image,
-          sp_price : SparePart_price,
-          sp_discount : SparePart_discount,
-          sp_description : SparePart_description,
-          sp_status : SparePart_status,
+          sp_name: SparePart_name,
+          sp_image: image,
+          sp_price: SparePart_price,
+          sp_discount: SparePart_discount,
+          sp_description: SparePart_description,
+          sp_status: SparePart_status,
         })
         .then((res) => {
           console.log("New sparePart added", res.data);
@@ -136,12 +136,14 @@ const CreateSparePart= () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username">
+                            htmlFor="input-username"
+                          >
                             Spare Part Name
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-username"
+                            required
                             placeholder="Enter spare part Name"
                             type="text"
                             onChange={(e) => {
@@ -154,9 +156,11 @@ const CreateSparePart= () => {
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
-                            htmlFor="input-email">
+                            htmlFor="input-email"
+                          >
                             Spare Part Picture
-                          </label> <br></br>
+                          </label>{" "}
+                          <br></br>
                           <Media className="align-items-center">
                             <span className="avatar avatar-sm rounded-circle">
                               {image && (
@@ -167,7 +171,8 @@ const CreateSparePart= () => {
                                 />
                               )}
                             </span>
-                          </Media><br></br>
+                          </Media>
+                          <br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
@@ -192,6 +197,7 @@ const CreateSparePart= () => {
                           <Input
                             className="form-control-alternative"
                             id="input-first-name"
+                            required
                             placeholder="Enter spare part price"
                             type="number"
                             onChange={(e) => {
@@ -211,6 +217,7 @@ const CreateSparePart= () => {
                           <Input
                             className="form-control-alternative"
                             id="input-first-name"
+                            required
                             placeholder="Enter spare part discount"
                             type="number"
                             onChange={(e) => {
@@ -229,11 +236,14 @@ const CreateSparePart= () => {
                           </label>
                           <Dropdown
                             isOpen={dropdownOpen}
+                            required
                             color="primary"
                             toggle={toggle}
                           >
                             <DropdownToggle caret>
-                              {SparePart_status ? SparePart_status : "Select Status"}
+                              {SparePart_status
+                                ? SparePart_status
+                                : "Select Status"}
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem
@@ -271,6 +281,7 @@ const CreateSparePart= () => {
                       <Input
                         className="form-control-alternative"
                         placeholder="A brief description about the spare part"
+                        required
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
@@ -280,13 +291,25 @@ const CreateSparePart= () => {
                       {error && (
                         <div
                           style={{
-                            backgroundColor: "red",
-                            color: "white",
+                            backgroundColor: "#ffffff",
+                            color: "red",
+                            // textAlign:"center",
+                            display: "flex",
+                            justifyContent: "center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
                             padding: "10px",
-                            marginTop: "10px",
+                            marginTop: "15px",
+                            borderStyle: "solid",
+                            borderColor: "red",
+                            borderWidth: "3px",
+                            borderRadius: "20px",
                           }}
                         >
-                          <p>{error}</p>
+                          <span>
+                            <b>{error}</b>
+                          </span>
                         </div>
                       )}
                     </FormGroup>
