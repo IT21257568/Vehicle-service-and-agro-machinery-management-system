@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -18,14 +18,19 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateFAQ = () => {
+const UpdateFAQ = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  // get FAQ id from url
+  const { id } = useParams();
+
   const navigate = useNavigate();
 
   // form states
@@ -33,32 +38,35 @@ const CreateFAQ = () => {
   const [faqQuestion, setFaqQuestion] = useState("");
   const [faqCategory, setFaqCategory] = useState("");
   const [faqAnswer, setFaqAnswer] = useState("");
-  const [faqVidLink, setVidLink] = useState("");
-  const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    const getFAQ = async () => {
+      const res = await axios.get(`/api/faqs/${id}`);
+      console.log(res.data);
+      setData(res.data);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page refresh
+      setFaqQuestion(res.data.faq_question);
+      setFaqCategory(res.data.faq_category);
+      setFaqAnswer(res.data.faq_answer);
+      
+    };
+    getFAQ();
+  }, [id]);
 
-    try {
-      await axios
-        .post("/api/faqs", {
-          faq_question: faqQuestion,
-          faq_category: faqCategory,
-          faq_answer: faqAnswer,
-          vid_link: faqVidLink
-        })
-        .then((res) => {
-          console.log("New FAQ added", res.data);
-          setFaqQuestion("");
-          setFaqCategory("");
-          setFaqAnswer("");
-          setVidLink("");
-          setError(null);
-          navigate("/admin/faqs");
-        });
-    } catch (error) {
-      setError(error.message);
-    }
+  const handleUpdate = async (e) => {
+    
+    console.log("lol");
+
+    axios
+      .patch(`/api/faqs/${id}`, {
+        faq_question: faqQuestion,
+        faq_category: faqCategory,
+        faq_answer: faqAnswer,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/admin/faqs");
+      });
   };
 
   return (
@@ -94,7 +102,8 @@ const CreateFAQ = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-username"
-                            placeholder="Enter question here"
+                            placeholder="Title"
+                            defaultValue={data.faq_question}
                             type="textarea"
                             onChange={(e) => {
                               setFaqQuestion(e.target.value);
@@ -114,32 +123,12 @@ const CreateFAQ = () => {
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="Enter solution here"
+                        placeholder="A brief description about the vacancy"
                         rows="4"
+                        defaultValue={data.faq_answer}
                         type="textarea"
                         onChange={(e) => {
                           setFaqAnswer(e.target.value);
-                        }}
-                      />
-                      </FormGroup>
-                      </Col>
-                      </Row>
-                      <Row>
-                      <Col lg="6">
-                      <FormGroup>
-                      <label
-                        className="form-control-label"
-                        htmlFor="input-last-name"
-                      >
-                        Tutorial video link (Optional)
-                      </label>
-                      <Input
-                        className="form-control-alternative"
-                        placeholder="Paste video link here"
-                        rows="4"
-                        type="text"
-                        onChange={(e) => {
-                          setVidLink(e.target.value);
                         }}
                       />
                       </FormGroup>
@@ -151,6 +140,7 @@ const CreateFAQ = () => {
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
+                            defaultValue={data.faq_category}
                           >
                             Select FAQ Category
                           </label>
@@ -204,8 +194,8 @@ const CreateFAQ = () => {
                     
                  {/*buttons*/}
                   <div className="pl-lg-4" style={{marginTop: '0.8rem'}}>
-                    <Button color="primary" onClick={handleSubmit}>
-                      Add FAQ 
+                    <Button color="primary" onClick={handleUpdate}>
+                      Save changes
                     </Button>
                     <Button style={{marginLeft: '0.8rem'}}
                       color="warning"
@@ -227,4 +217,4 @@ const CreateFAQ = () => {
   );
 };
 
-export default CreateFAQ;
+export default UpdateFAQ;
