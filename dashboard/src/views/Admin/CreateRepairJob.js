@@ -109,7 +109,13 @@ const CreateRepairjob = () => {
           navigate("/admin/view-repair-jobs");
         });
     } catch (error) {
-      setError(error.message);
+      if (error.response && error.response.status === 400) {
+        const { error: errorMessage, emptyFields } = error.response.data;
+        const fields = emptyFields.join(", ");
+        setError(`Please fill in all fields: ${fields}`);
+      } else {
+        console.log(error);
+      }
     }
   };
 
@@ -344,6 +350,30 @@ const CreateRepairjob = () => {
                           setRequiredParts(e.target.value);
                         }}
                       />
+                      {error && (
+                        <div
+                          style={{
+                            backgroundColor: "#ffffff",
+                            color: "red",
+                            // textAlign:"center",
+                            display: "flex",
+                            justifyContent: "center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
+                            padding: "10px",
+                            marginTop: "15px",
+                            borderStyle: "solid",
+                            borderColor: "red",
+                            borderWidth: "3px",
+                            borderRadius: "20px",
+                          }}
+                        >
+                          <span>
+                            <b>{error}</b>
+                          </span>
+                        </div>
+                      )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create
