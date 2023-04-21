@@ -25,7 +25,7 @@ const getFAQ = async(req, res) => {
     }
     //create new FAQ
 const createFAQ = async(req, res) => {
-    const { faq_question, faq_category, faq_answer} = req.body;
+    const { faq_question, faq_category, faq_answer, vid_link} = req.body;
 
     let emptyFields = [];
 
@@ -45,7 +45,7 @@ const createFAQ = async(req, res) => {
 
     //add to db
     try {
-        const faq = await FAQ.create({ faq_question, faq_category, faq_answer });
+        const faq = await FAQ.create({ faq_question, faq_category, faq_answer, vid_link});
         res.status(200).json({ faq });
     } catch (error) {
         res.status(400).json({ error: error.message });
