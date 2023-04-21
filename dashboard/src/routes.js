@@ -59,6 +59,9 @@ import FAQs from "views/User/FAQPage";
 // Pehesarani user views
 import AgroProductsPage from "views/User/AgroProductsPage";
 
+//nisa
+import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
+
 
 
 const routes = [
@@ -342,7 +345,7 @@ const routes = [
     component: UpdateFAQ,
     layout: "/admin",
   },
-  
+
   //User - Pehesasarani Spare Parts
   {
     path: "/spareParts",
@@ -420,6 +423,14 @@ const routes = [
     name: "Agro Product Page",
     icon: "ni ni-ruler-pencil text-green",
     component: AgroProductsPage,
+    layout: "/user",
+  },
+  //Nisal Meet The Team
+  {
+    path: "/meet-the-team",
+    name: "Meet The Team",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewMeetTheTeam,
     layout: "/user",
   },
 ];

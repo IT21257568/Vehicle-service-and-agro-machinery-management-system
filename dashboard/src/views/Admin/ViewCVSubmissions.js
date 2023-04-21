@@ -26,6 +26,9 @@ import {
   //UncontrolledTooltip,
   Button,
   //Chip,
+  Col,
+  InputGroup,
+  Input,
 } from "reactstrap";
 
 // core components
@@ -38,6 +41,8 @@ const ViewCVSubmissions = () => {
   const [allApplicants, setAllSubmissions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
+
   
 
  
@@ -89,6 +94,17 @@ const ViewCVSubmissions = () => {
                   <div className="col">
                     <h3 className="mb-0">All Applicants</h3>
                   </div>
+                  <Col xl="3">
+                    <InputGroup className="input-group-rounded input-group-merge">
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                    </InputGroup>
+                  </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
@@ -126,46 +142,56 @@ const ViewCVSubmissions = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allApplicants.slice(0, visible).map((applicant, index) => (
-                    <tr key={applicant._id}>
-                      <th scope="row">
-                        <span className="mb-0 text-sm">
-                          {applicant.applicant_name}
-                        </span>
-                      </th>
-                      <td>{applicant.vacancy_name}</td>
-                      <td>
-                        <Badge color="success">{applicant.applicant_age}</Badge>
-                      </td>
+                  {allApplicants
+                    .filter(
+                      (applicant) =>
+                        applicant.vacancy_name
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
+                    )
+                    .slice(0, visible)
+                    .map((applicant, index) => (
+                      <tr key={applicant._id}>
+                        <th scope="row">
+                          <span className="mb-0 text-sm">
+                            {applicant.applicant_name}
+                          </span>
+                        </th>
+                        <td>{applicant.vacancy_name}</td>
+                        <td>
+                          <Badge color="success">
+                            {applicant.applicant_age}
+                          </Badge>
+                        </td>
 
-                      <td>{applicant.applicant_gender}</td>
-                      <td>{applicant.applicant_contact}</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          {applicant.applicant_email}
-                        </div>
-                      </td>
-                      <td>
-                        <a
-                          href={applicant.applicant_CVFile_url}
-                          style={{ textDecoration: "none" }}
-                        >
-                          <Button size="sm" color="primary">
-                            View
+                        <td>{applicant.applicant_gender}</td>
+                        <td>{applicant.applicant_contact}</td>
+                        <td>
+                          <div className="d-flex align-items-center">
+                            {applicant.applicant_email}
+                          </div>
+                        </td>
+                        <td>
+                          <a
+                            href={applicant.applicant_CVFile_url}
+                            style={{ textDecoration: "none" }}
+                          >
+                            <Button size="sm" color="primary">
+                              View
+                            </Button>
+                          </a>
+                        </td>
+                        <td>
+                          <Button
+                            size="sm"
+                            color="danger"
+                            onClick={() => handleDelete(applicant._id)}
+                          >
+                            Delete
                           </Button>
-                        </a>
-                      </td>
-                      <td>
-                        <Button
-                          size="sm"
-                          color="danger"
-                          onClick={() => handleDelete(applicant._id)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                      </tr>
+                    ))}
                   {visible < allApplicants.length && (
                     <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
