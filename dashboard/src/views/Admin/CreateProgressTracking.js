@@ -261,15 +261,15 @@ const CreateProgressTracking = () => {
                             backgroundColor: "#F46D75",
                             color: "white",
                             // textAlign:"center",
-                            display: "flex",
-                            justifyContent: "center",
+                            display:"flex",
+                            justifyContent:"center",
                             // fontWeight:"bold",
                             // paddingBottom: "5px",
                             // paddingTop: "5px",
-                            padding: "10px",
+                            padding:"10px",
                             marginTop: "15px",
-                            borderColor: "red",
-                            borderRadius: "20px",
+                            borderColor : "red",
+                            borderRadius : "20px"
                           }}
                         >
                           <span>
