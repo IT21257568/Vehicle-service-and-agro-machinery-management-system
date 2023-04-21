@@ -56,6 +56,9 @@ import ApplyNow from "views/User/ApplyNow";
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
 
+// Pehesarani user views
+import AgroProductsPage from "views/User/AgroProductsPage";
+
 
 
 const routes = [
@@ -409,6 +412,15 @@ const routes = [
     icon: "ni ni-notification-70 text-orange",
     component: FAQs,
     layout: "/user",
-  }
+  },
+
+  //User - Pehesarani Agro Products
+  {
+    path: "/agroProducts",
+    name: "Agro Product Page",
+    icon: "ni ni-ruler-pencil text-green",
+    component: AgroProductsPage,
+    layout: "/user",
+  },
 ];
 export default routes;
