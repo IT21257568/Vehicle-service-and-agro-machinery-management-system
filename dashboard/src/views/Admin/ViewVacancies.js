@@ -49,6 +49,7 @@ import Header from "components/Headers/Header.js";
 const ViewVacancies = () => {
   // states
   const [allVacancies, setAllVacancies] = useState([]);
+  const [vacancy_applicants, setVacancyApplicants] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showCard, setShowCard] = useState(false);
@@ -65,7 +66,7 @@ const ViewVacancies = () => {
    console.log("Rendering App component with showCard = ", showCard);
 
   // set visible rows
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(3);
 
   const navigate = useNavigate();
 
@@ -78,6 +79,7 @@ const ViewVacancies = () => {
     const fetchAllVacancies = async () => {
       try {
         const res = await axios.get("/api/vacancies");
+        setVacancyApplicants(res.data.vacancy_applicants);
         setAllVacancies(res.data);
         setIsLoading(false);
       } catch (err) {
@@ -95,6 +97,14 @@ const ViewVacancies = () => {
         prevData.filter((vacancy) => vacancy._id !== id)
       );
     });
+    // update vacancy applicants
+    axios
+      .patch(`/api/vacancies/${id}`, {
+        vacancy_applicants: vacancy_applicants - 1,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
   };
 
   return (
@@ -177,12 +187,12 @@ const ViewVacancies = () => {
                       <td>
                         <div className="d-flex align-items-center">
                           <span className="mr-2">
-                            1/{vacancy.vacancy_count}
+                            {vacancy.vacancy_applicants}/{vacancy.vacancy_count}
                           </span>
                           <div>
                             <Progress
-                              max="10"
-                              value="4"
+                              max={vacancy.vacancy_count}
+                              value={vacancy.vacancy_applicants}
                               barClassName="bg-success"
                             />
                           </div>
@@ -208,64 +218,14 @@ const ViewVacancies = () => {
                       </td>
                     </tr>
                   ))}
-                  {visible < allVacancies.length && (
-                    <Button color="primary" size="sm" onClick={showMoreItems}>
-                      Load More
-                    </Button>
-                  )}
                 </tbody>
               </Table>
               <CardFooter className="py-4">
-                <nav aria-label="...">
-                  <Pagination
-                    className="pagination justify-content-end mb-0"
-                    listClassName="justify-content-end mb-0"
-                  >
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        tabIndex="-1"
-                      >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        3
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className="fas fa-angle-right" />
-                        <span className="sr-only">Next</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                  </Pagination>
-                </nav>
+                {visible < allVacancies.length && (
+                  <Button color="info" size="sm" onClick={showMoreItems}>
+                    Load More
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </div>
