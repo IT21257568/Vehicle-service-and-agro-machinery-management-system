@@ -31,13 +31,13 @@ const createFAQ = async(req, res) => {
 
     //validation for empty fields
     if (!faq_question) {
-        emptyFields.push('faq_question');
+        emptyFields.push('faq question');
     }
     if (!faq_category) {
-        emptyFields.push('faq_category');
+        emptyFields.push('faq category');
     }
     if (!faq_answer) {
-        emptyFields.push('faq_answer');
+        emptyFields.push('faq answer');
     }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
@@ -70,6 +70,7 @@ const deleteFAQ = async(req, res) => {
     //update a FAQ
 const updateFAQ = async(req, res) => {
     const { id } = req.params;
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'FAQ not found' });
     }

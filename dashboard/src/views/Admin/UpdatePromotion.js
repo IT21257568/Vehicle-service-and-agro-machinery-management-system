@@ -26,7 +26,7 @@ const UpdatePromotion = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
-  // get vacancy id from url
+  // get promotion id from url
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const UpdatePromotion = () => {
     getPromotion();
   }, [id]);
 
-  //setting current image url in pudate form
+  //setting current image url in update form
   const [image, setImage] = useState(data.promo_picture_url);
 
   //handling image upload
@@ -99,7 +99,7 @@ const UpdatePromotion = () => {
   };
   
   const handleUpdate = () => {
-    console.log("lol");
+    console.log("Promotion updated");
 
     axios
       .patch(`/api/promotions/${id}`, {
