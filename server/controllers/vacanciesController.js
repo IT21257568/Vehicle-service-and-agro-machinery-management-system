@@ -31,9 +31,7 @@ const ceateVacancy = async(req, res) => {
 
     //validation for empty fields
     if (!vacancy_title) {
-
-        emptyFields.push('Vacancy TITLE');
-
+        emptyFields.push('Vacancy Tittle');
     }
     if (!vacancy_type) {
         emptyFields.push('Vacancy Type');

@@ -38,29 +38,35 @@ const createmCVSubmission = async (req, res) => {
 
   //validation for empty fields
   if (!applicant_name) {
-    emptyFields.push("applicant_name");
+    emptyFields.push("Name");
   }
   if (!applicant_age) {
-    emptyFields.push("applicant_age");
+    emptyFields.push("Age");
   }
   if (!applicant_gender) {
-    emptyFields.push("applicant_gender");
+    emptyFields.push("Gender");
   }
   if (!applicant_contact) {
-    emptyFields.push("applicant_contact");
+    emptyFields.push("Contact Number");
   }
-  /* if (applicant_contact.length>10) {
+  if (applicant_contact.length>10) {
     emptyFields.push("Invalid Contact Number");
-  } */
+  }
   if (!applicant_email) {
-    emptyFields.push("applicant_email");
+    emptyFields.push("Email");
+  } else {
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(applicant_email)) {
+      emptyFields.push("Invalid Email Address");
+    }
   }
   if (!applicant_CVFile_url) {
-    emptyFields.push("applicant_CVFile_url");
+    emptyFields.push("CV File");
   }
   if (!vacancy_name) {
     emptyFields.push("vacancy_name");
-  }
+  } 
   if (emptyFields.length > 0) {
     return res
       .status(400)
