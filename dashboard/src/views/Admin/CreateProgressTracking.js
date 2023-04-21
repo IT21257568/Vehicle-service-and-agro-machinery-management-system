@@ -102,9 +102,15 @@ const CreateProgressTracking = () => {
           setError(null);
           navigate("/admin/progress");
         });
-    } catch (error) {
-      setError(error.message);
-    }
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          const { error: errorMessage, emptyFields } = error.response.data;
+          const fields = emptyFields.join(", ");
+          setError(`Please fill in all fields: ${fields}`);
+        } else {
+          console.log(error);
+        }
+      }
   };
 
   return (
@@ -249,6 +255,21 @@ const CreateProgressTracking = () => {
                           setDescription(e.target.value);
                         }}
                       />
+                      {error && (
+                        <div
+                          style={{
+                            backgroundColor: "#F46D75",
+                            color: "white",
+                            padding: "10px",
+                            marginTop: "10px",
+                            borderColor : "red",
+                            borderRadius : "20px"
+
+                          }}
+                        >
+                          <p>{error}</p>
+                        </div>
+                      )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create
