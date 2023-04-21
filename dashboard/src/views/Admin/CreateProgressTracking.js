@@ -272,7 +272,9 @@ const CreateProgressTracking = () => {
                             borderRadius : "20px"
                           }}
                         >
-                          <span><b>{error}</b></span>
+                          <span>
+                            <b>{error}</b>
+                          </span>
                         </div>
                       )}
                     </FormGroup>
