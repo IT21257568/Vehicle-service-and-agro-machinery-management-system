@@ -25,7 +25,9 @@ import Header from "components/Headers/Header.js";
 
 const CreateBooking = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const toggle1 = () => setDropdownOpen1((prevState) => !prevState);
   const navigate = useNavigate();
 
   // form states
@@ -164,24 +166,42 @@ const CreateBooking = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col lg="4">
-                        <FormGroup>
+                      
+                      <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
-                            htmlFor="input-first-name"
+                            htmlFor="input-email"
                           >
                             Location
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue=""
-                            id="input-first-name"
-                            placeholder="Location"
-                            type="text"
-                            onChange={(e) => {
-                              setLocation(e.target.value);
-                            }}
-                          />
+                          <Dropdown
+                            isOpen={dropdownOpen1}
+                            color="primary"
+                            toggle={toggle1}
+                          >
+                            <DropdownToggle caret>
+                              {location ? location : "Select Type"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem
+                                value="Auto Wash"
+                                onClick={(e) => {
+                                    setLocation(e.target.value);
+                                }}
+                              >
+                                Auto Wash
+                            </DropdownItem>
+                              <DropdownItem
+                                value="Auto Plaza"
+                                onClick={(e) => {
+                                    setLocation(e.target.value);
+                                }}
+                              >
+                                Auto Plaza
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
                         </FormGroup>
                       </Col>
 
