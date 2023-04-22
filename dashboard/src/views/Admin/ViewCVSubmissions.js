@@ -43,7 +43,7 @@ const ViewCVSubmissions = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
-  //const [submissions, setSubmissions] = useState([]);
+  
 
   
 
@@ -64,9 +64,6 @@ const ViewCVSubmissions = () => {
       try {
         const res = await axios.get("/api/cvSub");
         setAllSubmissions(res.data);
-
-        
-
         setIsLoading(false);
       } catch (err) {
         setError(err);
