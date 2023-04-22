@@ -69,7 +69,8 @@ const CreateGeneralIssue = () => {
         } else {
           console.log(error);
         }
-    }
+      }
+  
   };
 
   return (
@@ -210,31 +211,31 @@ const CreateGeneralIssue = () => {
                         onChange={(e) => {
                           setGnDiscription(e.target.value);
                         }}
-                        />
-                        {error && (
-                          <div
-                            style={{
-                              backgroundColor: "#ffffff",
-                              color: "red",
-                              // textAlign:"center",
-                              display: "flex",
-                              justifyContent: "center",
-                              // fontWeight:"bold",
-                              // paddingBottom: "5px",
-                              // paddingTop: "5px",
-                              padding: "10px",
-                              marginTop: "15px",
-                              borderStyle: "solid",
-                              borderColor: "red",
-                              borderWidth: "3px",
-                              borderRadius: "20px",
-                            }}
-                          >
-                            <span>
-                              <b>{error}</b>
-                            </span>
-                          </div>
-                        )}
+                      />
+                      {error && (
+                        <div
+                          style={{
+                            backgroundColor: "#ffffff",
+                            color: "red",
+                            // textAlign:"center",
+                            display: "flex",
+                            justifyContent: "center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
+                            padding: "10px",
+                            marginTop: "15px",
+                            borderStyle: "solid",
+                            borderColor: "red",
+                            borderWidth: "3px",
+                            borderRadius: "20px",
+                          }}
+                        >
+                          <span>
+                            <b>{error}</b>
+                          </span>
+                        </div>
+                      )} 
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create
