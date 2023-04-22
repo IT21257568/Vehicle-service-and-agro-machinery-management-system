@@ -114,12 +114,12 @@ const ViewGeneralIssues = () => {
                   <div className="col">
                     <h3 className="mb-0">All General Issues</h3>
                   </div>
-                  <Col xl="3">
-                    <InputGroup className="input-group-rounded input-group-merge">
+                  <Col xl="1">
+                    <InputGroup className="input-group-rounded input-group-merge" style={{width: '25rem'}}>
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
-                        placeholder="Search"
+                        placeholder="Search by customername/NIC"
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
