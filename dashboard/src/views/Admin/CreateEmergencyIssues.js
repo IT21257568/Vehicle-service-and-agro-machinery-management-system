@@ -25,7 +25,7 @@ import Header from "components/Headers/Header.js";
 
 
 
-const CreateGeneralIssue = () => {
+const CreateEmergencyIssue = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
@@ -35,8 +35,10 @@ const CreateGeneralIssue = () => {
   const [customerName, setCustomerName] = useState("");
   const [customerNIC, setCustomerNIC] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [location, setLocation] = useState("");
   const [gnDiscription, setGnDiscription] = useState("");
   const [issueStatus, setIssueStatus] = useState("");
+  const [availableTechnicians, setAvailableTechnicians] = useState([]);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -44,22 +46,26 @@ const CreateGeneralIssue = () => {
 
     try {
       await axios
-        .post("/api/generalIssues", {
+        .post("/api/emergencyIssues", {
           customer_name: customerName,
           customer_NIC: customerNIC,
           contact_number: contactNumber,
+          c_location: location,
           GN_discription: gnDiscription,
           issue_status: issueStatus,
+          available_Technicians: availableTechnicians,
         })
         .then((res) => {
-          console.log("New general issue is added", res.data);
+          console.log("New emergency issue is added", res.data);
           setCustomerName("");
           setCustomerNIC("");
           setContactNumber("");
+          setLocation("");
           setGnDiscription("");
           setIssueStatus("");
+          setAvailableTechnicians("");
           setError(null);
-          navigate("/admin/view-general-issues");
+          navigate("/admin/view-emergency-issues");
         });
     } catch (error) {
       setError(error.message);
@@ -77,14 +83,14 @@ const CreateGeneralIssue = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create General Issue</h3>
+                    <h3 className="mb-0">Create emergency Issue</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    General Issue Information
+                    Emergency Issue Information
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -229,4 +235,4 @@ const CreateGeneralIssue = () => {
   );
 };
 
-export default CreateGeneralIssue;
+export default CreateEmergencyIssue;
