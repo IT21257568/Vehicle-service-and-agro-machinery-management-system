@@ -1,19 +1,16 @@
 import { Button, Container, Row, Col } from "reactstrap";
 
-const MeetTheTeamHeader = () => {
+const BookingHeader = () => {
   return (
     <>
       <div
         className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
-          minHeight: "400px",
+          minHeight: "500px",
           backgroundImage:
-            "url(" +
-            require("../../assets/img/theme/meettheteamcover.jpg") +
-            ")",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-         
+            "url(" + require("../../assets/img/theme/car-service-online.jpg") + ")",
+          backgroundSize: "100% 115%",
+          //backgroundPosition: "center top",
         }}
       >
         {/* Mask */}
@@ -22,10 +19,8 @@ const MeetTheTeamHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello</h1>
-              <p className="text-white mt-0 mb-5">
-                You can meet our technicians here ...
-              </p>
+              <h1 className="display-2 text-white">Create Bookings</h1>
+
             </Col>
           </Row>
         </Container>
@@ -34,4 +29,4 @@ const MeetTheTeamHeader = () => {
   );
 };
 
-export default MeetTheTeamHeader;
+export default BookingHeader;
