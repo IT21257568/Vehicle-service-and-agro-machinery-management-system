@@ -143,11 +143,10 @@ const ViewCVSubmissions = () => {
                     </tr>
                   )}
                   {allApplicants
-                    .filter(
-                      (applicant) =>
-                        applicant.vacancy_name
-                          ?.toLowerCase()
-                          .includes(query.toLowerCase())
+                    .filter((applicant) =>
+                      applicant.vacancy_name
+                        ?.toLowerCase()
+                        .includes(query.toLowerCase())
                     )
                     .slice(0, visible)
                     .map((applicant, index) => (
@@ -157,12 +156,12 @@ const ViewCVSubmissions = () => {
                             {applicant.applicant_name}
                           </span>
                         </th>
-                        <td>{applicant.vacancy_name}</td>
                         <td>
                           <Badge color="success">
-                            {applicant.applicant_age}
+                            {applicant.vacancy_name}
                           </Badge>
                         </td>
+                        <td>{applicant.applicant_age}</td>
 
                         <td>{applicant.applicant_gender}</td>
                         <td>{applicant.applicant_contact}</td>
