@@ -40,17 +40,14 @@ import {
   ToastBody,
   ButtonToggle,
   CardLink,
-  NavLink
-  
+  NavLink,
 } from "reactstrap";
 
-import { Accordion } from 'react-bootstrap-accordion';
-import 'react-bootstrap-accordion/dist/index.css';
+import { Accordion } from "react-bootstrap-accordion";
+import "react-bootstrap-accordion/dist/index.css";
 // core components
 import Header from "components/Headers/Header.js";
-
-
-
+import Footer from "components/Footers/AdminFooter";
 
 const ViewFAQs = () => {
   // states
@@ -72,7 +69,7 @@ const ViewFAQs = () => {
     const fetchAllFaqs = async () => {
       try {
         const res = await axios.get("/api/faqs");
-        
+
         setAllFaqs(res.data);
         setIsLoading(false);
       } catch (err) {
@@ -83,37 +80,36 @@ const ViewFAQs = () => {
     fetchAllFaqs();
   }, []);
 
-  //accordion 
-  const [open, setOpen] = useState('1');
+  //accordion
+  const [open, setOpen] = useState("1");
   const toggle = (id) => {
     if (open === id) {
       setOpen();
     } else {
       setOpen(id);
     }
-  }
-
+  };
 
   const handleDelete = (id) => {
     axios.delete(`/api/faqs/${id}`).then((res) => {
       console.log(res.data);
-      setAllFaqs((prevData) =>
-        prevData.filter((faq) => faq._id !== id)
-      );
+      setAllFaqs((prevData) => prevData.filter((faq) => faq._id !== id));
     });
   };
 
- 
-    return (
+  return (
     <>
-      <Header/>
+      <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Light Table */}
         <Row>
           <div className="col">
             <Card className="shadow" color="lighter">
-              <CardHeader className="border-0" style={{marginBottom: '1.8rem'}}>
+              <CardHeader
+                className="border-0"
+                style={{ marginBottom: "1.8rem" }}
+              >
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All FAQs</h3>
@@ -137,45 +133,46 @@ const ViewFAQs = () => {
                 </Row>
               </CardHeader>
 
-            <Container>
-                
-              {allFAQs.slice(0, visible).map((faq, index) => (
-              
-                <Accordion title={faq.faq_question} open={open} toggle={toggle}>
-                
-                {faq.faq_answer}
+              <Container>
+                {allFAQs.slice(0, visible).map((faq, index) => (
+                  <Accordion
+                    title={faq.faq_question}
+                    open={open}
+                    toggle={toggle}
+                  >
+                    {faq.faq_answer}
 
-                <Row>
-                  <NavLink href={faq.vid_link} style={{ color: 'teal', marginLeft: '0.2rem'}}>Watch Tutorial here</NavLink>
-                </Row>
-                  <Row style={{marginTop: '1rem'}}>
-                      <Button style={{marginLeft: '0.8rem', marginRight: '1rem'}}
-                          size="sm"
-                          color="warning"
-                          onClick={() =>
-                            navigate(`/admin/update-faq/${faq._id}`)}
-                         
+                    <Row>
+                      <NavLink
+                        href={faq.vid_link}
+                        style={{ color: "teal", marginLeft: "0.2rem" }}
                       >
-                          Update FAQ
-                        </Button>
-                        <Button
-                          size="sm"
-                          color="danger"
-                          onClick={() => handleDelete(faq._id)}
-                        >
-                          Delete FAQ
-                        </Button>
+                        Watch Tutorial here
+                      </NavLink>
                     </Row>
-                   
-                </Accordion>
-                
-            ))}
-            
+                    <Row style={{ marginTop: "1rem" }}>
+                      <Button
+                        style={{ marginLeft: "0.8rem", marginRight: "1rem" }}
+                        size="sm"
+                        color="warning"
+                        onClick={() => navigate(`/admin/update-faq/${faq._id}`)}
+                      >
+                        Update FAQ
+                      </Button>
+                      <Button
+                        size="sm"
+                        color="danger"
+                        onClick={() => handleDelete(faq._id)}
+                      >
+                        Delete FAQ
+                      </Button>
+                    </Row>
+                  </Accordion>
+                ))}
               </Container>
-              
-              
-              <CardFooter className="py-4" style={{marginTop: '1.8rem'}}>
-              {visible < allFAQs.length && (
+
+              <CardFooter className="py-4" style={{ marginTop: "1.8rem" }}>
+                {visible < allFAQs.length && (
                   <Button color="info" size="sm" onClick={showMoreItems}>
                     Load More
                   </Button>

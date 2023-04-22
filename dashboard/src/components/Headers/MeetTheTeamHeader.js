@@ -1,6 +1,6 @@
 import { Button, Container, Row, Col } from "reactstrap";
 
-const CareerHeader = () => {
+const MeetTheTeamHeader = () => {
   return (
     <>
       <div
@@ -8,7 +8,9 @@ const CareerHeader = () => {
         style={{
           minHeight: "400px",
           backgroundImage:
-            "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
+            "url(" +
+            require("../../assets/img/theme/meettheteamcover.jpg") +
+            ")",
           backgroundSize: "cover",
           backgroundPosition: "center top",
         }}
@@ -19,9 +21,9 @@ const CareerHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello Job Seekers</h1>
+              <h1 className="display-2 text-white">Hello</h1>
               <p className="text-white mt-0 mb-5">
-                Build up your career with us. We are here to help you ... 
+                You can meet our technicians here ...
               </p>
             </Col>
           </Row>
@@ -31,4 +33,4 @@ const CareerHeader = () => {
   );
 };
 
-export default CareerHeader;
+export default MeetTheTeamHeader;
