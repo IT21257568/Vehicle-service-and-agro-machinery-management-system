@@ -323,6 +323,25 @@ const CreateEmergencyIssue = () => {
                       </Col>
 
                     </Row>
+                    <Row>
+                    <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-total "
+                          >
+                            Total Fee
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-towing"
+                            placeholder="Enter total Fee"
+                            type="text"
+                            onChange={(e) => {
+                              setTotalFee(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                    </Row>
                   </div>
 
                   {/* Description */}
