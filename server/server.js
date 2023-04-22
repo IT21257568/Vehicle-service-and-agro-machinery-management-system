@@ -14,6 +14,8 @@ const damageValuationRoutes = require("./routes/damageValuation");
 const faqRoute = require("./routes/faqRoute");
 const cvSubmissionRoute = require("./routes/cvSubmissionRoute");
 const generalIssueRoutes = require("./routes/generalIssue");
+const orderAgroProductRoute = require("./routes/orderAgroProductRoute");
+const emergencyIssueRoutes = require("./routes/emergencyIssue");
 // setup cors
 const cors = require("cors");
 
@@ -37,6 +39,7 @@ app.use("/api/cvSub", cvSubmissionRoute);
 //Pehesarani
 app.use("/api/spareParts", sparePartsRoutes);
 app.use("/api/agroProducts", agroProductRoutes);
+app.use("/api/orderAgroProduct", orderAgroProductRoute);
 // Pawan
 app.use("/api/users", userRoutes);
 //Janindu
@@ -50,6 +53,7 @@ app.use("/api/progress", ProgressTrackingRoute);
 app.use("/api/damageValuation", damageValuationRoutes);
 //Piyumi
 app.use("/api/generalIssues", generalIssueRoutes);
+app.use("/api/emergencyIssues", emergencyIssueRoutes);
 
 //connect to db
 mongoose

@@ -183,7 +183,7 @@ const AgroProductsPage = () => {
                             type="button"
                             onClick={() =>
                               navigate(
-                                `/admin/update-spare-part/${agroProduct._id}`
+                                `/user/order-agro-product/${agroProduct._id}`
                               )
                             }
                           >

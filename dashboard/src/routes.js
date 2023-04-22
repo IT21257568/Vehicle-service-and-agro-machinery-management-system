@@ -65,8 +65,15 @@ import AgroProductsPage from "views/User/AgroProductsPage";
 //nisa
 import ViewMeetTheTeam from "views/User/MeetTheTeam";
 
-//home page
-import HomePage from "views/User/HomePage";
+//Pehesarani admin views
+import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
+
+//Pehesarani user views
+import OrderAgroProduct from "views/User/OrderAgroProduct";
+
+// nethum user progress
+import ProgressStatusPage from "views/User/ProgressStatusPage";
+
 
 const routes = [
   {
@@ -76,34 +83,34 @@ const routes = [
     component: Index,
     layout: "/admin",
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
-    layout: "/admin",
-  },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "ni ni-planet text-blue",
+  //   component: Icons,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   component: Maps,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/user-profile",
+  //   name: "User Profile",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   component: Profile,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/tables",
+  //   name: "Tables",
+  //   icon: "ni ni-bullet-list-67 text-red",
+  //   component: Tables,
+  //   layout: "/admin",
+  // },
   {
     path: "/login",
     name: "Login",
@@ -119,31 +126,7 @@ const routes = [
   //   layout: "/auth",
   // },
 
-  // nisal
-  //Vacancy Routes
-  {
-    path: "/create-vacancy",
-    name: "Create Vacancy",
-    icon: "ni ni-calendar-grid-58 text-blue",
-    component: CreateVacancy,
-    layout: "/admin",
-  },
-  {
-    path: "/vacancies",
-    name: "Vacancies",
-    icon: "ni ni-notification-70 text-pink",
-    component: ViewVacancies,
-    layout: "/admin",
-  },
-  {
-    path: "/update-vacancy/:id",
-    name: "Update Vacancy",
-    icon: "ni ni-ruler-pencil text-pink",
-    component: UpdateVacancy,
-    layout: "/admin",
-  },
-
-  //Meet the team routes
+  //Pawan - User Routes
   {
     path: "/admin-login",
     name: "Admin/ Staff Login",
@@ -158,29 +141,83 @@ const routes = [
     component: UserRegister,
     layout: "/auth",
   },
-
-  // nisal
+  //Nisal - Vacancy admin Routes
+  {
+    path: "/create-vacancy",
+    name: "Create Vacancy",
+    icon: "ni ni-calendar-grid-58 text-red",
+    component: CreateVacancy,
+    layout: "/admin",
+  },
+  {
+    path: "/vacancies",
+    name: "Vacancies",
+    icon: "ni ni-notification-70 text-red",
+    component: ViewVacancies,
+    layout: "/admin",
+  },
+  {
+    path: "/update-vacancy/:id",
+    name: "Update Vacancy",
+    icon: "ni ni-ruler-pencil text-red",
+    component: UpdateVacancy,
+    layout: "/admin",
+  },
+  //User Views
+  {
+    path: "/carrerpage",
+    name: "Career",
+    icon: "ni ni-ruler-pencil text-red",
+    component: Career,
+    layout: "/user",
+  },
+  // Nisal - Technician Admin views
   {
     path: "/create-technician",
     name: "Create Technician",
-    icon: "ni ni-calendar-grid-58 text-blue",
+    icon: "ni ni-calendar-grid-58 text-red",
     component: CreateTechnician,
     layout: "/admin",
   },
   {
     path: "/technicians",
     name: "Technicians",
-    icon: "ni ni-notification-70 text-pink",
+    icon: "ni ni-notification-70 text-red",
     component: ViewTechnicians,
     layout: "/admin",
   },
   {
     path: "/update-technician/:id",
     name: "Update Technician",
-    icon: "ni ni-ruler-pencil text-pink",
+    icon: "ni ni-ruler-pencil text-red",
     component: UpdateTechnician,
     layout: "/admin",
   },
+  //Nisal Meet The Team user view
+  {
+    path: "/meet-the-team",
+    name: "Meet The Team",
+    icon: "ni ni-notification-70 text-red",
+    component: ViewMeetTheTeam,
+    layout: "/user",
+  },
+  //Nisal CV Submission
+  {
+    path: "/cv-submission",
+    name: "CV Submissions",
+    icon: "ni ni-notification-70 text-red",
+    component: ViewCVSubmissions,
+    layout: "/admin",
+  },
+  {
+    path: "/applynowpage/:id",
+    name: "Apply Now",
+    icon: "ni ni-ruler-pencil text-red",
+    component: ApplyNow,
+    layout: "/user",
+  },
+
+  //Janindu - Booking Admin views
   {
     path: "/create-bookings",
     name: "Create Bookings",
@@ -201,6 +238,14 @@ const routes = [
     icon: "ni ni-ruler-pencil text-purple",
     component: UpdateBooking,
     layout: "/admin",
+  },
+  //Janindu user views
+  {
+    path: "/create-client-booking",
+    name: "Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: CreateClientBooking,
+    layout: "/user",
   },
 
   //sithija promotions
@@ -225,8 +270,46 @@ const routes = [
     component: UpdatePromotion,
     layout: "/admin",
   },
+  //Sithija user view for promotions
+  {
+    path: "/promotions-page",
+    name: "Promotions",
+    icon: "ni ni-notification-70 text-orange",
+    component: Promotions,
+    layout: "/user",
+  },
+   //Sithija FAQ section
+   {
+    path: "/create-faq",
+    name: "Create FAQ",
+    icon: "ni ni-notification-70 text-orange",
+    component: CreateFAQ,
+    layout: "/admin",
+  },
+  {
+    path: "/faqs",
+    name: "FAQ Section",
+    icon: "ni ni-notification-70 text-orange",
+    component: ViewFAQs,
+    layout: "/admin",
+  },
+  {
+    path: "/update-faq/:id",
+    name: "Update FAQs",
+    icon: "ni ni-notification-70 text-orange",
+    component: UpdateFAQ,
+    layout: "/admin",
+  },
+  //Sithija user view for FAQ section
+  {
+    path: "/faq-page",
+    name: "FAQs",
+    icon: "ni ni-notification-70 text-orange",
+    component: FAQs,
+    layout: "/user",
+  },
 
-  //Pehesarai spare parts
+  //Pehesarai spare parts admin routes
   {
     path: "/spare-parts",
     name: "Spare Parts",
@@ -237,42 +320,26 @@ const routes = [
   {
     path: "/create-spare-part",
     name: "Create Spare Part",
-    icon: "ni ni-notification-70 text-pink",
+    icon: "ni ni-notification-70 text-blue",
     component: CreateSparePart,
     layout: "/admin",
   },
   {
     path: "/update-spare-part/:id",
     name: "Update Spare Part",
-    icon: "ni ni-ruler-pencil text-green",
+    icon: "ni ni-ruler-pencil text-blue",
     component: UpdateSparePart,
     layout: "/admin",
   },
-
-  //Nethum progress tracking
+  //User - Pehesasarani Spare Parts
   {
-    path: "/create-progress",
-    name: "Create Progress Status",
-    icon: "ni ni-notification-70 text-pink",
-    component: CreateProgressTracking,
-    layout: "/admin",
+    path: "/spareParts",
+    name: "Spare Parts Page",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: SparePartsPage,
+    layout: "/user",
   },
-  {
-    path: "/progress",
-    name: "All Progress Status",
-    icon: "ni ni-notification-70 text-blue",
-    component: ViewProgressStatus,
-    layout: "/admin",
-  },
-  {
-    path: "/update-progress/:id",
-    name: "Update Progress Status",
-    icon: "ni ni-ruler-pencil text-green",
-    component: UpdateProgressStatus,
-    layout: "/admin",
-  },
-
-  //Pehesarani Agro Products
+  //Pehesarani - Agro Products admin routes
   {
     path: "/agro-products",
     name: "Agro Products",
@@ -283,117 +350,108 @@ const routes = [
   {
     path: "/create-agro-product",
     name: "Create Agro Product",
-    icon: "ni ni-notification-70 text-pink",
+    icon: "ni ni-notification-70 text-blue",
     component: CreateAgroProduct,
     layout: "/admin",
   },
   {
     path: "/update-agro-product/:id",
     name: "Update Agro Product",
-    icon: "ni ni-ruler-pencil text-green",
+    icon: "ni ni-ruler-pencil text-blue",
     component: UpdateAgroProduct,
     layout: "/admin",
   },
+  //User - Pehesarani Agro Products
+  {
+    path: "/agroProducts",
+    name: "Agro Product Page",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: AgroProductsPage,
+    layout: "/user",
+  },
+   //Pehesarani - View Agro Products orders admin routes
+   {
+    path: "/agro-products-orders",
+    name: "Agro Product Orders",
+    icon: "ni ni-settings text-blue",
+    component: ViewOrderAgroProducts,
+    layout: "/admin",
+  },
+  //User - Pehesarani Agro Products
+  {
+    path: "/order-agro-product/:id",
+    name: "Order Agro Product",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: OrderAgroProduct,
+    layout: "/user",
+  },
 
-  //Tharusha Create repair jobs
+  //Nethum - progress tracking admin routes
+  {
+    path: "/create-progress",
+    name: "Create Progress Status",
+    icon: "ni ni-notification-70 text-green",
+    component: CreateProgressTracking,
+    layout: "/admin",
+  },
+  {
+    path: "/progress",
+    name: "All Progress Status",
+    icon: "ni ni-notification-70 text-green",
+    component: ViewProgressStatus,
+    layout: "/admin",
+  },
+  {
+    path: "/update-progress/:id",
+    name: "Update Progress Status",
+    icon: "ni ni-ruler-pencil text-green",
+    component: UpdateProgressStatus,
+    layout: "/admin",
+  },
+  // nethum - progress tarcking
+  {
+    path: "/progress-page",
+    name: "Servise Progresss Status",
+    icon: "ni ni-notification-70 text-green",
+    component: ProgressStatusPage,
+    layout: "/user",
+  },
+
+  //Tharusha - Create repair jobs admin routes
   {
     path: "/ceate-repair-job",
     name: "Create Repair Job",
-    icon: "ni ni-settings text-blue",
+    icon: "ni ni-settings text-black",
     component: CreateRepairJob,
     layout: "/admin",
   },
   {
     path: "/view-repair-jobs",
     name: "View Repair Jobs",
-    icon: "ni ni-active-40 text-blue",
+    icon: "ni ni-active-40 text-black",
     component: ViewRepairJobs,
     layout: "/admin",
   },
-  // USER VIEWS
-  {
-    path: "/dummypage",
-    name: "Dummy Page",
-    icon: "ni ni-ruler-pencil text-green",
-    component: DummyPage,
-    layout: "/user",
-  },
-  //Tharusha Create repair jobs continued
   {
     path: "/update-repair-job/:id",
     name: "Update Repair Job",
-    icon: "ni ni-ruler-pencil text-blue",
+    icon: "ni ni-ruler-pencil text-black",
     component: UpdateRepairJob,
     layout: "/admin",
   },
-
-  //Sithija FAQ section
-  {
-    path: "/create-faq",
-    name: "Create FAQ",
-    icon: "ni ni-notification-70 text-pink",
-    component: CreateFAQ,
-    layout: "/admin",
-  },
-  {
-    path: "/faqs",
-    name: "FAQ Section",
-    icon: "ni ni-notification-70 text-pink",
-    component: ViewFAQs,
-    layout: "/admin",
-  },
-  {
-    path: "/update-faq/:id",
-    name: "Update FAQs",
-    icon: "ni ni-notification-70 text-pink",
-    component: UpdateFAQ,
-    layout: "/admin",
-  },
-
-  //User - Pehesasarani Spare Parts
-  {
-    path: "/spareParts",
-    name: "Spare Parts Page",
-    icon: "ni ni-ruler-pencil text-green",
-    component: SparePartsPage,
-    layout: "/user",
-  },
-
-  //Nisal CV Submission
-  {
-    path: "/cv-submission",
-    name: "CV Submissions",
-    icon: "ni ni-notification-70 text-pink",
-    component: ViewCVSubmissions,
-    layout: "/admin",
-  },
-  {
-    path: "/carrerpage",
-    name: "Career",
-    icon: "ni ni-ruler-pencil text-green",
-    component: Career,
-    layout: "/user",
-  },
-  {
-    path: "/applynowpage/:id",
-    name: "Apply Now",
-    icon: "ni ni-ruler-pencil text-green",
-    component: ApplyNow,
-    layout: "/user",
-  },
-
+  
   //Piyumi general issues
   {
     path: "/create-general-issue",
     name: "Create General Issue",
-    icon: "ni ni-single-copy-04 text-green",
+    icon: "ni ni-single-copy-04 text-purple",
     component: CreateGeneralIssue,
     layout: "/admin",
   },
   {
     path: "/view-general-issues",
     name: "View General Issues",
-    icon: "ni ni-notification-70 text-pink",
+    icon: "ni ni-notification-70 text-purple",
     component: ViewGeneralIssues,
     layout: "/admin",
   },
@@ -404,8 +462,7 @@ const routes = [
     component: UpdateGeneralIssue,
     layout: "/admin",
   },
-
-  //sithija user views
+  // USER VIEWS
   {
     path: "/promotions-page",
     name: "Promotions",
@@ -421,6 +478,7 @@ const routes = [
     layout: "/user",
   },
 
+
   //Janindu user views
   {
     path: "/create-client-booking",
@@ -435,15 +493,7 @@ const routes = [
     path: "/agroProducts",
     name: "Agro Product Page",
     icon: "ni ni-ruler-pencil text-green",
-    component: AgroProductsPage,
-    layout: "/user",
-  },
-  //Nisal Meet The Team
-  {
-    path: "/meet-the-team",
-    name: "Meet The Team",
-    icon: "ni ni-notification-70 text-pink",
-    component: ViewMeetTheTeam,
+    component: DummyPage,
     layout: "/user",
   },
 
