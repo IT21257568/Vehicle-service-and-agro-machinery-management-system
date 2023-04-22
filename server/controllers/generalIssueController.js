@@ -35,19 +35,28 @@ const mongoose = require('mongoose');
     
         //validation for empty fields
         if (!customer_name) {
-            emptyFields.push('customer_name');
+            emptyFields.push('Customer Name');
         }
         if (!customer_NIC) {
-            emptyFields.push('customer_NIC');
+            emptyFields.push('Customer NIC');
+        }else {
+            //NIC validation
+            if (!customer_NIC || !/^(\d{9})[vV]$|^\d{12}$/.test(customer_NIC)) {
+            emptyFields.push('Please enter a valid NIC number');
+            }
         }
         if (!contact_number) {
-            emptyFields.push('contact_number');
+            emptyFields.push('Contact Number');
         }
+        //contact number validation
+        if (contact_number.length>10) {
+            emptyFields.push("Invalid Contact Number");
+          }
         if (!GN_discription) {
-            emptyFields.push('GN_discription');
+            emptyFields.push('Description');
         }
         if (!issue_status) {
-            emptyFields.push('issue_status');
+            emptyFields.push('Issue Status');
         }
 
         if (emptyFields.length > 0) {
