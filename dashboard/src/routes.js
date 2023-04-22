@@ -56,8 +56,16 @@ import ApplyNow from "views/User/ApplyNow";
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
 
+
 //Janindu user views
 import CreateClientBooking from "views/User/BookingPage";
+
+// Pehesarani user views
+import AgroProductsPage from "views/User/AgroProductsPage";
+
+//nisa
+import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
+
 
 
 
@@ -292,14 +300,14 @@ const routes = [
   {
     path: "/ceate-repair-job",
     name: "Create Repair Job",
-    icon: "ni ni-notification-70 text-blue",
+    icon: "ni ni-settings text-blue",
     component: CreateRepairJob,
     layout: "/admin",
   },
   {
     path: "/view-repair-jobs",
     name: "View Repair Jobs",
-    icon: "ni ni-notification-70 text-blue",
+    icon: "ni ni-active-40 text-blue",
     component: ViewRepairJobs,
     layout: "/admin",
   },
@@ -315,7 +323,7 @@ const routes = [
   {
     path: "/update-repair-job/:id",
     name: "Update Repair Job",
-    icon: "ni ni-notification-70 text-blue",
+    icon: "ni ni-ruler-pencil text-blue",
     component: UpdateRepairJob,
     layout: "/admin",
   },
@@ -342,7 +350,7 @@ const routes = [
     component: UpdateFAQ,
     layout: "/admin",
   },
-  
+
   //User - Pehesasarani Spare Parts
   {
     path: "/spareParts",
@@ -414,6 +422,7 @@ const routes = [
     layout: "/user",
   },
 
+
   //Janindu user views
   {
     path: "/create-client-booking",
@@ -421,6 +430,24 @@ const routes = [
     icon: "ni ni-credit-card text-purple",
     component: CreateClientBooking,
     layout: "/user",
-  }
+  },
+
+  //User - Pehesarani Agro Products
+  {
+    path: "/agroProducts",
+    name: "Agro Product Page",
+    icon: "ni ni-ruler-pencil text-green",
+    component: AgroProductsPage,
+    layout: "/user",
+  },
+  //Nisal Meet The Team
+  {
+    path: "/meet-the-team",
+    name: "Meet The Team",
+    icon: "ni ni-notification-70 text-pink",
+    component: ViewMeetTheTeam,
+    layout: "/user",
+  },
+
 ];
 export default routes;

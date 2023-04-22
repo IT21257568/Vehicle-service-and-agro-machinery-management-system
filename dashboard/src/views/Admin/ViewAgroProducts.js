@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   Badge,
+  Col,
   Card,
   CardHeader,
   CardFooter,
   Container,
+  Input,
+  InputGroup,
   Row,
   Button,
   CardBody,
@@ -28,6 +31,7 @@ const ViewAgroProducts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [query, setQuery] = useState("");
 
   // set visible rows
   const [visible, setVisible] = useState(3);
@@ -75,6 +79,22 @@ const ViewAgroProducts = () => {
                   <div className="col">
                     <h3 className="mb-0">All Agro Product</h3>
                   </div>
+                  <Col xl = "3">
+                    <InputGroup className="input-group-rounded input-group-merge">
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                      {/* <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                      <span className="fa fa-search" />
+                      </InputGroupText>
+                      </InputGroupAddon> */}
+                  </InputGroup>
+                  </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
@@ -96,20 +116,27 @@ const ViewAgroProducts = () => {
 
               <Container>
                 <Row>
-                  {allAgroProducts.slice(0, visible).map((agroProduct, index) => (
+                  {allAgroProducts
+                    .filter((agroProduct) =>
+                    agroProduct.p_name
+                      ?.toLowerCase()
+                      .includes(query.toLowerCase())
+                    )
+                  .slice(0, visible).map((agroProduct, index) => (
                   
                   <Card key={agroProduct._id}
                     
                     style={{
                       height: '30rem',
                       width: '20rem',
-                      borderRadius:'0.2rem',
+                      borderRadius:'2rem',
                       margin: '0.8rem'
                       
                     }} >
                     <CardImg
                       height= '200rem'
                       width="100%"
+                      style={{borderRadius:"2rem"}}
                       alt="Sample"
                       src={agroProduct.p_image}
                     />

@@ -32,13 +32,15 @@ import {
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 
-const SparePartsPage = () => {
+const AgroProductsPage = () => {
   // states
-  const [allSpareParts, setAllSpareParts] = useState([]);
+  const [allAgroProducts, setAllAgroProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [visible, setVisible] = useState(10);
+  const [faqQuestion, setFaqQuestion] = useState("");
   const [faqCategory, setFaqCategory] = useState("");
+  const [faqAnswer, setFaqAnswer] = useState("");
   const [query, setQuery] = useState("");
 
   const navigate = useNavigate();
@@ -51,17 +53,17 @@ const SparePartsPage = () => {
 
   // retrieve all spare parts from database
   useEffect(() => {
-    const fetchAllSpareParts = async () => {
+    const fetchAllAgroProducts = async () => {
       try {
-        const response = await axios.get("/api/spareParts");
-        setAllSpareParts(response.data);
+        const response = await axios.get("/api/agroProducts");
+        setAllAgroProducts(response.data);
         setIsLoading(false);
       } catch (error) {
         setError(error);
         setIsLoading(false);
       }
     };
-    fetchAllSpareParts();
+    fetchAllAgroProducts();
   }, []);
 
   return (
@@ -78,7 +80,7 @@ const SparePartsPage = () => {
               >
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Spare Parts</h3>
+                    <h3 className="mb-0">All Agro Products</h3>
                   </div>
                   <Col xl = "3">
                     <label
@@ -126,9 +128,9 @@ const SparePartsPage = () => {
                       onChange={(e) => setQuery(e.target.value)}
                     />
                     {/* <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
+                    {/* <InputGroupText>
                     <span className="fa fa-search" />
-                    </InputGroupText>
+                    </InputGroupText> *
                     </InputGroupAddon> */}
                  </InputGroup>
                   {/* </Form> */}
@@ -137,15 +139,15 @@ const SparePartsPage = () => {
               </CardHeader>
               <div className="pl-lg-5">
                 <Row>
-                  {allSpareParts
-                  .filter((sparePart) =>
-                  sparePart.sp_name
+                  {allAgroProducts
+                  .filter((agroProduct) =>
+                  agroProduct.p_name
                     ?.toLowerCase()
                     .includes(query.toLowerCase())
                   )
-                  .slice(0, visible).map((sparePart, index) => (
+                  .slice(0, visible).map((agroProduct, index) => (
                     <Card
-                      key={sparePart._id}
+                      key={agroProduct._id}
                       style={{
                         height: "30rem",
                         width: "20rem",
@@ -158,34 +160,34 @@ const SparePartsPage = () => {
                         width="100%"
                         alt="Sample"
                         style={{borderRadius:"2rem"}}
-                        src={sparePart.sp_image}
+                        src={agroProduct.p_image}
                       />
                       <CardBody>
-                        <CardTitle tag="h2">{sparePart.sp_name}</CardTitle>
+                        <CardTitle tag="h2">{agroProduct.p_name}</CardTitle>
                         <CardSubtitle className="mb-2 text-muted" tag="h4">
-                          <Badge color="success">{sparePart.sp_status}</Badge>
+                          <Badge color="success">{agroProduct.p_status}</Badge>
                         </CardSubtitle>
                         <br></br>
                         <CardSubtitle className="mb-2 text-muted" tag="h3">
-                          Rs. {sparePart.sp_price}
+                          Rs. {agroProduct.p_price}
                         </CardSubtitle>
                         <CardSubtitle className="mb-2 text-muted" tag="h3">
-                          {sparePart.sp_discount}% Off
+                          {agroProduct.p_discount}% Off
                         </CardSubtitle>
-                        <CardText>{sparePart.sp_description}</CardText>
+                        <CardText>{agroProduct.p_description}</CardText>
 
                         <Row>
                           <Button
                             color="warning"
-                            type="button"
                             style={{marginLeft: '3.3rem', width: '12rem'}}
+                            type="button"
                             onClick={() =>
                               navigate(
-                                `/admin/update-spare-part/${sparePart._id}`
+                                `/admin/update-spare-part/${agroProduct._id}`
                               )
                             }
                           >
-                            Add to Cart
+                            Order Your Product
                           </Button>
                         </Row>
                       </CardBody>
@@ -194,7 +196,7 @@ const SparePartsPage = () => {
                 </Row>
               </div>
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
-                {visible < allSpareParts.length && (
+                {visible < allAgroProducts.length && (
                     <Button  color="info" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
@@ -208,4 +210,4 @@ const SparePartsPage = () => {
   );
 };
 
-export default SparePartsPage;
+export default AgroProductsPage;

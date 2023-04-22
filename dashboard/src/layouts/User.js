@@ -7,10 +7,12 @@ import { Container } from "reactstrap";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
+import FooterWH from "components/Footers/WHFooter";
 
 import Index from "views/Index.js";
 
 import routes from "../routes";
+import Footer from "components/Footers/AdminFooter";
 
 const User = () => {
   const mainContent = React.useRef(null);
@@ -51,7 +53,7 @@ const User = () => {
         {/* <Outlet /> */}
         {/* <Outlet /> */}
         <Container fluid>
-          <AdminFooter />
+          <FooterWH />
         </Container>
       </div>
     </>
