@@ -91,12 +91,9 @@ const Career = () => {
                   <div className="col">
                     <h3 className="mb-0">Vecancies</h3>
                   </div>
-                  <Col xl="3">
-                  fgddfgsf
                   
-                  </Col>
 
-                  <div className="col text-right">
+                  <Col xl="3">
                     <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
@@ -106,7 +103,7 @@ const Career = () => {
                         onChange={(e) => setQuery(e.target.value)}
                       />
                     </InputGroup>
-                  </div>
+                  </Col>
                   <div className="col text-right"></div>
                 </Row>
               </CardHeader>

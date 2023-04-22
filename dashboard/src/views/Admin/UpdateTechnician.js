@@ -15,6 +15,7 @@ import {
   Row,
   Col,
   Media,
+  CardImg,
   //Dropdown,
   //DropdownToggle,
   //DropdownMenu,
@@ -218,21 +219,26 @@ const UpdateTechnician = () => {
                     <Row>
                       <Col lg="6">
                         <Media className="align-items-center">
-                          <span className="avatar avatar-sm rounded-circle">
-                            <img alt="..." src={data.technician_picture_url} />
+                          <span>
+                            <CardImg
+                              height="50rem"
+                              width="100%"
+                              alt="Technician Picture"
+                              src={data.technician_picture_url}
+                            />
                           </span>
+                           : Current Picture
                         </Media>
                         <br></br>
-                        <br></br>
+
                         <Media className="align-items-center">
-                          <span className="avatar avatar-sm rounded-circle">
-                            {image && (
-                              <img
-                                //className="rounded-circle"
-                                src={image}
-                                alt="Uploaded"
-                              />
-                            )}
+                          <span>
+                            <CardImg
+                              height="50rem"
+                              width="100%"
+                              alt=" : Updated Picture Will Appear Here"
+                              src={image}
+                            />
                           </span>
                         </Media>
                         <br></br>

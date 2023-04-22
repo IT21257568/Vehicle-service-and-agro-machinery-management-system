@@ -19,6 +19,7 @@ import {
   //DropdownToggle,
   //DropdownMenu,
   //DropdownItem,
+  CardImg,
 } from "reactstrap";
 
 // core components
@@ -228,14 +229,14 @@ const CreateVacancy = () => {
                           </label>{" "}
                           <br></br>
                           <Media className="align-items-center">
-                            <span className="avatar avatar-sm rounded-circle">
-                              {image && (
-                                <img
-                                  //className="rounded-circle"
-                                  src={image}
-                                  alt="Uploaded"
-                                />
-                              )}
+                            <span>
+                              
+                              <CardImg
+                                height="50rem"
+                                width="100%"
+                                alt="Technician Picture"
+                                src={image}
+                              />
                             </span>
                           </Media>
                           <br></br>
@@ -263,14 +264,14 @@ const CreateVacancy = () => {
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
+                        placeholder="Enter Technician's Expertice here"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
                           setTechnicianExpertise(e.target.value);
                         }}
                       />
-                     {error && (
+                      {error && (
                         <div
                           style={{
                             backgroundColor: "#ffffff",
