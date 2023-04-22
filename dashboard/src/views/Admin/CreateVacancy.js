@@ -187,7 +187,7 @@ const CreateVacancy = () => {
                       </label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A brief description about the vacancy"
+                        placeholder="Requirmnets for the vacancy"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
