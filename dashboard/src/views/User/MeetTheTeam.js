@@ -1,8 +1,8 @@
+
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 // reactstrap components
 import {
   //Badge,
@@ -28,16 +28,16 @@ import {
   CardTitle,
   CardSubtitle,
   CardText,
+  Badge,
   //CardGroup,
   CardImg,
   //CardImgOverlay,
   Col,
-  InputGroup,
-  Input,
+    InputGroup,
+    Input,
 } from "reactstrap";
-
 // core components
-import Header from "components/Headers/Header.js";
+import MeetTheTeamHeader from "components/Headers/MeetTheTeamHeader.js";
 
 
 //card
@@ -56,7 +56,7 @@ import Header from "components/Headers/Header.js";
   }
 
 
-const ViewTechnicians = () => {
+const MeetTheTeam = () => {
  
 
   // states
@@ -125,7 +125,7 @@ const ViewTechnicians = () => {
 
   return (
     <>
-      <Header />
+      <MeetTheTeamHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Light Table */}
@@ -152,20 +152,7 @@ const ViewTechnicians = () => {
                     </InputGroup>
                   </Col>
                   <div className="col text-right">
-                    <Button
-                      className="btn-icon btn-3"
-                      color="success"
-                      type="button"
-                      onClick={() => navigate("/admin/create-technician")}
-                    >
-                      <span
-                        className="btn-inner--icon"
-                        style={{ width: "20px" }}
-                      >
-                        <i className="ni ni-planet" />
-                      </span>
-                      <span className="btn-inner--text">Add Technician</span>
-                    </Button>
+                    
                   </div>
                 </Row>
               </CardHeader>
@@ -241,24 +228,7 @@ const ViewTechnicians = () => {
                           </Row>
 
                           <Row>
-                            <Button
-                              size="sm"
-                              color="warning"
-                              onClick={() =>
-                                navigate(
-                                  `/admin/update-technician/${technician._id}`
-                                )
-                              }
-                            >
-                              Update
-                            </Button>
-                            <Button
-                              size="sm"
-                              color="danger"
-                              onClick={() => handleDelete(technician._id)}
-                            >
-                              Delete
-                            </Button>
+                           
                           </Row>
                         </CardBody>
                       </Card>
@@ -283,4 +253,4 @@ const ViewTechnicians = () => {
   );
 };
 
-export default ViewTechnicians;
+export default MeetTheTeam;
