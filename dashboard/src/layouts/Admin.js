@@ -59,9 +59,8 @@ const Admin = () => {
         </Routes>
         {/* <Outlet /> */}
         {/* <Outlet /> */}
-        <Container fluid>
-        <FooterWH/>
-        </Container>
+        <Container fluid></Container>
+        <FooterWH />
       </div>
     </>
   );
