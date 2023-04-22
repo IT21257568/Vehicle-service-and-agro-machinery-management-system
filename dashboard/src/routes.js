@@ -38,6 +38,7 @@ import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 import CreateGeneralIssue from "views/Admin/CreateGeneralIssues";
 import ViewGeneralIssues from "views/Admin/ViewGeneralIssues";
 import UpdateGeneralIssue from "views/Admin/UpdateGeneralIssues";
+import CreateEmergencyIssue from "views/Admin/CreateEmergencyIssues";
 
 import CreateFAQ from "views/Admin/CreateFAQ";
 import ViewFAQs from "views/Admin/ViewFAQs";
@@ -464,6 +465,14 @@ const routes = [
     name: "Update General Issue",
     icon: "ni ni-ruler-pencil text-purple",
     component: UpdateGeneralIssue,
+    layout: "/admin",
+  },
+  //Piyumi - Emergency Issues
+  {
+    path: "/create-emergency-issue",
+    name: "Create Emergency Issue",
+    icon: "ni ni-single-copy-04 text-purple",
+    component: CreateEmergencyIssue,
     layout: "/admin",
   },
   // USER VIEWS
