@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 // reactstrap components
 import {
@@ -42,6 +43,7 @@ const ViewCVSubmissions = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
+  //const [submissions, setSubmissions] = useState([]);
 
   
 
@@ -62,6 +64,12 @@ const ViewCVSubmissions = () => {
       try {
         const res = await axios.get("/api/cvSub");
         setAllSubmissions(res.data);
+
+        /* // fetch all vacancies
+        const response = await fetch("/api/cvSub");
+        const data = await response.json();
+        setSubmissions(data); */
+
         setIsLoading(false);
       } catch (err) {
         setError(err);
@@ -80,9 +88,48 @@ const ViewCVSubmissions = () => {
     });
   };
 
+
+  const generateReport = () => {
+    
+        const doc = new jsPDF();
+        const columns = [
+          "Applicant Name",
+          "Applied Vacancy",
+          "Age",
+          "Gender",
+          "Contact Number",
+          "Email",
+        ];
+        const rows = allApplicants.map(
+          ({
+            applicant_name,
+            vacancy_name,
+            applicant_age,
+            applicant_gender,
+            applicant_contact,
+            applicant_email,
+          }) => [
+            applicant_name,
+            vacancy_name,
+            applicant_age,
+            applicant_gender,
+            applicant_contact,
+            applicant_email,
+          ]
+        );
+        doc.autoTable({
+          head: [columns],
+          body: rows,
+        });
+
+        doc.save("Applicants.pdf");
+      
+  }
   return (
     <>
       <Header />
+      
+
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Light Table */}
@@ -94,6 +141,7 @@ const ViewCVSubmissions = () => {
                   <div className="col">
                     <h3 className="mb-0">All Applicants</h3>
                   </div>
+
                   <Col xl="3">
                     <InputGroup className="input-group-rounded input-group-merge">
                       <Input
@@ -105,12 +153,27 @@ const ViewCVSubmissions = () => {
                       />
                     </InputGroup>
                   </Col>
+
                   <div className="col text-right">
+                    {/* <Button
+                      className="btn-icon btn-3"
+                      color="success"
+                      type="button"
+                      onClick={fetchBookings}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-planet" />
+                      </span>
+                      <span className="btn-inner--text">Fetch Bookings</span>
+                    </Button> */}
                     <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      //onClick={() => navigate("/admin/create-vacancy")}
+                      onClick={generateReport}
                     >
                       <span
                         className="btn-inner--icon"
