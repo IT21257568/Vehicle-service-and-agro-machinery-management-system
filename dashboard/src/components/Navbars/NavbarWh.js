@@ -1,21 +1,5 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import { Link } from "react-router-dom";
+
 // reactstrap components
 import {
   UncontrolledCollapse,
@@ -26,16 +10,17 @@ import {
   Nav,
   Container,
   Row,
-  Col
+  Col,
 } from "reactstrap";
 
-const AdminNavbar = () => {
+const NavbarWh = () => {
   return (
     <>
       <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
         <Container className="px-4">
           <NavbarBrand to="/" tag={Link}>
-            <img style={{width: '15rem', height: '5rem'}}
+            <img
+              style={{ width: "15rem", height: "5rem" }}
               alt="..."
               src={require("../../assets/img/brand/WLpy.png")}
             />
@@ -66,7 +51,7 @@ const AdminNavbar = () => {
               <NavItem>
                 <NavLink className="nav-link-icon" to="/" tag={Link}>
                   <i className="ni ni-planet" />
-                  <span className="nav-link-inner--text">Dashboard</span>
+                  <span className="nav-link-inner--text">Home</span>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -76,13 +61,23 @@ const AdminNavbar = () => {
                   tag={Link}
                 >
                   <i className="ni ni-circle-08" />
-                  <span className="nav-link-inner--text">Register</span>
+                  <span className="nav-link-inner--text">Agro products</span>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className="nav-link-icon"
+                  to="/auth/register"
+                  tag={Link}
+                >
+                  <i className="ni ni-circle-08" />
+                  <span className="nav-link-inner--text">Vehicle products</span>
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink className="nav-link-icon" to="/auth/login" tag={Link}>
                   <i className="ni ni-key-25" />
-                  <span className="nav-link-inner--text">Login</span>
+                  <span className="nav-link-inner--text">Contact us</span>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -103,4 +98,4 @@ const AdminNavbar = () => {
   );
 };
 
-export default AdminNavbar;
+export default NavbarWh;

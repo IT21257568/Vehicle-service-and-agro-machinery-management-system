@@ -56,7 +56,6 @@ import ApplyNow from "views/User/ApplyNow";
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
 
-
 //Janindu user views
 import CreateClientBooking from "views/User/BookingPage";
 
@@ -64,10 +63,10 @@ import CreateClientBooking from "views/User/BookingPage";
 import AgroProductsPage from "views/User/AgroProductsPage";
 
 //nisa
-import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
+import ViewMeetTheTeam from "views/User/MeetTheTeam";
 
-
-
+//home page
+import HomePage from "views/User/HomePage";
 
 const routes = [
   {
@@ -421,7 +420,6 @@ const routes = [
     component: FAQs,
     layout: "/user",
   },
-
 
   //Janindu user views
   {
