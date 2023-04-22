@@ -30,7 +30,7 @@ import {
 } from "reactstrap";
 
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import SparePartHeader from "components/Headers/SparePartHeader.js";
 
 const SparePartsPage = () => {
   // states
@@ -66,7 +66,7 @@ const SparePartsPage = () => {
 
   return (
     <>
-      <UserHeader />
+      <SparePartHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -179,11 +179,11 @@ const SparePartsPage = () => {
                             color="warning"
                             type="button"
                             style={{marginLeft: '3.3rem', width: '12rem'}}
-                            onClick={() =>
-                              navigate(
-                                `/admin/update-spare-part/${sparePart._id}`
-                              )
-                            }
+                            // onClick={() =>
+                            //   navigate(
+                            //     `/admin/update-spare-part/${sparePart._id}`
+                            //   )
+                            // }
                           >
                             Add to Cart
                           </Button>
