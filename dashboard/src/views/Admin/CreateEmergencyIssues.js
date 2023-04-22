@@ -23,11 +23,13 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
+
+
 const CreateEmergencyIssue = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const toggle1 = () => setDropdownOpen1((prevState) => !prevState);
+  const toggle1 = () => setDropdownOpen1((prevState1) => !prevState1);
   const navigate = useNavigate();
 
   // form states
@@ -56,7 +58,7 @@ const CreateEmergencyIssue = () => {
           c_location: location,
           EM_discription: emDiscription,
           issue_status: issueStatus,
-          available_Technicians: availableTechnicians,
+          available_emp: availableTechnicians,
           maintenance_fee: maintenanceFee,
           towing_fee: towingFee,
           total_fee: totalFee,
@@ -74,11 +76,18 @@ const CreateEmergencyIssue = () => {
           setTowingFee("");
           setTotalFee("");
           setError(null);
-          navigate("/admin/view-emergency-issues");
+          navigate("/admin/view-general-issues");
         });
-    } catch (error) {
-      setError(error.message);
-    }
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          const { error: errorMessage, emptyFields } = error.response.data;
+          const fields = emptyFields.join(", ");
+          setError(`Please fill in all fields: ${fields}`);
+        } else {
+          console.log(error);
+        }
+      }
+  
   };
 
   return (
@@ -92,7 +101,7 @@ const CreateEmergencyIssue = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create emergency Issue</h3>
+                    <h3 className="mb-0">Create Emergency Issue</h3>
                   </Col>
                 </Row>
               </CardHeader>
@@ -107,13 +116,13 @@ const CreateEmergencyIssue = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-cname"
+                            htmlFor="input-username"
                           >
                             Customer Name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-cname"
+                            id="input-username"
                             placeholder="Enter Customer Name"
                             type="text"
                             onChange={(e) => {
@@ -161,57 +170,57 @@ const CreateEmergencyIssue = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="cNIC"
-                          >
-                            Customer NIC
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="cNIC"
-                            placeholder="Enter Customer NIC"
-                            type="text"
-                            onChange={(e) => {
-                              setCustomerNIC(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="cnumber"
-                          >
-                            Contact Number
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="cnumber"
-                            placeholder="Enter Contact Number"
-                            type="text"
-                            onChange={(e) => {
-                              setContactNumber(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
+                        <Col lg="6">
+                            <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-username"
+                            >
+                                Customer NIC
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                id="input-username"
+                                placeholder="Enter Customer NIC"
+                                type="text"
+                                onChange={(e) => {
+                                setCustomerNIC(e.target.value);
+                                }}
+                            />
+                            </FormGroup>
+                        </Col>
+                        <Col lg="6">
+                            <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-username"
+                            >
+                                Contact Number
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                id="input-username"
+                                placeholder="Enter Contact Number"
+                                type="text"
+                                onChange={(e) => {
+                                setContactNumber(e.target.value);
+                                }}
+                            />
+                            </FormGroup>
+                        </Col>
                     </Row>
                     <Row>
                       <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="clocation"
+                            htmlFor="input-username"
                           >
                             Current Location
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="clocation"
+                            id="input-username"
                             placeholder="Enter Current Location"
                             type="text"
                             onChange={(e) => {
@@ -224,9 +233,9 @@ const CreateEmergencyIssue = () => {
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
-                            htmlFor="availableTechnicians"
+                            htmlFor="input-email"
                           >
-                            Available Technicians
+                            Available Employees
                           </label>
                           <Dropdown
                             isOpen={dropdownOpen1}
@@ -234,7 +243,7 @@ const CreateEmergencyIssue = () => {
                             toggle={toggle1}
                           >
                             <DropdownToggle caret>
-                              {issueStatus ? issueStatus : "Select a Technician"}
+                              {availableTechnicians ? availableTechnicians : "Select a Technician"}
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem
@@ -248,7 +257,7 @@ const CreateEmergencyIssue = () => {
                               <DropdownItem
                                 value="K. Jayawardana"
                                 onClick={(e) => {
-                                  setIssueStatus(e.target.value);
+                                  setAvailableTechnicians(e.target.value);
                                 }}
                               >
                                 K. Jayawardana
@@ -256,7 +265,7 @@ const CreateEmergencyIssue = () => {
                               <DropdownItem
                                 value="H.B. Bandara"
                                 onClick={(e) => {
-                                  setIssueStatus(e.target.value);
+                                  setAvailableTechnicians(e.target.value);
                                 }}
                               >
                                 H.B. Bandara
@@ -264,7 +273,7 @@ const CreateEmergencyIssue = () => {
                               <DropdownItem
                                 value="R.S Perera"
                                 onClick={(e) => {
-                                  setIssueStatus(e.target.value);
+                                  setAvailableTechnicians(e.target.value);
                                 }}
                               >
                                 R.S Perera
@@ -272,7 +281,7 @@ const CreateEmergencyIssue = () => {
                               <DropdownItem
                                 value="I.M. Gunapala"
                                 onClick={(e) => {
-                                  setIssueStatus(e.target.value);
+                                 setAvailableTechnicians(e.target.value);
                                 }}
                               >
                                 I.M. Gunapala
@@ -287,13 +296,13 @@ const CreateEmergencyIssue = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="cmaintenance"
+                            htmlFor="input-username"
                           >
                             Maintenance Fee
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="cmaintenance"
+                            id="input-username"
                             placeholder="Enter Maintenance Fee"
                             type="text"
                             onChange={(e) => {
@@ -306,13 +315,13 @@ const CreateEmergencyIssue = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-towing "
+                            htmlFor="input-username "
                           >
                             Towing Fee
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-towing"
+                            id="input-username"
                             placeholder="Enter towing Fee"
                             type="text"
                             onChange={(e) => {
@@ -321,19 +330,19 @@ const CreateEmergencyIssue = () => {
                           />
                         </FormGroup>
                       </Col>
-
                     </Row>
                     <Row>
+                      <Col lg="6">
                     <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-total "
+                            htmlFor="input-username "
                           >
                             Total Fee
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-towing"
+                            id="input-username"
                             placeholder="Enter total Fee"
                             type="text"
                             onChange={(e) => {
@@ -341,6 +350,7 @@ const CreateEmergencyIssue = () => {
                             }}
                           />
                         </FormGroup>
+                      </Col>
                     </Row>
                   </div>
 
@@ -349,7 +359,7 @@ const CreateEmergencyIssue = () => {
                     <FormGroup>
                       <label
                         className="form-control-label"
-                        htmlFor="cdiscription"
+                        htmlFor="input-last-name"
                       >
                         Description
                       </label>
@@ -362,6 +372,30 @@ const CreateEmergencyIssue = () => {
                           setEmDiscription(e.target.value);
                         }}
                       />
+                      {error && (
+                        <div
+                          style={{
+                            backgroundColor: "#ffffff",
+                            color: "red",
+                            // textAlign:"center",
+                            display: "flex",
+                            justifyContent: "center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
+                            padding: "10px",
+                            marginTop: "15px",
+                            borderStyle: "solid",
+                            borderColor: "red",
+                            borderWidth: "3px",
+                            borderRadius: "20px",
+                          }}
+                        >
+                          <span>
+                            <b>{error}</b>
+                          </span>
+                        </div>
+                      )} 
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create
@@ -370,7 +404,7 @@ const CreateEmergencyIssue = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/view-general-issues");
+                        navigate("/admin/view-emergency-issues");
                       }}
                     >
                       Cancel
