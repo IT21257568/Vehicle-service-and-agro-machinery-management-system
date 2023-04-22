@@ -329,7 +329,7 @@ const handleImageUpload = (event) => {
                             className="form-control-alternative"
                             id="input-first-name"
                             placeholder="Enter Your Email Here"
-                            type="text"
+                            type="email"
                             onChange={(e) => {
                               setApplicantEmail(e.target.value);
                             }}
