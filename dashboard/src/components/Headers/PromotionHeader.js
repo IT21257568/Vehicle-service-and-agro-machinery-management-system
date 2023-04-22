@@ -8,9 +8,9 @@ const PromotionHeader = () => {
         style={{
           minHeight: "500px",
           backgroundImage:
-            "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
+            "url(" + require("../../assets/img/theme/promotions.jpg") + ")",
+          backgroundSize: "contain",
+          
         }}
       >
         {/* Mask */}
@@ -19,9 +19,9 @@ const PromotionHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Explore Promotions</h1>
-              <p className="text-white mt-0 mb-5">
-                Enjoy great discounts with Wheelmasters special promotions
+              <h1 className="display-2 text-white" style={{width: '35rem'}}>Explore our exclusive offers</h1>
+              <p className="text-white mt-0 mb-5" style={{width: '25rem'}}>
+                Enjoy great discounts with Wheelmasters special promotions . . . 
               </p>
             </Col>
           </Row>

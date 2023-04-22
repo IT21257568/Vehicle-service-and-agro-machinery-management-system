@@ -41,6 +41,11 @@ import {
   ButtonToggle,
   CardLink,
   NavLink,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input,
+  Dropdown,
 } from "reactstrap";
 
 import { Accordion } from "react-bootstrap-accordion";
@@ -54,10 +59,11 @@ const ViewFAQs = () => {
   const [allFAQs, setAllFaqs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [query, setQuery] = useState("");
   // set visible rows
   const [visible, setVisible] = useState(10);
-
+  const [querySort, setQuerySort] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   const showMoreItems = () => {
@@ -90,6 +96,8 @@ const ViewFAQs = () => {
     }
   };
 
+  const toggleSort = () => setDropdownOpen((prevState) => !prevState);
+
   const handleDelete = (id) => {
     axios.delete(`/api/faqs/${id}`).then((res) => {
       console.log(res.data);
@@ -113,12 +121,80 @@ const ViewFAQs = () => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All FAQs</h3>
+                    <InputGroup className="input-group-rounded input-group-merge"
+                      style={{width: '28rem', marginTop: "0.8rem"}}>
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <span className="fa fa-search" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                    </InputGroup>
                   </div>
+                  <Col xl="3" style={{ marginLeft: "40rem",  marginTop: "-5.5rem"}}>
+                    <label
+                      className="form-control-label mr-2"
+                      htmlFor="input-email"
+                    >
+                      Sort By:
+                    </label>
+                    <Dropdown
+                      isOpen={dropdownOpen}
+                      color="primary"
+                      toggle={toggleSort}
+                      style={{width: '10rem'}}
+                    >
+                      <DropdownToggle caret>
+                        {querySort ? querySort : "Select Category"}
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem
+                          value="User profile related"
+                          onClick={(e) => {
+                            setQuerySort(e.target.value);
+                          }}
+                        >
+                          User profile related
+                        </DropdownItem>
+                        <DropdownItem
+                          value="Bookings related"
+                          onClick={(e) => {
+                            setQuerySort(e.target.value);
+                          }}
+                        >
+                          Bookings related
+                        </DropdownItem>
+                        <DropdownItem
+                          value="Online shop related"
+                          onClick={(e) => {
+                            setQuerySort(e.target.value);
+                          }}
+                        >
+                          Online shop related
+                        </DropdownItem>
+                        <DropdownItem
+                          value="Agro products related"
+                          onClick={(e) => {
+                            setQuerySort(e.target.value);
+                          }}
+                        >
+                          Agro products related
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
+                  </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
+                      style={{marginTop: "-5.5rem",marginRight: '1rem'}}
                       onClick={() => navigate("/admin/create-faq")}
                     >
                       <span
@@ -134,41 +210,55 @@ const ViewFAQs = () => {
               </CardHeader>
 
               <Container>
-                {allFAQs.slice(0, visible).map((faq, index) => (
-                  <Accordion
-                    title={faq.faq_question}
-                    open={open}
-                    toggle={toggle}
-                  >
-                    {faq.faq_answer}
+                {allFAQs
+                  .filter((faq) =>
+                  faq.faq_category
+                    ?.toLowerCase()
+                    .includes(querySort.toLowerCase())
+                )
+                  .filter((faq) =>
+                    faq.faq_question
+                      ?.toLowerCase()
+                      .includes(query.toLowerCase())
+                  )
+                  .slice(0, visible)
+                  .map((faq, index) => (
+                    <Accordion
+                      title={faq.faq_question}
+                      open={open}
+                      toggle={toggle}
+                    >
+                      {faq.faq_answer}
 
-                    <Row>
-                      <NavLink
-                        href={faq.vid_link}
-                        style={{ color: "teal", marginLeft: "0.2rem" }}
-                      >
-                        Watch Tutorial here
-                      </NavLink>
-                    </Row>
-                    <Row style={{ marginTop: "1rem" }}>
-                      <Button
-                        style={{ marginLeft: "0.8rem", marginRight: "1rem" }}
-                        size="sm"
-                        color="warning"
-                        onClick={() => navigate(`/admin/update-faq/${faq._id}`)}
-                      >
-                        Update FAQ
-                      </Button>
-                      <Button
-                        size="sm"
-                        color="danger"
-                        onClick={() => handleDelete(faq._id)}
-                      >
-                        Delete FAQ
-                      </Button>
-                    </Row>
-                  </Accordion>
-                ))}
+                      <Row>
+                        <NavLink
+                          href={faq.vid_link}
+                          style={{ color: "teal", marginLeft: "0.2rem" }}
+                        >
+                          Watch Tutorial here
+                        </NavLink>
+                      </Row>
+                      <Row style={{ marginTop: "1rem" }}>
+                        <Button
+                          style={{ marginLeft: "0.8rem", marginRight: "1rem" }}
+                          size="sm"
+                          color="warning"
+                          onClick={() =>
+                            navigate(`/admin/update-faq/${faq._id}`)
+                          }
+                        >
+                          Update FAQ
+                        </Button>
+                        <Button
+                          size="sm"
+                          color="danger"
+                          onClick={() => handleDelete(faq._id)}
+                        >
+                          Delete FAQ
+                        </Button>
+                      </Row>
+                    </Accordion>
+                  ))}
               </Container>
 
               <CardFooter className="py-4" style={{ marginTop: "1.8rem" }}>
