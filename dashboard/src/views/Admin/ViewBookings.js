@@ -77,17 +77,8 @@ const ViewBookings = () => {
     });
   };
 
-  const fetchBookings = async () => {
-    const response = await fetch("/api/bookings");
-    const data = await response.json();
-    setBookings(data);
-  };
 
   const generateReport = () => {
-    if (bookings.length === 0) {
-      alert("Please fetch booking before generating the report");
-      return;
-    }
 
     const doc = new jsPDF();
     const columns = [
@@ -99,7 +90,7 @@ const ViewBookings = () => {
       "Date Time",
       "Special Note",
     ];
-    const rows = bookings.map(
+    const rows = allBookings.map(
       ({
         client_name,
         service_type,
@@ -156,20 +147,6 @@ const ViewBookings = () => {
                     </InputGroup>
                   </div>
                   <div className="col text-right">
-                    <Button
-                      className="btn-icon btn-3"
-                      color="success"
-                      type="button"
-                      onClick={fetchBookings}
-                    >
-                      <span
-                        className="btn-inner--icon"
-                        style={{ width: "20px" }}
-                      >
-                        <i className="ni ni-planet" />
-                      </span>
-                      <span className="btn-inner--text">Fetch Bookings</span>
-                    </Button>
                     <Button
                       className="btn-icon btn-3"
                       color="success"
