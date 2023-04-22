@@ -258,17 +258,15 @@ const CreateProgressTracking = () => {
                       {error && (
                         <div
                           style={{
-                            backgroundColor: "#F46D75",
-                            color: "white",
-                            // textAlign:"center",
+                            backgroundColor: "#ffffff",
+                            color: "red",
                             display: "flex",
                             justifyContent: "center",
-                            // fontWeight:"bold",
-                            // paddingBottom: "5px",
-                            // paddingTop: "5px",
                             padding: "10px",
                             marginTop: "15px",
+                            borderStyle: "solid",
                             borderColor: "red",
+                            borderWidth: "3px",
                             borderRadius: "20px",
                           }}
                         >

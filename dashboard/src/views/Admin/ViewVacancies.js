@@ -23,7 +23,10 @@ import {
   Row,
   //UncontrolledTooltip,
   Button,
- //Chip,
+  //Chip,
+  Col,
+  InputGroup,
+  Input,
 } from "reactstrap";
 
 // core components
@@ -49,9 +52,12 @@ import Header from "components/Headers/Header.js";
 const ViewVacancies = () => {
   // states
   const [allVacancies, setAllVacancies] = useState([]);
+  const [vacancy_applicants, setVacancyApplicants] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showCard, setShowCard] = useState(false);
+  const [query, setQuery] = useState("");
+
 
    function handleViewClick() {
      console.log("View button clicked");
@@ -65,7 +71,7 @@ const ViewVacancies = () => {
    console.log("Rendering App component with showCard = ", showCard);
 
   // set visible rows
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(3);
 
   const navigate = useNavigate();
 
@@ -78,6 +84,7 @@ const ViewVacancies = () => {
     const fetchAllVacancies = async () => {
       try {
         const res = await axios.get("/api/vacancies");
+        setVacancyApplicants(res.data.vacancy_applicants);
         setAllVacancies(res.data);
         setIsLoading(false);
       } catch (err) {
@@ -95,6 +102,14 @@ const ViewVacancies = () => {
         prevData.filter((vacancy) => vacancy._id !== id)
       );
     });
+    // update vacancy applicants
+    axios
+      .patch(`/api/vacancies/${id}`, {
+        vacancy_applicants: vacancy_applicants - 1,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
   };
 
   return (
@@ -111,6 +126,17 @@ const ViewVacancies = () => {
                   <div className="col">
                     <h3 className="mb-0">All Vacancies</h3>
                   </div>
+                  <Col xl="3">
+                    <InputGroup className="input-group-rounded input-group-merge">
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                    </InputGroup>
+                  </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
@@ -146,126 +172,88 @@ const ViewVacancies = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allVacancies.slice(0, visible).map((vacancy, index) => (
-                    <tr key={vacancy._id}>
-                      <th scope="row">
-                        <span className="mb-0 text-sm">
-                          {vacancy.vacancy_title}
-                        </span>
-                      </th>
-                      <td>
-                        <Badge color="success">{vacancy.vacancy_type}</Badge>
-                      </td>
-                      <td>{vacancy.vacancy_count}</td>
-                      <td>
-                        <div className="container">
+                  {allVacancies
+                    .filter(
+                      (vacancy) =>
+                        vacancy.vacancy_title
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase()) ||
+                        vacancy.vacancy_type
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
+                    )
+                    .slice(0, visible)
+                    .map((vacancy, index) => (
+                      <tr key={vacancy._id}>
+                        <th scope="row">
+                          <span className="mb-0 text-sm">
+                            {vacancy.vacancy_title}
+                          </span>
+                        </th>
+                        <td>
+                          <Badge color="success">{vacancy.vacancy_type}</Badge>
+                        </td>
+                        <td>{vacancy.vacancy_count}</td>
+                        <td>
+                          <div className="container">
+                            <Button
+                              size="sm"
+                              color="primary"
+                              onClick={handleViewClick}
+                            >
+                              View
+                            </Button>
+                            {showCard && (
+                              <CardRequiremnts
+                                vacancyd={vacancy.vacancy_requirements}
+                                onClose={handleCloseClick}
+                              />
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="d-flex align-items-center">
+                            <span className="mr-2">
+                              {vacancy.vacancy_applicants}/
+                              {vacancy.vacancy_count}
+                            </span>
+                            <div>
+                              <Progress
+                                max={vacancy.vacancy_count}
+                                value={vacancy.vacancy_applicants}
+                                barClassName="bg-success"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td>
                           <Button
                             size="sm"
-                            color="primary"
-                            onClick={handleViewClick}
+                            color="warning"
+                            onClick={() =>
+                              navigate(`/admin/update-vacancy/${vacancy._id}`)
+                            }
                           >
-                            View
+                            Update
                           </Button>
-                          {showCard && (
-                            <CardRequiremnts
-                              vacancyd={vacancy.vacancy_requirements}
-                              onClose={handleCloseClick}
-                            />
-                          )}
-                        </div>
-                      </td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">
-                            1/{vacancy.vacancy_count}
-                          </span>
-                          <div>
-                            <Progress
-                              max="10"
-                              value="4"
-                              barClassName="bg-success"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <Button
-                          size="sm"
-                          color="warning"
-                          onClick={() =>
-                            navigate(`/admin/update-vacancy/${vacancy._id}`)
-                          }
-                        >
-                          Update
-                        </Button>
-                        <Button
-                          size="sm"
-                          color="danger"
-                          onClick={() => handleDelete(vacancy._id)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                  {visible < allVacancies.length && (
-                    <Button color="primary" size="sm" onClick={showMoreItems}>
-                      Load More
-                    </Button>
-                  )}
+                          <Button
+                            size="sm"
+                            color="danger"
+                            onClick={() => handleDelete(vacancy._id)}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </Table>
               <CardFooter className="py-4">
-                <nav aria-label="...">
-                  <Pagination
-                    className="pagination justify-content-end mb-0"
-                    listClassName="justify-content-end mb-0"
-                  >
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        tabIndex="-1"
-                      >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        3
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className="fas fa-angle-right" />
-                        <span className="sr-only">Next</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                  </Pagination>
-                </nav>
+                {visible < allVacancies.length && (
+                  <Button color="info" size="sm" onClick={showMoreItems}>
+                    Load More
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </div>

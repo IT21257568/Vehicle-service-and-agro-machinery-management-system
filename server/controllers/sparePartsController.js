@@ -30,33 +30,33 @@ const createSparePart = async (req, res) => {
     const{sp_name, sp_image,sp_price, sp_discount, sp_description, sp_status} = req.body;
 
     //check if all fields are filled
-    let emptyFeilds = [];
+    let emptyFields = [];
 
     if(!sp_name) {
-        emptyFeilds.push('sp_name');
+        emptyFields.push('Spare Part Name');
     }
     if(!sp_image) {
-        emptyFeilds.push('sp_image');
+        emptyFields.push('Spare Part image');
     }
     if(!sp_price) {
-        emptyFeilds.push('sp_price');
+        emptyFields.push('Spare Part price');
     }
     if(!sp_discount) {
-        emptyFeilds.push('sp_discount');
+        emptyFields.push('Spare Part discount');
     }
     if(!sp_description) {
-        emptyFeilds.push('sp_description');
+        emptyFields.push('Spare Part description');
     }
     if(!sp_status) {
-        emptyFeilds.push('sp_status');
+        emptyFields.push('Spare Part status');
     }
-    if(emptyFeilds.length > 0) {
-        return res.status(400).json({error: `The following fields are empty: ${emptyFeilds}`});
+    if(emptyFields.length > 0) {
+        return res.status(400).json({error: "The following fields are empty: ", emptyFields});
     }
 
     //add doc to db
     try{
-        const sparePart = await SparePart.create({sp_name, sp_image,sp_price, sp_discount, sp_description, sp_status});
+        const sparePart = await SparePart.create({sp_name, sp_image,sp_price, sp_discount, sp_description, sp_status,});
         res.status(200).json({sparePart});
     }catch(error){
         res.status(400).json({error: error.message});

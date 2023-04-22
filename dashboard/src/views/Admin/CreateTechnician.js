@@ -270,16 +270,28 @@ const CreateVacancy = () => {
                           setTechnicianExpertise(e.target.value);
                         }}
                       />
-                       {error && (
+                     {error && (
                         <div
                           style={{
-                            backgroundColor: "red",
-                            color: "white",
+                            backgroundColor: "#ffffff",
+                            color: "red",
+                            // textAlign:"center",
+                            display: "flex",
+                            justifyContent: "center",
+                            // fontWeight:"bold",
+                            // paddingBottom: "5px",
+                            // paddingTop: "5px",
                             padding: "10px",
-                            marginTop: "10px",
+                            marginTop: "15px",
+                            borderStyle: "solid",
+                            borderColor: "red",
+                            borderWidth: "3px",
+                            borderRadius: "20px",
                           }}
                         >
-                          <p>{error}</p>
+                          <span>
+                            <b>{error}</b>
+                          </span>
                         </div>
                       )}
                     </FormGroup>
