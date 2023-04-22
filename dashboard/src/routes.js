@@ -66,9 +66,11 @@ import AgroProductsPage from "views/User/AgroProductsPage";
 //nisa
 import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
 
-
 //Pehesarani admin views
 import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
+
+//Pehesarani user views
+import OrderAgroProduct from "views/User/OrderAgroProduct";
 
 
 const routes = [
@@ -458,6 +460,14 @@ const routes = [
     icon: "ni ni-settings text-blue",
     component: ViewOrderAgroProducts,
     layout: "/admin",
+  },
+  //User - Pehesarani Agro Products
+  {
+    path: "/order-agro-product/:id",
+    name: "Order Agro Product",
+    icon: "ni ni-ruler-pencil text-green",
+    component: OrderAgroProduct,
+    layout: "/user",
   },
 ];
 export default routes;

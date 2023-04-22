@@ -22,7 +22,6 @@ const orderAgroProductSchema = new Schema(
     },
     customer_note: {
       type: String,
-      required: true,
     },
     p_name: {
       type: String,

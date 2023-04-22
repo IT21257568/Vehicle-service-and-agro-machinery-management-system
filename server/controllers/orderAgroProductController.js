@@ -44,19 +44,18 @@ const createOrderAgroProduct = async (req, res) => {
     if (!customer_contact) {
         emptyFields.push("Customer Contact");
     }
-    if (customer_contact.length>10) {
+    else if (customer_contact.length>10 || customer_contact.length<10) {
         emptyFields.push("Invalid Contact Number");
     }
     if (!customer_email) {
         emptyFields.push("Customer Email");
+    }else {
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(customer_email)) {
+          emptyFields.push("Invalid Email Address");
+       }
     }
-    // }else {
-    //     // Email validation
-    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //     if (!emailRegex.test(customer_email)) {
-    //       emptyFields.push("Invalid Email Address");
-    //     }
-    // }
     if (!customer_address) {
         emptyFields.push("Customer Address");
     }
