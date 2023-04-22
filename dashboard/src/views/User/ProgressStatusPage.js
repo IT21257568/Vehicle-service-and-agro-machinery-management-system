@@ -146,7 +146,7 @@ const Progresses = () => {
                           Customer Name: {progress.name}
                         </CardTitle>
 
-                        <CardSubtitle className="mb-2 text-muted" tag="h2">
+                        <CardSubtitle className="mb-2 text-muted" tag="h4">
                           Vehi Number: {progress.vehi_number}
                         </CardSubtitle>
 
@@ -156,7 +156,7 @@ const Progresses = () => {
 
                         <CardText>{progress.description}</CardText>
 
-                        <CardSubtitle className="mb-2 text-muted" tag="h4">
+                        <CardSubtitle className="mb-2 text-muted" tag="h5">
                           {" "}
                           <strong>
                             Date: {progress.date}
