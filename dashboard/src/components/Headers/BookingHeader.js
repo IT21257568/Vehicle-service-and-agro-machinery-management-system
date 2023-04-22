@@ -1,6 +1,6 @@
 import { Button, Container, Row, Col } from "reactstrap";
 
-const PromotionHeader = () => {
+const BookingHeader = () => {
   return (
     <>
       <div
@@ -8,9 +8,9 @@ const PromotionHeader = () => {
         style={{
           minHeight: "500px",
           backgroundImage:
-            "url(" + require("../../assets/img/theme/promotions.jpg") + ")",
-          backgroundSize: "contain",
-          
+            "url(" + require("../../assets/img/theme/car-service-online.jpg") + ")",
+          backgroundSize: "100% 115%",
+          //backgroundPosition: "center top",
         }}
       >
         {/* Mask */}
@@ -19,10 +19,8 @@ const PromotionHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white" style={{width: '35rem'}}>Explore our exclusive offers</h1>
-              <p className="text-white mt-0 mb-5" style={{width: '25rem'}}>
-                Enjoy great discounts with Wheelmasters special promotions . . . 
-              </p>
+              <h1 className="display-2 text-white">Create Bookings</h1>
+
             </Col>
           </Row>
         </Container>
@@ -31,4 +29,4 @@ const PromotionHeader = () => {
   );
 };
 
-export default PromotionHeader;
+export default BookingHeader;

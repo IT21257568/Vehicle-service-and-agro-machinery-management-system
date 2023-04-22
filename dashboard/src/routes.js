@@ -56,11 +56,16 @@ import ApplyNow from "views/User/ApplyNow";
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
 
+
+//Janindu user views
+import CreateClientBooking from "views/User/BookingPage";
+
 // Pehesarani user views
 import AgroProductsPage from "views/User/AgroProductsPage";
 
 //nisa
 import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
+
 
 //Pehesarani admin views
 import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
@@ -384,7 +389,7 @@ const routes = [
   {
     path: "/create-general-issue",
     name: "Create General Issue",
-    icon: "ni ni-notification-70 text-pink",
+    icon: "ni ni-single-copy-04 text-green",
     component: CreateGeneralIssue,
     layout: "/admin",
   },
@@ -398,7 +403,7 @@ const routes = [
   {
     path: "/update-general-issues/:id",
     name: "Update General Issue",
-    icon: "ni ni-notification-70 text-pink",
+    icon: "ni ni-ruler-pencil text-purple",
     component: UpdateGeneralIssue,
     layout: "/admin",
   },
@@ -419,6 +424,16 @@ const routes = [
     layout: "/user",
   },
 
+
+  //Janindu user views
+  {
+    path: "/create-client-booking",
+    name: "Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: CreateClientBooking,
+    layout: "/user",
+  },
+
   //User - Pehesarani Agro Products
   {
     path: "/agroProducts",
@@ -435,6 +450,7 @@ const routes = [
     component: ViewMeetTheTeam,
     layout: "/user",
   },
+
   //Pehesarani - Admin - View Agro Products orders
   {
     path: "/agro-products-orders",
