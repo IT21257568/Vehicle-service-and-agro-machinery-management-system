@@ -72,9 +72,6 @@ import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
 //Pehesarani user views
 import OrderAgroProduct from "views/User/OrderAgroProduct";
 
-// nethum user progress
-import ProgressStatusPage from "views/User/ProgressStatusPage";
-
 
 const routes = [
   {
@@ -472,13 +469,5 @@ const routes = [
     component: OrderAgroProduct,
     layout: "/user",
   },
-    // nethum - progress tarcking
-    {
-      path: "/progress-page",
-      name: "Servise Progresss Status",
-      icon: "ni ni-notification-70 text-orange",
-      component: ProgressStatusPage,
-      layout: "/user",
-    },
 ];
 export default routes;
