@@ -31,54 +31,23 @@ import {
   //CardGroup,
   CardImg,
   //CardImgOverlay,
+  Col,
+  InputGroup,
+  Input,
 } from "reactstrap";
 // core components
 import CareerHeader from "components/Headers/CareerHeader.js";
 
-//card
-function CardRatings({ ratings, onClose }) {
-  return (
-    <div className="card">
-      <div className="card-body">
-        <h5 className="card-title">Ratings</h5>
-        <p className="card-text">{ratings}</p>
-        <Button size="sm" color="primary" onClick={onClose}>
-          Close
-        </Button>
-      </div>
-    </div>
-  );
-}
+
 
 const Career = () => {
   // states
   const [allVacancies, setAllVacancies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showCard, setShowCard] = useState(false);
+  const [query, setQuery] = useState("");
 
-  function handleViewClick() {
-    console.log("View button clicked");
-    setShowCard(true);
-  }
-
-  function handleCloseClick() {
-    console.log("Close button clicked");
-    setShowCard(false);
-  }
-  console.log("Rendering App component with showCard = ", showCard);
-
-  function handleViewClick() {
-    console.log("View button clicked");
-    setShowCard(true);
-  }
-
-  function handleCloseClick() {
-    console.log("Close button clicked");
-    setShowCard(false);
-  }
-  console.log("Rendering App component with showCard = ", showCard);
-
+ 
   // set visible rows
   const [visible, setVisible] = useState(3);
 
@@ -122,54 +91,84 @@ const Career = () => {
                   <div className="col">
                     <h3 className="mb-0">Vecancies</h3>
                   </div>
+                  
+
+                  <Col xl="3">
+                    <InputGroup className="input-group-rounded input-group-merge">
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                    </InputGroup>
+                  </Col>
                   <div className="col text-right"></div>
                 </Row>
               </CardHeader>
               <Container>
                 <Row>
-                  {allVacancies.slice(0, visible).map((vacancy, index) => (
-                    <Card
-                      key={vacancy._id}
-                      style={{
-                        width: "22rem",
-                        borderRadius: "0.2rem",
-                        margin: "0.8rem",
-                      }}
-                    >
-                      <CardBody>
-                        <CardTitle tag="h2">{vacancy.vacancy_title}</CardTitle>
-                        <CardText className="mb-1 text-muted" tag="h4">
-                          Available Count : {vacancy.vacancy_count}
-                        </CardText>
-                        <CardText className="mb-1 text-muted" tag="h4">
-                          Vacancy Type :{" "}
-                          <Badge color="success">{vacancy.vacancy_type}</Badge>
-                        </CardText>
+                  {allVacancies
+                    .filter(
+                      (vacancy) =>
+                        vacancy.vacancy_title
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase()) ||
+                        vacancy.vacancy_type
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
+                    )
+                    .slice(0, visible)
+                    .map((vacancy, index) => (
+                      <Card
+                        key={vacancy._id}
+                        style={{
+                          width: "22rem",
+                          borderRadius: "0.2rem",
+                          margin: "0.8rem",
+                        }}
+                      >
+                        <CardBody>
+                          <CardTitle tag="h2">
+                            {vacancy.vacancy_title}
+                          </CardTitle>
+                          <CardText className="mb-1 text-muted" tag="h4">
+                            Available Count : {vacancy.vacancy_count}
+                          </CardText>
+                          <CardText className="mb-1 text-muted" tag="h4">
+                            Vacancy Type :{" "}
+                            <Badge color="success">
+                              {vacancy.vacancy_type}
+                            </Badge>
+                          </CardText>
 
-                        <Row className="mb-2">
-                          <div className="container">
-                            <Button
-                              size="sm"
-                              color="primary"
-                              onClick={() =>
-                                navigate(`/user/applynowpage/${vacancy._id}`)
-                              }
-                            >
-                              <span
-                                className="btn-inner--icon"
-                                style={{ width: "20px" }}
+                          <Row className="mb-2">
+                            <div className="container">
+                              <Button
+                                size="sm"
+                                color="primary"
+                                onClick={() =>
+                                  navigate(`/user/applynowpage/${vacancy._id}`)
+                                }
                               >
-                                <i className="ni ni-like-2" />
-                              </span>
-                              <span className="btn-inner--text">Apply Now</span>
-                            </Button>
-                          </div>
-                        </Row>
+                                <span
+                                  className="btn-inner--icon"
+                                  style={{ width: "20px" }}
+                                >
+                                  <i className="ni ni-like-2" />
+                                </span>
+                                <span className="btn-inner--text">
+                                  Apply Now
+                                </span>
+                              </Button>
+                            </div>
+                          </Row>
 
-                        <Row></Row>
-                      </CardBody>
-                    </Card>
-                  ))}
+                          <Row></Row>
+                        </CardBody>
+                      </Card>
+                    ))}
                 </Row>
               </Container>
               <CardFooter

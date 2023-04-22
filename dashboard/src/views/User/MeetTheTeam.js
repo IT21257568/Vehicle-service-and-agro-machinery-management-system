@@ -151,9 +151,7 @@ const MeetTheTeam = () => {
                       />
                     </InputGroup>
                   </Col>
-                  <div className="col text-right">
-                    
-                  </div>
+                  <div className="col text-right"></div>
                 </Row>
               </CardHeader>
               <Container>
@@ -199,7 +197,15 @@ const MeetTheTeam = () => {
                             {technician.technician_experiences} Years
                           </CardText>
                           <CardText className="mb-2 text-muted" tag="h4">
-                            Expertice : {technician.technician_expertise}
+                            Expertice :
+                            <Input
+                              className="form-control-alternative"
+                              placeholder="Requirmnets for the vacancy"
+                              rows="4"
+                              type="textarea"
+                              readOnly
+                              value={technician.technician_expertise}
+                            />
                           </CardText>
                           <Row className="mb-2">
                             <div className="container">
@@ -227,9 +233,7 @@ const MeetTheTeam = () => {
                             </div>
                           </Row>
 
-                          <Row>
-                           
-                          </Row>
+                          <Row></Row>
                         </CardBody>
                       </Card>
                     ))}
