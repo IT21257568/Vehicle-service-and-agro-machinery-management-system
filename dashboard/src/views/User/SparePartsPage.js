@@ -15,12 +15,18 @@ import {
   CardTitle,
   CardSubtitle,
   CardText,
+  Col,
   ButtonGroup,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
   Input,
   Form,
+  CardFooter,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 
 // core components
@@ -32,8 +38,16 @@ const SparePartsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [visible, setVisible] = useState(10);
+  const [faqCategory, setFaqCategory] = useState("");
+  const [query, setQuery] = useState("");
 
   const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  const showMoreItems = () => {
+    setVisible((prevValue) => prevValue + 3);
+  };
 
   // retrieve all spare parts from database
   useEffect(() => {
@@ -66,6 +80,41 @@ const SparePartsPage = () => {
                   <div className="col">
                     <h3 className="mb-0">All Spare Parts</h3>
                   </div>
+                  <Col xl = "3">
+                    <label
+                            className="form-control-label mr-2"
+                            htmlFor="input-email"
+                          >
+                            Sort By: 
+                          </label>
+                          <Dropdown
+                            isOpen={dropdownOpen}
+                            color="primary"
+                            toggle={toggle}
+                          >
+                            <DropdownToggle caret>
+                              {faqCategory ? faqCategory : "Select Category"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem
+                                value="Price Low to High"
+                                onClick={(e) => {
+                                  setFaqCategory(e.target.value);
+                                }}
+                              >
+                                Price Low to High
+                              </DropdownItem>
+                              <DropdownItem
+                                value="Price High to Low"
+                                onClick={(e) => {
+                                  setFaqCategory(e.target.value);
+                                }}
+                              >
+                                Price High to Low
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
+                  </Col>
                   <div className="col text-right">
                   {/* <Form className="mt-4 mb-3 d-md-none"> */}
                   <InputGroup className="input-group-rounded input-group-merge">
@@ -74,26 +123,33 @@ const SparePartsPage = () => {
                       className="form-control-rounded form-control-prepended"
                       placeholder="Search"
                       type="search"
+                      onChange={(e) => setQuery(e.target.value)}
                     />
-                    <InputGroupAddon addonType="prepend">
+                    {/* <InputGroupAddon addonType="prepend">
                     <InputGroupText>
                     <span className="fa fa-search" />
                     </InputGroupText>
-                    </InputGroupAddon>
+                    </InputGroupAddon> */}
                  </InputGroup>
                   {/* </Form> */}
                   </div>
                 </Row>
               </CardHeader>
-              <div className="pl-lg-6">
+              <div className="pl-lg-5">
                 <Row>
-                  {allSpareParts.slice(0, visible).map((sparePart, index) => (
+                  {allSpareParts
+                  .filter((sparePart) =>
+                  sparePart.sp_name
+                    ?.toLowerCase()
+                    .includes(query.toLowerCase())
+                  )
+                  .slice(0, visible).map((sparePart, index) => (
                     <Card
                       key={sparePart._id}
                       style={{
                         height: "30rem",
                         width: "20rem",
-                        borderRadius: "0.2rem",
+                        borderRadius: "2rem",
                         margin: "0.8rem",
                       }}
                     >
@@ -101,6 +157,7 @@ const SparePartsPage = () => {
                         height="200rem"
                         width="100%"
                         alt="Sample"
+                        style={{borderRadius:"2rem"}}
                         src={sparePart.sp_image}
                       />
                       <CardBody>
@@ -119,10 +176,9 @@ const SparePartsPage = () => {
 
                         <Row>
                           <Button
-                            block
                             color="warning"
-                            outline
                             type="button"
+                            style={{marginLeft: '3.3rem', width: '12rem'}}
                             onClick={() =>
                               navigate(
                                 `/admin/update-spare-part/${sparePart._id}`
@@ -137,6 +193,13 @@ const SparePartsPage = () => {
                   ))}
                 </Row>
               </div>
+              <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
+                {visible < allSpareParts.length && (
+                    <Button  color="info" size="sm" onClick={showMoreItems}>
+                      Load More
+                    </Button>
+                )}
+                </CardFooter>
             </Card>
           </div>
         </Row>
