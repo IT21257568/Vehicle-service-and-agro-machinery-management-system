@@ -56,11 +56,16 @@ import ApplyNow from "views/User/ApplyNow";
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
 
+
+//Janindu user views
+import CreateClientBooking from "views/User/BookingPage";
+
 // Pehesarani user views
 import AgroProductsPage from "views/User/AgroProductsPage";
 
 //nisa
 import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
+
 
 
 
@@ -417,6 +422,16 @@ const routes = [
     layout: "/user",
   },
 
+
+  //Janindu user views
+  {
+    path: "/create-client-booking",
+    name: "Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: CreateClientBooking,
+    layout: "/user",
+  },
+
   //User - Pehesarani Agro Products
   {
     path: "/agroProducts",
@@ -433,5 +448,6 @@ const routes = [
     component: ViewMeetTheTeam,
     layout: "/user",
   },
+
 ];
 export default routes;
