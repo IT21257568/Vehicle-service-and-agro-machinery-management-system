@@ -25,7 +25,9 @@ import Header from "components/Headers/Header.js";
 
 const CreateEmergencyIssue = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const toggle1 = () => setDropdownOpen1((prevState) => !prevState);
   const navigate = useNavigate();
 
   // form states
@@ -105,13 +107,13 @@ const CreateEmergencyIssue = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username"
+                            htmlFor="input-cname"
                           >
                             Customer Name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-username"
+                            id="input-cname"
                             placeholder="Enter Customer Name"
                             type="text"
                             onChange={(e) => {
@@ -163,13 +165,13 @@ const CreateEmergencyIssue = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username"
+                            htmlFor="cNIC"
                           >
                             Customer NIC
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-username"
+                            id="cNIC"
                             placeholder="Enter Customer NIC"
                             type="text"
                             onChange={(e) => {
@@ -182,13 +184,13 @@ const CreateEmergencyIssue = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username"
+                            htmlFor="cnumber"
                           >
                             Contact Number
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-username"
+                            id="cnumber"
                             placeholder="Enter Contact Number"
                             type="text"
                             onChange={(e) => {
@@ -203,13 +205,13 @@ const CreateEmergencyIssue = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username"
+                            htmlFor="clocation"
                           >
                             Current Location
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-username"
+                            id="clocation"
                             placeholder="Enter Current Location"
                             type="text"
                             onChange={(e) => {
@@ -222,14 +224,14 @@ const CreateEmergencyIssue = () => {
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
-                            htmlFor="input-email"
+                            htmlFor="availableTechnicians"
                           >
                             Available Technicians
                           </label>
                           <Dropdown
-                            isOpen={dropdownOpen}
+                            isOpen={dropdownOpen1}
                             color="primary"
-                            toggle={toggle}
+                            toggle={toggle1}
                           >
                             <DropdownToggle caret>
                               {issueStatus ? issueStatus : "Select a Technician"}
@@ -280,7 +282,47 @@ const CreateEmergencyIssue = () => {
                         </FormGroup>
                       </Col>
                     </Row>
-                    
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="cmaintenance"
+                          >
+                            Maintenance Fee
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="cmaintenance"
+                            placeholder="Enter Maintenance Fee"
+                            type="text"
+                            onChange={(e) => {
+                            setMaintenanceFee(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-towing "
+                          >
+                            Towing Fee
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-towing"
+                            placeholder="Enter towing Fee"
+                            type="text"
+                            onChange={(e) => {
+                              setTowingFee(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+
+                    </Row>
                   </div>
 
                   {/* Description */}
@@ -288,7 +330,7 @@ const CreateEmergencyIssue = () => {
                     <FormGroup>
                       <label
                         className="form-control-label"
-                        htmlFor="input-last-name"
+                        htmlFor="cdiscription"
                       >
                         Description
                       </label>
