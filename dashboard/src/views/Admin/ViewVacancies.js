@@ -35,10 +35,18 @@ import Header from "components/Headers/Header.js";
  //card
   function CardRequiremnts({ vacancyd, onClose }) {
     return (
-      <div className="card">
-        <div className="card-body">
+      <div Container>
+        <div><br></br>
           <h5 className="card-title">Requirements</h5>
-          <p className="card-text">{vacancyd}</p>
+          <Input
+            className="form-control-alternative"
+            placeholder="Requirmnets for the vacancy"
+            rows="4"
+            type="textarea"
+            readOnly
+            value={vacancyd}
+          />
+          <br></br>
           <Button size="sm" color="primary" onClick={onClose}>
             Close
           </Button>
