@@ -14,6 +14,7 @@ const damageValuationRoutes = require("./routes/damageValuation");
 const faqRoute = require("./routes/faqRoute");
 const cvSubmissionRoute = require("./routes/cvSubmissionRoute");
 const generalIssueRoutes = require("./routes/generalIssue");
+const emergencyIssueRoutes = require("./routes/emergencyIssue");
 // setup cors
 const cors = require("cors");
 
@@ -50,6 +51,7 @@ app.use("/api/progress", ProgressTrackingRoute);
 app.use("/api/damageValuation", damageValuationRoutes);
 //Piyumi
 app.use("/api/generalIssues", generalIssueRoutes);
+app.use("/api/emergencyIssues", emergencyIssueRoutes);
 
 //connect to db
 mongoose

@@ -23,8 +23,6 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-
-
 const CreateEmergencyIssue = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
@@ -36,9 +34,12 @@ const CreateEmergencyIssue = () => {
   const [customerNIC, setCustomerNIC] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [location, setLocation] = useState("");
-  const [gnDiscription, setGnDiscription] = useState("");
+  const [emDiscription, setEmDiscription] = useState("");
   const [issueStatus, setIssueStatus] = useState("");
   const [availableTechnicians, setAvailableTechnicians] = useState([]);
+  const [maintenanceFee, setMaintenanceFee] = useState("");
+  const [towingFee, setTowingFee] = useState("");
+  const [totalFee, setTotalFee] = useState("");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -51,9 +52,12 @@ const CreateEmergencyIssue = () => {
           customer_NIC: customerNIC,
           contact_number: contactNumber,
           c_location: location,
-          GN_discription: gnDiscription,
+          EM_discription: emDiscription,
           issue_status: issueStatus,
           available_Technicians: availableTechnicians,
+          maintenance_fee: maintenanceFee,
+          towing_fee: towingFee,
+          total_fee: totalFee,
         })
         .then((res) => {
           console.log("New emergency issue is added", res.data);
@@ -61,9 +65,12 @@ const CreateEmergencyIssue = () => {
           setCustomerNIC("");
           setContactNumber("");
           setLocation("");
-          setGnDiscription("");
+          setEmDiscription("");
           setIssueStatus("");
           setAvailableTechnicians("");
+          setMaintenanceFee("");
+          setTowingFee("");
+          setTotalFee("");
           setError(null);
           navigate("/admin/view-emergency-issues");
         });
@@ -152,45 +159,128 @@ const CreateEmergencyIssue = () => {
                       </Col>
                     </Row>
                     <Row>
-                        <Col lg="6">
-                            <FormGroup>
-                            <label
-                                className="form-control-label"
-                                htmlFor="input-username"
-                            >
-                                Customer NIC
-                            </label>
-                            <Input
-                                className="form-control-alternative"
-                                id="input-username"
-                                placeholder="Enter Customer NIC"
-                                type="text"
-                                onChange={(e) => {
-                                setCustomerNIC(e.target.value);
-                                }}
-                            />
-                            </FormGroup>
-                        </Col>
-                        <Col lg="6">
-                            <FormGroup>
-                            <label
-                                className="form-control-label"
-                                htmlFor="input-username"
-                            >
-                                Contact Number
-                            </label>
-                            <Input
-                                className="form-control-alternative"
-                                id="input-username"
-                                placeholder="Enter Contact Number"
-                                type="text"
-                                onChange={(e) => {
-                                setContactNumber(e.target.value);
-                                }}
-                            />
-                            </FormGroup>
-                        </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-username"
+                          >
+                            Customer NIC
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-username"
+                            placeholder="Enter Customer NIC"
+                            type="text"
+                            onChange={(e) => {
+                              setCustomerNIC(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-username"
+                          >
+                            Contact Number
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-username"
+                            placeholder="Enter Contact Number"
+                            type="text"
+                            onChange={(e) => {
+                              setContactNumber(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
                     </Row>
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-username"
+                          >
+                            Current Location
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-username"
+                            placeholder="Enter Current Location"
+                            type="text"
+                            onChange={(e) => {
+                              setLocation(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Available Technicians
+                          </label>
+                          <Dropdown
+                            isOpen={dropdownOpen}
+                            color="primary"
+                            toggle={toggle}
+                          >
+                            <DropdownToggle caret>
+                              {issueStatus ? issueStatus : "Select a Technician"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem
+                                value="A.N. Silva"
+                                onClick={(e) => {
+                                  setAvailableTechnicians(e.target.value);
+                                }}
+                              >
+                                A.N. Silva
+                              </DropdownItem>
+                              <DropdownItem
+                                value="K. Jayawardana"
+                                onClick={(e) => {
+                                  setIssueStatus(e.target.value);
+                                }}
+                              >
+                                K. Jayawardana
+                              </DropdownItem>
+                              <DropdownItem
+                                value="H.B. Bandara"
+                                onClick={(e) => {
+                                  setIssueStatus(e.target.value);
+                                }}
+                              >
+                                H.B. Bandara
+                              </DropdownItem>
+                              <DropdownItem
+                                value="R.S Perera"
+                                onClick={(e) => {
+                                  setIssueStatus(e.target.value);
+                                }}
+                              >
+                                R.S Perera
+                              </DropdownItem>
+                              <DropdownItem
+                                value="I.M. Gunapala"
+                                onClick={(e) => {
+                                  setIssueStatus(e.target.value);
+                                }}
+                              >
+                                I.M. Gunapala
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    
                   </div>
 
                   {/* Description */}
@@ -208,7 +298,7 @@ const CreateEmergencyIssue = () => {
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
-                          setGnDiscription(e.target.value);
+                          setEmDiscription(e.target.value);
                         }}
                       />
                     </FormGroup>
