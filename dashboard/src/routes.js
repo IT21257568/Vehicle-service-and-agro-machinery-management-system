@@ -76,6 +76,9 @@ import OrderAgroProduct from "views/User/OrderAgroProduct";
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
 
+//home page
+import Home from "./views/User/HomePage";
+
 
 const routes = [
   {
@@ -478,6 +481,14 @@ const routes = [
     name: "Dummy Page",
     icon: "ni ni-ruler-pencil text-green",
     component: DummyPage,
+    layout: "/user",
+  },
+  //home view
+  {
+    path: "/home-page",
+    name: " ",
+    icon: "ni ni-ruler-pencil text-green",
+    component: Home,
     layout: "/user",
   },
 

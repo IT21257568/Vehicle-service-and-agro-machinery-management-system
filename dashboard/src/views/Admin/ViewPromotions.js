@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 // reactstrap components
 import {
@@ -32,7 +34,6 @@ import {
   CardGroup,
   CardImg,
   CardImgOverlay,
-  
 } from "reactstrap";
 
 // core components
@@ -77,16 +78,52 @@ const ViewPromotions = () => {
     });
   };
 
+  const generateReport = () => {
+    const doc = new jsPDF();
+    const columns = [
+      "Promotion title",
+      "Promo Code",
+      "Discount",
+      "Start date",
+      "End date",
+    ];
+    const rows = allPromotions.map(
+      ({
+        promo_title,
+        promo_code,
+        promo_discount,
+        promo_startDate,
+        promo_endDate,
+      }) => [
+        promo_title,
+        promo_code,
+        promo_discount,
+        promo_startDate,
+        promo_endDate,
+      ]
+    );
+
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
+
+    doc.save("report.pdf");
+  };
+
   return (
     <>
-      <Header/>
+      <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Light Table */}
         <Row>
           <div className="col">
             <Card className="shadow" color="lighter">
-              <CardHeader className="border-0" style={{marginBottom: '1.8rem'}}>
+              <CardHeader
+                className="border-0"
+                style={{ marginBottom: "1.8rem" }}
+              >
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Promotions</h3>
@@ -94,8 +131,9 @@ const ViewPromotions = () => {
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
-                      color="success"
+                      
                       type="button"
+                      style={{marginLeft:'25rem', width: '12rem', color:'#ffa500'}}
                       onClick={() => navigate("/admin/create-promotion")}
                     >
                       <span
@@ -107,57 +145,65 @@ const ViewPromotions = () => {
                       <span className="btn-inner--text">Add Promotion</span>
                     </Button>
                   </div>
+                  <div className="col text-right">
+                    <Button
+                      className="btn-icon btn-3"
+                      style={{color: 'teal'}}
+                      type="button"
+                      onClick={generateReport}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-planet" />
+                      </span>
+                      <span className="btn-inner--text">Generate Report</span>
+                    </Button>
+                  </div>
                 </Row>
               </CardHeader>
 
               <Container>
                 <Row>
                   {allPromotions.slice(0, visible).map((promotion, index) => (
-                  
-                  <Card key={promotion._id}
-                    
-                    style={{
-                      width: '22rem',
-                      borderRadius:'1.5rem',
-                      margin: '0.8rem'
-                      
-                    }}
-                    
-                  >
-                    <CardImg
-                      width="100%"
-                      alt="Sample"
-                      height="250rem"
-                      style={{borderTopLeftRadius: '1.5rem', borderTopRightRadius: '1.5rem'}}
-                      src={promotion.promo_picture_url}
-                    />
-                    <CardBody>
-                      <CardTitle tag="h2" style={{fontSize: '24px'}}>
-                        {promotion.promo_title}
-                      </CardTitle>
-                      <CardSubtitle
-                        className="mb-2 text-muted"
-                        tag="h3"
-                      >
-                        {promotion.promo_discount}% Off
-                      </CardSubtitle>
-                      <CardText>
-                        {promotion.promo_description}
-                      </CardText>
-                      <CardSubtitle
-                        className="mb-2 text-muted"
-                        tag="h4"
-                      >
-                        Offer ends on {promotion.promo_endDate}
-                      </CardSubtitle>
+                    <Card
+                      key={promotion._id}
+                      style={{
+                        width: "22rem",
+                        borderRadius: "1.5rem",
+                        margin: "0.8rem",
+                      }}
+                    >
+                      <CardImg
+                        width="100%"
+                        alt="Sample"
+                        height="250rem"
+                        style={{
+                          borderTopLeftRadius: "1.5rem",
+                          borderTopRightRadius: "1.5rem",
+                        }}
+                        src={promotion.promo_picture_url}
+                      />
+                      <CardBody>
+                        <CardTitle tag="h2" style={{ fontSize: "24px" }}>
+                          {promotion.promo_title}
+                        </CardTitle>
+                        <CardSubtitle className="mb-2 text-muted" tag="h3">
+                          {promotion.promo_discount}% Off
+                        </CardSubtitle>
+                        <CardText>{promotion.promo_description}</CardText>
+                        <CardSubtitle className="mb-2 text-muted" tag="h4">
+                          Offer ends on {promotion.promo_endDate}
+                        </CardSubtitle>
 
-                      <Button
+                        <Button
                           size="sm"
                           color="warning"
                           onClick={() =>
-                            navigate(`/admin/update-promotion/${promotion._id}`)}
-                         
-                      >
+                            navigate(`/admin/update-promotion/${promotion._id}`)
+                          }
+                        >
                           Update
                         </Button>
                         <Button
@@ -168,23 +214,18 @@ const ViewPromotions = () => {
                           Delete
                         </Button>
                       </CardBody>
-                  </Card>
-                 
-                ))}
+                    </Card>
+                  ))}
 
-                {visible < allPromotions.length && (
+                  {visible < allPromotions.length && (
                     <Button color="secondary" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
-                )}
+                  )}
                 </Row>
               </Container>
-              
-               
-             
-                
-              
-              <CardFooter className="py-4" style={{marginTop: '1.8rem'}}>
+
+              <CardFooter className="py-4" style={{ marginTop: "1.8rem" }}>
                 <nav aria-label="...">
                   <Pagination
                     className="pagination justify-content-end mb-0"
@@ -225,10 +266,7 @@ const ViewPromotions = () => {
                       </PaginationLink>
                     </PaginationItem>
                     <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={showMoreItems}
-                      >
+                      <PaginationLink href="#pablo" onClick={showMoreItems}>
                         <i className="fas fa-angle-right" />
                         <span className="sr-only">Next</span>
                       </PaginationLink>
