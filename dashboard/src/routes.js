@@ -56,6 +56,9 @@ import ApplyNow from "views/User/ApplyNow";
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
 
+//Janindu user views
+import CreateClientBooking from "views/User/BookingPage";
+
 
 
 const routes = [
@@ -408,6 +411,15 @@ const routes = [
     name: "FAQs",
     icon: "ni ni-notification-70 text-orange",
     component: FAQs,
+    layout: "/user",
+  },
+
+  //Janindu user views
+  {
+    path: "/create-client-booking",
+    name: "Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: CreateClientBooking,
     layout: "/user",
   }
 ];
