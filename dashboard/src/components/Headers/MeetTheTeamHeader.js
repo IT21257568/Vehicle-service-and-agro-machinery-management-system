@@ -13,6 +13,7 @@ const MeetTheTeamHeader = () => {
             ")",
           backgroundSize: "cover",
           backgroundPosition: "center top",
+         
         }}
       >
         {/* Mask */}

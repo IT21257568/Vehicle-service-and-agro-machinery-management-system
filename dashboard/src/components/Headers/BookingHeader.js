@@ -8,9 +8,9 @@ const BookingHeader = () => {
         style={{
           minHeight: "500px",
           backgroundImage:
-            "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
+            "url(" + require("../../assets/img/theme/car-service-online.jpg") + ")",
+          backgroundSize: "100% 115%",
+          //backgroundPosition: "center top",
         }}
       >
         {/* Mask */}
