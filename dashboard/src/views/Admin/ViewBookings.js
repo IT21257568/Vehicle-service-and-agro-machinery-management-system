@@ -77,6 +77,7 @@ const ViewBookings = () => {
     });
   };
 
+
   const generateReport = () => {
 
     const doc = new jsPDF();

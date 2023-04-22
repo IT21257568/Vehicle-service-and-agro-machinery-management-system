@@ -43,7 +43,7 @@ const createBooking = async(req, res) => {
     if(!email){
         emptyFields.push('Email');
     } else {
-        // Email validation
+        // Email validation // abc   @ gmail  .com
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
           emptyFields.push("Invalid Email Address");
@@ -52,7 +52,10 @@ const createBooking = async(req, res) => {
     if(!date_time){
         emptyFields.push('Date & time');
     }
-    if(phone.length>10){
+    if(!phone){
+        emptyFields.push('Phone Number');
+    }
+    else if(phone.length>10 || phone.length<10){
         emptyFields.push('Invalid Contact Number');
     }
     if(!special_note){
