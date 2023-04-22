@@ -8,8 +8,8 @@ const ProgressStatusHeader = () => {
         style={{
           minHeight: "400px",
           backgroundImage:
-            "url(" + require("../../assets/img/theme/progresstrack.jpeg") + ")",
-            backgroundSize: "100% 95%",
+            "url(" + require("../../assets/img/theme/progress_track.jpg") + ")",
+            backgroundSize: "100% 114%",
 
         }}
       >
