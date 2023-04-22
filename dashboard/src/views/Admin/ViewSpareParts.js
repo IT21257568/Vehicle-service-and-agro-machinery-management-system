@@ -151,7 +151,7 @@ const ViewSpareParts = () => {
                     <CardImg
                       height= '200rem'
                       width="100%"
-                      borderRadius= '2rem'
+                      style={{borderRadius:"2rem"}}
                       alt="Sample"
                       src={sparePart.sp_image}
                     />
