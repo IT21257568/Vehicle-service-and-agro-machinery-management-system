@@ -66,7 +66,11 @@ import AgroProductsPage from "views/User/AgroProductsPage";
 //nisa
 import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
 
+//Pehesarani admin views
+import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
 
+//Pehesarani user views
+import OrderAgroProduct from "views/User/OrderAgroProduct";
 
 
 const routes = [
@@ -77,34 +81,34 @@ const routes = [
     component: Index,
     layout: "/admin",
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
-    layout: "/admin",
-  },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "ni ni-planet text-blue",
+  //   component: Icons,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   component: Maps,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/user-profile",
+  //   name: "User Profile",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   component: Profile,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/tables",
+  //   name: "Tables",
+  //   icon: "ni ni-bullet-list-67 text-red",
+  //   component: Tables,
+  //   layout: "/admin",
+  // },
   {
     path: "/login",
     name: "Login",
@@ -449,5 +453,21 @@ const routes = [
     layout: "/user",
   },
 
+  //Pehesarani - Admin - View Agro Products orders
+  {
+    path: "/agro-products-orders",
+    name: "Agro Product Orders",
+    icon: "ni ni-settings text-blue",
+    component: ViewOrderAgroProducts,
+    layout: "/admin",
+  },
+  //User - Pehesarani Agro Products
+  {
+    path: "/order-agro-product/:id",
+    name: "Order Agro Product",
+    icon: "ni ni-ruler-pencil text-green",
+    component: OrderAgroProduct,
+    layout: "/user",
+  },
 ];
 export default routes;
