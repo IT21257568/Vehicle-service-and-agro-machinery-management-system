@@ -6,11 +6,11 @@ const ProgressStatusHeader = () => {
       <div
         className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
-          minHeight: "500px",
+          minHeight: "400px",
           backgroundImage:
-            "url(" + require("../../assets/img/theme/progress-tarcking.jpg") + ")",
-          backgroundSize: "contain",
-          
+            "url(" + require("../../assets/img/theme/progresstrack.jpeg") + ")",
+            backgroundSize: "100% 95%",
+
         }}
       >
         {/* Mask */}
