@@ -303,7 +303,7 @@ const CreateVacancy = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/vacancies");
+                        navigate("/admin/technicians");
                       }}
                     >
                       Cancel
