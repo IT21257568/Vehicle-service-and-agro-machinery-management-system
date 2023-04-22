@@ -38,7 +38,7 @@ const mongoose = require('mongoose');
             emptyFields.push('Customer NIC');
         } else {
             if (!customer_id || !/^(\d{9})[vV]$|^\d{12}$/.test(customer_id)) {
-            emptyFields.push('Customer ID should be like 6536004v or 200120103936');
+            emptyFields.push('Customer ID should be like XXXXXX784v or XXXXXXXXX8547');
             }
         }
         if (!customer_name) {
