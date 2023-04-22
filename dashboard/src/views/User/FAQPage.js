@@ -4,6 +4,7 @@ import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Accordion } from "react-bootstrap-accordion";
 import "react-bootstrap-accordion/dist/index.css";
+import NavbarWh from "components/Navbars/NavbarWh.js";
 // reactstrap components
 import {
   //Badge,
@@ -133,6 +134,7 @@ const FAQs = () => {
   return (
     <>
       <FAQHeader />
+      
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Light Table */}
