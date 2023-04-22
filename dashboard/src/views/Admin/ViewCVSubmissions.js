@@ -65,10 +65,7 @@ const ViewCVSubmissions = () => {
         const res = await axios.get("/api/cvSub");
         setAllSubmissions(res.data);
 
-        /* // fetch all vacancies
-        const response = await fetch("/api/cvSub");
-        const data = await response.json();
-        setSubmissions(data); */
+        
 
         setIsLoading(false);
       } catch (err) {
@@ -155,20 +152,7 @@ const ViewCVSubmissions = () => {
                   </Col>
 
                   <div className="col text-right">
-                    {/* <Button
-                      className="btn-icon btn-3"
-                      color="success"
-                      type="button"
-                      onClick={fetchBookings}
-                    >
-                      <span
-                        className="btn-inner--icon"
-                        style={{ width: "20px" }}
-                      >
-                        <i className="ni ni-planet" />
-                      </span>
-                      <span className="btn-inner--text">Fetch Bookings</span>
-                    </Button> */}
+                   
                     <Button
                       className="btn-icon btn-3"
                       color="success"
