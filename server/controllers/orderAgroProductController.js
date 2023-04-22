@@ -49,15 +49,19 @@ const createOrderAgroProduct = async (req, res) => {
     }
     if (!customer_email) {
         emptyFields.push("Customer Email");
-    }else {
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(customer_email)) {
-          emptyFields.push("Invalid Email Address");
-        }
     }
+    // }else {
+    //     // Email validation
+    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //     if (!emailRegex.test(customer_email)) {
+    //       emptyFields.push("Invalid Email Address");
+    //     }
+    // }
     if (!customer_address) {
         emptyFields.push("Customer Address");
+    }
+    if (!p_name) {
+        emptyFields.push("Product Name");
     }
     if (emptyFields.length > 0) {
         return res
@@ -75,7 +79,7 @@ const createOrderAgroProduct = async (req, res) => {
             customer_note,
             p_name,
         });
-        res.status(200).json(orderAgroProduct);
+        res.status(200).json({orderAgroProduct});
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

@@ -62,6 +62,8 @@ import AgroProductsPage from "views/User/AgroProductsPage";
 //nisa
 import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
 
+//Pehesarani admin views
+import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
 
 
 const routes = [
@@ -432,6 +434,14 @@ const routes = [
     icon: "ni ni-notification-70 text-pink",
     component: ViewMeetTheTeam,
     layout: "/user",
+  },
+  //Pehesarani - Admin - View Agro Products orders
+  {
+    path: "/agro-products-orders",
+    name: "Agro Product Orders",
+    icon: "ni ni-settings text-blue",
+    component: ViewOrderAgroProducts,
+    layout: "/admin",
   },
 ];
 export default routes;
