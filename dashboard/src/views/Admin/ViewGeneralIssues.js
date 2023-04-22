@@ -21,9 +21,14 @@ import {
   Table,
   Container,
   Row,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input,
   UncontrolledTooltip,
   Button,
   Chip,
+  Col,
 } from "reactstrap";
 
 // core components
@@ -49,6 +54,7 @@ const ViewGeneralIssues = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showCard, setShowCard] = useState(false);
+  const [query, setQuery] = useState("");
 
   function handleViewClick() {
     console.log("View button clicked");
@@ -108,6 +114,17 @@ const ViewGeneralIssues = () => {
                   <div className="col">
                     <h3 className="mb-0">All General Issues</h3>
                   </div>
+                  <Col xl="3">
+                    <InputGroup className="input-group-rounded input-group-merge">
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                    </InputGroup>
+                  </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
@@ -144,6 +161,15 @@ const ViewGeneralIssues = () => {
                     </tr>
                   )}
                   {allGeneralIssues
+                    .filter(
+                      (generalIssue) =>
+                      generalIssue.customer_NIC
+                          ?.toString()
+                          .includes(query.toString()) ||
+                        generalIssue.customer_name
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
+                    )
                     .slice(0, visible)
                     .map((generalIssue, index) => (
                       <tr key={generalIssue._id}>

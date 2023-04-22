@@ -387,7 +387,7 @@ const routes = [
   {
     path: "/create-general-issue",
     name: "Create General Issue",
-    icon: "ni ni-notification-70 text-pink",
+    icon: "ni ni-single-copy-04 text-green",
     component: CreateGeneralIssue,
     layout: "/admin",
   },
@@ -401,7 +401,7 @@ const routes = [
   {
     path: "/update-general-issues/:id",
     name: "Update General Issue",
-    icon: "ni ni-notification-70 text-pink",
+    icon: "ni ni-ruler-pencil text-purple",
     component: UpdateGeneralIssue,
     layout: "/admin",
   },
