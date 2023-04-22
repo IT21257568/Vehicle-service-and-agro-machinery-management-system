@@ -121,7 +121,7 @@ const SparePartsPage = () => {
                     <Input
                       aria-label="Search"
                       className="form-control-rounded form-control-prepended"
-                      placeholder="Search"
+                      placeholder="Search by Spare Part Name"
                       type="search"
                       onChange={(e) => setQuery(e.target.value)}
                     />
@@ -135,8 +135,9 @@ const SparePartsPage = () => {
                   </div>
                 </Row>
               </CardHeader>
-              <div className="pl-lg-5">
-                <Row>
+              <container>
+              {/* <div className="pl-lg-5"> */}
+                <Row style={{ marginTop: "0.5rem" }}>
                   {allSpareParts
                   .filter((sparePart) =>
                   sparePart.sp_name
@@ -192,7 +193,8 @@ const SparePartsPage = () => {
                     </Card>
                   ))}
                 </Row>
-              </div>
+              {/* </div> */}
+              </container>
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
                 {visible < allSpareParts.length && (
                     <Button  color="info" size="sm" onClick={showMoreItems}>
