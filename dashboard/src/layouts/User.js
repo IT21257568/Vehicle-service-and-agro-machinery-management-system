@@ -53,8 +53,9 @@ const User = () => {
         {/* <Outlet /> */}
         {/* <Outlet /> */}
         <Container fluid>
-          <FooterWH />
+          
         </Container>
+        <FooterWH />
       </div>
     </>
   );
