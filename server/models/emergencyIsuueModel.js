@@ -20,7 +20,7 @@ const emergencyIssueSchema = new Schema({
     },
     c_location: {
         type: String,
-        required: [true, "Please add the contact number"],
+        required: [true, "Please add the current location"],
 
     },
     EM_discription: {
@@ -35,12 +35,12 @@ const emergencyIssueSchema = new Schema({
     },
     available_emp: {
         type: String,
-        required: [true, "Please add the issue status"],
+        required: [true, "Please select the available employee"],
 
     },
     maintenance_fee: {
         type: Number,
-        required: [true, "Please add the issue status"],
+        required: [true, "Please add the maintenance fee"],
 
     },
     towing_fee: {
@@ -49,7 +49,7 @@ const emergencyIssueSchema = new Schema({
     },
     total_fee: {
         type: Number,
-        required: [true, "Please add the issue status"],
+        required: [true, "Please add the total fee"],
 
     },
 
