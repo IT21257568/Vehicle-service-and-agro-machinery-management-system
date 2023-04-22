@@ -21,7 +21,9 @@ import {
   //Table,
   Container,
   Row,
-  //Col,
+  Col,
+  Input,
+  InputGroup,
   //UncontrolledTooltip,
   Button,
   //Chip,
@@ -43,6 +45,7 @@ const ViewSpareParts = () => {
   const [allSpareParts, setAllSpareParts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
 
   // set visible rows
   const [visible, setVisible] = useState(3);
@@ -91,6 +94,22 @@ const ViewSpareParts = () => {
                   <div className="col">
                     <h3 className="mb-0">All Spare Parts</h3>
                   </div>
+                  <Col xl = "3">
+                    <InputGroup className="input-group-rounded input-group-merge">
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                      {/* <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                      <span className="fa fa-search" />
+                      </InputGroupText>
+                      </InputGroupAddon> */}
+                  </InputGroup>
+                  </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
@@ -112,14 +131,20 @@ const ViewSpareParts = () => {
 
               <Container>
                 <Row>
-                  {allSpareParts.slice(0, visible).map((sparePart, index) => (
+                  {allSpareParts
+                   .filter((sparePart) =>
+                   sparePart.sp_name
+                     ?.toLowerCase()
+                     .includes(query.toLowerCase())
+                   )
+                  .slice(0, visible).map((sparePart, index) => (
                   
                   <Card key={sparePart._id}
                     
                     style={{
                       height: '30rem',
                       width: '20rem',
-                      borderRadius:'0.2rem',
+                      borderRadius:'2rem',
                       margin: '0.8rem'
                       
                     }} >
