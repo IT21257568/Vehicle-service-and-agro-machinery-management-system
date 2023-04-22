@@ -22,7 +22,17 @@ import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 const Header = () => {
   return (
     <>
-      <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
+      <div
+        className="header pb-8 pt-5 pt-md-8"
+        style={{
+          minHeight: "500px",
+          backgroundImage:
+            "url(" +
+            require("../../assets/img/theme/wheelmasterImg1.jpg") +
+            ")",
+          backgroundSize: "100% 110%",
+        }}
+      >
         <Container fluid>
           <div className="header-body">
             {/* Card stats */}
@@ -38,9 +48,7 @@ const Header = () => {
                         >
                           Bookings
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">
-                          625
-                        </span>
+                        <span className="h2 font-weight-bold mb-0">625</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
