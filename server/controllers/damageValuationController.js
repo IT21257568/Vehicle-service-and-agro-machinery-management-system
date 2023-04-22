@@ -35,9 +35,9 @@ const mongoose = require('mongoose');
     
         //validation for empty fields
         if (!customer_id) {
-            emptyFields.push('Customer ID');
+            emptyFields.push('Customer NIC');
         } else {
-            if (!customer_id || !/^(\d{7})[vV]$|^\d{12}$/.test(customer_id)) {
+            if (!customer_id || !/^(\d{9})[vV]$|^\d{12}$/.test(customer_id)) {
             emptyFields.push('Customer ID should be like 6536004v or 200120103936');
             }
         }
@@ -52,7 +52,7 @@ const mongoose = require('mongoose');
             }
         }
         if (!vehicle_Model) {
-            emptyFields.push('Vehicle Model');
+            emptyFields.push('Vehicle Type');
         }
         if (!customer_email) {
             emptyFields.push('Customer Email');
