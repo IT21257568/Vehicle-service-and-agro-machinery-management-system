@@ -48,7 +48,7 @@ import { Accordion } from 'react-bootstrap-accordion';
 import 'react-bootstrap-accordion/dist/index.css';
 // core components
 import Header from "components/Headers/Header.js";
-
+import Footer from "components/Footers/AdminFooter";
 
 
 
@@ -121,7 +121,7 @@ const ViewFAQs = () => {
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
-                      color="success"
+                      style={{backgroundColor: '#ffa500'}}
                       type="button"
                       onClick={() => navigate("/admin/create-faq")}
                     >
@@ -151,7 +151,7 @@ const ViewFAQs = () => {
                   <Row style={{marginTop: '1rem'}}>
                       <Button style={{marginLeft: '0.8rem', marginRight: '1rem'}}
                           size="sm"
-                          color="warning"
+                          color="info"
                           onClick={() =>
                             navigate(`/admin/update-faq/${faq._id}`)}
                          
@@ -179,7 +179,7 @@ const ViewFAQs = () => {
                   <Button color="info" size="sm" onClick={showMoreItems}>
                     Load More
                   </Button>
-                )}
+              )}
               </CardFooter>
             </Card>
           </div>
