@@ -103,8 +103,6 @@ const Promotions = () => {
     fetchAllPromotions();
   }, []);
 
-  
-
   return (
     <>
       <PromotionHeader />
@@ -126,49 +124,38 @@ const Promotions = () => {
                 </Row>
               </CardHeader>
               <Container>
-                <Row style={{marginTop: '0.5rem'}}>
+                <Row style={{ marginTop: "0.5rem" }}>
                   {allPromotions.slice(0, visible).map((promotion, index) => (
-                    <Card key={promotion._id}
-                    
-                    style={{
-                      width: '22rem',
-                      borderRadius:'0.2rem',
-                      margin: '0.8rem'
-                      
-                    }}
-                    
-                  >
-                    <CardImg
-                      width="100%"
-                      alt="Sample"
-                      height="250rem"
-                      src={promotion.promo_picture_url}
-                    />
-                    <CardBody>
-                      <CardTitle tag="h2" style={{fontSize: '24px'}}>
-                      
-                        {promotion.promo_title}
-                        
-                      </CardTitle>
-                      <CardSubtitle
-                        className="mb-2 text-muted"
-                        tag="h3"
-                      ><strong>
-                        {promotion.promo_discount}% Off
-                        </strong>
-                      </CardSubtitle>
-                      <CardText>
-                        {promotion.promo_description}
-                      </CardText>
-                      <CardSubtitle
-                        className="mb-2 text-muted"
-                        tag="h4"
-                      > <strong>
-                        Offer ends on {promotion.promo_endDate}
-                        </strong>
-                      </CardSubtitle>
-                    </CardBody>
-                  </Card>
+                    <Card
+                      key={promotion._id}
+                      style={{
+                        width: "22rem",
+                        borderRadius: "0.2rem",
+                        margin: "0.8rem",
+                      }}
+                    >
+                      <CardImg
+                        width="100%"
+                        alt="Sample"
+                        height="250rem"
+                        src={promotion.promo_picture_url}
+                      />
+                      <CardBody>
+                        <CardTitle tag="h2" style={{ fontSize: "24px" }}>
+                          {promotion.promo_title}
+                        </CardTitle>
+                        <CardSubtitle className="mb-2 text-muted" tag="h3">
+                          <strong>{promotion.promo_discount}% Off</strong>
+                        </CardSubtitle>
+                        <CardText>{promotion.promo_description}</CardText>
+                        <CardSubtitle className="mb-2 text-muted" tag="h4">
+                          {" "}
+                          <strong>
+                            Offer ends on {promotion.promo_endDate}
+                          </strong>
+                        </CardSubtitle>
+                      </CardBody>
+                    </Card>
                   ))}
                 </Row>
               </Container>
