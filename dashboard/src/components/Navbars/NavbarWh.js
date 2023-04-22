@@ -20,7 +20,7 @@ const NavbarWh = () => {
         <Container className="px-4">
           <NavbarBrand to="/" tag={Link}>
             <img
-              style={{ width: "15rem", height: "5rem" }}
+              style={{ width: "15rem", height: "5rem", marginLeft: "-8rem", marginTop:'-0.8rem'}}
               alt="..."
               src={require("../../assets/img/brand/WLpy.png")}
             />
@@ -49,9 +49,19 @@ const NavbarWh = () => {
             </div>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink className="nav-link-icon" to="/" tag={Link}>
+                <NavLink className="nav-link-icon" to="#" tag={Link}>
                   <i className="ni ni-planet" />
-                  <span className="nav-link-inner--text">Home</span>
+                  <span style={{color:'#e9ecef'}} className="nav-link-inner--text">Home</span>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className="nav-link-icon"
+                  to="/user/agroProducts"
+                  tag={Link}
+                >
+                  <i className="ni ni-circle-08" />
+                  <span style={{color:'#e9ecef'}} className="nav-link-inner--text">Agro products</span>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -61,23 +71,13 @@ const NavbarWh = () => {
                   tag={Link}
                 >
                   <i className="ni ni-circle-08" />
-                  <span className="nav-link-inner--text">Agro products</span>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className="nav-link-icon"
-                  to="/auth/register"
-                  tag={Link}
-                >
-                  <i className="ni ni-circle-08" />
-                  <span className="nav-link-inner--text">Vehicle products</span>
+                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Vehicle products</span>
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink className="nav-link-icon" to="/auth/login" tag={Link}>
                   <i className="ni ni-key-25" />
-                  <span className="nav-link-inner--text">Contact us</span>
+                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Contact us</span>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -87,7 +87,7 @@ const NavbarWh = () => {
                   tag={Link}
                 >
                   <i className="ni ni-single-02" />
-                  <span className="nav-link-inner--text">Profile</span>
+                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Profile</span>
                 </NavLink>
               </NavItem>
             </Nav>
