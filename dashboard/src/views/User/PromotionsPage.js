@@ -130,7 +130,7 @@ const Promotions = () => {
                       key={promotion._id}
                       style={{
                         width: "22rem",
-                        borderRadius: "0.2rem",
+                        borderRadius: "1.5rem",
                         margin: "0.8rem",
                       }}
                     >
@@ -138,6 +138,7 @@ const Promotions = () => {
                         width="100%"
                         alt="Sample"
                         height="250rem"
+                        style={{borderTopLeftRadius: '1.5rem', borderTopRightRadius: '1.5rem'}}
                         src={promotion.promo_picture_url}
                       />
                       <CardBody>

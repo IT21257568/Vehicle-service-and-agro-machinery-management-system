@@ -8,9 +8,9 @@ const FAQHeader = () => {
         style={{
           minHeight: "500px",
           backgroundImage:
-            "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
+            "url(" + require("../../assets/img/theme/FAQImage.jpg") + ")",
+          backgroundSize: "100% 110%",
+          
         }}
       >
         {/* Mask */}
@@ -19,9 +19,9 @@ const FAQHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Explore FAQ Section</h1>
-              <p className="text-white mt-0 mb-5">
-                Find solutions for your issues .....
+              <h1 className="display-2 text-white" style={{width: '35rem'}}>We guide you through all your concerns</h1>
+              <p className="text-white mt-0 mb-5" style={{width: '25rem'}}>
+                Explore the FAQ section to easily find solutions for your questions . . . 
               </p>
             </Col>
           </Row>

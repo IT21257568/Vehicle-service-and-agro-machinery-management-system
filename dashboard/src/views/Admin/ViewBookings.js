@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 // reactstrap components
 import {
   Badge,
@@ -39,6 +42,7 @@ const ViewBookings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
+  const [bookings, setBookings] = useState([]);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -73,6 +77,56 @@ const ViewBookings = () => {
     });
   };
 
+  const fetchBookings = async () => {
+    const response = await fetch("/api/bookings");
+    const data = await response.json();
+    setBookings(data);
+  };
+
+  const generateReport = () => {
+    if (bookings.length === 0) {
+      alert("Please fetch booking before generating the report");
+      return;
+    }
+
+    const doc = new jsPDF();
+    const columns = [
+      "Client Name",
+      "Service Type",
+      "Location",
+      "Phone",
+      "Email",
+      "Date Time",
+      "Special Note",
+    ];
+    const rows = bookings.map(
+      ({
+        client_name,
+        service_type,
+        location,
+        phone,
+        email,
+        date_time,
+        special_note,
+      }) => [
+        client_name,
+        service_type,
+        location,
+        phone,
+        email,
+        date_time,
+        special_note,
+      ]
+    );
+
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
+
+    doc.save("report.pdf");
+  };
+
   return (
     <>
       <Header />
@@ -87,26 +141,26 @@ const ViewBookings = () => {
                   <div className="col">
                     <h3 className="mb-0">All Bookings</h3>
                     <InputGroup className="input-group-rounded input-group-merge">
-                    <Input
-                      aria-label="Search"
-                      className="form-control-rounded form-control-prepended"
-                      placeholder="Search"
-                      type="search"
-                      onChange={(e) => setQuery(e.target.value)}
-                    />
-                    <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                    <span className="fa fa-search" />
-                    </InputGroupText>
-                    </InputGroupAddon>
-                 </InputGroup>
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <span className="fa fa-search" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                    </InputGroup>
                   </div>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={() => navigate("/admin/create-bookings")}
+                      onClick={fetchBookings}
                     >
                       <span
                         className="btn-inner--icon"
@@ -114,11 +168,26 @@ const ViewBookings = () => {
                       >
                         <i className="ni ni-planet" />
                       </span>
-                      <span className="btn-inner--text">Add</span>
+                      <span className="btn-inner--text">Fetch Bookings</span>
+                    </Button>
+                    <Button
+                      className="btn-icon btn-3"
+                      color="success"
+                      type="button"
+                      onClick={generateReport}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-planet" />
+                      </span>
+                      <span className="btn-inner--text">Generate Report</span>
                     </Button>
                   </div>
                 </Row>
               </CardHeader>
+
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>

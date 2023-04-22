@@ -46,6 +46,8 @@
     "classnames": "2.3.1",
     "dotenv": "^16.0.3",
     "googleapis": "^105.0.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.28",
     "moment": "2.29.4",
     "nouislider": "15.2.0",
     "pdfkit": "^0.13.0",
