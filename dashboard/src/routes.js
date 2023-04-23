@@ -40,6 +40,7 @@ import ViewGeneralIssues from "views/Admin/ViewGeneralIssues";
 import UpdateGeneralIssue from "views/Admin/UpdateGeneralIssues";
 import CreateEmergencyIssue from "views/Admin/CreateEmergencyIssues";
 import ViewRepairJobImage from "views/Admin/ViewRepairJobImage";
+import UpdateEmergencyIssue from "views/Admin/UpdateEmergencyIssues";
 
 import CreateFAQ from "views/Admin/CreateFAQ";
 import ViewFAQs from "views/Admin/ViewFAQs";

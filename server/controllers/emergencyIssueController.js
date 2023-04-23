@@ -62,7 +62,7 @@ const mongoose = require('mongoose');
             emptyFields.push('Issue Status');
         }
         if (!available_emp) {
-            emptyFields.push('Available Employees');
+            emptyFields.push('Available Technicians');
         }
         if (!maintenance_fee) {
             emptyFields.push('Maintenance Fee');
