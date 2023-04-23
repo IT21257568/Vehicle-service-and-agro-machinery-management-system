@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 // reactstrap components
 import {
   Badge,
@@ -100,6 +103,43 @@ const ViewEmergencyIssues = () => {
     });
   };
 
+  const generateReport = () => {
+    
+    const doc = new jsPDF();
+    const columns = [
+      "Customer Name",
+      "NIC",
+      "Contact Number",
+      "Maintenance Fee",
+      "Towing Fee",
+      "Total Fee",
+    ];
+    const rows = allEmergencyIssues.map(
+      ({
+        customer_name,
+        customer_NIC,
+        contact_number,
+        maintenance_fee,
+        towing_fee,
+        total_fee,
+      }) => [
+        customer_name,
+        customer_NIC,
+        contact_number,
+        `Rs. ${maintenance_fee}`,
+        `Rs. ${towing_fee}`,
+        `Rs. ${total_fee}`,
+      ]
+    );
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
+
+    doc.save("EmergencyIssue.pdf");
+  
+}
+
   return (
     <>
       <Header />
@@ -125,6 +165,7 @@ const ViewEmergencyIssues = () => {
                       />
                     </InputGroup>
                   </Col>
+                  <Col lg="7">
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
@@ -141,6 +182,24 @@ const ViewEmergencyIssues = () => {
                       <span className="btn-inner--text">Add</span>
                     </Button>
                   </div>
+                  </Col>
+                  <div className="col text-right">
+                   
+                   <Button
+                     className="btn-icon btn-3"
+                     color="success"
+                     type="button"
+                     onClick={generateReport}
+                   >
+                     <span
+                       className="btn-inner--icon"
+                       style={{ width: "20px" }}
+                     >
+                       <i className="ni ni-folder-17" />
+                     </span>
+                     <span className="btn-inner--text">Generate Report</span>
+                   </Button>
+                 </div>
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
@@ -185,11 +244,11 @@ const ViewEmergencyIssues = () => {
                         </th>
                         <td>{emergencyIssue.customer_NIC}</td>
                         <td>{emergencyIssue.contact_number}</td>
-                        <td>{emergencyIssue.current_location}</td>
-                        <td>{emergencyIssue.availabel_emp}</td>
-                        <td>{emergencyIssue.maintenance_fee}</td>
-                        <td>{emergencyIssue.towing_fee}</td>
-                        <td>{emergencyIssue.total_fee}</td>
+                        <td>{emergencyIssue.c_location}</td>
+                        <td>{emergencyIssue.available_emp}</td>
+                        <td>Rs.{emergencyIssue.maintenance_fee}</td>
+                        <td>Rs.{emergencyIssue.towing_fee}</td>
+                        <td>Rs.{emergencyIssue.total_fee}</td>
                         <td>
                           <Badge color="success">
                             {emergencyIssue.issue_status}
@@ -238,7 +297,7 @@ const ViewEmergencyIssues = () => {
                             color="warning"
                             onClick={() =>
                               navigate(
-                                `/admin/update-emergency-issues/${emergencyIssue._id}`
+                                `/admin/update-emergency-issue/${emergencyIssue._id}`
                               )
                             }
                           >

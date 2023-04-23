@@ -73,7 +73,7 @@ const UpdateEmergencyIssue = () => {
     console.log("update button clicked");
 
     axios
-      .patch(`/api/generalIssues/${id}`, {
+      .patch(`/api/emergencyIssues/${id}`, {
         customer_name: customerName,
         customer_NIC: customerNIC,
         contact_number: contactNumber,
@@ -225,6 +225,7 @@ const UpdateEmergencyIssue = () => {
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Enter Current Location"
+                            defaultValue={data.c_location}
                             type="text"
                             onChange={(e) => {
                               setLocation(e.target.value);
@@ -307,6 +308,7 @@ const UpdateEmergencyIssue = () => {
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Enter Maintenance Fee"
+                            defaultValue={data.maintenance_fee}
                             type="text"
                             onChange={(e) => {
                             setMaintenanceFee(e.target.value);
@@ -326,6 +328,7 @@ const UpdateEmergencyIssue = () => {
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Enter towing Fee"
+                            defaultValue={data.towing_fee}
                             type="text"
                             onChange={(e) => {
                               setTowingFee(e.target.value);
@@ -347,6 +350,7 @@ const UpdateEmergencyIssue = () => {
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Enter total Fee"
+                            defaultValue={data.total_fee}
                             type="text"
                             onChange={(e) => {
                               setTotalFee(e.target.value);
