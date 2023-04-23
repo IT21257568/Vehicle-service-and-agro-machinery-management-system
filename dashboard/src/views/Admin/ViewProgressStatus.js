@@ -35,6 +35,8 @@ import {
   CardGroup,
   CardImg,
   CardImgOverlay,
+  Input,
+  InputGroup,
   
 } from "reactstrap";
 
@@ -46,6 +48,7 @@ const ViewProgressStatus = () => {
   const [allProgresses, setAllProgresses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -129,9 +132,9 @@ const ViewProgressStatus = () => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Progress Status</h3>
-
-
-                    {/* <InputGroup className="input-group-rounded input-group-merge">
+                  </div>
+                  <Col xl="3">
+                    <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
@@ -139,16 +142,10 @@ const ViewProgressStatus = () => {
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <span className="fa fa-search" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                    </InputGroup> */}
-
-                  {/* genarate report button */}
-                  </div>
+                    </InputGroup>
+                    </Col>
                   <div className="col text-right">
+                  {/* genarate report button */}
                   <Button
                       className="btn-icon btn-3"
                       color="success"
@@ -170,7 +167,16 @@ const ViewProgressStatus = () => {
 
               <Container>
                 <Row>
-                  {allProgresses.slice(0, visible).map((progress, index) => (
+                  {allProgresses
+                    .filter((progress) =>
+                      progress.name
+                        ?.toLowerCase()
+                        .includes(query.toLowerCase()) ||
+                        progress.vehi_number
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
+                    )
+                  .slice(0, visible).map((progress, index) => (
                   
                   <Card key={progress._id}
                     
