@@ -91,19 +91,20 @@ const Career = () => {
                   <div className="col">
                     <h3 className="mb-0">Vecancies</h3>
                   </div>
-                  
 
-                  <Col xl="3">
-                    <InputGroup className="input-group-rounded input-group-merge">
-                      <Input
-                        aria-label="Search"
-                        className="form-control-rounded form-control-prepended"
-                        placeholder="Search"
-                        type="search"
-                        onChange={(e) => setQuery(e.target.value)}
-                      />
-                    </InputGroup>
-                  </Col>
+                  
+                    <Col xl="6">
+                      <InputGroup className="input-group-rounded input-group-merge">
+                        <Input
+                          aria-label="Search"
+                          className="form-control-rounded form-control-prepended"
+                          placeholder="Search"
+                          type="search"
+                          onChange={(e) => setQuery(e.target.value)}
+                        />
+                      </InputGroup>
+                    </Col>
+                  
                   <div className="col text-right"></div>
                 </Row>
               </CardHeader>
