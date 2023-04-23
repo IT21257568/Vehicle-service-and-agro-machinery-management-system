@@ -41,6 +41,7 @@ import UpdateGeneralIssue from "views/Admin/UpdateGeneralIssues";
 import CreateEmergencyIssue from "views/Admin/CreateEmergencyIssues";
 import ViewRepairJobImage from "views/Admin/ViewRepairJobImage";
 import UpdateEmergencyIssue from "views/Admin/UpdateEmergencyIssues";
+import ViewEmergencyIssues from "views/Admin/ViewEmergencyIssues";
 
 import CreateFAQ from "views/Admin/CreateFAQ";
 import ViewFAQs from "views/Admin/ViewFAQs";
@@ -482,6 +483,20 @@ const routes = [
     name: "Create Emergency Issue",
     icon: "ni ni-single-copy-04 text-purple",
     component: CreateEmergencyIssue,
+    layout: "/admin",
+  },
+  {
+    path: "/update-emergency-issue/:id",
+    name: "Update Emergency Issue",
+    icon: "ni ni-single-copy-04 text-purple",
+    component: UpdateEmergencyIssue,
+    layout: "/admin",
+  },
+  {
+    path: "/view-emergency-issues",
+    name: "View Emergency Issues",
+    icon: "ni ni-single-copy-04 text-purple",
+    component: ViewEmergencyIssues,
     layout: "/admin",
   },
   // USER VIEWS
