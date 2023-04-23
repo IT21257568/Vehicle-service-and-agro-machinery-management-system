@@ -158,8 +158,13 @@ const ViewRepairJobs = () => {
                         <td> Rs.{repairJob.estimated_cost} </td>
                         <td> {repairJob.required_parts} </td>
                         <td>
-                          <Button size="sm" color="primary">
-                            View
+                          <Button size="sm" color="primary"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(`/admin/view-repair-job-images/${repairJob._id}`);
+                          }}
+                          >
+                            View image
                           </Button>
                           <Button
                             size="sm"
