@@ -49,7 +49,6 @@ const emergencyIssueSchema = new Schema({
     },
     total_fee: {
         type: Number,
-        required: [true, "Please add the total fee"],
 
     },
 

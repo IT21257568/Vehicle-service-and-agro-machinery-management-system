@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 // reactstrap components
 import {
   Badge,
@@ -77,6 +80,42 @@ const ViewProgressStatus = () => {
     });
   };
 
+  const generateReport = () => {
+
+    const doc = new jsPDF();
+    const columns = [
+      "Client Name",
+      "Vehicle Number",
+      "Service Status",
+      "Date of service",
+      "Discription",
+    ];
+    const rows = allProgresses.map(
+      ({
+        name,
+        vehi_number ,
+        status,
+        date,
+        description,
+      }) => [
+        name,
+        vehi_number ,
+        status,
+        date,
+        description,
+      ]
+    );
+
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
+
+    doc.save("report.pdf");
+  };
+
+
+
   return (
     <>
       <Header/>
@@ -107,14 +146,14 @@ const ViewProgressStatus = () => {
                       </InputGroupAddon>
                     </InputGroup> */}
 
-                    
+                  {/* genarate report button */}
                   </div>
                   <div className="col text-right">
-                    <Button
+                  <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={() => navigate("/admin/create-progress")}
+                      onClick={generateReport}
                     >
                       <span
                         className="btn-inner--icon"
@@ -122,8 +161,9 @@ const ViewProgressStatus = () => {
                       >
                         <i className="ni ni-planet" />
                       </span>
-                      <span className="btn-inner--text">Add New Status</span>
+                      <span className="btn-inner--text">Generate Report</span>
                     </Button>
+
                   </div>
                 </Row>
               </CardHeader>
