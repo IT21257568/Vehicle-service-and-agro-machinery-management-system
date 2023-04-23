@@ -131,7 +131,7 @@ const ViewFAQs = () => {
                         onChange={(e) => setQuery(e.target.value)}
                       />
                       <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
+                        <InputGroupText style={{ color: "#ffa500" }}>
                           <span className="fa fa-search" />
                         </InputGroupText>
                       </InputGroupAddon>
@@ -150,7 +150,7 @@ const ViewFAQs = () => {
                       toggle={toggleSort}
                       style={{width: '10rem'}}
                     >
-                      <DropdownToggle caret>
+                      <DropdownToggle caret style={{ color: "#ffa500" }}>
                         {querySort ? querySort : "Select Category"}
                       </DropdownToggle>
                       <DropdownMenu>
