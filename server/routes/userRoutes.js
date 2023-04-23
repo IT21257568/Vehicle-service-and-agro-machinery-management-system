@@ -1,18 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const {
-  createUser,
-  getAllUsers,
-  getUserByNIC,
+  registerUser,
+  loginUser,
+  getMe,
 } = require("../controllers/userController");
 
-//GET all users
-router.get("/", getAllUsers);
-
-//GET a single user
-router.get("/:nic", getUserByNIC);
-
-//POST a new user
-router.post("/", createUser);
+router.post("/", registerUser);
+router.post("/login", loginUser);
+router.get("/me", getMe);
 
 module.exports = router;

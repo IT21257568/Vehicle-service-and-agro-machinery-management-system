@@ -2,6 +2,9 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+
+const { errorHandler } = require("./middleware/errorMiddleware");
+
 const vanaciesRoute = require("./routes/vanaciesRoute");
 const sparePartsRoutes = require("./routes/spareParts");
 const agroProductRoutes = require("./routes/agroRoute");
@@ -24,6 +27,8 @@ const app = express();
 
 // middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -46,7 +51,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/bookings", bookingsRoute);
 //Sithija
 app.use("/api/promotions", promotionRoute);
-app.use("/api/faqs", faqRoute)
+app.use("/api/faqs", faqRoute);
 //Nethum
 app.use("/api/progress", ProgressTrackingRoute);
 //Tharusha
@@ -54,6 +59,8 @@ app.use("/api/damageValuation", damageValuationRoutes);
 //Piyumi
 app.use("/api/generalIssues", generalIssueRoutes);
 app.use("/api/emergencyIssues", emergencyIssueRoutes);
+
+app.use(errorHandler);
 
 //connect to db
 mongoose

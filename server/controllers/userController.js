@@ -1,75 +1,67 @@
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
-const mongoose = require("mongoose");
 
-//get all users
-const getAllUsers = async (req, res) => {
-  const allUsers = await User.find({}).sort({ createdAt: -1 });
+// @desc    Create new user
+// @route   POST /api/users
+// @access  Public
+const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password, phone } = req.body;
 
-  res.status(200).json(allUsers);
-};
-
-//get single user by NIC
-// path: 'users/:nic'
-const getUserByNIC = async (req, res) => {
-  const { nic } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(nic)) {
-    return res.status(404).json({ error: "Invalid NIC" });
+  if (!name || !email || !password || !phone) {
+    res.status(400);
+    throw new Error("Please fill all the fields");
   }
 
-  const user = await User.findOne({ nic: nic });
-  if (!user) {
-    return res.status(404).json({ error: "User not found" });
-  } else {
-    res.status(200).json(user);
-  }
-};
+  // check of user exists
+  const userExists = await User.findOne({ email });
 
-//create new user
-const createUser = async (req, res) => {
-  const { nic, email, password, phone, name, pfp_url } = req.body;
-
-  let emptyFields = [];
-
-  //validation for empty fields
-  if (!nic) {
-    emptyFields.push("NIC");
-  }
-  if (!email) {
-    emptyFields.push("Email");
-  }
-  if (!password) {
-    emptyFields.push("Password");
-  }
-  if (!phone) {
-    emptyFields.push("Phone");
-  }
-  if (!name) {
-    emptyFields.push("Name");
-  }
-  if (emptyFields.length > 0) {
-    return res
-      .status(400)
-      .json({ error: "Please fill in all fields:", emptyFields });
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
   }
 
-  //add to db
-  try {
-    const user = await User.create({
-      nic,
-      email,
-      password,
-      phone,
-      name,
-      pfp_url,
+  // hash the password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  // create user
+  const user = await User.create({
+    name,
+    email,
+    password: hashedPassword,
+    phone,
+  });
+
+  if (user) {
+    res.status(201).json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
     });
-    res.status(200).json({ user });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
   }
-};
+});
+
+// @desc    Authenticate user
+// @route   POST /api/users/login
+// @access  Public
+const loginUser = asyncHandler(async (req, res) => {
+  res.json({ message: "Login user" });
+});
+
+// @desc    Get user data
+// @route   POST /api/users/me
+// @access  Public
+const getMe = asyncHandler(async (req, res) => {
+  res.json({ message: "User data display" });
+});
 
 module.exports = {
-  getAllUsers,
-  getUserByNIC,
-  createUser,
+  registerUser,
+  loginUser,
+  getMe,
 };

@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
 
-// const Schema = mongoose.Schema
-
 const userSchema = mongoose.Schema(
   {
-    nic: {
+    name: {
       type: String,
-      required: [true, "Please add NIC"],
+      required: [true, "Please add name"],
     },
     email: {
       type: String,
@@ -19,19 +17,7 @@ const userSchema = mongoose.Schema(
     phone: {
       type: String,
       required: [true, "Please add phone number"],
-    },
-    name: {
-      first_name: {
-        type: String,
-        required: [true, "Please add first name"],
-      },
-      last_name: {
-        type: String,
-        required: [true, "Please add last name"],
-      },
-    },
-    pfp_url: {
-      type: String,
+      unique: true,
     },
   },
   {
