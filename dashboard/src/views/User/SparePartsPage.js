@@ -37,7 +37,7 @@ const SparePartsPage = () => {
   const [allSpareParts, setAllSpareParts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(3);
   const [faqCategory, setFaqCategory] = useState("");
   const [query, setQuery] = useState("");
 
@@ -121,7 +121,7 @@ const SparePartsPage = () => {
                     <Input
                       aria-label="Search"
                       className="form-control-rounded form-control-prepended"
-                      placeholder="Search"
+                      placeholder="Search by Spare Part Name"
                       type="search"
                       onChange={(e) => setQuery(e.target.value)}
                     />
@@ -135,8 +135,9 @@ const SparePartsPage = () => {
                   </div>
                 </Row>
               </CardHeader>
-              <div className="pl-lg-5">
-                <Row>
+              <Container>
+               <div className="pl-lg-5">
+                <Row style={{ marginTop: "0.5rem" }}>
                   {allSpareParts
                   .filter((sparePart) =>
                   sparePart.sp_name
@@ -193,6 +194,7 @@ const SparePartsPage = () => {
                   ))}
                 </Row>
               </div>
+              </Container>
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
                 {visible < allSpareParts.length && (
                     <Button  color="info" size="sm" onClick={showMoreItems}>
