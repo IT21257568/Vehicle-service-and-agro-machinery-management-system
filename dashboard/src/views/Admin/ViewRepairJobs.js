@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 // reactstrap components
 import {
@@ -64,6 +66,50 @@ const ViewRepairJobs = () => {
     });
   };
 
+  // Calculate the total estimated cost
+  const totalEstimatedCost = allRepairJobs.reduce(
+    (acc, { estimated_cost }) => acc + estimated_cost,
+    0
+  );
+
+  // Create a row for the total estimated cost
+  const totalRow = ["", "", "", "Total estimated cost", `Rs. ${totalEstimatedCost}`];
+
+  const generateReport = () => {
+    const doc = new jsPDF();
+    const columns = [
+      "Customer Name",
+      "Vehicle Number",
+      "Vehicle Model",
+      "Required Parts",
+      "Estimated Cost",
+    ];
+    const rows = allRepairJobs
+      .map(
+        ({
+          customer_name,
+          vehicle_Number,
+          vehicle_Model,
+          required_parts,
+          estimated_cost,
+        }) => [
+          customer_name,
+          vehicle_Number,
+          vehicle_Model,
+          required_parts,
+          `Rs. ${estimated_cost}`,
+        ]
+      )
+      .concat([totalRow]); // Add the total row to the end of the rows array
+
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
+
+    doc.save("Damage Valuation Report.pdf");
+  };
+
   return (
     <>
       <Header />
@@ -103,6 +149,23 @@ const ViewRepairJobs = () => {
                         <i className="ni ni-planet" />
                       </span>
                       <span className="btn-inner--text">Add</span>
+                    </Button>
+                  </div>
+                  <div className="col text-right">
+                    <Button
+                      className="btn-icon btn-3"
+                      color="success"
+                      // style={{ color: "teal" }}
+                      type="button"
+                      onClick={generateReport}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-planet" />
+                      </span>
+                      <span className="btn-inner--text">Generate Report</span>
                     </Button>
                   </div>
                 </Row>
@@ -158,11 +221,15 @@ const ViewRepairJobs = () => {
                         <td> Rs.{repairJob.estimated_cost} </td>
                         <td> {repairJob.required_parts} </td>
                         <td>
-                          <Button size="sm" color="primary"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(`/admin/view-repair-job-images/${repairJob._id}`);
-                          }}
+                          <Button
+                            size="sm"
+                            color="primary"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              navigate(
+                                `/admin/view-repair-job-images/${repairJob._id}`
+                              );
+                            }}
                           >
                             View image
                           </Button>
