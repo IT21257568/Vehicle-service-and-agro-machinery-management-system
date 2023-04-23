@@ -266,7 +266,7 @@ const routes = [
   },
   {
     path: "/promotions",
-    name: "Promotions",
+    name: "Promotions Admin",
     icon: "ni ni-notification-70 text-orange",
     component: ViewPromotions,
     layout: "/admin",
