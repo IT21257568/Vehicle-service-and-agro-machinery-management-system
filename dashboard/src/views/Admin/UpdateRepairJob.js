@@ -269,7 +269,7 @@ const UpdateRepairJob = () => {
                             <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Title"
+                                placeholder="Enter Vehicle Number"
                                 defaultValue={data.vehicle_Number}
                                 type="text"
                                 onChange={(e) => {
@@ -291,7 +291,7 @@ const UpdateRepairJob = () => {
                             <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Title"
+                                placeholder="Customer Email"
                                 defaultValue={data.customer_email}
                                 type="text"
                                 onChange={(e) => {
@@ -311,7 +311,7 @@ const UpdateRepairJob = () => {
                             <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Title"
+                                placeholder="Estimated Cost"
                                 defaultValue={data.estimated_cost}
                                 type="text"
                                 onChange={(e) => {
