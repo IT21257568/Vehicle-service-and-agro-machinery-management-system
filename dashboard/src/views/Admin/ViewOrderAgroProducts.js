@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 // reactstrap components
 import {
   Badge,
@@ -40,7 +43,7 @@ const ViewOrderAgroProduct = () => {
   const [query, setQuery] = useState("");
 
   // set visible rows
-  const [visible, setVisible] = useState(5);
+  const [visible, setVisible] = useState(4);
 
   const navigate = useNavigate();
 
@@ -72,6 +75,41 @@ const ViewOrderAgroProduct = () => {
     });
   };
 
+  const generateReport = () => {
+    const doc = new jsPDF();
+    const tableColumn = [
+      "Product Name",
+      "Customer Name",
+      "Customer Contact",
+      "Customer Email",
+      "Customer Address",
+      "Special Note",
+    ];
+    const tableRows = allAgroProductOrders.map(
+      ({
+        p_name,
+        customer_name,
+        customer_contact,
+        customer_email,
+        customer_address,
+        customer_note,
+      }) => [
+        p_name,
+        customer_name,
+        customer_contact,
+        customer_email,
+        customer_address,
+        customer_note,
+      ]
+    );
+    doc.autoTable({
+      head: [tableColumn], 
+      body: tableRows,
+    });
+
+    doc.save("agroProductOrders.pdf");
+  };
+
   return (
     <>
       <Header />
@@ -86,12 +124,13 @@ const ViewOrderAgroProduct = () => {
                   <div className="col">
                     <h3 className="mb-0">All Agro Product Orders</h3>
                   </div>
-                  <Col xl="3">
-                    <InputGroup className="input-group-rounded input-group-merge">
+                  <Col xl="1">
+                    <InputGroup className="input-group-rounded input-group-merge"
+                      style={{width: '25rem'}}>
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
-                        placeholder="Search"
+                        placeholder="Search by product name"
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
@@ -102,7 +141,7 @@ const ViewOrderAgroProduct = () => {
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      //onClick={() => navigate("/admin/create-vacancy")}
+                      onClick={generateReport}
                     >
                       <span
                         className="btn-inner--icon"
@@ -161,7 +200,7 @@ const ViewOrderAgroProduct = () => {
                     ))}
                 </tbody>
               </Table>
-              <CardFooter className="py-4">
+              <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
                 {visible < allAgroProductOrders.length && (
                   <Button color="info" size="sm" onClick={showMoreItems}>
                     Load More

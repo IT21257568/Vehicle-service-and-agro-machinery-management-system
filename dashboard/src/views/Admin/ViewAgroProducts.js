@@ -73,18 +73,19 @@ const ViewAgroProducts = () => {
         {/* Light Table */}
         <Row>
           <div className="col">
-            <Card className="shadow" color="lighter">
+            <Card className="shadow" color="lighter" style={{marginBottom: '1.8rem'}}>
               <CardHeader className="border-0" style={{marginBottom: '1.8rem'}}>
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Agro Product</h3>
                   </div>
-                  <Col xl = "3">
-                    <InputGroup className="input-group-rounded input-group-merge">
+                  <Col xl = "1">
+                    <InputGroup className="input-group-rounded input-group-merge"
+                      style={{width: '25rem'}}>
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
-                        placeholder="Search"
+                        placeholder="Search by Agro Product Name"
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
@@ -115,6 +116,7 @@ const ViewAgroProducts = () => {
               </CardHeader>
 
               <Container>
+              <div className="pl-lg-5">
                 <Row>
                   {allAgroProducts
                     .filter((agroProduct) =>
@@ -191,6 +193,7 @@ const ViewAgroProducts = () => {
                 ))}
                
                 </Row>
+              </div>
               </Container>
               
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>

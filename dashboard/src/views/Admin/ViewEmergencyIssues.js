@@ -3,20 +3,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import jsPDF from "jspdf";
-import "jspdf-autotable";
-
 // reactstrap components
 import {
   Badge,
   Card,
   CardHeader,
   CardFooter,
-  //DropdownMenu,
-  //DropdownItem,
-  //UncontrolledDropdown,
-  //DropdownToggle,
-  //Media,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  Media,
   Pagination,
   PaginationItem,
   PaginationLink,
@@ -24,30 +21,51 @@ import {
   Table,
   Container,
   Row,
-  //UncontrolledTooltip,
-  Button,
-  //Chip,
-  Col,
   InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   Input,
+  UncontrolledTooltip,
+  Button,
+  Chip,
+  Col,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
+//card
+function CardRequiremnts({ gIssues, onClose }) {
+  return (
+    <div className="card">
+      <div className="card-body">
+        <p className="card-text">{gIssues}</p>
+        <Button size="sm" color="primary" onClick={onClose}>
+          Close
+        </Button>
+      </div>
+    </div>
+  );
+}
 
-
-const ViewCVSubmissions = () => {
+const ViewEmergencyIssues = () => {
   // states
-  const [allApplicants, setAllSubmissions] = useState([]);
+  const [allEmergencyIssues, setAllEmergencyIssues] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showCard, setShowCard] = useState(false);
   const [query, setQuery] = useState("");
-  
 
-  
+  function handleViewClick() {
+    console.log("View button clicked");
+    setShowCard(true);
+  }
 
- 
+  function handleCloseClick() {
+    console.log("Close button clicked");
+    setShowCard(false);
+  }
+  console.log("Rendering App component with showCard = ", showCard);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -58,72 +76,33 @@ const ViewCVSubmissions = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all vacancies from database
+  // retrieve all emergency issues from database
   useEffect(() => {
-    const fetchAllVacancies = async () => {
+    const fetchAllEmergencyIssues = async () => {
       try {
-        const res = await axios.get("/api/cvSub");
-        setAllSubmissions(res.data);
+        const res = await axios.get("/api/emergencyIssues");
+        setAllEmergencyIssues(res.data);
         setIsLoading(false);
       } catch (err) {
         setError(err);
         setIsLoading(false);
       }
     };
-    fetchAllVacancies();
+    fetchAllEmergencyIssues();
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`/api/cvSub/${id}`).then((res) => {
+    axios.delete(`/api/emergencyIssues/${id}`).then((res) => {
       console.log(res.data);
-      setAllSubmissions((prevData) =>
-        prevData.filter((vacancy) => vacancy._id !== id)
+      setAllEmergencyIssues((prevData) =>
+        prevData.filter((emergencyissues) => emergencyissues._id !== id)
       );
     });
   };
 
-
-  const generateReport = () => {
-    
-        const doc = new jsPDF();
-        const columns = [
-          "Applicant Name",
-          "Applied Vacancy",
-          "Age",
-          "Gender",
-          "Contact Number",
-          "Email",
-        ];
-        const rows = allApplicants.map(
-          ({
-            applicant_name,
-            vacancy_name,
-            applicant_age,
-            applicant_gender,
-            applicant_contact,
-            applicant_email,
-          }) => [
-            applicant_name,
-            vacancy_name,
-            applicant_age,
-            applicant_gender,
-            applicant_contact,
-            applicant_email,
-          ]
-        );
-        doc.autoTable({
-          head: [columns],
-          body: rows,
-        });
-
-        doc.save("Applicants.pdf");
-      
-  }
   return (
     <>
       <Header />
-      
-
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Light Table */}
@@ -133,36 +112,33 @@ const ViewCVSubmissions = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Applicants</h3>
+                    <h3 className="mb-0">All Emergency Issues</h3>
                   </div>
-
-                  <Col xl="3">
-                    <InputGroup className="input-group-rounded input-group-merge">
+                  <Col xl="1">
+                    <InputGroup className="input-group-rounded input-group-merge" style={{width: '25rem'}}>
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
-                        placeholder="Search"
+                        placeholder="Search by customername / NIC"
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
                     </InputGroup>
                   </Col>
-
                   <div className="col text-right">
-                   
                     <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={generateReport}
+                      onClick={() => navigate("/admin/create-emergency-issue")}
                     >
                       <span
                         className="btn-inner--icon"
                         style={{ width: "20px" }}
                       >
-                        <i className="ni ni-folder-17" />
+                        <i className="ni ni-planet" />
                       </span>
-                      <span className="btn-inner--text">Generate Report</span>
+                      <span className="btn-inner--text">Add</span>
                     </Button>
                   </div>
                 </Row>
@@ -170,13 +146,16 @@ const ViewCVSubmissions = () => {
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Applied Vacancy</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Gender</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">NIC</th>
                     <th scope="col">Contact Number</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">CV</th>
+                    <th scope="col">Current Location</th>
+                    <th scope="col">Assigned Employee</th>
+                    <th scope="col">Maintenance Fee</th>
+                    <th scope="col">Towing Fee</th>
+                    <th scope="col">Total Fee</th>
+                    <th scope="col">Issue Status</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -186,56 +165,96 @@ const ViewCVSubmissions = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allApplicants
-                    .filter((applicant) =>
-                      applicant.vacancy_name
-                        ?.toLowerCase()
-                        .includes(query.toLowerCase())
+                  {allEmergencyIssues
+                    .filter(
+                      (emergencyIssue) =>
+                      emergencyIssue.customer_NIC
+                          ?.toString()
+                          .includes(query.toString()) ||
+                        emergencyIssue.customer_name
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
                     )
                     .slice(0, visible)
-                    .map((applicant, index) => (
-                      <tr key={applicant._id}>
+                    .map((emergencyIssue, index) => (
+                      <tr key={emergencyIssue._id}>
                         <th scope="row">
                           <span className="mb-0 text-sm">
-                            {applicant.applicant_name}
+                            {emergencyIssue.customer_name}
                           </span>
                         </th>
+                        <td>{emergencyIssue.customer_NIC}</td>
+                        <td>{emergencyIssue.contact_number}</td>
+                        <td>{emergencyIssue.current_location}</td>
+                        <td>{emergencyIssue.availabel_emp}</td>
+                        <td>{emergencyIssue.maintenance_fee}</td>
+                        <td>{emergencyIssue.towing_fee}</td>
+                        <td>{emergencyIssue.total_fee}</td>
                         <td>
                           <Badge color="success">
-                            {applicant.vacancy_name}
+                            {emergencyIssue.issue_status}
                           </Badge>
                         </td>
-                        <td>{applicant.applicant_age}</td>
-
-                        <td>{applicant.applicant_gender}</td>
-                        <td>{applicant.applicant_contact}</td>
                         <td>
-                          <div className="d-flex align-items-center">
-                            {applicant.applicant_email}
-                          </div>
-                        </td>
-                        <td>
-                          <a
-                            href={applicant.applicant_CVFile_url}
-                            style={{ textDecoration: "none" }}
-                          >
-                            <Button size="sm" color="primary">
+                          <div className="container">
+                            <Button
+                              size="sm"
+                              color="primary"
+                              onClick={handleViewClick}
+                            >
                               View
                             </Button>
-                          </a>
+                            {showCard && (
+                              <CardRequiremnts
+                                gIssues={emergencyIssue.EM_discription}
+                                onClose={handleCloseClick}
+                              />
+                            )}
+                          </div>
+                          {/* <td>
+                           <Button
+                            size="sm"
+                            color="warning"
+                            onClick={() =>
+                              navigate(
+                                `/admin/update-general-issues/${generalIssue._id}`
+                              )
+                            }
+                          >
+                            Update
+                          </Button>
+                          <Button
+                            size="sm"
+                            color="danger"
+                            onClick={() => handleDelete(generalIssue._id)}
+                          >
+                            Delete
+                          </Button>
+                          </td> */}
                         </td>
                         <td>
                           <Button
                             size="sm"
+                            color="warning"
+                            onClick={() =>
+                              navigate(
+                                `/admin/update-emergency-issues/${emergencyIssue._id}`
+                              )
+                            }
+                          >
+                            Update
+                          </Button>
+                          <Button
+                            size="sm"
                             color="danger"
-                            onClick={() => handleDelete(applicant._id)}
+                            onClick={() => handleDelete(emergencyIssue._id)}
                           >
                             Delete
                           </Button>
                         </td>
                       </tr>
                     ))}
-                  {visible < allApplicants.length && (
+                  {visible < allEmergencyIssues.length && (
                     <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
@@ -302,4 +321,4 @@ const ViewCVSubmissions = () => {
   );
 };
 
-export default ViewCVSubmissions;
+export default ViewEmergencyIssues;

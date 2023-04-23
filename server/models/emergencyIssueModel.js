@@ -35,7 +35,7 @@ const emergencyIssueSchema = new Schema({
     },
     available_emp: {
         type: String,
-        required: [true, "Please select the available employee"],
+        required: [true, "Please select the available technician"],
 
     },
     maintenance_fee: {
