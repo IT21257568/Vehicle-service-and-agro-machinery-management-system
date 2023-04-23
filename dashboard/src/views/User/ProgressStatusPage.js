@@ -27,10 +27,13 @@ import {
   CardTitle,
   CardSubtitle,
   CardText,
+  Col,
   Badge,
   //CardGroup,
   CardImg,
   //CardImgOverlay,
+  Input,
+  InputGroup,
 } from "reactstrap";
 // core components
 import ProgressStatusHeader from "components/Headers/ProgressStatusHeader.js";
@@ -56,6 +59,7 @@ const Progresses = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showCard, setShowCard] = useState(false);
+  const [query, setQuery] = useState("");
 
   function handleViewClick() {
     console.log("View button clicked");
@@ -120,12 +124,35 @@ const Progresses = () => {
                   <div className="col">
                     <h3 className="mb-0">All Service Progress Status</h3>
                   </div>
+
+                  <Col xl="3">
+                    <InputGroup className="input-group-rounded input-group-merge">
+                      <Input
+                        aria-label="Search"
+                        className="form-control-rounded form-control-prepended"
+                        placeholder="Search"
+                        type="search"
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                    </InputGroup>
+                    </Col>
+
+
                   <div className="col text-right"></div>
                 </Row>
               </CardHeader>
               <Container>
                 <Row style={{ marginTop: "0.5rem" }}>
-                  {allProgresses.slice(0, visible).map((progress, index) => (
+                  {allProgresses
+                    .filter((progress) =>
+                      progress.name
+                        ?.toLowerCase()
+                        .includes(query.toLowerCase()) ||
+                        progress.vehi_number
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
+                    )
+                  .slice(0, visible).map((progress, index) => (
                     <Card
                       key={progress._id}
                       style={{
