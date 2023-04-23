@@ -12,25 +12,26 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  DropdownMenu,
+ /*  DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Media,
+  Media, */
   Pagination,
   PaginationItem,
   PaginationLink,
-  Progress,
+  //Progress,
   Table,
   Container,
   InputGroup,
-  InputGroupAddon,
-  InputGroupText,
+ // InputGroupAddon,
+  //InputGroupText,
   Input,
   Row,
-  UncontrolledTooltip,
+ // UncontrolledTooltip,
   Button,
-  Chip,
+ // Chip,
+  Col,
 } from "reactstrap";
 
 // core components
@@ -77,9 +78,7 @@ const ViewBookings = () => {
     });
   };
 
-
   const generateReport = () => {
-
     const doc = new jsPDF();
     const columns = [
       "Client Name",
@@ -131,6 +130,8 @@ const ViewBookings = () => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Bookings</h3>
+                  </div>
+                  <Col xl="3">
                     <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
@@ -139,13 +140,8 @@ const ViewBookings = () => {
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <span className="fa fa-search" />
-                        </InputGroupText>
-                      </InputGroupAddon>
                     </InputGroup>
-                  </div>
+                  </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
