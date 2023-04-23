@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -19,17 +19,20 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-
 // core components
 import Header from "components/Headers/Header.js";
 
 
 
-const CreateEmergencyIssue = () => {
+const UpdateEmergencyIssue = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const toggle1 = () => setDropdownOpen1((prevState1) => !prevState1);
+  const toggle1 = () => setDropdownOpen1((prevState) => !prevState);
+
+  // get vacancy id from url
+  const { id } = useParams();
+
   const navigate = useNavigate();
 
   // form states
@@ -46,50 +49,47 @@ const CreateEmergencyIssue = () => {
   const [totalFee, setTotalFee] = useState("");
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page refresh
+  useEffect(() => {
+    const getEmergencyIssue = async () => {
+      const res = await axios.get(`/api/emergencyIssues/${id}`);
+      console.log(res.data);
+      setData(res.data);
 
-    try {
-      await axios
-        .post("/api/emergencyIssues", {
-          customer_name: customerName,
-          customer_NIC: customerNIC,
-          contact_number: contactNumber,
-          c_location: location,
-          EM_discription: emDiscription,
-          issue_status: issueStatus,
-          available_emp: availableTechnicians,
-          maintenance_fee: maintenanceFee,
-          towing_fee: towingFee,
-          total_fee: totalFee,
-        })
-        .then((res) => {
-          console.log("New emergency issue is added", res.data);
-          setCustomerName("");
-          setCustomerNIC("");
-          setContactNumber("");
-          setLocation("");
-          setEmDiscription("");
-          setIssueStatus("");
-          setAvailableTechnicians("");
-          setMaintenanceFee("");
-          setTowingFee("");
-          setTotalFee("");
-          setError(null);
-          navigate("/admin/view-general-issues");
-        });
-      } catch (error) {
-        if (error.response && error.response.status === 400) {
-          const { error: errorMessage, emptyFields } = error.response.data;
-          const fields = emptyFields.join(", ");
-          setError(`Please fill in all fields: ${fields}`);
-        } else {
-          console.log(error);
-        }
-      }
-  
+      setCustomerName(res.data.customer_name);
+      setCustomerNIC(res.data.customer_NIC);
+      setContactNumber(res.data.contact_number);
+      setLocation(res.data.c_location);
+      setEmDiscription(res.data.EM_discription);
+      setIssueStatus(res.data.issue_status);
+      setAvailableTechnicians(res.data.available_emp);
+      setMaintenanceFee(res.data.maintenance_fee);
+      setTowingFee(res.data.towing_fee);
+      setTotalFee(res.data.total_fee);
+    };
+    getEmergencyIssue();
+  }, [id]);
+
+  const handleUpdate = () => {
+    console.log("update button clicked");
+
+    axios
+      .patch(`/api/generalIssues/${id}`, {
+        customer_name: customerName,
+        customer_NIC: customerNIC,
+        contact_number: contactNumber,
+        c_location: location,
+        EM_discription: emDiscription,
+        issue_status: issueStatus,
+        available_emp: availableTechnicians,
+        maintenance_fee: maintenanceFee,
+        towing_fee: towingFee,
+        total_fee: totalFee,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/admin/view-emergency-issues");
+      });
   };
-
   return (
     <>
       <Header />
@@ -101,7 +101,7 @@ const CreateEmergencyIssue = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Emergency Issue</h3>
+                    <h3 className="mb-0">Update Emergency Issue</h3>
                   </Col>
                 </Row>
               </CardHeader>
@@ -124,6 +124,7 @@ const CreateEmergencyIssue = () => {
                             className="form-control-alternative"
                             id="input-username"
                             placeholder="Enter Customer Name"
+                            defaultValue={data.customer_name}
                             type="text"
                             onChange={(e) => {
                               setCustomerName(e.target.value);
@@ -181,7 +182,8 @@ const CreateEmergencyIssue = () => {
                             <Input
                                 className="form-control-alternative"
                                 id="input-username"
-                                placeholder="Enter Customer NIC"
+                                placeholder="Enter Customer NIC" 
+                                defaultValue={data.customer_NIC}
                                 type="text"
                                 onChange={(e) => {
                                 setCustomerNIC(e.target.value);
@@ -201,6 +203,7 @@ const CreateEmergencyIssue = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Enter Contact Number"
+                                defaultValue={data.contact_number}
                                 type="text"
                                 onChange={(e) => {
                                 setContactNumber(e.target.value);
@@ -366,39 +369,16 @@ const CreateEmergencyIssue = () => {
                       <Input
                         className="form-control-alternative"
                         placeholder="Brief description about the issue"
+                        defaultValue={data.EM_discription}
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
                           setEmDiscription(e.target.value);
                         }}
                       />
-                      {error && (
-                        <div
-                          style={{
-                            backgroundColor: "#ffffff",
-                            color: "red",
-                            // textAlign:"center",
-                            display: "flex",
-                            justifyContent: "center",
-                            // fontWeight:"bold",
-                            // paddingBottom: "5px",
-                            // paddingTop: "5px",
-                            padding: "10px",
-                            marginTop: "15px",
-                            borderStyle: "solid",
-                            borderColor: "red",
-                            borderWidth: "3px",
-                            borderRadius: "20px",
-                          }}
-                        >
-                          <span>
-                            <b>{error}</b>
-                          </span>
-                        </div>
-                      )} 
                     </FormGroup>
-                    <Button color="primary" onClick={handleSubmit}>
-                      Create
+                    <Button color="primary" onClick={handleUpdate}>
+                      Update
                     </Button>
                     <Button
                       color="warning"
@@ -420,4 +400,4 @@ const CreateEmergencyIssue = () => {
   );
 };
 
-export default CreateEmergencyIssue;
+export default UpdateEmergencyIssue;
