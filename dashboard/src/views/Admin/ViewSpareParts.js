@@ -94,8 +94,9 @@ const ViewSpareParts = () => {
                   <div className="col">
                     <h3 className="mb-0">All Spare Parts</h3>
                   </div>
-                  <Col xl = "3">
-                    <InputGroup className="input-group-rounded input-group-merge">
+                  <Col xl = "1">
+                    <InputGroup className="input-group-rounded input-group-merge"
+                      style={{width: '25rem'}}>
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
@@ -130,6 +131,7 @@ const ViewSpareParts = () => {
               </CardHeader>
 
               <Container>
+              <div className="pl-lg-5">
                 <Row>
                   {allSpareParts
                    .filter((sparePart) =>
@@ -206,6 +208,7 @@ const ViewSpareParts = () => {
                 ))}
                
                 </Row>
+                </div>
               </Container>
               
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>

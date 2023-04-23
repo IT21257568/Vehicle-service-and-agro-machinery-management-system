@@ -116,6 +116,7 @@ const ViewAgroProducts = () => {
               </CardHeader>
 
               <Container>
+              <div className="pl-lg-5">
                 <Row>
                   {allAgroProducts
                     .filter((agroProduct) =>
@@ -192,6 +193,7 @@ const ViewAgroProducts = () => {
                 ))}
                
                 </Row>
+              </div>
               </Container>
               
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
