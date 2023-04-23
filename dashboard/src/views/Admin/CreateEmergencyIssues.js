@@ -76,7 +76,7 @@ const CreateEmergencyIssue = () => {
           setTowingFee("");
           setTotalFee("");
           setError(null);
-          navigate("/admin/view-general-issues");
+          navigate("/admin/view-emergency-issues");
         });
       } catch (error) {
         if (error.response && error.response.status === 400) {
