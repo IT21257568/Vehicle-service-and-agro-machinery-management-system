@@ -144,8 +144,8 @@ const ViewProgressStatus = () => {
                       />
                     </InputGroup>
                     </Col>
-                  {/* genarate report button */}
                   <div className="col text-right">
+                  {/* genarate report button */}
                   <Button
                       className="btn-icon btn-3"
                       color="success"
