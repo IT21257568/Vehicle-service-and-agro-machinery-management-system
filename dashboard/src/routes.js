@@ -40,6 +40,7 @@ import ViewGeneralIssues from "views/Admin/ViewGeneralIssues";
 import UpdateGeneralIssue from "views/Admin/UpdateGeneralIssues";
 import CreateEmergencyIssue from "views/Admin/CreateEmergencyIssues";
 import UpdateEmergencyIssue from "views/Admin/UpdateEmergencyIssues";
+import ViewRepairJobImage from "views/Admin/ViewRepairJobImage";
 
 import CreateFAQ from "views/Admin/CreateFAQ";
 import ViewFAQs from "views/Admin/ViewFAQs";
@@ -443,6 +444,13 @@ const routes = [
     name: "Update Repair Job",
     icon: "ni ni-ruler-pencil text-black",
     component: UpdateRepairJob,
+    layout: "/admin",
+  },
+  {
+    path: "/view-repair-job-images/:id",
+    name: "View Repair Job Image",
+    icon: "ni ni-ruler-pencil text-black",
+    component: ViewRepairJobImage,
     layout: "/admin",
   },
   
