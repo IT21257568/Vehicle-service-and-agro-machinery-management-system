@@ -39,7 +39,7 @@ const CreateBookingClient = () => {
   const [phone, setPhone] = useState("");
   const [date_time, setDateTime] = useState("");
   const [specialNote, setSpecialNote] = useState("");
-  const [bookinguser_id, setBookingUserId] = useState("42000");
+  const [bookinguser_id, setBookingUserId] = useState("4200effffs0");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
