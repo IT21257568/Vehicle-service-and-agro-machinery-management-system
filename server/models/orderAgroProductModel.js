@@ -27,6 +27,10 @@ const orderAgroProductSchema = new Schema(
       type: String,
       required: true,
     },
+    p_price: {
+      type: String,
+      required: true,
+    },
     agroproduct_user_id: {
       type: String,
       required: true,
