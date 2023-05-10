@@ -26,7 +26,16 @@ const getBooking = async(req, res) => {
 
 //create new booking
 const createBooking = async(req, res) => {
-    const { location, service_type, client_name, email, phone, special_note,date_time} = req.body;
+    const {
+      location,
+      service_type,
+      client_name,
+      email,
+      phone,
+      special_note,
+      date_time,
+      booking_user_id,
+    } = req.body;
 
     let emptyFields = [];
 
@@ -67,7 +76,16 @@ const createBooking = async(req, res) => {
 
     //add to db
     try{
-        const booking = await Booking.create({location, service_type, client_name, email, phone,date_time, special_note});
+        const booking = await Booking.create({
+          location,
+          service_type,
+          client_name,
+          email,
+          phone,
+          date_time,
+          special_note,
+          booking_user_id,
+        });
         res.status(200).json({ booking });
     } catch (error) {
         res.status(400).json({error: error.message});
