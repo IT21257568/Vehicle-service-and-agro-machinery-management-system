@@ -40,6 +40,7 @@ const CreateVacancy = () => {
   const [vacancyTitle, setVacancyTitle] = useState("");
   const [vacancy_applicants, setVacancyApplicants] = useState("");
   const [vacancyRequirements, setVacancyRequirements] = useState("");
+  const [vacancy_id, setVacancyId] = useState("");
 
   useEffect(() => {
     const getVacancy = async () => {
@@ -50,6 +51,7 @@ const CreateVacancy = () => {
       setVacancyTitle(res.data.vacancy_title);
       setVacancyRequirements(res.data.vacancy_requirements);
       setVacancyApplicants(res.data.vacancy_applicants)
+      setVacancyId(res.data._id);
     };
     getVacancy();
   }, [id]);
@@ -111,6 +113,7 @@ const handleImageUpload = (event) => {
           applicant_email: applicant_email,
           applicant_CVFile_url: cvFile,
           vacancy_name: vacancyTitle,
+          vacancy_id: vacancy_id,
         })
         .then((res) => {
           console.log("New Vacancy added", res.data);
@@ -124,13 +127,12 @@ const handleImageUpload = (event) => {
           setError(null);
           axios
             .patch(`/api/vacancies/${id}`, {
-              vacancy_applicants: vacancy_applicants+1,
+              vacancy_applicants: vacancy_applicants + 1,
             })
             .then((res) => {
               console.log(res.data);
               navigate("/user/carrerpage");
             });
-          
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {

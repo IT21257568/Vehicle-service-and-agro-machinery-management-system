@@ -43,11 +43,8 @@ const ViewCVSubmissions = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
-  
+  const [vacancy_applicants, setVacancyApplicants] = useState("");
 
-  
-
- 
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -58,9 +55,9 @@ const ViewCVSubmissions = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all vacancies from database
+  // retrieve all cv submissions from database
   useEffect(() => {
-    const fetchAllVacancies = async () => {
+    const fetchAllCVSubmissions = async () => {
       try {
         const res = await axios.get("/api/cvSub");
         setAllSubmissions(res.data);
@@ -70,59 +67,80 @@ const ViewCVSubmissions = () => {
         setIsLoading(false);
       }
     };
-    fetchAllVacancies();
+    fetchAllCVSubmissions();
   }, []);
 
-  const handleDelete = (id) => {
+ 
+
+  const handleDelete = (id, vId) => {
     axios.delete(`/api/cvSub/${id}`).then((res) => {
       console.log(res.data);
       setAllSubmissions((prevData) =>
         prevData.filter((vacancy) => vacancy._id !== id)
       );
     });
+
+    
+    const updateRecord = async () => {
+      // get vacancy applicants count
+      const response = await axios.get(`/api/vacancies/${vId}`);
+      setVacancyApplicants(response.data.vacancy_applicants);
+      console.log(response.data);
+
+      // update vacancy applicants count
+      axios
+        .patch(`/api/vacancies/${vId}`, {
+          vacancy_applicants: response.data.vacancy_applicants - 1,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    updateRecord();
   };
 
 
   const generateReport = () => {
-    
-        const doc = new jsPDF();
-        const columns = [
-          "Applicant Name",
-          "Applied Vacancy",
-          "Age",
-          "Gender",
-          "Contact Number",
-          "Email",
-        ];
-        const rows = allApplicants.map(
-          ({
-            applicant_name,
-            vacancy_name,
-            applicant_age,
-            applicant_gender,
-            applicant_contact,
-            applicant_email,
-          }) => [
-            applicant_name,
-            vacancy_name,
-            applicant_age,
-            applicant_gender,
-            applicant_contact,
-            applicant_email,
-          ]
-        );
-        doc.autoTable({
-          head: [columns],
-          body: rows,
-        });
+    const doc = new jsPDF();
+    const columns = [
+      "Applicant Name",
+      "Applied Vacancy",
+      "Age",
+      "Gender",
+      "Contact Number",
+      "Email",
+    ];
+    const rows = allApplicants.map(
+      ({
+        applicant_name,
+        vacancy_name,
+        applicant_age,
+        applicant_gender,
+        applicant_contact,
+        applicant_email,
+      }) => [
+        applicant_name,
+        vacancy_name,
+        applicant_age,
+        applicant_gender,
+        applicant_contact,
+        applicant_email,
+      ]
+    );
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
 
-        doc.save("Applicants.pdf");
-      
-  }
+    doc.save("Applicants.pdf");
+  };
   return (
     <>
       <Header />
-      
 
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -149,7 +167,6 @@ const ViewCVSubmissions = () => {
                   </Col>
 
                   <div className="col text-right">
-                   
                     <Button
                       className="btn-icon btn-3"
                       color="success"
@@ -228,7 +245,7 @@ const ViewCVSubmissions = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(applicant._id)}
+                            onClick={() => handleDelete(applicant._id,applicant.vacancy_id)}
                           >
                             Delete
                           </Button>
