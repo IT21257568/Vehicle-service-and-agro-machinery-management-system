@@ -19,6 +19,8 @@ const cvSubmissionRoute = require("./routes/cvSubmissionRoute");
 const generalIssueRoutes = require("./routes/generalIssue");
 const orderAgroProductRoute = require("./routes/orderAgroProductRoute");
 const emergencyIssueRoutes = require("./routes/emergencyIssue");
+const employeeRoutes = require("./routes/employeeRoutes");
+
 // setup cors
 const cors = require("cors");
 
@@ -47,6 +49,7 @@ app.use("/api/agroProducts", agroProductRoutes);
 app.use("/api/orderAgroProduct", orderAgroProductRoute);
 // Pawan
 app.use("/api/users", userRoutes);
+app.use("/api/employees", employeeRoutes);
 //Janindu
 app.use("/api/bookings", bookingsRoute);
 //Sithija
@@ -68,7 +71,10 @@ mongoose
   .then(() => {
     //listen for requests
     app.listen(process.env.PORT, () => {
-      console.log("Connect to the DB and listening on port", process.env.PORT);
+      console.log(
+        "Connected to the DB and listening on port",
+        process.env.PORT
+      );
     });
   })
   .catch((err) => console.log(err));

@@ -56,7 +56,6 @@ import ApplyNow from "views/User/ApplyNow";
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
 
-
 //Janindu user views
 import CreateClientBooking from "views/User/BookingPage";
 
@@ -64,7 +63,7 @@ import CreateClientBooking from "views/User/BookingPage";
 import AgroProductsPage from "views/User/AgroProductsPage";
 
 //nisa
-import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
+import ViewMeetTheTeam from "views/User/MeetTheTeam";
 
 //Pehesarani admin views
 import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
@@ -75,6 +74,10 @@ import OrderAgroProduct from "views/User/OrderAgroProduct";
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
 
+// Pawan — employee accounts section
+import CreateEmployee from "views/Admin/EmployeeAccounts/CreateEmployee";
+import ViewEmployees from "views/Admin/EmployeeAccounts/ViewEmployees";
+import UpdateEmployee from "views/Admin/EmployeeAccounts/UpdateEmployee";
 
 const routes = [
   {
@@ -279,8 +282,8 @@ const routes = [
     component: Promotions,
     layout: "/user",
   },
-   //Sithija FAQ section
-   {
+  //Sithija FAQ section
+  {
     path: "/create-faq",
     name: "Create FAQ",
     icon: "ni ni-notification-70 text-orange",
@@ -370,8 +373,8 @@ const routes = [
     component: AgroProductsPage,
     layout: "/user",
   },
-   //Pehesarani - View Agro Products orders admin routes
-   {
+  //Pehesarani - View Agro Products orders admin routes
+  {
     path: "/agro-products-orders",
     name: "Agro Product Orders",
     icon: "ni ni-settings text-blue",
@@ -440,7 +443,7 @@ const routes = [
     component: UpdateRepairJob,
     layout: "/admin",
   },
-  
+
   //Piyumi general issues
   {
     path: "/create-general-issue",
@@ -471,6 +474,27 @@ const routes = [
     component: DummyPage,
     layout: "/user",
   },
-
+  // EMPLOYEE ACCOUNTS SECTION
+  {
+    path: "/create-employee",
+    name: "Create Employee Account",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: CreateEmployee,
+    layout: "/admin",
+  },
+  {
+    path: "/view-employees",
+    name: "View Employee Accounts",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: ViewEmployees,
+    layout: "/admin",
+  },
+  {
+    path: "/update-employee/:id",
+    name: "Update Employee Account",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: UpdateEmployee,
+    layout: "/admin",
+  },
 ];
 export default routes;

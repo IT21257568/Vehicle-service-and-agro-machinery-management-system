@@ -84,6 +84,17 @@ const getMe = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Get user data
+// @route   POST /api/users/me
+// @access  Public
+const getAllUsers = asyncHandler(async (req, res) => {
+  const allUsers = await User.findOne().select("-password");
+
+  res.status(200).json({
+    allUsers,
+  });
+});
+
 // generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -95,4 +106,5 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  getAllUsers,
 };
