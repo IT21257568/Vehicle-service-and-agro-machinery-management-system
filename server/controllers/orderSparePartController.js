@@ -35,7 +35,7 @@ const createOrderSparePart = async (req, res) => {
         customer_buying_option,
         p_name,
         p_price,
-        spareparts_user_id,
+        sparepart_user_id,
     } = req.body;
 
     let emptyFields = [];
@@ -88,7 +88,7 @@ const createOrderSparePart = async (req, res) => {
             customer_buying_option,
             p_name,
             p_price,
-            spareparts_user_id,
+            sparepart_user_id,
         });
         res.status(200).json({orderSparePart});
     } catch (error) {

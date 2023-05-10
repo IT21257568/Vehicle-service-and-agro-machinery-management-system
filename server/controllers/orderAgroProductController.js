@@ -34,7 +34,7 @@ const createOrderAgroProduct = async (req, res) => {
         customer_note,
         p_name,
         p_price,
-        agroProduct_user_id,
+        agroproduct_user_id,
     } = req.body;
 
     let emptyFields = [];
@@ -80,7 +80,7 @@ const createOrderAgroProduct = async (req, res) => {
             customer_note,
             p_name,
             p_price,
-            agroProduct_user_id,
+            agroproduct_user_id,
         });
         res.status(200).json({orderAgroProduct});
     } catch (error) {
