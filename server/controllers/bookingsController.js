@@ -26,7 +26,16 @@ const getBooking = async(req, res) => {
 
 //create new booking
 const createBooking = async(req, res) => {
-    const { location, service_type, client_name, email, phone, special_note,date_time} = req.body;
+    const {
+      location,
+      service_type,
+      client_name,
+      email,
+      phone,
+      special_note,
+      date_time,
+      bookinguser_id,
+    } = req.body;
 
     let emptyFields = [];
 
@@ -61,13 +70,24 @@ const createBooking = async(req, res) => {
     if(!special_note){
         emptyFields.push('Special note');
     }
+    
+    
     if(emptyFields.length > 0 ){
         return res.status(400).json({ error: 'Please fill in all fields', emptyFields});
     }
 
     //add to db
     try{
-        const booking = await Booking.create({location, service_type, client_name, email, phone,date_time, special_note});
+        const booking = await Booking.create({
+          location,
+          service_type,
+          client_name,
+          email,
+          phone,
+          date_time,
+          special_note,
+          bookinguser_id,
+        });
         res.status(200).json({ booking });
     } catch (error) {
         res.status(400).json({error: error.message});
