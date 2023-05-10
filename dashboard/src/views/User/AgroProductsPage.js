@@ -30,7 +30,7 @@ import {
 } from "reactstrap";
 
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import AgroProductHeader from "components/Headers/AgroProductHeader.js";
 
 const AgroProductsPage = () => {
   // states
@@ -68,7 +68,7 @@ const AgroProductsPage = () => {
 
   return (
     <>
-      <UserHeader />
+      <AgroProductHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>

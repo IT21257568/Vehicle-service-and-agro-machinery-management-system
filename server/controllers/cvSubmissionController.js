@@ -49,7 +49,7 @@ const createmCVSubmission = async (req, res) => {
   if (!applicant_contact) {
     emptyFields.push("Contact Number");
   }
-  if (applicant_contact.length>10) {
+  else if(applicant_contact.length > 10 || applicant_contact.length < 10) {
     emptyFields.push("Invalid Contact Number");
   }
   if (!applicant_email) {

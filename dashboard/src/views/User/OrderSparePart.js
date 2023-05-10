@@ -1,6 +1,7 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -14,68 +15,84 @@ import {
   Container,
   Row,
   Col,
-  Media,
-  //Dropdown,
-  //DropdownToggle,
-  //DropdownMenu,
-  //DropdownItem,
-  CardImg,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Badge,
 } from "reactstrap";
 
 // core components
-import Header from "components/Headers/Header.js";
+import SparePartHeader from "components/Headers/SparePartHeader.js";
 
-const CreateVacancy = () => {
+const OrderAgroProduct = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
   
+  // get vacancy id from url
+  const { id } = useParams();
+
   const navigate = useNavigate();
-
-  //const [isLoading, setIsLoading] = useState(false);
-
-  const [image, setImage] = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
+  //const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
-  const [technician_name, setTechnicianName] = useState("");
-  const [technician_age, setTechnicianAge] = useState("");
-  const [technician_experiences, setTechnicianExperiences] = useState("");
-  const [technician_expertise, setTechnicianExpertise] = useState("");
-  const [technician_picture_url, setTechnicianPictureUrl] = useState("");
-  const [technician_specialize_in, setTechnicianSpecializeIn] = useState("");
+  const [data, setData] = useState([]);
+  const [SparePart_name, setSparePartName] = useState("");
+  const [SparePart_price, setSparePartPrice] = useState("");
+  
+  useEffect(() => {
+    const getSparePartNameOrders = async () => {
+      const res = await axios.get(`/api/spareParts${id}`);
+      console.log(res.data);
+      setData(res.data);
+      setSparePartName(res.data.p_name);
+      setSparePartPrice(res.data.p_price);
+    };
+    getSparePartNameOrders();
+  }, [id]);
+
+  // form states
+  const [customer_name, setCustomerName] = useState("");
+  const [customer_contact, setCustomerContact] = useState("");
+  const [customer_email, setCustomerEmail] = useState("");
+  const [customer_address, setCustomerAddress] = useState("");
+  const [customer_note, setCustomerNote] = useState("");
+  const [customer_buying_option, setBuyingOption] = useState("");
   const [error, setError] = useState(null);
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "agd0dlhj");
-    // formData.append("public_id", "your_public_id");
-    formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
 
-    const options = {
-      onUploadProgress: (progressEvent) => {
-        const percentCompleted = Math.round(
-          (progressEvent.loaded * 100) / progressEvent.total
-        );
-        setUploadProgress(percentCompleted);
-      },
-    };
+// const handleImageUpload = (event) => {
+//   const file = event.target.files[0];
+//   const formData = new FormData();
+//   formData.append("file", file);
+//   formData.append("upload_preset", "agd0dlhj");
+//   // formData.append("public_id", "your_public_id");
+//   formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
 
-    axios
-      .post(
-        `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
-        formData,
-        options
-      )
-      .then((response) => {
-        setImage(response.data.secure_url);
-        setUploadProgress(0);
-      })
-      .catch((error) => {
-        console.error(error);
-        setUploadProgress(0);
-      });
-  };
+//   const options = {
+//     onUploadProgress: (progressEvent) => {
+//       const percentCompleted = Math.round(
+//         (progressEvent.loaded * 100) / progressEvent.total
+//       );
+//       setUploadProgress(percentCompleted);
+//     },
+//   };
 
+//   axios
+//     .post(
+//       `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+//       formData,
+//       options
+//     )
+//     .then((response) => {
+//       setCVFile(response.data.secure_url);
+//       setUploadProgress(0);
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       setUploadProgress(0);
+//     });
+// };
 
 
   const handleSubmit = async (e) => {
@@ -83,39 +100,39 @@ const CreateVacancy = () => {
 
     try {
       await axios
-        .post("/api/mTeams", {
-          technician_name: technician_name,
-          technician_age: technician_age,
-          technician_experiences: technician_experiences,
-          technician_expertise: technician_expertise,
-          technician_picture_url: image,
-          technician_specialize_in: technician_specialize_in,
+        .post("/api/orderAgroProduct", {
+          customer_name: customer_name,
+          customer_contact: customer_contact,
+          customer_email: customer_email,
+          customer_address: customer_address,
+          customer_note: customer_note,
+          p_name: AgroProduct_name,
         })
         .then((res) => {
-          console.log("New Technician added", res.data);
-          setTechnicianName("");
-          setTechnicianAge("");
-          setTechnicianExperiences("");
-          setTechnicianExpertise("");
-          setTechnicianPictureUrl("");
-          setTechnicianSpecializeIn("");
+          console.log("New order added", res.data);
+          setCustomerName("");
+          setCustomerContact("");
+          setCustomerEmail("");
+          setCustomerAddress("");
+          setCustomerNote("");
           setError(null);
-          navigate("/admin/technicians");
+          navigate("/user/AgroProducts"); 
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        setError(`${fields}`);
       } else {
         console.log(error);
       }
     }
+    
+    
   };
-
   return (
     <>
-      <Header />
+      <SparePartHeader/>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -124,14 +141,17 @@ const CreateVacancy = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Add Technician</h3>
+                    <h4 className="mb-0">
+                      Order {" "}
+                      <Badge color="success">{data.p_name}</Badge>
+                    </h4>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Technician Details
+                    Customer Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -141,136 +161,131 @@ const CreateVacancy = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Technician Name
+                            Agro Product Name
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-username"
-                            placeholder="Enter Name"
+                            readOnly
+                            value={data.p_name}
+                            placeholder="Title"
                             type="text"
                             onChange={(e) => {
-                              setTechnicianName(e.target.value);
+                                setAgroProductName(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Technician Specialize In
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            //defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="Enter Technician's main expertise"
-                            type="text"
-                            onChange={(e) => {
-                              setTechnicianSpecializeIn(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Technician Age
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="select age"
-                            type="number"
-                            onChange={(e) => {
-                              setTechnicianAge(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Technician Expirence
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="select number of years working on this field"
-                            type="number"
-                            onChange={(e) => {
-                              setTechnicianExperiences(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
                       <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            Technician Picture
-                          </label>{" "}
-                          <br></br>
-                          <Media className="align-items-center">
-                            <span>
-                              
-                              <CardImg
-                                height="50rem"
-                                width="100%"
-                                alt="Technician Picture"
-                                src={image}
-                              />
-                            </span>
-                          </Media>
-                          <br></br>
+                            Name
+                          </label>
                           <Input
-                            type="file"
                             className="form-control-alternative"
-                            onChange={handleImageUpload}
+                            id="input-username"
+                            placeholder="Eneter Your Name Here"
+                            type="text"
+                            onChange={(e) => {
+                              setCustomerName(e.target.value);
+                            }}
                           />
-                          {uploadProgress > 0 && (
-                            <div>Uploading... {uploadProgress}%</div>
-                          )}
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Contact Number
+                          </label>
+
+                          <Input
+                            className="form-control-alternative"
+                            defaultValue="Lucky"
+                            id="input-first-name"
+                            placeholder="Enter Your Contact Number Here"
+                            type="number"
+                            onChange={(e) => {
+                              setCustomerContact(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Email
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-first-name"
+                            placeholder="Enter Your Email Here"
+                            type="email"
+                            onChange={(e) => {
+                              setCustomerEmail(e.target.value);
+                            }}
+                          /> 
+                          
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Address
+                          </label>
+
+                          <Input
+                            className="form-control-alternative"
+                            id="input-first-name"
+                            placeholder="Enter Your Address Here"
+                            type="text"
+                            onChange={(e) => {
+                              setCustomerAddress(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Special Note
+                          </label>
+
+                          <Input
+                            className="form-control-alternative"
+                            id="input-first-name"
+                            placeholder="Enter Your Note Here"
+                            rows="2"
+                            type="textarea"
+                            onChange={(e) => {
+                              setCustomerNote(e.target.value);
+                            }}
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
                   </div>
 
-                  {/* Description */}
                   <div className="pl-lg-4">
                     <FormGroup>
-                      <label
-                        className="form-control-label"
-                        htmlFor="input-last-name"
-                      >
-                        Techinician Expertice
-                      </label>
-                      <Input
-                        className="form-control-alternative"
-                        placeholder="Enter Technician's Expertice here"
-                        rows="4"
-                        type="textarea"
-                        onChange={(e) => {
-                          setTechnicianExpertise(e.target.value);
-                        }}
-                      />
                       {error && (
                         <div
                           style={{
@@ -297,13 +312,13 @@ const CreateVacancy = () => {
                       )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
-                      Create
+                        Order
                     </Button>
                     <Button
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/technicians");
+                        navigate("/user/AgroProducts");
                       }}
                     >
                       Cancel
@@ -319,4 +334,4 @@ const CreateVacancy = () => {
   );
 };
 
-export default CreateVacancy;
+export default OrderAgroProduct;

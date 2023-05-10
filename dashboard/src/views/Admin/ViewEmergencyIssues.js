@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -11,27 +12,63 @@ import {
   Card,
   CardHeader,
   CardFooter,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  Media,
   Pagination,
   PaginationItem,
   PaginationLink,
+  Progress,
   Table,
   Container,
   Row,
   InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   Input,
+  UncontrolledTooltip,
   Button,
+  Chip,
   Col,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-const ViewRepairJobs = () => {
+//card
+function CardRequiremnts({ gIssues, onClose }) {
+  return (
+    <div className="card">
+      <div className="card-body">
+        <p className="card-text">{gIssues}</p>
+        <Button size="sm" color="primary" onClick={onClose}>
+          Close
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+const ViewEmergencyIssues = () => {
   // states
-  const [allRepairJobs, setAllRepairJobs] = useState([]);
+  const [allEmergencyIssues, setAllEmergencyIssues] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showCard, setShowCard] = useState(false);
   const [query, setQuery] = useState("");
+
+  function handleViewClick() {
+    console.log("View button clicked");
+    setShowCard(true);
+  }
+
+  function handleCloseClick() {
+    console.log("Close button clicked");
+    setShowCard(false);
+  }
+  console.log("Rendering App component with showCard = ", showCard);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -42,73 +79,66 @@ const ViewRepairJobs = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all repair jobs from database
+  // retrieve all emergency issues from database
   useEffect(() => {
-    const fetchAllRepairJobs = async () => {
+    const fetchAllEmergencyIssues = async () => {
       try {
-        const res = await axios.get("/api/damageValuation");
-        setAllRepairJobs(res.data);
+        const res = await axios.get("/api/emergencyIssues");
+        setAllEmergencyIssues(res.data);
         setIsLoading(false);
       } catch (err) {
         setError(err);
         setIsLoading(false);
       }
     };
-    fetchAllRepairJobs();
+    fetchAllEmergencyIssues();
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`/api/damageValuation/${id}`).then((res) => {
+    axios.delete(`/api/emergencyIssues/${id}`).then((res) => {
       console.log(res.data);
-      setAllRepairJobs((prevData) =>
-        prevData.filter((damagevaluation) => damagevaluation._id !== id)
+      setAllEmergencyIssues((prevData) =>
+        prevData.filter((emergencyissues) => emergencyissues._id !== id)
       );
     });
   };
 
-  // Calculate the total estimated cost
-  const totalEstimatedCost = allRepairJobs.reduce(
-    (acc, { estimated_cost }) => acc + estimated_cost,
-    0
-  );
-
-  // Create a row for the total estimated cost
-  const totalRow = ["", "", "", "Total estimated cost", `Rs. ${totalEstimatedCost}`];
-
   const generateReport = () => {
+    
     const doc = new jsPDF();
     const columns = [
       "Customer Name",
-      "Vehicle Number",
-      "Vehicle Model",
-      "Required Parts",
-      "Estimated Cost",
+      "NIC",
+      "Contact Number",
+      "Maintenance Fee",
+      "Towing Fee",
+      "Total Fee",
     ];
-    const rows = allRepairJobs
-      .map(
-        ({
-          customer_name,
-          vehicle_Number,
-          vehicle_Model,
-          required_parts,
-          estimated_cost,
-        }) => [
-          customer_name,
-          vehicle_Number,
-          vehicle_Model,
-          required_parts,
-          `Rs. ${estimated_cost}`,
-        ]
-      )
-      .concat([totalRow]); // Add the total row to the end of the rows array
-
+    const rows = allEmergencyIssues.map(
+      ({
+        customer_name,
+        customer_NIC,
+        contact_number,
+        maintenance_fee,
+        towing_fee,
+        total_fee,
+      }) => [
+        customer_name,
+        customer_NIC,
+        contact_number,
+        `Rs. ${maintenance_fee}`,
+        `Rs. ${towing_fee}`,
+        `Rs. ${total_fee}`,
+      ]
+    );
     doc.autoTable({
       head: [columns],
       body: rows,
     });
 
-    doc.save("Damage Valuation Report.pdf");
-  };
+    doc.save("EmergencyIssue.pdf");
+  
+}
 
   return (
     <>
@@ -122,25 +152,26 @@ const ViewRepairJobs = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Repair Jobs</h3>
+                    <h3 className="mb-0">All Emergency Issues</h3>
                   </div>
-                  <Col xl="3">
-                    <InputGroup className="input-group-rounded input-group-merge">
+                  <Col xl="1">
+                    <InputGroup className="input-group-rounded input-group-merge" style={{width: '25rem'}}>
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
-                        placeholder="Search"
+                        placeholder="Search by customername / NIC"
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
                     </InputGroup>
                   </Col>
+                  <Col lg="7">
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={() => navigate("/admin/ceate-repair-job")}
+                      onClick={() => navigate("/admin/create-emergency-issue")}
                     >
                       <span
                         className="btn-inner--icon"
@@ -151,35 +182,39 @@ const ViewRepairJobs = () => {
                       <span className="btn-inner--text">Add</span>
                     </Button>
                   </div>
+                  </Col>
                   <div className="col text-right">
-                    <Button
-                      className="btn-icon btn-3"
-                      color="success"
-                      // style={{ color: "teal" }}
-                      type="button"
-                      onClick={generateReport}
-                    >
-                      <span
-                        className="btn-inner--icon"
-                        style={{ width: "20px" }}
-                      >
-                        <i className="ni ni-planet" />
-                      </span>
-                      <span className="btn-inner--text">Generate Report</span>
-                    </Button>
-                  </div>
+                   
+                   <Button
+                     className="btn-icon btn-3"
+                     color="success"
+                     type="button"
+                     onClick={generateReport}
+                   >
+                     <span
+                       className="btn-inner--icon"
+                       style={{ width: "20px" }}
+                     >
+                       <i className="ni ni-folder-17" />
+                     </span>
+                     <span className="btn-inner--text">Generate Report</span>
+                   </Button>
+                 </div>
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
+                    <th scope="col">Customer Name</th>
                     <th scope="col">NIC</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Vehicle Number</th>
-                    <th scope="col">Vehicle Type</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Estimated Cost</th>
-                    <th scope="col">Required Parts</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col">Current Location</th>
+                    <th scope="col">Assigned Employee</th>
+                    <th scope="col">Maintenance Fee</th>
+                    <th scope="col">Towing Fee</th>
+                    <th scope="col">Total Fee</th>
+                    <th scope="col">Issue Status</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -189,56 +224,59 @@ const ViewRepairJobs = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allRepairJobs
+                  {allEmergencyIssues
                     .filter(
-                      (repairJob) =>
-                        repairJob.customer_id
+                      (emergencyIssue) =>
+                      emergencyIssue.customer_NIC
                           ?.toString()
                           .includes(query.toString()) ||
-                        repairJob.customer_email
+                        emergencyIssue.customer_name
                           ?.toLowerCase()
                           .includes(query.toLowerCase())
-                      // repairJob.customer_id
-                      //   ?.toLowerCase()
-                      //   .includes(query.toLowerCase())
                     )
                     .slice(0, visible)
-                    .map((repairJob, index) => (
-                      <tr key={repairJob._id}>
+                    .map((emergencyIssue, index) => (
+                      <tr key={emergencyIssue._id}>
                         <th scope="row">
                           <span className="mb-0 text-sm">
-                            {repairJob.customer_id}
+                            {emergencyIssue.customer_name}
                           </span>
                         </th>
-                        <td>{repairJob.customer_name}</td>
-                        <td>{repairJob.vehicle_Number}</td>
+                        <td>{emergencyIssue.customer_NIC}</td>
+                        <td>{emergencyIssue.contact_number}</td>
+                        <td>{emergencyIssue.c_location}</td>
+                        <td>{emergencyIssue.available_emp}</td>
+                        <td>Rs.{emergencyIssue.maintenance_fee}</td>
+                        <td>Rs.{emergencyIssue.towing_fee}</td>
+                        <td>Rs.{emergencyIssue.total_fee}</td>
                         <td>
                           <Badge color="success">
-                            {repairJob.vehicle_Model}
+                            {emergencyIssue.issue_status}
                           </Badge>
                         </td>
-                        <td> {repairJob.customer_email} </td>
-                        <td> Rs.{repairJob.estimated_cost} </td>
-                        <td> {repairJob.required_parts} </td>
                         <td>
-                          <Button
-                            size="sm"
-                            color="primary"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              navigate(
-                                `/admin/view-repair-job-images/${repairJob._id}`
-                              );
-                            }}
-                          >
-                            View image
-                          </Button>
-                          <Button
+                          <div className="container">
+                            <Button
+                              size="sm"
+                              color="primary"
+                              onClick={handleViewClick}
+                            >
+                              View
+                            </Button>
+                            {showCard && (
+                              <CardRequiremnts
+                                gIssues={emergencyIssue.EM_discription}
+                                onClose={handleCloseClick}
+                              />
+                            )}
+                          </div>
+                          {/* <td>
+                           <Button
                             size="sm"
                             color="warning"
                             onClick={() =>
                               navigate(
-                                `/admin/update-repair-job/${repairJob._id}`
+                                `/admin/update-general-issues/${generalIssue._id}`
                               )
                             }
                           >
@@ -247,14 +285,35 @@ const ViewRepairJobs = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(repairJob._id)}
+                            onClick={() => handleDelete(generalIssue._id)}
+                          >
+                            Delete
+                          </Button>
+                          </td> */}
+                        </td>
+                        <td>
+                          <Button
+                            size="sm"
+                            color="warning"
+                            onClick={() =>
+                              navigate(
+                                `/admin/update-emergency-issue/${emergencyIssue._id}`
+                              )
+                            }
+                          >
+                            Update
+                          </Button>
+                          <Button
+                            size="sm"
+                            color="danger"
+                            onClick={() => handleDelete(emergencyIssue._id)}
                           >
                             Delete
                           </Button>
                         </td>
                       </tr>
                     ))}
-                  {visible < allRepairJobs.length && (
+                  {visible < allEmergencyIssues.length && (
                     <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
@@ -321,4 +380,4 @@ const ViewRepairJobs = () => {
   );
 };
 
-export default ViewRepairJobs;
+export default ViewEmergencyIssues;

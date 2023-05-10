@@ -38,6 +38,10 @@ import UpdateRepairJob from "views/Admin/UpdateRepairJob";
 import CreateGeneralIssue from "views/Admin/CreateGeneralIssues";
 import ViewGeneralIssues from "views/Admin/ViewGeneralIssues";
 import UpdateGeneralIssue from "views/Admin/UpdateGeneralIssues";
+import CreateEmergencyIssue from "views/Admin/CreateEmergencyIssues";
+import ViewRepairJobImage from "views/Admin/ViewRepairJobImage";
+import UpdateEmergencyIssue from "views/Admin/UpdateEmergencyIssues";
+import ViewEmergencyIssues from "views/Admin/ViewEmergencyIssues";
 
 import CreateFAQ from "views/Admin/CreateFAQ";
 import ViewFAQs from "views/Admin/ViewFAQs";
@@ -74,10 +78,16 @@ import OrderAgroProduct from "views/User/OrderAgroProduct";
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
 
+<<<<<<< HEAD
 // Pawan — employee accounts section
 import CreateEmployee from "views/Admin/EmployeeAccounts/CreateEmployee";
 import ViewEmployees from "views/Admin/EmployeeAccounts/ViewEmployees";
 import UpdateEmployee from "views/Admin/EmployeeAccounts/UpdateEmployee";
+=======
+//home page
+import Home from "./views/User/HomePage";
+
+>>>>>>> develop-new
 
 const routes = [
   {
@@ -262,7 +272,7 @@ const routes = [
   },
   {
     path: "/promotions",
-    name: "Promotions",
+    name: "Promotions Admin",
     icon: "ni ni-notification-70 text-orange",
     component: ViewPromotions,
     layout: "/admin",
@@ -443,7 +453,18 @@ const routes = [
     component: UpdateRepairJob,
     layout: "/admin",
   },
+<<<<<<< HEAD
 
+=======
+  {
+    path: "/view-repair-job-images/:id",
+    name: "View Repair Job Image",
+    icon: "ni ni-ruler-pencil text-black",
+    component: ViewRepairJobImage,
+    layout: "/admin",
+  },
+  
+>>>>>>> develop-new
   //Piyumi general issues
   {
     path: "/create-general-issue",
@@ -466,6 +487,28 @@ const routes = [
     component: UpdateGeneralIssue,
     layout: "/admin",
   },
+  //Piyumi - Emergency Issues
+  {
+    path: "/create-emergency-issue",
+    name: "Create Emergency Issue",
+    icon: "ni ni-single-copy-04 text-purple",
+    component: CreateEmergencyIssue,
+    layout: "/admin",
+  },
+  {
+    path: "/update-emergency-issue/:id",
+    name: "Update Emergency Issue",
+    icon: "ni ni-single-copy-04 text-purple",
+    component: UpdateEmergencyIssue,
+    layout: "/admin",
+  },
+  {
+    path: "/view-emergency-issues",
+    name: "View Emergency Issues",
+    icon: "ni ni-single-copy-04 text-purple",
+    component: ViewEmergencyIssues,
+    layout: "/admin",
+  },
   // USER VIEWS
   {
     path: "/dummypage",
@@ -474,6 +517,7 @@ const routes = [
     component: DummyPage,
     layout: "/user",
   },
+<<<<<<< HEAD
   // EMPLOYEE ACCOUNTS SECTION
   {
     path: "/create-employee",
@@ -496,5 +540,16 @@ const routes = [
     component: UpdateEmployee,
     layout: "/admin",
   },
+=======
+  //home view
+  {
+    path: "/home-page",
+    name: " ",
+    icon: "ni ni-ruler-pencil text-green",
+    component: Home,
+    layout: "/user",
+  },
+
+>>>>>>> develop-new
 ];
 export default routes;

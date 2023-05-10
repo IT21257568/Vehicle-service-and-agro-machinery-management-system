@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 // reactstrap components
 import {
   Badge,
@@ -32,6 +35,8 @@ import {
   CardGroup,
   CardImg,
   CardImgOverlay,
+  Input,
+  InputGroup,
   
 } from "reactstrap";
 
@@ -43,6 +48,7 @@ const ViewProgressStatus = () => {
   const [allProgresses, setAllProgresses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -77,6 +83,42 @@ const ViewProgressStatus = () => {
     });
   };
 
+  const generateReport = () => {
+
+    const doc = new jsPDF();
+    const columns = [
+      "Client Name",
+      "Vehicle Number",
+      "Service Status",
+      "Date of service",
+      "Discription",
+    ];
+    const rows = allProgresses.map(
+      ({
+        name,
+        vehi_number ,
+        status,
+        date,
+        description,
+      }) => [
+        name,
+        vehi_number ,
+        status,
+        date,
+        description,
+      ]
+    );
+
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
+
+    doc.save("report.pdf");
+  };
+
+
+
   return (
     <>
       <Header/>
@@ -90,9 +132,9 @@ const ViewProgressStatus = () => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Progress Status</h3>
-
-
-                    {/* <InputGroup className="input-group-rounded input-group-merge">
+                  </div>
+                  <Col xl="3">
+                    <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
@@ -100,21 +142,15 @@ const ViewProgressStatus = () => {
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <span className="fa fa-search" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                    </InputGroup> */}
-
-                    
-                  </div>
+                    </InputGroup>
+                    </Col>
                   <div className="col text-right">
-                    <Button
+                  {/* genarate report button */}
+                  <Button
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={() => navigate("/admin/create-progress")}
+                      onClick={generateReport}
                     >
                       <span
                         className="btn-inner--icon"
@@ -122,15 +158,25 @@ const ViewProgressStatus = () => {
                       >
                         <i className="ni ni-planet" />
                       </span>
-                      <span className="btn-inner--text">Add New Status</span>
+                      <span className="btn-inner--text">Generate Report</span>
                     </Button>
+
                   </div>
                 </Row>
               </CardHeader>
 
               <Container>
                 <Row>
-                  {allProgresses.slice(0, visible).map((progress, index) => (
+                  {allProgresses
+                    .filter((progress) =>
+                      progress.name
+                        ?.toLowerCase()
+                        .includes(query.toLowerCase()) ||
+                        progress.vehi_number
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
+                    )
+                  .slice(0, visible).map((progress, index) => (
                   
                   <Card key={progress._id}
                     

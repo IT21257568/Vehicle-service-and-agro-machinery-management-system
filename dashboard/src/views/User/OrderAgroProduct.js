@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -22,7 +23,7 @@ import {
 } from "reactstrap";
 
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import AgroProductHeader from "components/Headers/AgroProductHeader.js";
 
 const OrderAgroProduct = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -128,7 +129,7 @@ const OrderAgroProduct = () => {
   };
   return (
     <>
-      <UserHeader />
+      <AgroProductHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -268,7 +269,7 @@ const OrderAgroProduct = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-first-name"
-                            placeholder="Enter Your Email Here"
+                            placeholder="Enter Your Note Here"
                             rows="2"
                             type="textarea"
                             onChange={(e) => {

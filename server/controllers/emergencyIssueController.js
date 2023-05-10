@@ -62,15 +62,11 @@ const mongoose = require('mongoose');
             emptyFields.push('Issue Status');
         }
         if (!available_emp) {
-            emptyFields.push('Available Employees');
+            emptyFields.push('Available Technicians');
         }
         if (!maintenance_fee) {
             emptyFields.push('Maintenance Fee');
         }
-        if (!total_fee) {
-            emptyFields.push('Total Fee');
-        }
-
         if (emptyFields.length > 0) {
             return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
         }
