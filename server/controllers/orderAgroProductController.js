@@ -101,32 +101,32 @@ const createOrderAgroProduct = async (req, res) => {
     };
 
     //update a agroProduct
-    // const updateAgroProduct = async (req, res) => {
-    //     const { id } = req.params;
+    const updateOrderedAgroProduct = async (req, res) => {
+        const { id } = req.params;
 
-    //     if (!mongoose.Types.ObjectId.isValid(id)) {
-    //         return res.status(404).json({ error: "No such agroProduct" });
-    //     }
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).json({ error: "No such agroProduct" });
+        }
 
-    //     const agroProduct = await AgroProduct.findOneAndUpdate(
-    //         { _id: id },
-    //         {
-    //             ...req.body,
-    //         }
-    //     );
+        const agroProduct = await AgroProduct.findOneAndUpdate(
+            { _id: id },
+            {
+                ...req.body,
+            }
+        );
 
-    //     if (!agroProduct) {
-    //         return res.status(404).json({ error: "No such agroProduct" });
-    //     }
+        if (!agroProduct) {
+            return res.status(404).json({ error: "No such agroProduct" });
+        }
 
-    //     res.status(200).json(agroProduct);
-    // };
+        res.status(200).json(agroProduct);
+    };
 
     module.exports = {
         getAllOrderedAgroProducts,
         getOrderedAgroProduct,
         createOrderAgroProduct,
         deleteOrderedAgroProduct,
-        //updateAgroProduct,
+        updateOrderedAgroProduct,
     };
 
