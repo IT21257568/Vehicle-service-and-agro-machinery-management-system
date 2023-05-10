@@ -39,4 +39,4 @@ const orderSparePartSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("OrderedSpareParts", orderSparePartSchema);
+module.exports = mongoose.model("orderedspareparts", orderSparePartSchema);

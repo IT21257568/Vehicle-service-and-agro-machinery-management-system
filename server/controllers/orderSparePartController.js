@@ -1,9 +1,9 @@
-const OrderAgroProductForm = require("../models/orderSparePartModel");
+const orderedspareparts = require("../models/orderSparePartModel");
 const mongoose = require("mongoose");
 
 //get all ordered SpareParts
 const getAllOrderedSpareParts = async (req, res) => {
-  const orderedSpareParts = await OrderedSpareParts.find({}).sort({ createdAt: -1 });
+  const orderedSpareParts = await orderedspareparts.find({}).sort({ createdAt: -1 });
 
   res.status(200).json(orderedSpareParts);
 };
@@ -15,7 +15,7 @@ const getOrderedSparePart = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such ordered SpareParts" });
   }
-  const orderedSpareParts = await OrderSpareParts.findById(id);
+  const orderedSpareParts = await orderedspareparts.findById(id);
 
   if (!orderedSpareParts) {
     return res.status(404).json({ error: "No such ordered SpareParts" });
@@ -78,7 +78,7 @@ const createOrderSparePart = async (req, res) => {
 
     //add doc to db
     try {
-        const orderSparePart = await  OrderSpareParts.create({
+        const orderSparePart = await  orderedspareparts.create({
             customer_name,
             customer_contact,
             customer_email,
@@ -101,7 +101,7 @@ const createOrderSparePart = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(404).json({ error: "No such ordered SparePart" });
         }
-        const orderedSparePart = await  OrderSpareParts.findOneAndDelete({ _id: id });
+        const orderedSparePart = await  orderedspareparts.findOneAndDelete({ _id: id });
 
         if (!orderedSparePart) {
             return res.status(404).json({ error: "No such ordered SparePart" });
@@ -167,7 +167,7 @@ const createOrderSparePart = async (req, res) => {
             return res.status(404).json({ error: "No such SparePart" });
         }
 
-        const spareParts = await SparePart.findOneAndUpdate(
+        const spareParts = await orderedspareparts.findOneAndUpdate(
             { _id: id },
             {
                 ...req.body,

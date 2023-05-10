@@ -108,7 +108,7 @@ const createOrderAgroProduct = async (req, res) => {
             return res.status(404).json({ error: "No such agroProduct" });
         }
 
-        const agroProduct = await AgroProduct.findOneAndUpdate(
+        const agroProduct = await OrderAgroProductForm.findOneAndUpdate(
             { _id: id },
             {
                 ...req.body,
