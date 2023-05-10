@@ -35,6 +35,10 @@ const orderSparePartSchema = new Schema(
             type: String,
             required: true,
         },
+        sparepart_user_id: {
+            type: String,
+            required: true,
+        },
     },
   { timestamps: true }
 );
