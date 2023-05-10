@@ -54,8 +54,7 @@ const CreateBookingClient = () => {
           phone: phone,
           email: email,
           date_time: date_time,
-          special_note: specialNote,
-          bookinguser_id: bookinguser_id,
+          special_note: specialNote
         })
         .then((res) => {
           console.log("New booking added", res.data);
@@ -66,7 +65,6 @@ const CreateBookingClient = () => {
           setPhone("");
           setDateTime("");
           setSpecialNote("");
-          setBookingUserId("");
           setError(null);
           navigate("/admin/bookings");
         });
