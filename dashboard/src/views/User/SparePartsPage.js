@@ -49,6 +49,11 @@ const SparePartsPage = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
+  //sorting function
+  const sorting = () => {
+    setDropdownOpen((prevState) => !prevState);
+  };
+
   // retrieve all spare parts from database
   useEffect(() => {
     const fetchAllSpareParts = async () => {
@@ -64,6 +69,7 @@ const SparePartsPage = () => {
     fetchAllSpareParts();
   }, []);
 
+  
   return (
     <>
       <SparePartHeader />
@@ -91,6 +97,7 @@ const SparePartsPage = () => {
                             isOpen={dropdownOpen}
                             color="primary"
                             toggle={toggle}
+                            onClick={sorting}
                           >
                             <DropdownToggle caret>
                               {faqCategory ? faqCategory : "Select Category"}
@@ -186,7 +193,7 @@ const SparePartsPage = () => {
                             //   )
                             // }
                           >
-                            Add to Cart
+                            Order Product
                           </Button>
                         </Row>
                       </CardBody>

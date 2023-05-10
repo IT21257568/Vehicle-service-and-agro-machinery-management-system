@@ -5,6 +5,7 @@ const {
     getOrderedAgroProduct,
     createOrderAgroProduct,
     deleteOrderedAgroProduct,
+    updateOrderedAgroProduct,
  } = require('../controllers/orderAgroProductController');
 
 //GET all AgroProducts
@@ -20,6 +21,6 @@ router.post('/',  createOrderAgroProduct)
 router.delete('/:id', deleteOrderedAgroProduct)
 
 //UPDATE a AgroProduct
-//router.patch('/:id', updateAgroProduct)
+router.patch('/:id', updateOrderedAgroProduct)
 
 module.exports = router;
