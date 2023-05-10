@@ -39,6 +39,7 @@ const CreateBooking = () => {
   const [phone, setPhone] = useState("");
   const [date_time, setDateTime] = useState("");
   const [specialNote, setSpecialNote] = useState("");
+  const [booking_user_id, setBookingUserId] = useState("4200efghid");
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -53,7 +54,8 @@ const CreateBooking = () => {
           phone: phone,
           email: email,
           date_time: date_time,
-          special_note: specialNote
+          special_note: specialNote,
+          booking_user_id: booking_user_id,
         })
         .then((res) => {
           console.log("New booking added", res.data);
