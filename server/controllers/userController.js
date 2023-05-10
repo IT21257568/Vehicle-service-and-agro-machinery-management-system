@@ -88,7 +88,7 @@ const getMe = asyncHandler(async (req, res) => {
 // @route   POST /api/users/me
 // @access  Public
 const getAllUsers = asyncHandler(async (req, res) => {
-  const allUsers = await User.findOne().select("-password");
+  const allUsers = await User.find().select("-password");
 
   res.status(200).json({
     allUsers,
