@@ -43,15 +43,20 @@ const createmCVSubmission = async (req, res) => {
   }
   if (!applicant_age) {
     emptyFields.push("Age");
+  } else if(applicant_age < 18 || applicant_age > 60){
+    
+      emptyFields.push("Age must be between 18 and 60");
   }
   if (!applicant_gender) {
     emptyFields.push("Gender");
   }
   if (!applicant_contact) {
     emptyFields.push("Contact Number");
-  }
-  else if(applicant_contact.length > 10 || applicant_contact.length < 10) {
-    emptyFields.push("Invalid Contact Number");
+  } else {
+    const phoneRegex = /^\d{10}$/; // regular expression for 10-digit phone number
+    if (!phoneRegex.test(applicant_contact)) {
+      emptyFields.push("Invalid phone number format");
+    }
   }
   if (!applicant_email) {
     emptyFields.push("Email");
