@@ -35,8 +35,6 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-
-
 const ViewCVSubmissions = () => {
   // states
   const [allApplicants, setAllSubmissions] = useState([]);
@@ -44,7 +42,6 @@ const ViewCVSubmissions = () => {
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
   const [vacancy_applicants, setVacancyApplicants] = useState("");
-
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -70,8 +67,6 @@ const ViewCVSubmissions = () => {
     fetchAllCVSubmissions();
   }, []);
 
- 
-
   const handleDelete = (id, vId) => {
     axios.delete(`/api/cvSub/${id}`).then((res) => {
       console.log(res.data);
@@ -80,9 +75,7 @@ const ViewCVSubmissions = () => {
       );
     });
 
-    
     const updateRecord = async () => {
-      // get vacancy applicants count
       const response = await axios.get(`/api/vacancies/${vId}`);
       setVacancyApplicants(response.data.vacancy_applicants);
       console.log(response.data);
@@ -103,49 +96,47 @@ const ViewCVSubmissions = () => {
     updateRecord();
   };
 
-
   const generateReport = () => {
-        const doc = new jsPDF();
-        const columns = [
-          "Applicant Name",
-          "Applied Vacancy",
-          "Age",
-          "Gender",
-          "Contact Number",
-          "Email",
-          "Submitted Date&Time",
-        ];
-        const rows = allApplicants.map(
-          ({
-            applicant_name,
-            vacancy_name,
-            applicant_age,
-            applicant_gender,
-            applicant_contact,
-            applicant_email,
-            createdAt,
-          }) => [
-            applicant_name,
-            vacancy_name,
-            applicant_age,
-            applicant_gender,
-            applicant_contact,
-            applicant_email,
-            new Date(createdAt).toLocaleString("en-US", {
-              dateStyle: "short",
-              timeStyle: "short",
-            }),
-            ,
-          ]
-        );
-        doc.autoTable({
-          head: [columns],
-          body: rows,
-        });
+    const doc = new jsPDF();
+    const columns = [
+      "Applicant Name",
+      "Applied Vacancy",
+      "Age",
+      "Gender",
+      "Contact Number",
+      "Email",
+      "Submitted Date&Time",
+    ];
+    const rows = allApplicants.map(
+      ({
+        applicant_name,
+        vacancy_name,
+        applicant_age,
+        applicant_gender,
+        applicant_contact,
+        applicant_email,
+        createdAt,
+      }) => [
+        applicant_name,
+        vacancy_name,
+        applicant_age,
+        applicant_gender,
+        applicant_contact,
+        applicant_email,
+        new Date(createdAt).toLocaleString("en-US", {
+          dateStyle: "short",
+          timeStyle: "short",
+        }),
+        ,
+      ]
+    );
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
 
-        doc.save("Applicants.pdf");
-      
-  }
+    doc.save("Applicants.pdf");
+  };
 
   return (
     <>
@@ -263,7 +254,9 @@ const ViewCVSubmissions = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(applicant._id,applicant.vacancy_id)}
+                            onClick={() =>
+                              handleDelete(applicant._id, applicant.vacancy_id)
+                            }
                           >
                             Delete
                           </Button>
