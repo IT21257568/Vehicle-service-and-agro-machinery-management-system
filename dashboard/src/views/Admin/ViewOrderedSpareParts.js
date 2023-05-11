@@ -35,9 +35,9 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const ViewOrderAgroProduct = () => {
+const ViewOrderedSpareParts = () => {
   // states
-  const [allAgroProductOrders, setAllAgroProductOrders] = useState([]);
+  const [allSparePartOrders, setAllSparePartOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
@@ -53,24 +53,24 @@ const ViewOrderAgroProduct = () => {
 
   // retrieve all agro product orders from database
   useEffect(() => {
-    const fetchAllAgroProductOrders = async () => {
+    const fetchAllSparePartOrders = async () => {
       try {
-        const res = await axios.get("/api/orderAgroProduct");
-        setAllAgroProductOrders(res.data);
+        const res = await axios.get("/api/orderSparePart");
+        setAllSparePartOrders(res.data);
         setIsLoading(false);
       } catch (error) {
         setError(error);
         setIsLoading(false);
       }
     };
-    fetchAllAgroProductOrders();
+    fetchAllSparePartOrders();
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`/api/orderAgroProduct/${id}`).then((res) => {
+    axios.delete(`/api/orderSparePart/${id}`).then((res) => {
       console.log(res.data);
-      setAllAgroProductOrders((prevData) =>
-        prevData.filter((orderAgroProduct) => orderAgroProduct._id !== id)
+      setAllSparePartOrders((prevData) =>
+        prevData.filter((orderSparePart) => orderSparePart._id !== id)
       );
     });
   };
@@ -87,7 +87,7 @@ const ViewOrderAgroProduct = () => {
       "Ordered Date",
       "Updated Date",
     ];
-    const tableRows = allAgroProductOrders.map(
+    const tableRows = allSparePartOrders.map(
       ({
         p_name,
         customer_name,
@@ -113,7 +113,7 @@ const ViewOrderAgroProduct = () => {
       body: tableRows,
     });
 
-    doc.save("agroProductOrders.pdf");
+    doc.save("SparePartOrders.pdf");
   };
 
   //date format
@@ -156,7 +156,7 @@ const ViewOrderAgroProduct = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Agro Product Orders</h3>
+                    <h3 className="mb-0">All Spare Parts Orders</h3>
                   </div>
                   <Col xl="1">
                     <InputGroup className="input-group-rounded input-group-merge"
@@ -208,7 +208,7 @@ const ViewOrderAgroProduct = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allAgroProductOrders
+                  {allSparePartOrders
                     .filter((order) =>
                       order.p_name?.toLowerCase().includes(query.toLowerCase())
                     )
@@ -239,7 +239,7 @@ const ViewOrderAgroProduct = () => {
                 </tbody>
               </Table>
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
-                {visible < allAgroProductOrders.length && (
+                {visible < allSparePartOrders.length && (
                   <Button color="info" size="sm" onClick={showMoreItems}>
                     Load More
                   </Button>
@@ -253,4 +253,4 @@ const ViewOrderAgroProduct = () => {
   );
 };
 
-export default ViewOrderAgroProduct;
+export default ViewOrderedSpareParts;

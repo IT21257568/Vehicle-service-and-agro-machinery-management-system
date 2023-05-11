@@ -58,6 +58,7 @@ const OrderSparePart = () => {
   const [customer_address, setCustomerAddress] = useState("");
   const [customer_note, setCustomerNote] = useState("");
   const [customer_buying_option, setBuyingOption] = useState("");
+  const [sparepart_user_id, setSparePartUserId] = useState("4200");
   const [error, setError] = useState(null);
 
 
@@ -76,6 +77,7 @@ const OrderSparePart = () => {
           customer_buying_option: customer_buying_option,
           p_price: SparePart_price,
           p_name: SparePart_name,
+          sparepart_user_id: sparepart_user_id,	
         })
         .then((res) => {
           console.log("New order added", res.data);
