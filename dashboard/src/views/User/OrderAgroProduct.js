@@ -38,6 +38,7 @@ const OrderAgroProduct = () => {
   // form states
   const [data, setData] = useState([]);
   const [AgroProduct_name, setAgroProductName] = useState("");
+  const [AgroProduct_price, setAgroProductPrice] = useState("");
   
   useEffect(() => {
     const getAgroProductOrders = async () => {
@@ -45,6 +46,7 @@ const OrderAgroProduct = () => {
       console.log(res.data);
       setData(res.data);
       setAgroProductName(res.data.p_name);
+      setAgroProductPrice(res.data.p_price);
     };
     getAgroProductOrders();
   }, [id]);
@@ -55,6 +57,7 @@ const OrderAgroProduct = () => {
   const [customer_email, setCustomerEmail] = useState("");
   const [customer_address, setCustomerAddress] = useState("");
   const [customer_note, setCustomerNote] = useState("");
+  const [agroproduct_user_id, setAgroUserId] = useState("4200");
   const [error, setError] = useState(null);
 
 
@@ -104,6 +107,8 @@ const OrderAgroProduct = () => {
           customer_address: customer_address,
           customer_note: customer_note,
           p_name: AgroProduct_name,
+          p_price: AgroProduct_price,
+          agroproduct_user_id: agroproduct_user_id,
         })
         .then((res) => {
           console.log("New order added", res.data);
@@ -148,7 +153,7 @@ const OrderAgroProduct = () => {
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Customer Details
+                    Agro Product Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -174,6 +179,36 @@ const OrderAgroProduct = () => {
                         </FormGroup>
                       </Col>
                       <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-username"
+                          >
+                            Agro Product Price
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-username"
+                            readOnly
+                            value={data.p_price}
+                            placeholder="Title"
+                            type="text"
+                            onChange={(e) => {
+                                setAgroProductPrice(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div>
+                  </Form>
+                  <Form>
+                  <h6 className="heading-small text-muted mb-4">
+                    Customer Details
+                  </h6>
+                    <div className="pl-lg-4">
+                    <Row>
+                    <Col lg="4">
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
@@ -192,9 +227,7 @@ const OrderAgroProduct = () => {
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="6">
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -205,17 +238,19 @@ const OrderAgroProduct = () => {
 
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
+
                             id="input-first-name"
                             placeholder="Enter Your Contact Number Here"
-                            type="number"
+                            type="phone"
                             onChange={(e) => {
                               setCustomerContact(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
+                    </Row>
+                    <Row>
+                    <Col lg="4">
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
@@ -235,9 +270,7 @@ const OrderAgroProduct = () => {
                           
                         </FormGroup>
                       </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="6">
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -257,7 +290,9 @@ const OrderAgroProduct = () => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
+                      </Row>
+                      <Row>
+                      <Col lg="8">
                         <FormGroup>
                           <label
                             className="form-control-label"
