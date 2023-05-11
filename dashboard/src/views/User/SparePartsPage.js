@@ -37,7 +37,7 @@ const SparePartsPage = () => {
   const [allSpareParts, setAllSpareParts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visible, setVisible] = useState(3);
+  const [visible, setVisible] = useState(4);
   const [faqCategory, setFaqCategory] = useState("");
   const [query, setQuery] = useState("");
 
@@ -47,6 +47,11 @@ const SparePartsPage = () => {
 
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 3);
+  };
+
+  //sorting function
+  const sorting = () => {
+    setDropdownOpen((prevState) => !prevState);
   };
 
   // retrieve all spare parts from database
@@ -64,6 +69,7 @@ const SparePartsPage = () => {
     fetchAllSpareParts();
   }, []);
 
+  
   return (
     <>
       <SparePartHeader />
@@ -91,6 +97,7 @@ const SparePartsPage = () => {
                             isOpen={dropdownOpen}
                             color="primary"
                             toggle={toggle}
+                            onClick={sorting}
                           >
                             <DropdownToggle caret>
                               {faqCategory ? faqCategory : "Select Category"}
@@ -135,7 +142,7 @@ const SparePartsPage = () => {
                   </div>
                 </Row>
               </CardHeader>
-              <Container>
+              {/* <Container> */}
                <div className="pl-lg-5">
                 <Row style={{ marginTop: "0.5rem" }}>
                   {allSpareParts
@@ -180,13 +187,13 @@ const SparePartsPage = () => {
                             color="warning"
                             type="button"
                             style={{marginLeft: '3.3rem', width: '12rem'}}
-                            // onClick={() =>
-                            //   navigate(
-                            //     `/admin/update-spare-part/${sparePart._id}`
-                            //   )
-                            // }
+                            onClick={() =>
+                              navigate(
+                                `/user/order-spareParts/${sparePart._id}`
+                              )
+                            }
                           >
-                            Add to Cart
+                            Order Product
                           </Button>
                         </Row>
                       </CardBody>
@@ -194,7 +201,7 @@ const SparePartsPage = () => {
                   ))}
                 </Row>
               </div>
-              </Container>
+              {/* </Container> */}
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
                 {visible < allSpareParts.length && (
                     <Button  color="info" size="sm" onClick={showMoreItems}>

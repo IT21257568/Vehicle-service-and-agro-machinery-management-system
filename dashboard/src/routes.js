@@ -71,10 +71,12 @@ import AgroProductsPage from "views/User/AgroProductsPage";
 import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
 
 //Pehesarani admin views
-import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
-
+import ViewOrderedAgroProducts from "views/Admin/ViewOrderedAgroProducts";
+import ViewOrderedSpareParts from "views/Admin/ViewOrderedSpareParts";
 //Pehesarani user views
 import OrderAgroProduct from "views/User/OrderAgroProduct";
+import OrderSparePart from "views/User/OrderSparePart";
+import MyOrders from "views/User/MyOrders";
 
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
@@ -359,12 +361,34 @@ const routes = [
     component: UpdateSparePart,
     layout: "/admin",
   },
+  {
+    path: "/spare-part-orders",
+    name: "Spare Parts Orders",
+    icon: "ni ni-settings text-blue",
+    component: ViewOrderedSpareParts,
+    layout: "/admin",
+  },
+  //Pehesarani user views
   //User - Pehesasarani Spare Parts
   {
     path: "/spareParts",
     name: "Spare Parts Page",
     icon: "ni ni-ruler-pencil text-blue",
     component: SparePartsPage,
+    layout: "/user",
+  },
+  {
+    path: "/order-spareParts/:id",
+    name: "Order Spare Part",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: OrderSparePart,
+    layout: "/user",
+  },
+  {
+    path: "/my-orders",
+    name: "My Orders",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: MyOrders,
     layout: "/user",
   },
   //Pehesarani - Agro Products admin routes
@@ -402,7 +426,7 @@ const routes = [
     path: "/agro-products-orders",
     name: "Agro Product Orders",
     icon: "ni ni-settings text-blue",
-    component: ViewOrderAgroProducts,
+    component: ViewOrderedAgroProducts,
     layout: "/admin",
   },
   //User - Pehesarani Agro Products

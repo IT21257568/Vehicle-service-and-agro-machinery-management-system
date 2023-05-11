@@ -35,9 +35,9 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-const ViewOrderAgroProduct = () => {
+const ViewOrderedSpareParts = () => {
   // states
-  const [allAgroProductOrders, setAllAgroProductOrders] = useState([]);
+  const [allSparePartOrders, setAllSparePartOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
@@ -53,24 +53,24 @@ const ViewOrderAgroProduct = () => {
 
   // retrieve all agro product orders from database
   useEffect(() => {
-    const fetchAllAgroProductOrders = async () => {
+    const fetchAllSparePartOrders = async () => {
       try {
-        const res = await axios.get("/api/orderAgroProduct");
-        setAllAgroProductOrders(res.data);
+        const res = await axios.get("/api/orderSparePart");
+        setAllSparePartOrders(res.data);
         setIsLoading(false);
       } catch (error) {
         setError(error);
         setIsLoading(false);
       }
     };
-    fetchAllAgroProductOrders();
+    fetchAllSparePartOrders();
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`/api/orderAgroProduct/${id}`).then((res) => {
+    axios.delete(`/api/orderSparePart/${id}`).then((res) => {
       console.log(res.data);
-      setAllAgroProductOrders((prevData) =>
-        prevData.filter((orderAgroProduct) => orderAgroProduct._id !== id)
+      setAllSparePartOrders((prevData) =>
+        prevData.filter((orderSparePart) => orderSparePart._id !== id)
       );
     });
   };
@@ -84,8 +84,10 @@ const ViewOrderAgroProduct = () => {
       "Customer Email",
       "Customer Address",
       "Special Note",
+      "Ordered Date",
+      "Updated Date",
     ];
-    const tableRows = allAgroProductOrders.map(
+    const tableRows = allSparePartOrders.map(
       ({
         p_name,
         customer_name,
@@ -93,6 +95,8 @@ const ViewOrderAgroProduct = () => {
         customer_email,
         customer_address,
         customer_note,
+        createdAt,
+        updatedAt,
       }) => [
         p_name,
         customer_name,
@@ -100,6 +104,8 @@ const ViewOrderAgroProduct = () => {
         customer_email,
         customer_address,
         customer_note,
+        formatDateTime(createdAt),
+        formatDateTime(updatedAt),
       ]
     );
     doc.autoTable({
@@ -107,8 +113,36 @@ const ViewOrderAgroProduct = () => {
       body: tableRows,
     });
 
-    doc.save("agroProductOrders.pdf");
+    doc.save("SparePartOrders.pdf");
   };
+
+  //date format
+  function formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedDate = `${date.getDate()} ${
+      months[date.getMonth()]
+    } ${date.getFullYear()}, ${hours % 12}:${minutes
+      .toString()
+      .padStart(2, "0")} ${ampm}`;
+    return formattedDate;
+  }
 
   return (
     <>
@@ -122,7 +156,7 @@ const ViewOrderAgroProduct = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Agro Product Orders</h3>
+                    <h3 className="mb-0">All Spare Parts Orders</h3>
                   </div>
                   <Col xl="1">
                     <InputGroup className="input-group-rounded input-group-merge"
@@ -163,6 +197,8 @@ const ViewOrderAgroProduct = () => {
                     <th scope="col">Customer Email</th>
                     <th scope="col">Customer Address</th>
                     <th scope="col">Special Note</th>
+                    <th scope="col">Ordered Date</th>
+                    <th scope="col">Updated Date</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -172,7 +208,7 @@ const ViewOrderAgroProduct = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allAgroProductOrders
+                  {allSparePartOrders
                     .filter((order) =>
                       order.p_name?.toLowerCase().includes(query.toLowerCase())
                     )
@@ -187,6 +223,8 @@ const ViewOrderAgroProduct = () => {
                         <td>{order.customer_email}</td>
                         <td>{order.customer_address}</td>
                         <td>{order.customer_note}</td>
+                        <td>{formatDateTime(order.createdAt)}</td>
+                        <td>{formatDateTime(order.updatedAt)}</td>
                         <td>
                           <Button
                             size="sm"
@@ -201,7 +239,7 @@ const ViewOrderAgroProduct = () => {
                 </tbody>
               </Table>
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
-                {visible < allAgroProductOrders.length && (
+                {visible < allSparePartOrders.length && (
                   <Button color="info" size="sm" onClick={showMoreItems}>
                     Load More
                   </Button>
@@ -215,4 +253,4 @@ const ViewOrderAgroProduct = () => {
   );
 };
 
-export default ViewOrderAgroProduct;
+export default ViewOrderedSpareParts;

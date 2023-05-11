@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -22,82 +23,44 @@ import {
 } from "reactstrap";
 
 // core components
-import CareerHeader from "components/Headers/CareerHeader.js";
+import SparePartHeader from "components/Headers/SparePartHeader.js";
 
-const CreateVacancy = () => {
+const OrderSparePart = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-
+  
   // get vacancy id from url
   const { id } = useParams();
 
   const navigate = useNavigate();
-   const [cvFile, setCVFile] = useState(null);
-   const [uploadProgress, setUploadProgress] = useState(0);
+  //const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
   const [data, setData] = useState([]);
-  const [vacancyTitle, setVacancyTitle] = useState("");
-  const [vacancy_applicants, setVacancyApplicants] = useState("");
-  const [vacancyRequirements, setVacancyRequirements] = useState("");
-  const [vacancy_id, setVacancyId] = useState("");
-
+  const [SparePart_name, setSparePartName] = useState("");
+  const [SparePart_price, setSparePartPrice] = useState("");
+  
   useEffect(() => {
-    const getVacancy = async () => {
-      const res = await axios.get(`/api/vacancies/${id}`);
+    const getSparePartNameOrders = async () => {
+      const res = await axios.get(`/api/spareParts/${id}`);
       console.log(res.data);
       setData(res.data);
-
-      setVacancyTitle(res.data.vacancy_title);
-      setVacancyRequirements(res.data.vacancy_requirements);
-      setVacancyApplicants(res.data.vacancy_applicants)
-      setVacancyId(res.data._id);
+      setSparePartName(res.data.sp_name);
+      setSparePartPrice(res.data.sp_price);
     };
-    getVacancy();
+    getSparePartNameOrders();
   }, [id]);
 
   // form states
-  const [applicant_name, setApplicantName] = useState("");
-  const [applicant_age, setApplicantAge] = useState("");
-  const [applicant_gender, setApplicantGender] = useState("");
-  const [applicant_contact, setApplicantContact] = useState("");
-  const [applicant_email, setApplicantEmail] = useState("");
-  const [applicant_CVFile_url, setApplicantCVFileUrl] = useState("");
+  const [customer_name, setCustomerName] = useState("");
+  const [customer_contact, setCustomerContact] = useState("");
+  const [customer_email, setCustomerEmail] = useState("");
+  const [customer_address, setCustomerAddress] = useState("");
+  const [customer_note, setCustomerNote] = useState("");
+  const [customer_buying_option, setBuyingOption] = useState("");
+  const [sparepart_user_id, setSparePartUserId] = useState("4200");
   const [error, setError] = useState(null);
 
-
-const handleImageUpload = (event) => {
-  const file = event.target.files[0];
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "agd0dlhj");
-  // formData.append("public_id", "your_public_id");
-  formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
-
-  const options = {
-    onUploadProgress: (progressEvent) => {
-      const percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total
-      );
-      setUploadProgress(percentCompleted);
-    },
-  };
-
-  axios
-    .post(
-      `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
-      formData,
-      options
-    )
-    .then((response) => {
-      setCVFile(response.data.secure_url);
-      setUploadProgress(0);
-    })
-    .catch((error) => {
-      console.error(error);
-      setUploadProgress(0);
-    });
-};
 
 
   const handleSubmit = async (e) => {
@@ -105,40 +68,35 @@ const handleImageUpload = (event) => {
 
     try {
       await axios
-        .post("/api/cvSub", {
-          applicant_name: applicant_name,
-          applicant_age: applicant_age,
-          applicant_gender: applicant_gender,
-          applicant_contact: applicant_contact,
-          applicant_email: applicant_email,
-          applicant_CVFile_url: cvFile,
-          vacancy_name: vacancyTitle,
-          vacancy_id: vacancy_id,
+        .post("/api/orderSparePart", {
+          customer_name: customer_name,
+          customer_contact: customer_contact,
+          customer_email: customer_email,
+          customer_address: customer_address,
+          customer_note: customer_note,
+          customer_buying_option: customer_buying_option,
+          p_price: SparePart_price,
+          p_name: SparePart_name,
+          sparepart_user_id: sparepart_user_id,	
         })
         .then((res) => {
-          console.log("New Vacancy added", res.data);
-          setApplicantName("");
-          setApplicantAge("");
-          setApplicantGender("");
-          setApplicantContact("");
-          setApplicantEmail("");
-          setApplicantEmail("");
-          setApplicantCVFileUrl("");
+          console.log("New order added", res.data);
+          setCustomerName("");
+          setCustomerContact("");
+          setCustomerEmail("");
+          setCustomerAddress("");
+          setCustomerNote("");
+          setBuyingOption("");
+          setSparePartName("");
+          setSparePartPrice("");
           setError(null);
-          axios
-            .patch(`/api/vacancies/${id}`, {
-              vacancy_applicants: vacancy_applicants + 1,
-            })
-            .then((res) => {
-              console.log(res.data);
-              navigate("/user/carrerpage");
-            });
+          navigate("/user/spareParts"); 
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        setError(`${fields}`);
       } else {
         console.log(error);
       }
@@ -148,7 +106,7 @@ const handleImageUpload = (event) => {
   };
   return (
     <>
-      <CareerHeader />
+      <SparePartHeader/>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -157,33 +115,17 @@ const handleImageUpload = (event) => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">
-                      Apply For The{" "}
-                      <Badge color="success">{data.vacancy_title}</Badge>
-                    </h3>
-                    <br></br>
-                    <label
-                      className="form-control-label"
-                      htmlFor="input-last-name"
-                      style={{ marginBottom: "0.5rem", fontWeight: "bold" }}
-                    >
-                      Requirements for the {data.vacancy_title} vacancy
-                    </label>
-                    <Input
-                      className="form-control-alternative"
-                      readOnly
-                      value={data.vacancy_requirements}
-                      rows="6"
-                      type="textarea"
-                      style={{ fontSize: "1rem", backgroundColor: "#f8f9fe" }}
-                    />
+                    <h4 className="mb-0">
+                      Order {" "}
+                      <Badge color="success">{data.sp_name}</Badge>
+                    </h4>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Applicant Details
+                    Spare Part Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -193,17 +135,16 @@ const handleImageUpload = (event) => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Vacancy Name
+                            Spare Part Name
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-username"
                             readOnly
-                            value={data.vacancy_title}
-                            placeholder="Title"
+                            value={data.sp_name}
                             type="text"
                             onChange={(e) => {
-                              setVacancyTitle(e.target.value);
+                                setSparePartName(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -212,7 +153,36 @@ const handleImageUpload = (event) => {
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
-                            htmlFor="input-email"
+                            htmlFor="input-username"
+                          >
+                            Spare Part Price
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-username"
+                            readOnly
+                            value={data.sp_price}
+                            type="text"
+                            onChange={(e) => {
+                              setSparePartPrice(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div>
+                </Form>
+                <Form>
+                  <h6 className="heading-small text-muted mb-4">
+                    Customer Details
+                  </h6>
+                    <div className="pl-lg-4">
+                    <Row>
+                    <Col lg="4">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-username"
                           >
                             Name
                           </label>
@@ -222,85 +192,12 @@ const handleImageUpload = (event) => {
                             placeholder="Eneter Your Name Here"
                             type="text"
                             onChange={(e) => {
-                              setApplicantName(e.target.value);
+                              setCustomerName(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Age
-                          </label>
-
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="Enter Age"
-                            type="number"
-                            onChange={(e) => {
-                              setApplicantAge(e.target.value);
-                            }}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup className="d-flex flex-column">
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Gender
-                          </label>
-
-                          <Dropdown
-                            isOpen={dropdownOpen}
-                            color="primary"
-                            toggle={toggle}
-                          >
-                            <DropdownToggle caret>
-                              {applicant_gender
-                                ? applicant_gender
-                                : "Select Gender"}
-                            </DropdownToggle>
-                            <DropdownMenu>
-                              <DropdownItem
-                                value="Male"
-                                onClick={(e) => {
-                                  setApplicantGender(e.target.value);
-                                }}
-                              >
-                                Male
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Female"
-                                onClick={(e) => {
-                                  setApplicantGender(e.target.value);
-                                }}
-                              >
-                                Female
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Other"
-                                onClick={(e) => {
-                                  setApplicantGender(e.target.value);
-                                }}
-                              >
-                                Other
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </Dropdown>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="6">
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -312,54 +209,122 @@ const handleImageUpload = (event) => {
                           <Input
                             className="form-control-alternative"
                             id="input-first-name"
-                            placeholder="Enter Your Working Contact Number Here"
-                            type="text"
+                            placeholder="Enter Your Contact Number Here"
+                            type="phone"
                             onChange={(e) => {
-                              setApplicantContact(e.target.value);
+                              setCustomerContact(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
+                    </Row>
+                    <Row>
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="input-first-name"
                           >
-                            Email
+                            Address
                           </label>
 
+                          <Input
+                            className="form-control-alternative"
+                            id="input-first-name"
+                            placeholder="Enter Your Address Here"
+                            type="text"
+                            onChange={(e) => {
+                              setCustomerAddress(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Buying Option
+                          </label>
+                          <Dropdown
+                            isOpen={dropdownOpen}
+                            required
+                            color="primary"
+                            toggle={toggle}
+                          >
+                            <DropdownToggle caret>
+                              {customer_buying_option
+                                ? customer_buying_option
+                                : "Select Option"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem
+                                value="Meet at Shop door"
+                                onClick={(e) => {
+                                  setBuyingOption(e.target.value);
+                                }}
+                              >
+                                Meet at Shop door
+                              </DropdownItem>
+                              <DropdownItem
+                                value="Delivery"
+                                onClick={(e) => {
+                                  setBuyingOption(e.target.value);
+                                }}
+                              >
+                                Delivery
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                    <Col lg="4">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Email
+                          </label>
                           <Input
                             className="form-control-alternative"
                             id="input-first-name"
                             placeholder="Enter Your Email Here"
                             type="email"
                             onChange={(e) => {
-                              setApplicantEmail(e.target.value);
+                              setCustomerEmail(e.target.value);
+                            }}
+                          /> 
+                          
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Special Note
+                          </label>
+
+                          <Input
+                            className="form-control-alternative"
+                            id="input-first-name"
+                            placeholder="Enter Your Note Here"
+                            rows="2"
+                            type="textarea"
+                            onChange={(e) => {
+                              setCustomerNote(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
                   </div>
-
                   <div className="pl-lg-4">
-                    <Row>
-                      <label
-                        className="form-control-label"
-                        htmlFor="input-first-name"
-                      >
-                        Upload Your CV That Created As PDF
-                      </label>
-                      <Input
-                        type="file"
-                        className="form-control-alternative"
-                        onChange={handleImageUpload}
-                      />
-                      {uploadProgress > 0 && (
-                        <div>Uploading... {uploadProgress}%</div>
-                      )}
-                    </Row>
                     <FormGroup>
                       {error && (
                         <div
@@ -387,13 +352,13 @@ const handleImageUpload = (event) => {
                       )}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
-                      Apply
+                        Order
                     </Button>
                     <Button
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/user/carrerpage");
+                        navigate("/user/spareParts");
                       }}
                     >
                       Cancel
@@ -409,4 +374,4 @@ const handleImageUpload = (event) => {
   );
 };
 
-export default CreateVacancy;
+export default OrderSparePart;

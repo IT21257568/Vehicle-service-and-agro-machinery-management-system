@@ -16,6 +16,7 @@ const cvSubmissionRoute = require("./routes/cvSubmissionRoute");
 const generalIssueRoutes = require("./routes/generalIssue");
 const orderAgroProductRoute = require("./routes/orderAgroProductRoute");
 const emergencyIssueRoutes = require("./routes/emergencyIssue");
+const orderSparePartRoute = require("./routes/orderSparePartRoute");
 
 // setup cors
 const cors = require("cors");
@@ -41,6 +42,7 @@ app.use("/api/cvSub", cvSubmissionRoute);
 app.use("/api/spareParts", sparePartsRoutes);
 app.use("/api/agroProducts", agroProductRoutes);
 app.use("/api/orderAgroProduct", orderAgroProductRoute);
+app.use("/api/orderSparePart", orderSparePartRoute);
 // Pawan
 app.use("/api/users", userRoutes);
 //Janindu

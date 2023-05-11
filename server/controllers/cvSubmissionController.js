@@ -32,6 +32,7 @@ const createmCVSubmission = async (req, res) => {
     applicant_email,
     applicant_CVFile_url,
     vacancy_name,
+    vacancy_id,
   } = req.body;
 
   let emptyFields = [];
@@ -83,6 +84,7 @@ const createmCVSubmission = async (req, res) => {
       applicant_email,
       applicant_CVFile_url,
       vacancy_name,
+      vacancy_id,
     });
     res.status(200).json({ appCvs });
   } catch (error) {

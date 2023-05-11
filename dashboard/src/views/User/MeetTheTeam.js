@@ -114,14 +114,7 @@ const MeetTheTeam = () => {
     fetchAllTechnicians();
   }, []);
 
-  const handleDelete = (id) => {
-    axios.delete(`/api/mTeams/${id}`).then((res) => {
-      console.log(res.data);
-      setAllTechnicians((prevData) =>
-        prevData.filter((technician) => technician._id !== id)
-      );
-    });
-  };
+ 
 
   return (
     <>
@@ -140,7 +133,7 @@ const MeetTheTeam = () => {
                   <div className="col">
                     <h3 className="mb-0">Technicians</h3>
                   </div>
-                  <Col xl="3">
+                  <Col xl="6">
                     <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"

@@ -110,14 +110,7 @@ const ViewVacancies = () => {
         prevData.filter((vacancy) => vacancy._id !== id)
       );
     });
-    // update vacancy applicants
-    axios
-      .patch(`/api/vacancies/${id}`, {
-        vacancy_applicants: vacancy_applicants - 1,
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
+    
   };
 
   return (
