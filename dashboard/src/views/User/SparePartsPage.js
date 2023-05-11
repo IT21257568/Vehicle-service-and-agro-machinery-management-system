@@ -43,7 +43,6 @@ const SparePartsPage = () => {
 
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 3);
@@ -96,7 +95,6 @@ const SparePartsPage = () => {
                           <Dropdown
                             isOpen={dropdownOpen}
                             color="primary"
-                            toggle={toggle}
                             onClick={sorting}
                           >
                             <DropdownToggle caret>
