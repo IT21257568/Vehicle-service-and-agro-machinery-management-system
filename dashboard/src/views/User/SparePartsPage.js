@@ -37,12 +37,13 @@ const SparePartsPage = () => {
   const [allSpareParts, setAllSpareParts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visible, setVisible] = useState(3);
+  const [visible, setVisible] = useState(4);
   const [faqCategory, setFaqCategory] = useState("");
   const [query, setQuery] = useState("");
 
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 3);
@@ -95,6 +96,7 @@ const SparePartsPage = () => {
                           <Dropdown
                             isOpen={dropdownOpen}
                             color="primary"
+                            toggle={toggle}
                             onClick={sorting}
                           >
                             <DropdownToggle caret>
@@ -140,7 +142,7 @@ const SparePartsPage = () => {
                   </div>
                 </Row>
               </CardHeader>
-              <Container>
+              {/* <Container> */}
                <div className="pl-lg-5">
                 <Row style={{ marginTop: "0.5rem" }}>
                   {allSpareParts
@@ -185,11 +187,11 @@ const SparePartsPage = () => {
                             color="warning"
                             type="button"
                             style={{marginLeft: '3.3rem', width: '12rem'}}
-                            // onClick={() =>
-                            //   navigate(
-                            //     `/admin/update-spare-part/${sparePart._id}`
-                            //   )
-                            // }
+                            onClick={() =>
+                              navigate(
+                                `/user/order-spareParts/${sparePart._id}`
+                              )
+                            }
                           >
                             Order Product
                           </Button>
@@ -199,7 +201,7 @@ const SparePartsPage = () => {
                   ))}
                 </Row>
               </div>
-              </Container>
+              {/* </Container> */}
               <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
                 {visible < allSpareParts.length && (
                     <Button  color="info" size="sm" onClick={showMoreItems}>

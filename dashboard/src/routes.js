@@ -75,6 +75,8 @@ import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
 
 //Pehesarani user views
 import OrderAgroProduct from "views/User/OrderAgroProduct";
+import OrderSparePart from "views/User/OrderSparePart";
+import MyOrders from "views/User/MyOrders";
 
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
@@ -345,6 +347,20 @@ const routes = [
     name: "Spare Parts Page",
     icon: "ni ni-ruler-pencil text-blue",
     component: SparePartsPage,
+    layout: "/user",
+  },
+  {
+    path: "/order-spareParts/:id",
+    name: "Order Spare Part",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: OrderSparePart,
+    layout: "/user",
+  },
+  {
+    path: "/my-orders",
+    name: "My Orders",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: MyOrders,
     layout: "/user",
   },
   //Pehesarani - Agro Products admin routes

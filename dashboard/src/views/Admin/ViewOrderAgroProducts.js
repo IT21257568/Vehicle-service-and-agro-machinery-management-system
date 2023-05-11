@@ -84,6 +84,7 @@ const ViewOrderAgroProduct = () => {
       "Customer Email",
       "Customer Address",
       "Special Note",
+      "Date"
     ];
     const tableRows = allAgroProductOrders.map(
       ({
@@ -93,6 +94,7 @@ const ViewOrderAgroProduct = () => {
         customer_email,
         customer_address,
         customer_note,
+        createdAt,
       }) => [
         p_name,
         customer_name,
@@ -100,6 +102,7 @@ const ViewOrderAgroProduct = () => {
         customer_email,
         customer_address,
         customer_note,
+        formatDateTime(createdAt),
       ]
     );
     doc.autoTable({
@@ -109,6 +112,34 @@ const ViewOrderAgroProduct = () => {
 
     doc.save("agroProductOrders.pdf");
   };
+
+  //date format
+  function formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedDate = `${date.getDate()} ${
+      months[date.getMonth()]
+    } ${date.getFullYear()}, ${hours % 12}:${minutes
+      .toString()
+      .padStart(2, "0")} ${ampm}`;
+    return formattedDate;
+  }
 
   return (
     <>
@@ -163,6 +194,7 @@ const ViewOrderAgroProduct = () => {
                     <th scope="col">Customer Email</th>
                     <th scope="col">Customer Address</th>
                     <th scope="col">Special Note</th>
+                    {/* <th scope="col">Date</th> */}
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -187,6 +219,7 @@ const ViewOrderAgroProduct = () => {
                         <td>{order.customer_email}</td>
                         <td>{order.customer_address}</td>
                         <td>{order.customer_note}</td>
+                        <td>{formatDateTime(order.createdAt)}</td>
                         <td>
                           <Button
                             size="sm"

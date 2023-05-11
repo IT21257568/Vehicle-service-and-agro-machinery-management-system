@@ -25,7 +25,7 @@ import {
 // core components
 import SparePartHeader from "components/Headers/SparePartHeader.js";
 
-const OrderAgroProduct = () => {
+const OrderSparePart = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   
@@ -42,11 +42,11 @@ const OrderAgroProduct = () => {
   
   useEffect(() => {
     const getSparePartNameOrders = async () => {
-      const res = await axios.get(`/api/spareParts${id}`);
+      const res = await axios.get(`/api/spareParts/${id}`);
       console.log(res.data);
       setData(res.data);
-      setSparePartName(res.data.p_name);
-      setSparePartPrice(res.data.p_price);
+      setSparePartName(res.data.sp_name);
+      setSparePartPrice(res.data.sp_price);
     };
     getSparePartNameOrders();
   }, [id]);
@@ -61,52 +61,21 @@ const OrderAgroProduct = () => {
   const [error, setError] = useState(null);
 
 
-// const handleImageUpload = (event) => {
-//   const file = event.target.files[0];
-//   const formData = new FormData();
-//   formData.append("file", file);
-//   formData.append("upload_preset", "agd0dlhj");
-//   // formData.append("public_id", "your_public_id");
-//   formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
-
-//   const options = {
-//     onUploadProgress: (progressEvent) => {
-//       const percentCompleted = Math.round(
-//         (progressEvent.loaded * 100) / progressEvent.total
-//       );
-//       setUploadProgress(percentCompleted);
-//     },
-//   };
-
-//   axios
-//     .post(
-//       `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
-//       formData,
-//       options
-//     )
-//     .then((response) => {
-//       setCVFile(response.data.secure_url);
-//       setUploadProgress(0);
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//       setUploadProgress(0);
-//     });
-// };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
     try {
       await axios
-        .post("/api/orderAgroProduct", {
+        .post("/api/orderSparePart", {
           customer_name: customer_name,
           customer_contact: customer_contact,
           customer_email: customer_email,
           customer_address: customer_address,
           customer_note: customer_note,
-          p_name: AgroProduct_name,
+          customer_buying_option: customer_buying_option,
+          p_price: SparePart_price,
+          p_name: SparePart_name,
         })
         .then((res) => {
           console.log("New order added", res.data);
@@ -115,8 +84,11 @@ const OrderAgroProduct = () => {
           setCustomerEmail("");
           setCustomerAddress("");
           setCustomerNote("");
+          setBuyingOption("");
+          setSparePartName("");
+          setSparePartPrice("");
           setError(null);
-          navigate("/user/AgroProducts"); 
+          navigate("/user/spareParts"); 
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -143,7 +115,7 @@ const OrderAgroProduct = () => {
                   <Col xs="8">
                     <h4 className="mb-0">
                       Order {" "}
-                      <Badge color="success">{data.p_name}</Badge>
+                      <Badge color="success">{data.sp_name}</Badge>
                     </h4>
                   </Col>
                 </Row>
@@ -151,7 +123,7 @@ const OrderAgroProduct = () => {
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Customer Details
+                    Spare Part Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -161,17 +133,16 @@ const OrderAgroProduct = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Agro Product Name
+                            Spare Part Name
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-username"
                             readOnly
-                            value={data.p_name}
-                            placeholder="Title"
+                            value={data.sp_name}
                             type="text"
                             onChange={(e) => {
-                                setAgroProductName(e.target.value);
+                                setSparePartName(e.target.value);
                             }}
                           />
                         </FormGroup>
@@ -180,7 +151,36 @@ const OrderAgroProduct = () => {
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
-                            htmlFor="input-email"
+                            htmlFor="input-username"
+                          >
+                            Spare Part Price
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-username"
+                            readOnly
+                            value={data.sp_price}
+                            type="text"
+                            onChange={(e) => {
+                              setSparePartPrice(e.target.value);
+                            }}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div>
+                </Form>
+                <Form>
+                  <h6 className="heading-small text-muted mb-4">
+                    Customer Details
+                  </h6>
+                    <div className="pl-lg-4">
+                    <Row>
+                    <Col lg="4">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-username"
                           >
                             Name
                           </label>
@@ -195,9 +195,7 @@ const OrderAgroProduct = () => {
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="6">
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -208,39 +206,18 @@ const OrderAgroProduct = () => {
 
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
                             id="input-first-name"
                             placeholder="Enter Your Contact Number Here"
-                            type="number"
+                            type="phone"
                             onChange={(e) => {
                               setCustomerContact(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
-                        <FormGroup className="d-flex flex-column">
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Email
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-first-name"
-                            placeholder="Enter Your Email Here"
-                            type="email"
-                            onChange={(e) => {
-                              setCustomerEmail(e.target.value);
-                            }}
-                          /> 
-                          
-                        </FormGroup>
-                      </Col>
                     </Row>
                     <Row>
-                      <Col lg="6">
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -260,7 +237,69 @@ const OrderAgroProduct = () => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
+                      <Col lg="4">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Buying Option
+                          </label>
+                          <Dropdown
+                            isOpen={dropdownOpen}
+                            required
+                            color="primary"
+                            toggle={toggle}
+                          >
+                            <DropdownToggle caret>
+                              {customer_buying_option
+                                ? customer_buying_option
+                                : "Select Option"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem
+                                value="Meet at Shop door"
+                                onClick={(e) => {
+                                  setBuyingOption(e.target.value);
+                                }}
+                              >
+                                Meet at Shop door
+                              </DropdownItem>
+                              <DropdownItem
+                                value="Delivery"
+                                onClick={(e) => {
+                                  setBuyingOption(e.target.value);
+                                }}
+                              >
+                                Delivery
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                    <Col lg="4">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Email
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-first-name"
+                            placeholder="Enter Your Email Here"
+                            type="email"
+                            onChange={(e) => {
+                              setCustomerEmail(e.target.value);
+                            }}
+                          /> 
+                          
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -283,7 +322,6 @@ const OrderAgroProduct = () => {
                       </Col>
                     </Row>
                   </div>
-
                   <div className="pl-lg-4">
                     <FormGroup>
                       {error && (
@@ -318,7 +356,7 @@ const OrderAgroProduct = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/user/AgroProducts");
+                        navigate("/user/spareParts");
                       }}
                     >
                       Cancel
@@ -334,4 +372,4 @@ const OrderAgroProduct = () => {
   );
 };
 
-export default OrderAgroProduct;
+export default OrderSparePart;
