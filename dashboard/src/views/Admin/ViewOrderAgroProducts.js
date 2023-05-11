@@ -84,7 +84,8 @@ const ViewOrderAgroProduct = () => {
       "Customer Email",
       "Customer Address",
       "Special Note",
-      "Date"
+      "Ordered Date",
+      "Updated Date",
     ];
     const tableRows = allAgroProductOrders.map(
       ({
@@ -95,6 +96,7 @@ const ViewOrderAgroProduct = () => {
         customer_address,
         customer_note,
         createdAt,
+        updatedAt,
       }) => [
         p_name,
         customer_name,
@@ -103,6 +105,7 @@ const ViewOrderAgroProduct = () => {
         customer_address,
         customer_note,
         formatDateTime(createdAt),
+        formatDateTime(updatedAt),
       ]
     );
     doc.autoTable({
@@ -194,7 +197,8 @@ const ViewOrderAgroProduct = () => {
                     <th scope="col">Customer Email</th>
                     <th scope="col">Customer Address</th>
                     <th scope="col">Special Note</th>
-                    {/* <th scope="col">Date</th> */}
+                    <th scope="col">Ordered Date</th>
+                    <th scope="col">Updated Date</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -220,6 +224,7 @@ const ViewOrderAgroProduct = () => {
                         <td>{order.customer_address}</td>
                         <td>{order.customer_note}</td>
                         <td>{formatDateTime(order.createdAt)}</td>
+                        <td>{formatDateTime(order.updatedAt)}</td>
                         <td>
                           <Button
                             size="sm"
