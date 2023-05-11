@@ -163,6 +163,7 @@ const handleImageUpload = (event) => {
                     <label
                       className="form-control-label"
                       htmlFor="input-last-name"
+                      style={{ marginBottom: "0.5rem", fontWeight: "bold" }}
                     >
                       Requirements for the {data.vacancy_title} vacancy
                     </label>
@@ -170,8 +171,9 @@ const handleImageUpload = (event) => {
                       className="form-control-alternative"
                       readOnly
                       value={data.vacancy_requirements}
-                      rows="2"
+                      rows="6"
                       type="textarea"
+                      style={{ fontSize: "1rem", backgroundColor: "#f8f9fe" }}
                     />
                   </Col>
                 </Row>

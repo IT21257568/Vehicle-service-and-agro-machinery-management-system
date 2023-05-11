@@ -93,6 +93,7 @@ const ViewCVSubmissions = () => {
           "Gender",
           "Contact Number",
           "Email",
+          "Submitted Date&Time",
         ];
         const rows = allApplicants.map(
           ({
@@ -102,6 +103,7 @@ const ViewCVSubmissions = () => {
             applicant_gender,
             applicant_contact,
             applicant_email,
+            createdAt,
           }) => [
             applicant_name,
             vacancy_name,
@@ -109,6 +111,11 @@ const ViewCVSubmissions = () => {
             applicant_gender,
             applicant_contact,
             applicant_email,
+            new Date(createdAt).toLocaleString("en-US", {
+              dateStyle: "short",
+              timeStyle: "short",
+            }),
+            ,
           ]
         );
         doc.autoTable({
@@ -119,10 +126,10 @@ const ViewCVSubmissions = () => {
         doc.save("Applicants.pdf");
       
   }
+
   return (
     <>
       <Header />
-      
 
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -149,7 +156,6 @@ const ViewCVSubmissions = () => {
                   </Col>
 
                   <div className="col text-right">
-                   
                     <Button
                       className="btn-icon btn-3"
                       color="success"
@@ -176,6 +182,7 @@ const ViewCVSubmissions = () => {
                     <th scope="col">Gender</th>
                     <th scope="col">Contact Number</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Submitted At</th>
                     <th scope="col">CV</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -212,6 +219,14 @@ const ViewCVSubmissions = () => {
                         <td>
                           <div className="d-flex align-items-center">
                             {applicant.applicant_email}
+                          </div>
+                        </td>
+                        <td>
+                          <div className="d-flex align-items-center">
+                            {new Date(applicant.createdAt).toLocaleString(
+                              "en-US",
+                              { dateStyle: "short", timeStyle: "short" }
+                            )}
                           </div>
                         </td>
                         <td>
