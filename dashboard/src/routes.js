@@ -79,6 +79,10 @@ import OrderAgroProduct from "views/User/OrderAgroProduct";
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
 
+import ViewBookingClient from "views/User/ViewBookingClient";
+
+import UpdateBookingClient from "views/User/UpdateBookingClient";
+
 //home page
 import Home from "./views/User/HomePage";
 
@@ -255,6 +259,22 @@ const routes = [
     component: CreateClientBooking,
     layout: "/user",
   },
+  {
+    path: "/view-client-booking",
+    name: "View Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: ViewBookingClient,
+    layout: "/user",
+  },
+  {
+    path: "/update-client-booking/:id",
+    name: "Update Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: UpdateBookingClient,
+    layout: "/user",
+  },
+
+
 
   //sithija promotions
   {
