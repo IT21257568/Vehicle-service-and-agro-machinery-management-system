@@ -18,6 +18,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Media,
+  CardImg,
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
@@ -245,36 +247,51 @@ const UpdatePromotion = () => {
                      </Row>
                      <Row>
                      <Col lg="6">
-                        <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
                           >
                             Change Picture
                           </label> <br></br>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Current Picture : {data.promo_picture_url}
-                          </label> <br></br>
+                          <Media className="align-items-center">
+                          <span>
+                            <CardImg
+                              height="50rem"
+                              width="100%"
+                              alt="Technician Picture"
+                              src={data.promo_picture_url}
+                            />
+                          </span>
+                           : Current Picture
+                        </Media>
+                        <br></br>
+                        <Media className="align-items-center">
+                          <span>
+                            <CardImg
+                              height="50rem"
+                              width="100%"
+                              alt=" : Updated Picture Will Appear Here"
+                              src={image}
+                            />
+                          </span>
+                        </Media>
+                        <br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
                             onChange={handleImageUpload}
-                            defaultValue={data.promo_picture_url}
                             
                           />
                           {uploadProgress > 0 && (
                             <div>Uploading... {uploadProgress}%</div>
                           )}
-                        </FormGroup>
+                        
                       </Col>
                     </Row>
                   </div>
 
                    {/* Description */}
-                  <div className="pl-lg-4">
+                  <div className="pl-lg-4" style={{marginTop:'1.8rem'}}>
                     <FormGroup>
                       <label
                         className="form-control-label"

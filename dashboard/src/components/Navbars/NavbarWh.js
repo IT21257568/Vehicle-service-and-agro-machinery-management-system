@@ -62,15 +62,15 @@ const NavbarWh = () => {
               </Row>
             </div>
             <Nav className="ml-auto" navbar>
-              <NavItem>
+              <NavItem style={{marginLeft: '0.5rem',marginRight: '0.5rem'}}>
                 <NavLink className="nav-link-icon" to="#" tag={Link}>
                   <i className="ni ni-planet" />
-                  <span style={{color:'#e9ecef'}} className="nav-link-inner--text">Home</span>
+                  <span style={{color:'#e9ecef',width:'8rem', marginTop: '0.5rem'}} className="nav-link-inner--text">Home</span>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem style={{marginLeft: '0.5rem',marginRight: '0.5rem'}}>
                 <Dropdown isOpen={dropdownOpen} toggle={toggle}
-                style={{width:'8rem', marginTop: '0.5rem', marginLeft: '0.4rem',marginRight:'0.4rem'}}>
+                style={{width:'5rem', marginTop: '0.5rem'}}>
                   <DropdownToggle caret>Shop</DropdownToggle>
                   <DropdownMenu>
 
@@ -81,20 +81,30 @@ const NavbarWh = () => {
                   </DropdownMenu>
               </Dropdown>
               </NavItem>
-              <NavItem>
-                <NavLink className="nav-link-icon" to="/auth/login" tag={Link}>
-                  <i className="ni ni-key-25" />
-                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Contact us</span>
+              <NavItem style={{marginLeft: '0.5rem',marginRight: '0.5rem'}}>
+                <NavLink
+                  className="nav-link-icon"
+                  to="/user/carrerpage"
+                  tag={Link}
+                >
+                  <i className="ni ni-single-02" />  
+                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Career</span> 
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem style={{marginRight: '0.5rem',marginLeft: '0.5rem'}}>
+                <NavLink className="nav-link-icon" to="/user/create-client-booking" tag={Link}>
+                  <i className="ni ni-key-25" />
+                  <span style={{color:'#e9ecef',width:'8rem', marginTop: '0.5rem'}}  className="nav-link-inner--text">Book now</span>
+                </NavLink>
+              </NavItem>
+              <NavItem style={{marginLeft: '0.5rem'}}>
                 <NavLink
                   className="nav-link-icon"
                   to="/admin/user-profile"
                   tag={Link}
                 >
-                  <i className="ni ni-single-02" />
-                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Profile</span>
+                  <i className="ni ni-single-02" />  
+                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Profile</span> 
                 </NavLink>
               </NavItem>
             </Nav>

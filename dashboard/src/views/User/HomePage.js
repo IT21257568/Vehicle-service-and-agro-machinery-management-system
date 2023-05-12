@@ -47,8 +47,6 @@ import {
   Col,
 } from "reactstrap";
 
-// core components
-import FAQHeader from "components/Headers/FAQHeader.js";
 
 //card
 function CardRatings({ ratings, onClose }) {

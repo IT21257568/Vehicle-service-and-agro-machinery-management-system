@@ -21,7 +21,7 @@ import {
 } from "reactstrap";
 
 // core components
-import Header from "components/Headers/BookingHeader";
+import Header from "components/Headers/FeedbackHeader";
 
 const ProvideFeedback = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
