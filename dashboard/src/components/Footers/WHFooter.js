@@ -6,6 +6,7 @@ import { FaPhone } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import {FaLinkedin} from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const whFooter = () => {
   return (
@@ -20,12 +21,12 @@ const whFooter = () => {
                 </NavLink>
               </NavItem>
               <NavItem style={{ padding: "0.5rem" }}>
-                <NavLink href="#" rel="noopener noreferrer" target="_blank">
-                  About Us
+                <NavLink  href="/user/meet-the-team" rel="noopener noreferrer" target="">
+                  Meet the team
                 </NavLink>
               </NavItem>
               <NavItem style={{ padding: "0.5rem" }}>
-                <NavLink href="#" rel="noopener noreferrer" target="_blank">
+                <NavLink href="#" rel="noopener noreferrer" target="">
                   Our Branches
                 </NavLink>
               </NavItem>
@@ -45,9 +46,7 @@ const whFooter = () => {
                 }}
               >
                 <NavLink
-                  href="#"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                  href="/user/feedback-page"       
                   style={{ width: "13rem" }}
                 >
                   <strong>Provide Your Feedback</strong>

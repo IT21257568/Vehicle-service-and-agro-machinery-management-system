@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // reactstrap components
 import {
@@ -11,9 +12,22 @@ import {
   Container,
   Row,
   Col,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  
 } from "reactstrap";
 
 const NavbarWh = () => {
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  const navigate = useNavigate();
+
+
   return (
     <>
       <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
@@ -48,46 +62,49 @@ const NavbarWh = () => {
               </Row>
             </div>
             <Nav className="ml-auto" navbar>
-              <NavItem>
+              <NavItem style={{marginLeft: '0.5rem',marginRight: '0.5rem'}}>
                 <NavLink className="nav-link-icon" to="#" tag={Link}>
                   <i className="ni ni-planet" />
-                  <span style={{color:'#e9ecef'}} className="nav-link-inner--text">Home</span>
+                  <span style={{color:'#e9ecef',width:'8rem', marginTop: '0.5rem'}} className="nav-link-inner--text">Home</span>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem style={{marginLeft: '0.5rem',marginRight: '0.5rem'}}>
+                <Dropdown isOpen={dropdownOpen} toggle={toggle}
+                style={{width:'5rem', marginTop: '0.5rem'}}>
+                  <DropdownToggle caret>Shop</DropdownToggle>
+                  <DropdownMenu>
+
+                    <DropdownItem value="spare_parts" onClick={() => navigate("/user/spareParts")}>Spare parts</DropdownItem>
+
+                    <DropdownItem value="agro_products" onClick={() => navigate("/user/AgroProducts")}>Agro products</DropdownItem>
+                    
+                  </DropdownMenu>
+              </Dropdown>
+              </NavItem>
+              <NavItem style={{marginLeft: '0.5rem',marginRight: '0.5rem'}}>
                 <NavLink
                   className="nav-link-icon"
-                  to="/user/agroProducts"
+                  to="/user/carrerpage"
                   tag={Link}
                 >
-                  <i className="ni ni-circle-08" />
-                  <span style={{color:'#e9ecef'}} className="nav-link-inner--text">Agro products</span>
+                  <i className="ni ni-single-02" />  
+                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Career</span> 
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink
-                  className="nav-link-icon"
-                  to="/auth/register"
-                  tag={Link}
-                >
-                  <i className="ni ni-circle-08" />
-                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Vehicle products</span>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink className="nav-link-icon" to="/auth/login" tag={Link}>
+              <NavItem style={{marginRight: '0.5rem',marginLeft: '0.5rem'}}>
+                <NavLink className="nav-link-icon" to="/user/create-client-booking" tag={Link}>
                   <i className="ni ni-key-25" />
-                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Contact us</span>
+                  <span style={{color:'#e9ecef',width:'8rem', marginTop: '0.5rem'}}  className="nav-link-inner--text">Book now</span>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              <NavItem style={{marginLeft: '0.5rem'}}>
                 <NavLink
                   className="nav-link-icon"
                   to="/admin/user-profile"
                   tag={Link}
                 >
-                  <i className="ni ni-single-02" />
-                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Profile</span>
+                  <i className="ni ni-single-02" />  
+                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Profile</span> 
                 </NavLink>
               </NavItem>
             </Nav>

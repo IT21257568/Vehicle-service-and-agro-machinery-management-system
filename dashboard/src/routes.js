@@ -59,7 +59,8 @@ import ApplyNow from "views/User/ApplyNow";
 // Sithija user views
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
-
+import ProvideFeedback from "views/User/FeedbackPage"
+import ViewFeedbacks from "views/Admin/ViewFeedback";
 
 //Janindu user views
 import CreateClientBooking from "views/User/BookingPage";
@@ -80,6 +81,10 @@ import MyOrders from "views/User/MyOrders";
 
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
+
+import ViewBookingClient from "views/User/ViewBookingClient";
+
+import UpdateBookingClient from "views/User/UpdateBookingClient";
 
 //home page
 import Home from "./views/User/HomePage";
@@ -257,6 +262,22 @@ const routes = [
     component: CreateClientBooking,
     layout: "/user",
   },
+  {
+    path: "/view-client-booking",
+    name: "View Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: ViewBookingClient,
+    layout: "/user",
+  },
+  {
+    path: "/update-client-booking/:id",
+    name: "Update Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: UpdateBookingClient,
+    layout: "/user",
+  },
+
+
 
   //sithija promotions
   {
@@ -317,6 +338,21 @@ const routes = [
     icon: "ni ni-notification-70 text-orange",
     component: FAQs,
     layout: "/user",
+  },
+  //Sithija user view for feedback section
+  {
+    path: "/feedback-page",
+    name:"Provide Feedback",
+    icon: "ni ni-notification-70 text-orange",
+    component: ProvideFeedback,
+    layout: "/user"
+  },
+  {
+    path: "/view-feedback-page",
+    name:"View Feedback",
+    icon: "ni ni-notification-70 text-orange",
+    component: ViewFeedbacks,
+    layout: "/admin"
   },
 
   //Pehesarai spare parts admin routes
