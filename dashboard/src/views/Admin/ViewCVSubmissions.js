@@ -35,8 +35,6 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-
-
 const ViewCVSubmissions = () => {
   // states
   const [allApplicants, setAllSubmissions] = useState([]);
@@ -44,7 +42,6 @@ const ViewCVSubmissions = () => {
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
   const [vacancy_applicants, setVacancyApplicants] = useState("");
-
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -70,8 +67,6 @@ const ViewCVSubmissions = () => {
     fetchAllCVSubmissions();
   }, []);
 
- 
-
   const handleDelete = (id, vId) => {
     axios.delete(`/api/cvSub/${id}`).then((res) => {
       console.log(res.data);
@@ -80,9 +75,7 @@ const ViewCVSubmissions = () => {
       );
     });
 
-    
     const updateRecord = async () => {
-      // get vacancy applicants count
       const response = await axios.get(`/api/vacancies/${vId}`);
       setVacancyApplicants(response.data.vacancy_applicants);
       console.log(response.data);
@@ -103,7 +96,6 @@ const ViewCVSubmissions = () => {
     updateRecord();
   };
 
-
   const generateReport = () => {
     const doc = new jsPDF();
     const columns = [
@@ -113,6 +105,7 @@ const ViewCVSubmissions = () => {
       "Gender",
       "Contact Number",
       "Email",
+      "Submitted Date&Time",
     ];
     const rows = allApplicants.map(
       ({
@@ -122,6 +115,7 @@ const ViewCVSubmissions = () => {
         applicant_gender,
         applicant_contact,
         applicant_email,
+        createdAt,
       }) => [
         applicant_name,
         vacancy_name,
@@ -129,6 +123,11 @@ const ViewCVSubmissions = () => {
         applicant_gender,
         applicant_contact,
         applicant_email,
+        new Date(createdAt).toLocaleString("en-US", {
+          dateStyle: "short",
+          timeStyle: "short",
+        }),
+        ,
       ]
     );
     doc.autoTable({
@@ -138,6 +137,7 @@ const ViewCVSubmissions = () => {
 
     doc.save("Applicants.pdf");
   };
+
   return (
     <>
       <Header />
@@ -193,6 +193,7 @@ const ViewCVSubmissions = () => {
                     <th scope="col">Gender</th>
                     <th scope="col">Contact Number</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Submitted At</th>
                     <th scope="col">CV</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -232,6 +233,14 @@ const ViewCVSubmissions = () => {
                           </div>
                         </td>
                         <td>
+                          <div className="d-flex align-items-center">
+                            {new Date(applicant.createdAt).toLocaleString(
+                              "en-US",
+                              { dateStyle: "short", timeStyle: "short" }
+                            )}
+                          </div>
+                        </td>
+                        <td>
                           <a
                             href={applicant.applicant_CVFile_url}
                             style={{ textDecoration: "none" }}
@@ -245,7 +254,9 @@ const ViewCVSubmissions = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(applicant._id,applicant.vacancy_id)}
+                            onClick={() =>
+                              handleDelete(applicant._id, applicant.vacancy_id)
+                            }
                           >
                             Delete
                           </Button>
