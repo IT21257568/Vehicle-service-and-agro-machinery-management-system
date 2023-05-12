@@ -40,7 +40,7 @@ import {
 import MeetTheTeamHeader from "components/Headers/MeetTheTeamHeader.js";
 
 
-//card
+/* //card
   function CardRatings({ ratings, onClose }) {
     return (
       <div className="card">
@@ -53,7 +53,7 @@ import MeetTheTeamHeader from "components/Headers/MeetTheTeamHeader.js";
         </div>
       </div>
     );
-  }
+  } */
 
 
 const MeetTheTeam = () => {
@@ -68,7 +68,7 @@ const MeetTheTeam = () => {
 
   
 
-  function handleViewClick() {
+ /*  function handleViewClick() {
     console.log("View button clicked");
     setShowCard(true);
   }
@@ -77,18 +77,9 @@ const MeetTheTeam = () => {
     console.log("Close button clicked");
     setShowCard(false);
   }
-  console.log("Rendering App component with showCard = ", showCard);
+  console.log("Rendering App component with showCard = ", showCard); */
 
-  function handleViewClick() {
-    console.log("View button clicked");
-    setShowCard(true);
-  }
-
-  function handleCloseClick() {
-    console.log("Close button clicked");
-    setShowCard(false);
-  }
-  console.log("Rendering App component with showCard = ", showCard);
+ 
 
   // set visible rows
   const [visible, setVisible] = useState(3);
@@ -200,7 +191,7 @@ const MeetTheTeam = () => {
                               value={technician.technician_expertise}
                             />
                           </CardText>
-                          <Row className="mb-2">
+                         {/*  <Row className="mb-2">
                             <div className="container">
                               <Button
                                 size="sm"
@@ -224,9 +215,7 @@ const MeetTheTeam = () => {
                                 />
                               )}
                             </div>
-                          </Row>
-
-                          <Row></Row>
+                          </Row> */}
                         </CardBody>
                       </Card>
                     ))}
