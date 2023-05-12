@@ -17,6 +17,7 @@ const generalIssueRoutes = require("./routes/generalIssue");
 const orderAgroProductRoute = require("./routes/orderAgroProductRoute");
 const emergencyIssueRoutes = require("./routes/emergencyIssue");
 const orderSparePartRoute = require("./routes/orderSparePartRoute");
+const feedbackRoute = require("./routes/feedbackRoute");
 
 // setup cors
 const cors = require("cors");
@@ -50,6 +51,7 @@ app.use("/api/bookings", bookingsRoute);
 //Sithija
 app.use("/api/promotions", promotionRoute);
 app.use("/api/faqs", faqRoute)
+app.use("/api/feedback", feedbackRoute)
 //Nethum
 app.use("/api/progress", ProgressTrackingRoute);
 //Tharusha
