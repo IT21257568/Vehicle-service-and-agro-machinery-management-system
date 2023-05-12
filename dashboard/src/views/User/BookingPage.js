@@ -244,7 +244,7 @@ const CreateBookingClient = () => {
                             defaultValue=""
                             id="input-first-name"
                             placeholder="Email"
-                            type="text"
+                            type="email"
                             onChange={(e) => {
                               setEmail(e.target.value);
                             }}

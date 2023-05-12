@@ -19,6 +19,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Badge,
+  Label,
 } from "reactstrap";
 
 // core components
@@ -40,6 +41,7 @@ const CreateVacancy = () => {
   const [vacancyTitle, setVacancyTitle] = useState("");
   const [vacancy_applicants, setVacancyApplicants] = useState("");
   const [vacancyRequirements, setVacancyRequirements] = useState("");
+  const [vacancy_id, setVacancyId] = useState("");
 
   useEffect(() => {
     const getVacancy = async () => {
@@ -50,6 +52,7 @@ const CreateVacancy = () => {
       setVacancyTitle(res.data.vacancy_title);
       setVacancyRequirements(res.data.vacancy_requirements);
       setVacancyApplicants(res.data.vacancy_applicants)
+      setVacancyId(res.data._id);
     };
     getVacancy();
   }, [id]);
@@ -64,37 +67,51 @@ const CreateVacancy = () => {
   const [error, setError] = useState(null);
 
 
-const handleImageUpload = (event) => {
+const handleCVUpload = (event) => {
   const file = event.target.files[0];
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "agd0dlhj");
-  // formData.append("public_id", "your_public_id");
-  formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
 
-  const options = {
-    onUploadProgress: (progressEvent) => {
-      const percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total
-      );
-      setUploadProgress(percentCompleted);
-    },
-  };
+  // Check if file is a PDF
+  if (file.type === "application/pdf") {
 
-  axios
-    .post(
-      `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
-      formData,
-      options
-    )
-    .then((response) => {
-      setCVFile(response.data.secure_url);
-      setUploadProgress(0);
-    })
-    .catch((error) => {
-      console.error(error);
-      setUploadProgress(0);
-    });
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "agd0dlhj");
+    // formData.append("public_id", "your_public_id");
+    formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
+
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        setUploadProgress(percentCompleted);
+      },
+    };
+
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+        formData,
+        options
+      )
+      .then((response) => {
+        setCVFile(response.data.secure_url);
+        setUploadProgress(0);
+      })
+      .catch((error) => {
+        console.error(error);
+        setUploadProgress(0);
+      });
+
+
+
+    
+  } else {
+    alert("Please upload a PDF file.");
+    return;
+  }
+
+  
 };
 
 
@@ -111,6 +128,7 @@ const handleImageUpload = (event) => {
           applicant_email: applicant_email,
           applicant_CVFile_url: cvFile,
           vacancy_name: vacancyTitle,
+          vacancy_id: vacancy_id,
         })
         .then((res) => {
           console.log("New Vacancy added", res.data);
@@ -124,13 +142,12 @@ const handleImageUpload = (event) => {
           setError(null);
           axios
             .patch(`/api/vacancies/${id}`, {
-              vacancy_applicants: vacancy_applicants+1,
+              vacancy_applicants: vacancy_applicants + 1,
             })
             .then((res) => {
               console.log(res.data);
               navigate("/user/carrerpage");
             });
-          
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -163,6 +180,7 @@ const handleImageUpload = (event) => {
                     <label
                       className="form-control-label"
                       htmlFor="input-last-name"
+                      style={{ marginBottom: "0.5rem", fontWeight: "bold" }}
                     >
                       Requirements for the {data.vacancy_title} vacancy
                     </label>
@@ -170,8 +188,9 @@ const handleImageUpload = (event) => {
                       className="form-control-alternative"
                       readOnly
                       value={data.vacancy_requirements}
-                      rows="2"
+                      rows="6"
                       type="textarea"
+                      style={{ fontSize: "1rem", backgroundColor: "#f8f9fe" }}
                     />
                   </Col>
                 </Row>
@@ -293,6 +312,48 @@ const handleImageUpload = (event) => {
                             </DropdownMenu>
                           </Dropdown>
                         </FormGroup>
+
+                        {/* <FormGroup>
+                          <Label>Select Gender</Label>
+                          <div>
+                            <FormGroup check>
+                              <Label check>
+                                <Input
+                                  type="radio"
+                                  name="gender"
+                                  value="Male"
+                                  checked={applicant_gender === "Male"}
+                                  onChange={() => setApplicantGender("Male")}
+                                />
+                                Male
+                              </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                              <Label check>
+                                <Input
+                                  type="radio"
+                                  name="gender"
+                                  value="Female"
+                                  checked={applicant_gender === "Female"}
+                                  onChange={() => setApplicantGender("Female")}
+                                />
+                                Female
+                              </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                              <Label check>
+                                <Input
+                                  type="radio"
+                                  name="gender"
+                                  value="Other"
+                                  checked={applicant_gender === "Other"}
+                                  onChange={() => setApplicantGender("Other")}
+                                />
+                                Other
+                              </Label>
+                            </FormGroup>
+                          </div>
+                        </FormGroup> */}
                       </Col>
                     </Row>
                     <Row>
@@ -350,7 +411,7 @@ const handleImageUpload = (event) => {
                       <Input
                         type="file"
                         className="form-control-alternative"
-                        onChange={handleImageUpload}
+                        onChange={handleCVUpload}
                       />
                       {uploadProgress > 0 && (
                         <div>Uploading... {uploadProgress}%</div>

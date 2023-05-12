@@ -57,7 +57,7 @@ const Career = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all technicians from database
+  // retrieve all vacancies from database
   useEffect(() => {
     const fetchAllVacancies = async () => {
       try {
@@ -91,9 +91,8 @@ const Career = () => {
                   <div className="col">
                     <h3 className="mb-0">Vecancies</h3>
                   </div>
-                  
 
-                  <Col xl="3">
+                  <Col xl="6">
                     <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
@@ -104,6 +103,7 @@ const Career = () => {
                       />
                     </InputGroup>
                   </Col>
+
                   <div className="col text-right"></div>
                 </Row>
               </CardHeader>
@@ -140,6 +140,19 @@ const Career = () => {
                             Vacancy Type :{" "}
                             <Badge color="success">
                               {vacancy.vacancy_type}
+                            </Badge>
+                          </CardText>
+                          <CardText className="mb-1 text-muted" tag="h4">
+                            Current Applicants :{" "}
+                            <Badge
+                              color={
+                                vacancy.vacancy_applicants >=
+                                vacancy.vacancy_count
+                                  ? "danger"
+                                  : "info"
+                              }
+                            >
+                              {vacancy.vacancy_applicants}
                             </Badge>
                           </CardText>
 

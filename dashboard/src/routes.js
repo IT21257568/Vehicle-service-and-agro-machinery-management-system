@@ -59,6 +59,8 @@ import ApplyNow from "views/User/ApplyNow";
 // Sithija user views
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
+import ProvideFeedback from "views/User/FeedbackPage"
+import ViewFeedbacks from "views/Admin/ViewFeedback";
 
 //Janindu user views
 import CreateClientBooking from "views/User/BookingPage";
@@ -70,24 +72,26 @@ import AgroProductsPage from "views/User/AgroProductsPage";
 import ViewMeetTheTeam from "views/User/MeetTheTeam";
 
 //Pehesarani admin views
-import ViewOrderAgroProducts from "views/Admin/ViewOrderAgroProducts";
-
+import ViewOrderedAgroProducts from "views/Admin/ViewOrderedAgroProducts";
+import ViewOrderedSpareParts from "views/Admin/ViewOrderedSpareParts";
 //Pehesarani user views
 import OrderAgroProduct from "views/User/OrderAgroProduct";
+import OrderSparePart from "views/User/OrderSparePart";
+import MyOrders from "views/User/MyOrders";
 
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
 
-<<<<<<< HEAD
+
 // Pawan — employee accounts section
 import CreateEmployee from "views/Admin/EmployeeAccounts/CreateEmployee";
 import ViewEmployees from "views/Admin/EmployeeAccounts/ViewEmployees";
 import UpdateEmployee from "views/Admin/EmployeeAccounts/UpdateEmployee";
-=======
+import ViewBookingClient from "views/User/ViewBookingClient";
+import UpdateBookingClient from "views/User/UpdateBookingClient";
+
 //home page
 import Home from "./views/User/HomePage";
-
->>>>>>> develop-new
 
 const routes = [
   {
@@ -261,6 +265,22 @@ const routes = [
     component: CreateClientBooking,
     layout: "/user",
   },
+  {
+    path: "/view-client-booking",
+    name: "View Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: ViewBookingClient,
+    layout: "/user",
+  },
+  {
+    path: "/update-client-booking/:id",
+    name: "Update Client Bookings",
+    icon: "ni ni-credit-card text-purple",
+    component: UpdateBookingClient,
+    layout: "/user",
+  },
+
+
 
   //sithija promotions
   {
@@ -322,6 +342,21 @@ const routes = [
     component: FAQs,
     layout: "/user",
   },
+  //Sithija user view for feedback section
+  {
+    path: "/feedback-page",
+    name:"Provide Feedback",
+    icon: "ni ni-notification-70 text-orange",
+    component: ProvideFeedback,
+    layout: "/user"
+  },
+  {
+    path: "/view-feedback-page",
+    name:"View Feedback",
+    icon: "ni ni-notification-70 text-orange",
+    component: ViewFeedbacks,
+    layout: "/admin"
+  },
 
   //Pehesarai spare parts admin routes
   {
@@ -345,12 +380,34 @@ const routes = [
     component: UpdateSparePart,
     layout: "/admin",
   },
+  {
+    path: "/spare-part-orders",
+    name: "Spare Parts Orders",
+    icon: "ni ni-settings text-blue",
+    component: ViewOrderedSpareParts,
+    layout: "/admin",
+  },
+  //Pehesarani user views
   //User - Pehesasarani Spare Parts
   {
     path: "/spareParts",
     name: "Spare Parts Page",
     icon: "ni ni-ruler-pencil text-blue",
     component: SparePartsPage,
+    layout: "/user",
+  },
+  {
+    path: "/order-spareParts/:id",
+    name: "Order Spare Part",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: OrderSparePart,
+    layout: "/user",
+  },
+  {
+    path: "/my-orders",
+    name: "My Orders",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: MyOrders,
     layout: "/user",
   },
   //Pehesarani - Agro Products admin routes
@@ -388,7 +445,7 @@ const routes = [
     path: "/agro-products-orders",
     name: "Agro Product Orders",
     icon: "ni ni-settings text-blue",
-    component: ViewOrderAgroProducts,
+    component: ViewOrderedAgroProducts,
     layout: "/admin",
   },
   //User - Pehesarani Agro Products

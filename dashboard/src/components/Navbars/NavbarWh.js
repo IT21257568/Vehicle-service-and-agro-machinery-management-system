@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // reactstrap components
 import {
@@ -11,9 +12,22 @@ import {
   Container,
   Row,
   Col,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  
 } from "reactstrap";
 
 const NavbarWh = () => {
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  const navigate = useNavigate();
+
+
   return (
     <>
       <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
@@ -55,24 +69,17 @@ const NavbarWh = () => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink
-                  className="nav-link-icon"
-                  to="/user/agroProducts"
-                  tag={Link}
-                >
-                  <i className="ni ni-circle-08" />
-                  <span style={{color:'#e9ecef'}} className="nav-link-inner--text">Agro products</span>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className="nav-link-icon"
-                  to="/auth/register"
-                  tag={Link}
-                >
-                  <i className="ni ni-circle-08" />
-                  <span style={{color:'#e9ecef'}}  className="nav-link-inner--text">Vehicle products</span>
-                </NavLink>
+                <Dropdown isOpen={dropdownOpen} toggle={toggle}
+                style={{width:'8rem', marginTop: '0.5rem', marginLeft: '0.4rem',marginRight:'0.4rem'}}>
+                  <DropdownToggle caret>Shop</DropdownToggle>
+                  <DropdownMenu>
+
+                    <DropdownItem value="spare_parts" onClick={() => navigate("/user/spareParts")}>Spare parts</DropdownItem>
+
+                    <DropdownItem value="agro_products" onClick={() => navigate("/user/AgroProducts")}>Agro products</DropdownItem>
+                    
+                  </DropdownMenu>
+              </Dropdown>
               </NavItem>
               <NavItem>
                 <NavLink className="nav-link-icon" to="/auth/login" tag={Link}>

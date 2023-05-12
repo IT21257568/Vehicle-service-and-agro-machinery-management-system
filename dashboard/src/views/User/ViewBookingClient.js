@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 
 // reactstrap components
 import {
@@ -12,36 +10,28 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  //DropdownMenu,
-  //DropdownItem,
-  //UncontrolledDropdown,
-  //DropdownToggle,
-  //Media,
   Pagination,
   PaginationItem,
   PaginationLink,
-  Progress,
   Table,
   Container,
-  Row,
-  //UncontrolledTooltip,
-  Button,
-  //Chip,
-  Col,
   InputGroup,
   Input,
+  Row,
+  Button,
+  Col,
 } from "reactstrap";
 
 // core components
-import Header from "components/Headers/Header.js";
+import Header from "components/Headers/ViewBookingHeader";
 
-const ViewCVSubmissions = () => {
+const ViewBookingClient = () => {
   // states
-  const [allApplicants, setAllSubmissions] = useState([]);
+  const [allBookings, setAllBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
-  const [vacancy_applicants, setVacancyApplicants] = useState("");
+  const [bookings, setBookings] = useState([]);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -52,96 +42,33 @@ const ViewCVSubmissions = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all cv submissions from database
+  // retrieve all vacancies from database
   useEffect(() => {
-    const fetchAllCVSubmissions = async () => {
+    const fetchAllBookings = async () => {
       try {
-        const res = await axios.get("/api/cvSub");
-        setAllSubmissions(res.data);
+        const res = await axios.get("/api/bookings");
+        setAllBookings(res.data);
         setIsLoading(false);
       } catch (err) {
         setError(err);
         setIsLoading(false);
       }
     };
-    fetchAllCVSubmissions();
+    fetchAllBookings();
   }, []);
 
-  const handleDelete = (id, vId) => {
-    axios.delete(`/api/cvSub/${id}`).then((res) => {
+  const handleDelete = (id) => {
+    axios.delete(`/api/bookings/${id}`).then((res) => {
       console.log(res.data);
-      setAllSubmissions((prevData) =>
-        prevData.filter((vacancy) => vacancy._id !== id)
+      setAllBookings((prevData) =>
+        prevData.filter((booking) => booking._id !== id)
       );
     });
-
-    const updateRecord = async () => {
-      const response = await axios.get(`/api/vacancies/${vId}`);
-      setVacancyApplicants(response.data.vacancy_applicants);
-      console.log(response.data);
-
-      // update vacancy applicants count
-      axios
-        .patch(`/api/vacancies/${vId}`, {
-          vacancy_applicants: response.data.vacancy_applicants - 1,
-        })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    updateRecord();
-  };
-
-  const generateReport = () => {
-    const doc = new jsPDF();
-    const columns = [
-      "Applicant Name",
-      "Applied Vacancy",
-      "Age",
-      "Gender",
-      "Contact Number",
-      "Email",
-      "Submitted Date&Time",
-    ];
-    const rows = allApplicants.map(
-      ({
-        applicant_name,
-        vacancy_name,
-        applicant_age,
-        applicant_gender,
-        applicant_contact,
-        applicant_email,
-        createdAt,
-      }) => [
-        applicant_name,
-        vacancy_name,
-        applicant_age,
-        applicant_gender,
-        applicant_contact,
-        applicant_email,
-        new Date(createdAt).toLocaleString("en-US", {
-          dateStyle: "short",
-          timeStyle: "short",
-        }),
-        ,
-      ]
-    );
-    doc.autoTable({
-      head: [columns],
-      body: rows,
-    });
-
-    doc.save("Applicants.pdf");
   };
 
   return (
     <>
       <Header />
-
       {/* Page content */}
       <Container className="mt--7" fluid>
         {/* Light Table */}
@@ -151,10 +78,9 @@ const ViewCVSubmissions = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Applicants</h3>
-                  </div>
-
-                  <Col xl="3">
+                    <h3 className="mb-0">All Bookings</h3>
+                    </div>
+                    <Col xl="3">
                     <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
@@ -164,37 +90,20 @@ const ViewCVSubmissions = () => {
                         onChange={(e) => setQuery(e.target.value)}
                       />
                     </InputGroup>
-                  </Col>
-
-                  <div className="col text-right">
-                    <Button
-                      className="btn-icon btn-3"
-                      color="success"
-                      type="button"
-                      onClick={generateReport}
-                    >
-                      <span
-                        className="btn-inner--icon"
-                        style={{ width: "20px" }}
-                      >
-                        <i className="ni ni-folder-17" />
-                      </span>
-                      <span className="btn-inner--text">Generate Report</span>
-                    </Button>
-                  </div>
+                    </Col>
                 </Row>
               </CardHeader>
+
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Applied Vacancy</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Contact Number</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Phone</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Submitted At</th>
-                    <th scope="col">CV</th>
+                    <th scope="col">Date and Time</th>
+                    <th scope="col">Notes</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -204,66 +113,51 @@ const ViewCVSubmissions = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allApplicants
-                    .filter((applicant) =>
-                      applicant.vacancy_name
+                  {allBookings
+                    .filter((booking) =>
+                      booking.service_type
                         ?.toLowerCase()
                         .includes(query.toLowerCase())
                     )
                     .slice(0, visible)
-                    .map((applicant, index) => (
-                      <tr key={applicant._id}>
+                    .map((booking, index) => (
+                      <tr key={booking._id}>
                         <th scope="row">
                           <span className="mb-0 text-sm">
-                            {applicant.applicant_name}
+                            {booking.client_name}
                           </span>
                         </th>
                         <td>
-                          <Badge color="success">
-                            {applicant.vacancy_name}
-                          </Badge>
+                          <Badge color="success">{booking.service_type}</Badge>
                         </td>
-                        <td>{applicant.applicant_age}</td>
-
-                        <td>{applicant.applicant_gender}</td>
-                        <td>{applicant.applicant_contact}</td>
+                        <td>{booking.location}</td>
+                        <td> {booking.phone} </td>
+                        <td> {booking.email} </td>
+                        <td> {booking.date_time} </td>
+                        <td> {booking.special_note} </td>
                         <td>
-                          <div className="d-flex align-items-center">
-                            {applicant.applicant_email}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="d-flex align-items-center">
-                            {new Date(applicant.createdAt).toLocaleString(
-                              "en-US",
-                              { dateStyle: "short", timeStyle: "short" }
-                            )}
-                          </div>
-                        </td>
-                        <td>
-                          <a
-                            href={applicant.applicant_CVFile_url}
-                            style={{ textDecoration: "none" }}
+                            
+                          <Button
+                            size="sm"
+                            color="warning"
+                            onClick={() =>
+                              navigate(`/user/update-client-booking/${booking._id}`)
+                            }
                           >
-                            <Button size="sm" color="primary">
-                              View
-                            </Button>
-                          </a>
-                        </td>
-                        <td>
+                            Update 
+                          </Button>
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() =>
-                              handleDelete(applicant._id, applicant.vacancy_id)
-                            }
+                            onClick={() => handleDelete(booking._id)}
                           >
                             Delete
                           </Button>
                         </td>
                       </tr>
                     ))}
-                  {visible < allApplicants.length && (
+
+                  {visible < allBookings.length && (
                     <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
@@ -330,4 +224,4 @@ const ViewCVSubmissions = () => {
   );
 };
 
-export default ViewCVSubmissions;
+export default ViewBookingClient;
