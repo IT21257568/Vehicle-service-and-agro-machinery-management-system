@@ -53,7 +53,7 @@ const ProvideFeedback = () => {
           setRatingNum("");
           setFeedDate("");
           setError(null);
-          navigate("/admin/bookings");
+          navigate("/user/home-page");
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -198,7 +198,7 @@ const ProvideFeedback = () => {
                       color="warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate("/admin/bookings");
+                        navigate("/user/home-page");
                       }}
                     >
                       Cancel

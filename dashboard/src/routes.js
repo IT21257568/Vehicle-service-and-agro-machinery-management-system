@@ -60,7 +60,7 @@ import ApplyNow from "views/User/ApplyNow";
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
 import ProvideFeedback from "views/User/FeedbackPage"
-
+import ViewFeedbacks from "views/Admin/ViewFeedback";
 
 //Janindu user views
 import CreateClientBooking from "views/User/BookingPage";
@@ -326,6 +326,13 @@ const routes = [
     icon: "ni ni-notification-70 text-orange",
     component: ProvideFeedback,
     layout: "/user"
+  },
+  {
+    path: "/view-feedback-page",
+    name:"View Feedback",
+    icon: "ni ni-notification-70 text-orange",
+    component: ViewFeedbacks,
+    layout: "/admin"
   },
 
   //Pehesarai spare parts admin routes
