@@ -83,6 +83,7 @@ const ViewOrderedSpareParts = () => {
       "Customer Contact",
       "Customer Email",
       "Customer Address",
+      "Buying Option",
       "Special Note",
       "Ordered Date",
       "Updated Date",
@@ -94,6 +95,7 @@ const ViewOrderedSpareParts = () => {
         customer_contact,
         customer_email,
         customer_address,
+        customer_buying_option,
         customer_note,
         createdAt,
         updatedAt,
@@ -103,6 +105,7 @@ const ViewOrderedSpareParts = () => {
         customer_contact,
         customer_email,
         customer_address,
+        customer_buying_option,
         customer_note,
         formatDateTime(createdAt),
         formatDateTime(updatedAt),
@@ -164,7 +167,7 @@ const ViewOrderedSpareParts = () => {
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
-                        placeholder="Search by product name"
+                        placeholder="Search by product name or Customer contact"
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
@@ -196,6 +199,7 @@ const ViewOrderedSpareParts = () => {
                     <th scope="col">Customer Contact</th>
                     <th scope="col">Customer Email</th>
                     <th scope="col">Customer Address</th>
+                    <th scope="col">Customer Buying Option</th>
                     <th scope="col">Special Note</th>
                     <th scope="col">Ordered Date</th>
                     <th scope="col">Updated Date</th>
@@ -210,7 +214,8 @@ const ViewOrderedSpareParts = () => {
                   )}
                   {allSparePartOrders
                     .filter((order) =>
-                      order.p_name?.toLowerCase().includes(query.toLowerCase())
+                      order.p_name?.toLowerCase().includes(query.toLowerCase()) 
+                      ||  order.customer_contact?.toLowerCase().includes(query.toLowerCase())
                     )
                     .slice(0, visible)
                     .map((order, index) => (
@@ -222,6 +227,7 @@ const ViewOrderedSpareParts = () => {
                         <td>{order.customer_contact}</td>
                         <td>{order.customer_email}</td>
                         <td>{order.customer_address}</td>
+                        <td>{order.customer_buying_option}</td>
                         <td>{order.customer_note}</td>
                         <td>{formatDateTime(order.createdAt)}</td>
                         <td>{formatDateTime(order.updatedAt)}</td>
