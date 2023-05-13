@@ -155,6 +155,7 @@ const UpdatePromotion = () => {
                             defaultValue={data.promo_title}
                             placeholder="Promotion Title"
                             type="text"
+                            required="true"
                             onChange={(e) => {
                               setPromotionTitle(e.target.value);
                             }}
@@ -174,6 +175,7 @@ const UpdatePromotion = () => {
                             id="update-promo-code"
                             defaultValue={data.promo_code}
                             placeholder="enter promo code"
+                            required="true"
                             type="text"
                             onChange={(e) => {
                               setPromotionCode(e.target.value);
@@ -196,6 +198,7 @@ const UpdatePromotion = () => {
                             id="update-discount"
                             defaultValue={data.promo_discount}
                             placeholder="select discount"
+                            required="true"
                             type="number"
                             onChange={(e) => {
                               setPromotionDiscount(e.target.value);
@@ -217,6 +220,7 @@ const UpdatePromotion = () => {
                             className="form-control-alternative"
                             id="update-start-date"
                             defaultValue={data.promo_startDate}
+                            required="true"
                             type="date"
                             onChange={(e) => {
                               setPromotionStartDate(e.target.value);
@@ -237,6 +241,7 @@ const UpdatePromotion = () => {
                             
                             id="input-end-date"
                             defaultValue={data.promo_endDate}
+                            required="true"
                             type="date"
                             onChange={(e) => {
                               setPromotionEndDate(e.target.value);
@@ -280,6 +285,7 @@ const UpdatePromotion = () => {
                             type="file"
                             className="form-control-alternative"
                             onChange={handleImageUpload}
+                            required="true"
                             
                           />
                           {uploadProgress > 0 && (
@@ -303,6 +309,7 @@ const UpdatePromotion = () => {
                         className="form-control-alternative"
                         placeholder="A brief description about the promotion"
                         defaultValue={data.promo_description}
+                        required="true"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {
