@@ -213,7 +213,111 @@ const Sidebar = (props) => {
             </InputGroup>
           </Form>
           {/* Navigation */}
-          <Nav navbar>{createLinks(routes)}</Nav>
+          <Nav navbar>
+          <NavItem>
+              <NavLink href="/user/home-page">
+                <i className="ni ni-bell-55 text-default" />
+                User Homepage
+              </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink href="/admin/bookings">
+                <i className="ni ni-bell-55 text-teal" />
+                Bookings
+              </NavLink>
+          </NavItem>
+          <hr className="my-1" />
+          <NavItem>
+              <NavLink href="/admin/spare-parts">
+                <i className="ni ni-ruler-pencil text-pink" />
+                Spare parts
+              </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink href="/admin/agro-products">
+                <i className="ni ni-ruler-pencil text-pink" />
+                Agro products
+              </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink href="/admin/spare-part-orders">
+                <i className="ni ni-ruler-pencil text-pink" />
+                Spare part orders
+              </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink href="/admin/agro-products-orders">
+                <i className="ni ni-ruler-pencil text-pink" />
+                Agro products orders
+              </NavLink>
+          </NavItem>
+          <hr className="my-1" />
+          <NavItem>
+              <NavLink href="/admin/view-general-issues">
+                <i className="ni ni-single-copy-04 text-purple" />
+                 General issues 
+              </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink href="/admin/view-emergency-issues">
+                <i className="ni ni-single-copy-04 text-purple" />
+                 Emergency issues
+              </NavLink>
+          </NavItem>
+          <hr className="my-1" />
+          <NavItem>
+              <NavLink href="/admin/view-repair-jobs">
+                <i className="ni ni-active-40 text-yellow" />
+                 Repair jobs
+              </NavLink>
+          </NavItem>
+          <hr className="my-1" />
+          <NavItem>
+              <NavLink href="/admin/vacancies">
+                <i className="ni ni-notification-70 text-red" />
+                Vacancies
+              </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink href="/admin/technicians">
+                <i className="ni ni-notification-70 text-red" />
+                Technicians
+              </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink href="/admin/cv-submission">
+                <i className="ni ni-notification-70 text-red" />
+                CV Submissions
+              </NavLink>
+          </NavItem>
+          <hr className="my-1" />
+          <NavItem>
+              <NavLink href="/admin/progress">
+                <i className="ni ni-notification-70 text-green" />
+                Progress
+              </NavLink>
+          </NavItem>       
+          <hr className="my-1" />
+          <NavItem>
+              <NavLink href="/admin/promotions">
+                <i className="ni ni-notification-70 text-orange" />
+                Promotions
+              </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink href="/admin/faqs">
+                <i className="ni ni-notification-70 text-orange" />
+                FAQs
+              </NavLink>
+          </NavItem>
+          <NavItem>
+              <NavLink href="/admin/view-feedback-page">
+                <i className="ni ni-notification-70 text-orange" />
+                Feedback
+              </NavLink>
+          </NavItem>
+          </Nav>
+          {/* <Nav navbar>{createLinks(routes)}</Nav> */}
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
