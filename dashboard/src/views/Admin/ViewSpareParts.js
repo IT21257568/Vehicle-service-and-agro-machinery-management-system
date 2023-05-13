@@ -100,7 +100,7 @@ const ViewSpareParts = () => {
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
-                        placeholder="Search"
+                        placeholder="Search by Spare Part Name"
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />

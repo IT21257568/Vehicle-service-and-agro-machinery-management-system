@@ -211,6 +211,7 @@ const ViewOrderedAgroProduct = () => {
                   {allAgroProductOrders
                     .filter((order) =>
                       order.p_name?.toLowerCase().includes(query.toLowerCase())
+                      || order.customer_contact?.toLowerCase().includes(query.toLowerCase())
                     )
                     .slice(0, visible)
                     .map((order, index) => (
