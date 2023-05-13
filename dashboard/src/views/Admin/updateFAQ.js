@@ -107,6 +107,7 @@ const UpdateFAQ = () => {
                             placeholder="Title"
                             defaultValue={data.faq_question}
                             type="textarea"
+                            required="true"
                             onChange={(e) => {
                               setFaqQuestion(e.target.value);
                             }}
@@ -128,6 +129,7 @@ const UpdateFAQ = () => {
                         placeholder="A brief description about the vacancy"
                         rows="4"
                         defaultValue={data.faq_answer}
+                        required="true"
                         type="textarea"
                         onChange={(e) => {
                           setFaqAnswer(e.target.value);
@@ -150,6 +152,7 @@ const UpdateFAQ = () => {
                         placeholder="Paste video link here"
                         rows="4"
                         defaultValue={data.vid_link}
+                        required="true"
                         type="text"
                         onChange={(e) => {
                           setVidLink(e.target.value);
@@ -164,6 +167,7 @@ const UpdateFAQ = () => {
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
+                            required="true"
                             defaultValue={data.faq_category}
                           >
                             Select FAQ Category
