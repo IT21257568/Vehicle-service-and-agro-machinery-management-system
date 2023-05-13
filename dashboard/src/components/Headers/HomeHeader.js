@@ -37,7 +37,7 @@ const items = [
     altText: "Hello ",
     caption: "Hello ",
     key: 4,
-  }
+  },
 ];
 
 const HomeHeader = () => {
@@ -64,16 +64,18 @@ const HomeHeader = () => {
   const slides = items.map((item) => {
     return (
       <CarouselItem
-        
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
         key={item.src}
       >
-        <img src={item.src} alt={item.altText} style={{width: '100rem ', height: '25rem', objectFit:'cover'}}/>
+        <img
+          src={item.src}
+          alt={item.altText}
+          style={{ width: "100rem ", height: "25rem", objectFit: "cover" }}
+        />
         <CarouselCaption
           captionText={item.caption}
           //captionHeader={item.caption}
-          
         />
       </CarouselItem>
     );
@@ -81,10 +83,10 @@ const HomeHeader = () => {
 
   return (
     <container>
-      <Card style={{padding: '3rem', backgroundColor: '#172b4d'}}>
+      {/* <Card style={{padding: '3rem', backgroundColor: '#172b4d'}}>
         <NavbarWh/>
-      </Card>
-      <Carousel activeIndex={activeIndex} next={next} previous={previous} >
+      </Card> */}
+      <Carousel activeIndex={activeIndex} next={next} previous={previous}>
         <CarouselIndicators
           items={items}
           activeIndex={activeIndex}

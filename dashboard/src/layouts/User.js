@@ -13,6 +13,7 @@ import Index from "views/Index.js";
 
 import routes from "../routes";
 import Footer from "components/Footers/AdminFooter";
+import UserNavbar from "components/Navbars/UserNavbar";
 
 const User = () => {
   const mainContent = React.useRef(null);
@@ -37,7 +38,7 @@ const User = () => {
     <>
       <div className="main-content" ref={mainContent}>
         {/* {location.pathname} */}
-        <AdminNavbar brandText={getBrandText(location.pathname)} />
+        <UserNavbar />
         <Routes>
           {routes.map((item, index) =>
             item.layout === "/user" ? (
@@ -52,9 +53,7 @@ const User = () => {
         </Routes>
         {/* <Outlet /> */}
         {/* <Outlet /> */}
-        <Container fluid>
-          
-        </Container>
+        <Container fluid></Container>
         <FooterWH />
       </div>
     </>

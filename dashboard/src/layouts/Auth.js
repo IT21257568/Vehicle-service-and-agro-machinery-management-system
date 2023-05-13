@@ -8,6 +8,7 @@ import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
 import routes from "routes.js";
+import UserNavbar from "components/Navbars/UserNavbar";
 
 const Auth = () => {
   const mainContent = React.useRef(null);
@@ -28,7 +29,8 @@ const Auth = () => {
   return (
     <>
       <div className="main-content" ref={mainContent}>
-        <AuthNavbar />
+        {/* <AuthNavbar /> */}
+        <UserNavbar></UserNavbar>
         <div className="header bg-gradient-info py-7 py-lg-8">
           <Container>
             <div className="header-body text-center mb-7">
