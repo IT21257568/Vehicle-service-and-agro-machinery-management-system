@@ -59,7 +59,7 @@ import ApplyNow from "views/User/ApplyNow";
 // Sithija user views
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
-import ProvideFeedback from "views/User/FeedbackPage"
+import ProvideFeedback from "views/User/FeedbackPage";
 import ViewFeedbacks from "views/Admin/ViewFeedback";
 
 //Janindu user views
@@ -82,7 +82,6 @@ import MyOrders from "views/User/MyOrders";
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
 
-
 // Pawan — employee accounts section
 import CreateEmployee from "views/Admin/EmployeeAccounts/CreateEmployee";
 import ViewEmployees from "views/Admin/EmployeeAccounts/ViewEmployees";
@@ -101,13 +100,13 @@ const routes = [
     component: Index,
     layout: "/admin",
   },
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   icon: "ni ni-planet text-blue",
-  //   component: Icons,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/icons",
+    name: "Icons",
+    icon: "ni ni-planet text-blue",
+    component: Icons,
+    layout: "/admin",
+  },
   // {
   //   path: "/maps",
   //   name: "Maps",
@@ -280,8 +279,6 @@ const routes = [
     layout: "/user",
   },
 
-
-
   //sithija promotions
   {
     path: "/create-promotion",
@@ -345,17 +342,17 @@ const routes = [
   //Sithija user view for feedback section
   {
     path: "/feedback-page",
-    name:"Provide Feedback",
+    name: "Provide Feedback",
     icon: "ni ni-notification-70 text-orange",
     component: ProvideFeedback,
-    layout: "/user"
+    layout: "/user",
   },
   {
     path: "/view-feedback-page",
-    name:"View Feedback",
+    name: "View Feedback",
     icon: "ni ni-notification-70 text-orange",
     component: ViewFeedbacks,
-    layout: "/admin"
+    layout: "/admin",
   },
 
   //Pehesarai spare parts admin routes
@@ -510,9 +507,6 @@ const routes = [
     component: UpdateRepairJob,
     layout: "/admin",
   },
-<<<<<<< HEAD
-
-=======
   {
     path: "/view-repair-job-images/:id",
     name: "View Repair Job Image",
@@ -520,8 +514,7 @@ const routes = [
     component: ViewRepairJobImage,
     layout: "/admin",
   },
-  
->>>>>>> develop-new
+
   //Piyumi general issues
   {
     path: "/create-general-issue",
@@ -574,7 +567,6 @@ const routes = [
     component: DummyPage,
     layout: "/user",
   },
-<<<<<<< HEAD
   // EMPLOYEE ACCOUNTS SECTION
   {
     path: "/create-employee",
@@ -597,7 +589,6 @@ const routes = [
     component: UpdateEmployee,
     layout: "/admin",
   },
-=======
   //home view
   {
     path: "/home-page",
@@ -606,7 +597,5 @@ const routes = [
     component: Home,
     layout: "/user",
   },
-
->>>>>>> develop-new
 ];
 export default routes;
