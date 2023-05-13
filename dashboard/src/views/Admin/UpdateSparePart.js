@@ -6,6 +6,7 @@ import { useParams,useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
+  CardImg,
   CardHeader,
   CardBody,
   FormGroup,
@@ -169,21 +170,30 @@ const UpdateSparePart= () => {
                             Spare Part Picture
                           </label> <br></br>
                           <Media className="align-items-center">
-                            <span className="avatar avatar-sm rounded-circle">
-                              {image && (
-                                <img
-                                  //className="rounded-circle"
-                                  src={image}
-                                  alt="Uploaded"
-                                />
-                              )}
+                          <span>
+                            <CardImg
+                              height="50rem"
+                              width="100%"
+                              src={data.sp_image}
+                            />
+                          </span>
+                           : Current Picture
+                        </Media>
+                        <br></br>
+                          <Media className="align-items-center">
+                            <span>
+                            <CardImg
+                              height="50rem"
+                              width="100%"
+                              src={image}
+                            />
                             </span>
+                            : Updated Picture Will Appear Here
                           </Media><br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
                             onChange={handleImageUpload}
-                            defaultValue={data.sp_image}
                           />
                           {uploadProgress > 0 && (
                             <div>Uploading... {uploadProgress}%</div>
