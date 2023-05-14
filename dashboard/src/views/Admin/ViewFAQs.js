@@ -28,6 +28,8 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
+  FormGroup,
+  Label,
   CardText,
   CardGroup,
   CardImg,
@@ -188,13 +190,55 @@ const ViewFAQs = () => {
                         </DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
+                     {/* <FormGroup tag="fieldset">
+                        <FormGroup check>
+                          <Label check>
+                            <Input   
+                            
+                            onClick={(e) => {
+                            setQuerySort(e.target.value);
+                          }}
+                          value="User profile related"
+                          type="radio" name="radio1" /> User profile related
+                          </Label>
+                        </FormGroup>
+                        <FormGroup check>
+                          <Label check>
+                            <Input type="radio" name="radio1" 
+                            value="Bookings related"
+                            onClick={(e) => {
+                              setQuerySort(e.target.value);
+                            }}
+                            /> Bookings related                         
+                          </Label>
+                        </FormGroup>
+                        <FormGroup check>
+                          <Label check>
+                            <Input type="radio" name="radio1" 
+                            value="Online shop related"
+                            onClick={(e) => {
+                              setQuerySort(e.target.value);
+                            }}
+                            /> Online shop related
+                          </Label>
+                        </FormGroup>
+                        <FormGroup check>
+                          <Label check>
+                            <Input type="radio" name="radio1" 
+                            value="Online shop related"
+                            onClick={(e) => {
+                              setQuerySort(e.target.value);
+                            }}
+                            /> Online shop related
+                          </Label>
+                        </FormGroup>
+                      </FormGroup> */}
                   </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
-                      color="success"
                       type="button"
-                      style={{marginTop: "-5.5rem",marginRight: '1rem'}}
+                      style={{marginTop: "-5.5rem",marginRight: '1rem',color: 'teal'}}
                       onClick={() => navigate("/admin/create-faq")}
                     >
                       <span
