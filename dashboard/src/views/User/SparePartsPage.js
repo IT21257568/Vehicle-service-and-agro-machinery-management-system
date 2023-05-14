@@ -37,7 +37,7 @@ const SparePartsPage = () => {
   const [allSpareParts, setAllSpareParts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visible, setVisible] = useState(4);
+  const [visible, setVisible] = useState(3);
   const [faqCategory, setFaqCategory] = useState("");
   const [query, setQuery] = useState("");
 
@@ -50,9 +50,9 @@ const SparePartsPage = () => {
   };
 
   //sorting function
-  const sorting = () => {
-    setDropdownOpen((prevState) => !prevState);
-  };
+  // const sorting = () => {
+  //   setDropdownOpen((prevState) => !prevState);
+  // };
 
   // retrieve all spare parts from database
   useEffect(() => {
@@ -74,7 +74,7 @@ const SparePartsPage = () => {
     <>
       <SparePartHeader />
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7" fluid style={{marginBottom: '3rem'}}>
         <Row>
           <div className="col">
             <Card className="shadow" color="lighter">
@@ -86,42 +86,6 @@ const SparePartsPage = () => {
                   <div className="col">
                     <h3 className="mb-0">All Spare Parts</h3>
                   </div>
-                  <Col xl = "3">
-                    <label
-                            className="form-control-label mr-2"
-                            htmlFor="input-email"
-                          >
-                            Sort By: 
-                          </label>
-                          <Dropdown
-                            isOpen={dropdownOpen}
-                            color="primary"
-                            toggle={toggle}
-                            onClick={sorting}
-                          >
-                            <DropdownToggle caret>
-                              {faqCategory ? faqCategory : "Select Category"}
-                            </DropdownToggle>
-                            <DropdownMenu>
-                              <DropdownItem
-                                value="Price Low to High"
-                                onClick={(e) => {
-                                  setFaqCategory(e.target.value);
-                                }}
-                              >
-                                Price Low to High
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Price High to Low"
-                                onClick={(e) => {
-                                  setFaqCategory(e.target.value);
-                                }}
-                              >
-                                Price High to Low
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </Dropdown>
-                  </Col>
                   <div className="col text-right">
                   {/* <Form className="mt-4 mb-3 d-md-none"> */}
                   <InputGroup className="input-group-rounded input-group-merge">

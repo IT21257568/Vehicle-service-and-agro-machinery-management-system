@@ -84,7 +84,7 @@ const ViewSpareParts = () => {
     <>
       <Header/>
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7" fluid style={{marginBottom: '3rem'}}>
         {/* Light Table */}
         <Row>
           <div className="col">

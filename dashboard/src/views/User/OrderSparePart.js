@@ -108,7 +108,7 @@ const OrderSparePart = () => {
     <>
       <SparePartHeader/>
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7" fluid style={{marginBottom: '3rem'}}>
         <Row>
           <Col className="order-xl-1" xl="12">
             <Card className="bg-secondary shadow">

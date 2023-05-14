@@ -58,7 +58,7 @@ const MyOrders = () => {
     setVisibleAgro((prevValue) => prevValue + 3);
   };
 
-  // retrieve all agro product orders from database
+  // retrieve all spare parts orders from database
   useEffect(() => {
     const fetchAllSparePartOrders = async () => {
       try {

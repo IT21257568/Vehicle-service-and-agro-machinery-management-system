@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -19,12 +19,13 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Label,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-const CreateAgroProduct= () => {
+const CreateAgroProduct = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const navigate = useNavigate();
@@ -78,20 +79,18 @@ const CreateAgroProduct= () => {
       });
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
     try {
       await axios
         .post("/api/agroProducts", {
-          p_name : AgroProduct_name,
-          p_image : image,
-          p_price : AgroProduct_price,
-          p_discount : AgroProduct_discount,
-          p_description : AgroProduct_description,
-          p_status : AgroProduct_status,
+          p_name: AgroProduct_name,
+          p_image: image,
+          p_price: AgroProduct_price,
+          p_discount: AgroProduct_discount,
+          p_description: AgroProduct_description,
+          p_status: AgroProduct_status,
         })
         .then((res) => {
           console.log("New AgroProduct added", res.data);
@@ -119,7 +118,7 @@ const CreateAgroProduct= () => {
     <>
       <Header />
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7" fluid style={{ marginBottom: "3rem" }}>
         <Row>
           <Col className="order-xl-1" xl="12">
             <Card className="bg-secondary shadow">
@@ -229,6 +228,38 @@ const CreateAgroProduct= () => {
                         </FormGroup>
                       </Col>
                       <Col lg="4">
+                        {/* <FormGroup>
+                          <Label>Status</Label>
+                          <div>
+                            <FormGroup check>
+                              <Label check>
+                                <Input
+                                  type="radio"
+                                  name = "status"
+                                  value = "Available"
+                                  onClick={(e) => {
+                                    setAgroProductStatus(e.target.value);
+                                  }}
+                                />
+                                Available
+                              </Label>
+                            </FormGroup>
+                            <FormGroup check>
+                              <Label check>
+                                <Input
+                                  type="radio"
+                                  name = "status"
+                                  value = "Available"
+                                  onClick={(e) => {
+                                    setAgroProductStatus(e.target.value);
+                                  }}
+                                />
+                                Out of stock
+                              </Label>
+                            </FormGroup>
+                          </div>
+                        </FormGroup> */}
+                        
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
@@ -236,6 +267,7 @@ const CreateAgroProduct= () => {
                           >
                             Status
                           </label>
+                          
                           <Dropdown
                             isOpen={dropdownOpen}
                             color="primary"

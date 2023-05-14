@@ -19,6 +19,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Label,
 } from "reactstrap";
 
 // core components
@@ -114,7 +115,7 @@ const CreateSparePart = () => {
     <>
       <Header />
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7" fluid style={{marginBottom: '3rem'}}>
         <Row>
           <Col className="order-xl-1" xl="12">
             <Card className="bg-secondary shadow">
@@ -234,7 +235,31 @@ const CreateSparePart = () => {
                           >
                             Status
                           </label>
-                          <Dropdown
+                          <FormGroup check>
+                            <Label check>
+                              <Input 
+                                type = "radio"
+                                name = "status"
+                                value = "Available"
+                                onClick={(e) => {
+                                  setSparePartStatus(e.target.value);
+                                }} />
+                                Available
+                            </Label>
+                          </FormGroup>
+                          <FormGroup check>
+                            <Label check>
+                              <Input 
+                                type = "radio"
+                                name = "status"
+                                value = "Out of stock"
+                                onClick={(e) => {
+                                  setSparePartStatus(e.target.value);
+                                }} />
+                                Out of stock
+                            </Label>
+                          </FormGroup>
+                          {/* <Dropdown
                             isOpen={dropdownOpen}
                             required
                             color="primary"
@@ -263,7 +288,7 @@ const CreateSparePart = () => {
                                 Out of Stock
                               </DropdownItem>
                             </DropdownMenu>
-                          </Dropdown>
+                          </Dropdown> */}
                         </FormGroup>
                       </Col>
                     </Row>
