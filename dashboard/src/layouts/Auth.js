@@ -10,6 +10,8 @@ import AuthFooter from "components/Footers/AuthFooter.js";
 import routes from "routes.js";
 import UserNavbar from "components/Navbars/UserNavbar";
 
+import logo from "../assets/img/brand/logo-edited.png";
+
 const Auth = () => {
   const mainContent = React.useRef(null);
   const location = useLocation();
@@ -31,15 +33,20 @@ const Auth = () => {
       <div className="main-content" ref={mainContent}>
         {/* <AuthNavbar /> */}
         <UserNavbar></UserNavbar>
-        <div className="header bg-gradient-info py-7 py-lg-8">
+        <div className="header bg-gradient-info py-6 py-lg-6">
           <Container>
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
-                  <p className="text-lead text-light">
-                    Use these awesome forms to login or create new account in
-                    your project for free.
+                  <img
+                    className="mb-4"
+                    style={{ width: "350px" }}
+                    src={logo}
+                    alt=""
+                  ></img>
+                  {/* <h1 className="text-white">Welcome to Wheelmasters</h1> */}
+                  <p className="h3 text-white">
+                    Unmatched service for your ride
                   </p>
                 </Col>
               </Row>

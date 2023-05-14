@@ -41,7 +41,7 @@ const UserNavbar = (props) => {
         className="navbar-top navbar-dark"
         expand="md"
         id="navbar-main"
-        style={{ position: "relative" }}
+        style={{ position: "relative", zIndex: "99" }}
       >
         <Container fluid>
           {/* <Image src={logo} style={{ height: "px" }}></Image> */}
@@ -64,9 +64,35 @@ const UserNavbar = (props) => {
             {/* removed searchbar */}
 
             <Nav className="align-items-center d-none d-md-flex" navbar>
+              {/* Shop */}
+              <UncontrolledDropdown nav className="text-gray">
+                <DropdownToggle className="pr-0" nav>
+                  <Media className="align-items-start">
+                    <Media className="ml-2 d-none d-lg-block">
+                      <span
+                        className="mb-0 text-sm font-weight-bold text-gray"
+                        // style={{ color: "#525f7f" }}
+                      >
+                        Shop
+                      </span>
+                    </Media>
+                  </Media>
+                </DropdownToggle>
+                <DropdownMenu className="dropdown-menu-arrow" right>
+                  <DropdownItem to="/admin/user-profile" tag={Link}>
+                    <i className="ni ni-single-02" />
+                    <span>Spare Parts</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile" tag={Link}>
+                    <i className="ni ni-single-02" />
+                    <span>Agro Products</span>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
               <Link className="ml-4 text-gray" to="/">
                 <span className="mb-0 text-sm font-weight-bold">Dashboard</span>
               </Link>
+
               {!user && (
                 <Link className="ml-4 text-gray" to="/auth/login">
                   <span className="mb-0 text-sm font-weight-bold">Login</span>

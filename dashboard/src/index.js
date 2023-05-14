@@ -24,7 +24,7 @@ root.render(
         <Route path="/admin/*" element={<AdminLayout />} />
         <Route path="/auth/*" element={<AuthLayout />} />
         <Route path="/user/*" element={<UserLayout />} />
-        <Route path="/" element={<Navigate to="/admin/index" />} />
+        <Route path="/" element={<Navigate to="/user/home-page" />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

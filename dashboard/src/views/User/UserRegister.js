@@ -105,11 +105,24 @@ const UserRegister = () => {
     }
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
+  const [passwordStrength, setPasswordStrength] = useState("");
+
   const onChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+
+    if (name === "password") {
+      if (value.length >= 8) {
+        setPasswordStrength("strong");
+      } else if (value.length >= 4) {
+        setPasswordStrength("medium");
+      } else {
+        setPasswordStrength("weak");
+      }
+    }
   };
 
   const onSubmit = (e) => {
@@ -128,6 +141,21 @@ const UserRegister = () => {
       dispatch(register(userData));
     }
   };
+
+  let passwordStrengthClass = "";
+  switch (passwordStrength) {
+    case "weak":
+      passwordStrengthClass = "text-danger";
+      break;
+    case "medium":
+      passwordStrengthClass = "text-warning";
+      break;
+    case "strong":
+      passwordStrengthClass = "text-success";
+      break;
+    default:
+      passwordStrengthClass = "";
+  }
 
   return (
     <>
@@ -228,8 +256,10 @@ const UserRegister = () => {
               </FormGroup>
               <div className="text-muted font-italic">
                 <small>
-                  password strength:{" "}
-                  <span className="text-success font-weight-700">strong</span>
+                  Password strength:{" "}
+                  <span className={`font-weight-700 ${passwordStrengthClass}`}>
+                    {passwordStrength}
+                  </span>
                 </small>
               </div>
               {/* <Row className="my-4">

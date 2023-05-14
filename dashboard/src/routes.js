@@ -88,6 +88,7 @@ import ViewEmployees from "views/Admin/EmployeeAccounts/ViewEmployees";
 import UpdateEmployee from "views/Admin/EmployeeAccounts/UpdateEmployee";
 import ViewBookingClient from "views/User/ViewBookingClient";
 import UpdateBookingClient from "views/User/UpdateBookingClient";
+import UserLogin from "views/User/UserLogin";
 
 //home page
 import Home from "./views/User/HomePage";
@@ -132,7 +133,7 @@ const routes = [
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
-    component: Login,
+    component: UserLogin,
     layout: "/auth",
   },
   // {
