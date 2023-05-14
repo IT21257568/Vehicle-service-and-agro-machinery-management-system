@@ -31,8 +31,8 @@ const whFooter = () => {
                 </NavLink>
               </NavItem>
               <NavItem style={{ padding: "0.5rem" }}>
-                <NavLink href="#" rel="noopener noreferrer" target="_blank">
-                  Contact us
+                <NavLink href="/user/faq-page">
+                  FAQ section
                 </NavLink>
               </NavItem>
               <NavItem
