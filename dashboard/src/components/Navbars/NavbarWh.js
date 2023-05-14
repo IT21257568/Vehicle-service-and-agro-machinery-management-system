@@ -118,6 +118,21 @@ const NavbarWh = () => {
                   </span>
                 </NavLink>
               </NavItem>
+              <NavItem style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }}>
+                <NavLink
+                  className="nav-link-icon"
+                  to="/user/promotions-page"
+                  tag={Link}
+                >
+                  <i className="ni ni-single-02" />
+                  <span
+                    style={{ color: "#e9ecef" }}
+                    className="nav-link-inner--text"
+                  >
+                    Promotions
+                  </span>
+                </NavLink>
+              </NavItem>
               <NavItem style={{ marginRight: "0.5rem", marginLeft: "0.5rem" }}>
                 <NavLink
                   className="nav-link-icon"
