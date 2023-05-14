@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const {
   createAgroProduct,
   getAllAgroProducts,
@@ -8,9 +7,6 @@ const {
   deleteAgroProduct,
   updateAgroProduct,
 } = require("../controllers/agroController");
-
-// import auth middleware
-const { protect } = require("../middleware/authMiddleware");
 
 //GET all AgroProducts
 router.get("/", getAllAgroProducts);

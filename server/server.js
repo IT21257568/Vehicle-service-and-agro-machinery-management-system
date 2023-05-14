@@ -7,7 +7,7 @@ const { errorHandler } = require("./middleware/errorMiddleware");
 
 const vanaciesRoute = require("./routes/vanaciesRoute");
 const sparePartsRoutes = require("./routes/spareParts");
-const agroProductRoutes = require("./routes/AgroRoute");
+const agroProductRoutes = require("./routes/agroRoute");
 const meetTeamRoute = require("./routes/MeetTeamRoute");
 const promotionRoute = require("./routes/promotionRoute");
 const userRoutes = require("./routes/userRoutes");
