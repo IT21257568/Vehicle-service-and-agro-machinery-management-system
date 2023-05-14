@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -92,8 +93,17 @@ const ViewEmergencyIssues = () => {
   };
 
   const generateReport = () => {
-    
     const doc = new jsPDF();
+
+    // Add the report title to the PDF
+    doc.setFontSize(18);
+    doc.text("Emergency Report", 14, 22);
+
+    // Add the current date to the PDF
+    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    doc.setFontSize(12);
+    doc.text(`Report generated on ${date}`, 14, 32);
+
     const columns = [
       "Customer Name",
       "NIC",
@@ -122,6 +132,11 @@ const ViewEmergencyIssues = () => {
     doc.autoTable({
       head: [columns],
       body: rows,
+      startY: 40,
+      styles: {
+        fontSize: 10, // Set font size for table content
+        cellPadding: 3, // Set cell padding for table cells
+      },
     });
 
     doc.save("EmergencyIssue.pdf");
