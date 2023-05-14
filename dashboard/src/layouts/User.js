@@ -1,6 +1,10 @@
 import React from "react";
 import { useLocation, Route, Routes, Navigate, Outlet } from "react-router-dom";
 
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
@@ -13,6 +17,7 @@ import Index from "views/Index.js";
 
 import routes from "../routes";
 import Footer from "components/Footers/AdminFooter";
+import UserNavbar from "components/Navbars/UserNavbar";
 
 const User = () => {
   const mainContent = React.useRef(null);
@@ -37,7 +42,7 @@ const User = () => {
     <>
       <div className="main-content" ref={mainContent}>
         {/* {location.pathname} */}
-        <AdminNavbar brandText={getBrandText(location.pathname)} />
+        <UserNavbar />
         <Routes>
           {routes.map((item, index) =>
             item.layout === "/user" ? (
@@ -52,9 +57,7 @@ const User = () => {
         </Routes>
         {/* <Outlet /> */}
         {/* <Outlet /> */}
-        <Container fluid>
-          
-        </Container>
+        <Container fluid></Container>
         <FooterWH />
       </div>
     </>

@@ -1,5 +1,8 @@
 import React from "react";
 import { useLocation, Route, Routes, Navigate, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import { Container } from "reactstrap";
@@ -16,6 +19,20 @@ import routes from "../routes";
 const Admin = () => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    // restrict admin dashboard
+    if (!user) {
+      navigate("/auth/login");
+    }
+
+    if (user && user.email !== "admin@wheelmasters.com") {
+      navigate("/user/home-page");
+    }
+  });
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
