@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -44,7 +45,7 @@ const ViewCVSubmissions = () => {
   const [vacancy_applicants, setVacancyApplicants] = useState("");
 
   // set visible rows
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(3);
 
   const navigate = useNavigate();
 
@@ -98,6 +99,16 @@ const ViewCVSubmissions = () => {
 
   const generateReport = () => {
     const doc = new jsPDF();
+
+    // Add the report title to the PDF
+    doc.setFontSize(18);
+    doc.text("Applicants Report", 14, 22);
+
+    // Add the current date to the PDF
+    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    doc.setFontSize(12);
+    doc.text(`Report generated on ${date}`, 14, 32);
+
     const columns = [
       "Applicant Name",
       "Applied Vacancy",
@@ -133,6 +144,11 @@ const ViewCVSubmissions = () => {
     doc.autoTable({
       head: [columns],
       body: rows,
+      startY: 40,
+      styles: {
+        fontSize: 10, // Set font size for table content
+        cellPadding: 3, // Set cell padding for table cells
+      },
     });
 
     doc.save("Applicants.pdf");
@@ -263,64 +279,14 @@ const ViewCVSubmissions = () => {
                         </td>
                       </tr>
                     ))}
-                  {visible < allApplicants.length && (
-                    <Button color="primary" size="sm" onClick={showMoreItems}>
-                      Load More
-                    </Button>
-                  )}
                 </tbody>
               </Table>
               <CardFooter className="py-4">
-                <nav aria-label="...">
-                  <Pagination
-                    className="pagination justify-content-end mb-0"
-                    listClassName="justify-content-end mb-0"
-                  >
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        tabIndex="-1"
-                      >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        3
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className="fas fa-angle-right" />
-                        <span className="sr-only">Next</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                  </Pagination>
-                </nav>
+                {visible < allApplicants.length && (
+                  <Button color="info" size="sm" onClick={showMoreItems}>
+                    Load More
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </div>

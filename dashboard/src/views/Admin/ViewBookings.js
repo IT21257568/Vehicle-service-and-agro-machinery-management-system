@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -28,7 +29,7 @@ import {
   //InputGroupText,
   Input,
   Row,
- // UncontrolledTooltip,
+  // UncontrolledTooltip,
   Button,
   //Chip,
   Col,
@@ -78,10 +79,20 @@ const ViewBookings = () => {
     });
   };
 
-
   const generateReport = () => {
-
     const doc = new jsPDF();
+
+    // Add the report title to the PDF
+    doc.setFontSize(18);
+    doc.text("Bookings Report", 14, 22);
+    
+
+    // Add the current date to the PDF
+    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    doc.setFontSize(12);
+    doc.setTextColor("Blue");
+    doc.text(`Report generated on ${date}`, 14, 32);
+
     const columns = [
       "Client Name",
       "Service Type",
@@ -114,6 +125,11 @@ const ViewBookings = () => {
     doc.autoTable({
       head: [columns],
       body: rows,
+      startY:40,
+      styles:{
+         fontSize: 10, // Set font size for table content
+        cellPadding: 3, // Set cell padding for table cells
+      },
     });
 
     doc.save("report.pdf");
@@ -132,8 +148,8 @@ const ViewBookings = () => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Bookings</h3>
-                    </div>
-                    <Col xl="3">
+                  </div>
+                  <Col xl="3">
                     <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
@@ -143,8 +159,23 @@ const ViewBookings = () => {
                         onChange={(e) => setQuery(e.target.value)}
                       />
                     </InputGroup>
-                    </Col>
+                  </Col>
                   <div className="col text-right">
+                    <Button
+                      className="btn-icon btn-3"
+                      style={{color: '#ffa500'}}
+                      type="button"
+                      onClick={() => navigate("/admin/create-bookings")}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-folder-17" />
+                      </span>
+                      <span className="btn-inner--text">Add Bookings</span>
+                    </Button>
+
                     <Button
                       className="btn-icon btn-3"
                       color="success"
@@ -186,7 +217,7 @@ const ViewBookings = () => {
                     .filter((booking) =>
                       booking.client_name
                         ?.toLowerCase()
-                        .includes(query.toLowerCase())
+                        .includes(query.toLowerCase()) 
                     )
                     .slice(0, visible)
                     .map((booking, index) => (
@@ -205,9 +236,6 @@ const ViewBookings = () => {
                         <td> {booking.date_time} </td>
                         <td> {booking.special_note} </td>
                         <td>
-                          <Button size="sm" color="primary">
-                            View
-                          </Button>
                           <Button
                             size="sm"
                             color="warning"
@@ -236,56 +264,7 @@ const ViewBookings = () => {
                 </tbody>
               </Table>
               <CardFooter className="py-4">
-                <nav aria-label="...">
-                  <Pagination
-                    className="pagination justify-content-end mb-0"
-                    listClassName="justify-content-end mb-0"
-                  >
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        tabIndex="-1"
-                      >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        3
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className="fas fa-angle-right" />
-                        <span className="sr-only">Next</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                  </Pagination>
-                </nav>
+                <nav aria-label="..."></nav>
               </CardFooter>
             </Card>
           </div>

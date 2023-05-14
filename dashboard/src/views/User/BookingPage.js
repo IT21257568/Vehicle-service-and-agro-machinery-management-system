@@ -68,7 +68,7 @@ const CreateBookingClient = () => {
           setDateTime("");
           setSpecialNote("");
           setError(null);
-          navigate("/admin/bookings");
+          navigate("/user/view-client-booking");
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
