@@ -93,9 +93,14 @@ const UserNavbar = (props) => {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <Link className="ml-4 text-gray" to="/">
-                <span className="mb-0 text-sm font-weight-bold">Dashboard</span>
-              </Link>
+
+              {user && user.email === "admin@wheelmasters.com" && (
+                <Link className="ml-4 text-gray" to="/">
+                  <span className="mb-0 text-sm font-weight-bold">
+                    Dashboard
+                  </span>
+                </Link>
+              )}
 
               {!user && (
                 <Link className="ml-4 text-gray" to="/auth/login">
