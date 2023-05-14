@@ -94,7 +94,7 @@ const createBooking = async(req, res) => {
 
 }
 
-//delete vacancy
+//delete booking
 const deleteBooking = async (req, res) => {
     const { id } = req.params;
     if(!mongoose.Types.ObjectId.isValid(id)) {
