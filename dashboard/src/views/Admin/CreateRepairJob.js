@@ -243,7 +243,7 @@ const CreateRepairjob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Enter Customer NIC"
-                                type="text"
+                                type="number"
                                 onChange={(e) => {
                                 setCustomerId(e.target.value);
                                 }}
@@ -283,7 +283,7 @@ const CreateRepairjob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Enter Customer Email"
-                                type="text"
+                                type="email"
                                 onChange={(e) => {
                                 setCustomerEmail(e.target.value);
                                 }}
@@ -302,7 +302,7 @@ const CreateRepairjob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Enter Estimated Cost"
-                                type="text"
+                                type="number"
                                 onChange={(e) => {
                                 setEstimatedCost(e.target.value);
                                 }}
