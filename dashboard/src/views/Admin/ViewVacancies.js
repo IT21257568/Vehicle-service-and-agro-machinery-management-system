@@ -158,6 +158,7 @@ const ViewVacancies = () => {
       styles: {
         fontSize: 12, // Set font size for table content
         cellPadding: 3, // Set cell padding for table cells
+        
       },
     });
 
