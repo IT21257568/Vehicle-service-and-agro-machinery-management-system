@@ -235,31 +235,7 @@ const CreateSparePart = () => {
                           >
                             Status
                           </label>
-                          <FormGroup check>
-                            <Label check>
-                              <Input 
-                                type = "radio"
-                                name = "status"
-                                value = "Available"
-                                onClick={(e) => {
-                                  setSparePartStatus(e.target.value);
-                                }} />
-                                Available
-                            </Label>
-                          </FormGroup>
-                          <FormGroup check>
-                            <Label check>
-                              <Input 
-                                type = "radio"
-                                name = "status"
-                                value = "Out of stock"
-                                onClick={(e) => {
-                                  setSparePartStatus(e.target.value);
-                                }} />
-                                Out of stock
-                            </Label>
-                          </FormGroup>
-                          {/* <Dropdown
+                          <Dropdown
                             isOpen={dropdownOpen}
                             required
                             color="primary"
@@ -288,7 +264,7 @@ const CreateSparePart = () => {
                                 Out of Stock
                               </DropdownItem>
                             </DropdownMenu>
-                          </Dropdown> */}
+                          </Dropdown>
                         </FormGroup>
                       </Col>
                     </Row>

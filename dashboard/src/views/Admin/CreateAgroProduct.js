@@ -228,38 +228,6 @@ const CreateAgroProduct = () => {
                         </FormGroup>
                       </Col>
                       <Col lg="4">
-                        {/* <FormGroup>
-                          <Label>Status</Label>
-                          <div>
-                            <FormGroup check>
-                              <Label check>
-                                <Input
-                                  type="radio"
-                                  name = "status"
-                                  value = "Available"
-                                  onClick={(e) => {
-                                    setAgroProductStatus(e.target.value);
-                                  }}
-                                />
-                                Available
-                              </Label>
-                            </FormGroup>
-                            <FormGroup check>
-                              <Label check>
-                                <Input
-                                  type="radio"
-                                  name = "status"
-                                  value = "Available"
-                                  onClick={(e) => {
-                                    setAgroProductStatus(e.target.value);
-                                  }}
-                                />
-                                Out of stock
-                              </Label>
-                            </FormGroup>
-                          </div>
-                        </FormGroup> */}
-                        
                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
