@@ -35,7 +35,13 @@ if (!promo_title) {
 }
 if (!promo_code) {
     emptyFields.push('promotion code');
-}
+}else {
+    // code validation
+    const codeRegex =  /^[A-Z]{3}\d{4}$/;
+    if (!codeRegex.test(promo_code)) {
+      emptyFields.push("Invalid code pattern");
+    }
+  }
 if(!promo_discount){
     emptyFields.push('promotion discount');
 }
