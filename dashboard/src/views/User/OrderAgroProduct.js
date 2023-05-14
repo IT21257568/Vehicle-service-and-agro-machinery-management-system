@@ -124,7 +124,7 @@ const OrderAgroProduct = () => {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`${fields}`);
+        setError(`Please fill in all fields: ${fields}`);
       } else {
         console.log(error);
       }

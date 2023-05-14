@@ -37,7 +37,7 @@ const SparePartsPage = () => {
   const [allSpareParts, setAllSpareParts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visible, setVisible] = useState(3);
+  const [visible, setVisible] = useState(4);
   const [faqCategory, setFaqCategory] = useState("");
   const [query, setQuery] = useState("");
 

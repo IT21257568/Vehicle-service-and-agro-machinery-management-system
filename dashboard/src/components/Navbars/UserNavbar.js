@@ -68,12 +68,12 @@ const UserNavbar = (props) => {
             {/* removed searchbar */}
 
             <Nav className="align-items-center d-none d-md-flex" navbar>
-            {user && (
+            {/* {user && (
                 <Link className="ml-4 text-gray" to="/user/my-orders">
                   <i className="ni ni-cart" />
                   <span style={{marginLeft : "8px"}} className="mb-0 text-sm font-weight-bold">My orders</span>
                 </Link>
-              )}
+              )} */}
               {/* Shop */}
               <UncontrolledDropdown nav className="text-gray">
                 <DropdownToggle className="pr-0" nav>
