@@ -18,6 +18,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Label
 } from "reactstrap";
 
 // core components
@@ -205,6 +206,39 @@ const CreateBooking = () => {
                             </DropdownMenu>
                           </Dropdown>
                         </FormGroup>
+
+                        {/* <FormGroup className="d-flex flex-column">
+                          <Label>Location</Label>
+                          <div>
+                            <FormGroup check>
+                              <Label check>
+                                <Input
+                                type="radio"
+                                name="Location"
+                                value="Auto Wash"
+                                checked={location === "Auto Wash"}
+                                onChange={() => setLocation("Auto Wash")}
+                                />
+                              Auto wash
+                              </Label>
+                            </FormGroup>
+                          </div>
+                          <div>
+                            <FormGroup check>
+                              <Label check>
+                                <Input
+                                type="radio"
+                                name="Location"
+                                value="Auto Plaza"
+                                checked={location === "Auto Plaza"}
+                                onChange={() => setLocation("Auto Plaza")}
+                                />
+                              Auto Plaza
+                              </Label>
+                            </FormGroup>
+                          </div>
+                        </FormGroup>    */}
+                                             
                       </Col>
 
                       <Col lg="4">
