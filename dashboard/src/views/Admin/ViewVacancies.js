@@ -196,23 +196,6 @@ const ViewVacancies = () => {
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={generateReport}
-                    >
-                      <span
-                        className="btn-inner--icon"
-                        style={{ width: "20px" }}
-                      >
-                        <i className="ni ni-folder-17" />
-                      </span>
-                      <span className="btn-inner--text">Generate Report</span>
-                    </Button>
-                  </div>
-
-                  <div className="col text-right">
-                    <Button
-                      className="btn-icon btn-3"
-                      color="success"
-                      type="button"
                       onClick={() => navigate("/admin/create-vacancy")}
                     >
                       <span
@@ -223,7 +206,24 @@ const ViewVacancies = () => {
                       </span>
                       <span className="btn-inner--text">Add</span>
                     </Button>
+
+                    <Button
+                      className="btn-icon btn-3"
+                      style={{ color: "#ffa500" }}
+                      type="button"
+                      onClick={generateReport}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px", color: "#ffa500" }}
+                      >
+                        <i className="ni ni-folder-17" />
+                      </span>
+                      <span className="btn-inner--text">Generate Report</span>
+                    </Button>
                   </div>
+
+                  {/* <div className="col text-right"></div> */}
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>

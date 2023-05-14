@@ -266,7 +266,7 @@ const handleCVUpload = (event) => {
                         </FormGroup>
                       </Col>
                       <Col lg="6">
-                        <FormGroup className="d-flex flex-column">
+                         <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
@@ -311,7 +311,7 @@ const handleCVUpload = (event) => {
                               </DropdownItem>
                             </DropdownMenu>
                           </Dropdown>
-                        </FormGroup>
+                        </FormGroup> 
 
                         {/* <FormGroup>
                           <Label>Select Gender</Label>
@@ -322,8 +322,7 @@ const handleCVUpload = (event) => {
                                   type="radio"
                                   name="gender"
                                   value="Male"
-                                  checked={applicant_gender === "Male"}
-                                  onChange={() => setApplicantGender("Male")}
+                                  onClick={() => setApplicantGender("Male")}
                                 />
                                 Male
                               </Label>
@@ -334,8 +333,7 @@ const handleCVUpload = (event) => {
                                   type="radio"
                                   name="gender"
                                   value="Female"
-                                  checked={applicant_gender === "Female"}
-                                  onChange={() => setApplicantGender("Female")}
+                                  onClick={() => setApplicantGender("Female")}
                                 />
                                 Female
                               </Label>
@@ -346,14 +344,13 @@ const handleCVUpload = (event) => {
                                   type="radio"
                                   name="gender"
                                   value="Other"
-                                  checked={applicant_gender === "Other"}
-                                  onChange={() => setApplicantGender("Other")}
+                                  onClick={() => setApplicantGender("Other")}
                                 />
                                 Other
                               </Label>
-                            </FormGroup>
+                            </FormGroup> 
                           </div>
-                        </FormGroup> */}
+                        </FormGroup> */} 
                       </Col>
                     </Row>
                     <Row>
