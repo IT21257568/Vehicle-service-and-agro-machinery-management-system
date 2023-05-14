@@ -38,7 +38,7 @@ const NavbarWh = () => {
                 marginTop: "-0.8rem",
               }}
               alt="..."
-              src={require("../../assets/img/brand/WLpy.png")}
+              src={require("../../assets/img/brand/wh_white.png")}
             />
           </NavbarBrand>
           <button className="navbar-toggler" id="navbar-collapse-main">
@@ -115,6 +115,21 @@ const NavbarWh = () => {
                     className="nav-link-inner--text"
                   >
                     Career
+                  </span>
+                </NavLink>
+              </NavItem>
+              <NavItem style={{ marginLeft: "0.5rem", marginRight: "0.5rem" }}>
+                <NavLink
+                  className="nav-link-icon"
+                  to="/user/promotions-page"
+                  tag={Link}
+                >
+                  <i className="ni ni-single-02" />
+                  <span
+                    style={{ color: "#e9ecef" }}
+                    className="nav-link-inner--text"
+                  >
+                    Promotions
                   </span>
                 </NavLink>
               </NavItem>
