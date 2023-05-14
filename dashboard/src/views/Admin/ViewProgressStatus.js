@@ -145,6 +145,22 @@ const ViewProgressStatus = () => {
                     </InputGroup>
                     </Col>
                   <div className="col text-right">
+                  <Button
+                      className="btn-icon btn-3"
+                      // color="success"
+                      // type="button"
+                      type="button"
+                      style={{color:'#ffa500'}}
+                      onClick={()=>navigate("/admin/create-progress")}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-planet" />
+                      </span>
+                      <span className="btn-inner--text">Add Progress</span>
+                    </Button>
                   {/* genarate report button */}
                   <Button
                       className="btn-icon btn-3"
