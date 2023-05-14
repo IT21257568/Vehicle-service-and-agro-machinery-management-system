@@ -211,7 +211,7 @@ const UserNavbar = (props) => {
                   </Link>
                 </>
               )}
-              <Link to="/user/bookings">
+              <Link to="/user/create-client-booking">
                 <Button color="primary">Book Now</Button>
               </Link>
             </Nav>
