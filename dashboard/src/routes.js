@@ -59,7 +59,7 @@ import ApplyNow from "views/User/ApplyNow";
 // Sithija user views
 import Promotions from "views/User/PromotionsPage";
 import FAQs from "views/User/FAQPage";
-import ProvideFeedback from "views/User/FeedbackPage"
+import ProvideFeedback from "views/User/FeedbackPage";
 import ViewFeedbacks from "views/Admin/ViewFeedback";
 
 //Janindu user views
@@ -69,7 +69,7 @@ import CreateClientBooking from "views/User/BookingPage";
 import AgroProductsPage from "views/User/AgroProductsPage";
 
 //nisa
-import ViewMeetTheTeam from "views/User/MeetTheTeam"; 
+import ViewMeetTheTeam from "views/User/MeetTheTeam";
 
 //Pehesarani admin views
 import ViewOrderedAgroProducts from "views/Admin/ViewOrderedAgroProducts";
@@ -82,13 +82,16 @@ import MyOrders from "views/User/MyOrders";
 // nethum user progress
 import ProgressStatusPage from "views/User/ProgressStatusPage";
 
+// Pawan — employee accounts section
+import CreateEmployee from "views/Admin/EmployeeAccounts/CreateEmployee";
+import ViewEmployees from "views/Admin/EmployeeAccounts/ViewEmployees";
+import UpdateEmployee from "views/Admin/EmployeeAccounts/UpdateEmployee";
 import ViewBookingClient from "views/User/ViewBookingClient";
-
 import UpdateBookingClient from "views/User/UpdateBookingClient";
+import UserLogin from "views/User/UserLogin";
 
 //home page
 import Home from "./views/User/HomePage";
-
 
 const routes = [
   {
@@ -98,13 +101,13 @@ const routes = [
     component: Index,
     layout: "/admin",
   },
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   icon: "ni ni-planet text-blue",
-  //   component: Icons,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/icons",
+    name: "Icons",
+    icon: "ni ni-planet text-blue",
+    component: Icons,
+    layout: "/admin",
+  },
   // {
   //   path: "/maps",
   //   name: "Maps",
@@ -130,7 +133,7 @@ const routes = [
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
-    component: Login,
+    component: UserLogin,
     layout: "/auth",
   },
   // {
@@ -277,8 +280,6 @@ const routes = [
     layout: "/user",
   },
 
-
-
   //sithija promotions
   {
     path: "/create-promotion",
@@ -309,8 +310,8 @@ const routes = [
     component: Promotions,
     layout: "/user",
   },
-   //Sithija FAQ section
-   {
+  //Sithija FAQ section
+  {
     path: "/create-faq",
     name: "Create FAQ",
     icon: "ni ni-notification-70 text-orange",
@@ -342,17 +343,17 @@ const routes = [
   //Sithija user view for feedback section
   {
     path: "/feedback-page",
-    name:"Provide Feedback",
+    name: "Provide Feedback",
     icon: "ni ni-notification-70 text-orange",
     component: ProvideFeedback,
-    layout: "/user"
+    layout: "/user",
   },
   {
     path: "/view-feedback-page",
-    name:"View Feedback",
+    name: "View Feedback",
     icon: "ni ni-notification-70 text-orange",
     component: ViewFeedbacks,
-    layout: "/admin"
+    layout: "/admin",
   },
 
   //Pehesarai spare parts admin routes
@@ -437,8 +438,8 @@ const routes = [
     component: AgroProductsPage,
     layout: "/user",
   },
-   //Pehesarani - View Agro Products orders admin routes
-   {
+  //Pehesarani - View Agro Products orders admin routes
+  {
     path: "/agro-products-orders",
     name: "Agro Product Orders",
     icon: "ni ni-settings text-blue",
@@ -514,7 +515,7 @@ const routes = [
     component: ViewRepairJobImage,
     layout: "/admin",
   },
-  
+
   //Piyumi general issues
   {
     path: "/create-general-issue",
@@ -567,6 +568,28 @@ const routes = [
     component: DummyPage,
     layout: "/user",
   },
+  // EMPLOYEE ACCOUNTS SECTION
+  {
+    path: "/create-employee",
+    name: "Create Employee Account",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: CreateEmployee,
+    layout: "/admin",
+  },
+  {
+    path: "/view-employees",
+    name: "View Employee Accounts",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: ViewEmployees,
+    layout: "/admin",
+  },
+  {
+    path: "/update-employee/:id",
+    name: "Update Employee Account",
+    icon: "ni ni-ruler-pencil text-blue",
+    component: UpdateEmployee,
+    layout: "/admin",
+  },
   //home view
   {
     path: "/home-page",
@@ -575,6 +598,5 @@ const routes = [
     component: Home,
     layout: "/user",
   },
-
 ];
 export default routes;
