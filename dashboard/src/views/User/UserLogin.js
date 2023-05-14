@@ -53,6 +53,8 @@ const Login = () => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+
+    console.log(formData);
   };
 
   const onSubmit = (e) => {
@@ -85,7 +87,9 @@ const Login = () => {
                   <Input
                     placeholder="Email"
                     type="email"
-                    autoComplete="new-email"
+                    // value={email}
+                    name="email"
+                    // autoComplete="new-email"
                     onChange={onChange}
                   />
                 </InputGroup>
@@ -100,7 +104,9 @@ const Login = () => {
                   <Input
                     placeholder="Password"
                     type="password"
-                    autoComplete="new-password"
+                    // value={email}
+                    name="password"
+                    // autoComplete="new-password"
                     onChange={onChange}
                   />
                 </InputGroup>
@@ -115,7 +121,7 @@ const Login = () => {
           </CardBody>
         </Card>
         <Row className="mt-3">
-          <Col xs="6">
+          {/* <Col xs="6">
             <a
               className="text-light"
               href="#pablo"
@@ -123,8 +129,8 @@ const Login = () => {
             >
               <small>Forgot password?</small>
             </a>
-          </Col>
-          <Col className="text-right" xs="6">
+          </Col> */}
+          {/* <Col className="text-right" xs="6">
             <a
               className="text-light"
               href="#pablo"
@@ -132,7 +138,7 @@ const Login = () => {
             >
               <small>Create new account</small>
             </a>
-          </Col>
+          </Col> */}
         </Row>
       </Col>
     </>
