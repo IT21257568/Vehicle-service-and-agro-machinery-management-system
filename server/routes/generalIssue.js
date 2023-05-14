@@ -9,7 +9,7 @@ const {
 
 } = require("../controllers/generalIssueController");
 
-//Get all the geberal issues
+//Get all the general issues
 router.get("/", getGeneralIssues);
 
 //Get single general issue
