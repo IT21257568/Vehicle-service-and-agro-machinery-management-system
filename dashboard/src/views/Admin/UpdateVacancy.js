@@ -157,7 +157,7 @@ const UpdateVacancy = () => {
                     </Row>
                     <Row>
                       <Col lg="6">
-                      <FormGroup>
+                        <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="input-username"
@@ -175,8 +175,7 @@ const UpdateVacancy = () => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
-                      </Col>
+                      <Col lg="6"></Col>
                     </Row>
                   </div>
 

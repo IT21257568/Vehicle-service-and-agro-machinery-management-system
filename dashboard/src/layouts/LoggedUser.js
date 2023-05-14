@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation, Route, Routes, Navigate, Outlet } from "react-router-dom";
+
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,16 +10,19 @@ import { Container } from "reactstrap";
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
-import FooterWH from "components/Footers/WHFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
+import FooterWH from "components/Footers/WHFooter";
 
 import Index from "views/Index.js";
 
 import routes from "../routes";
+import Footer from "components/Footers/AdminFooter";
+import UserNavbar from "components/Navbars/UserNavbar";
 
-const Admin = () => {
+const LoggedUser = () => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
@@ -27,10 +31,6 @@ const Admin = () => {
     // restrict admin dashboard
     if (!user) {
       navigate("/auth/login");
-    }
-
-    if (user && user.email !== "admin@wheelmasters.com") {
-      navigate("/user/home-page");
     }
   });
 
@@ -51,20 +51,12 @@ const Admin = () => {
 
   return (
     <>
-      <Sidebar
-        routes={routes}
-        logo={{
-          innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/argon-react.png"),
-          imgAlt: "...",
-        }}
-      />
       <div className="main-content" ref={mainContent}>
         {/* {location.pathname} */}
-        <AdminNavbar brandText={getBrandText(location.pathname)} />
+        <UserNavbar />
         <Routes>
           {routes.map((item, index) =>
-            item.layout === "/admin" ? (
+            item.layout === "/user" ? (
               <Route
                 key={index}
                 path={item.path}
@@ -83,4 +75,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default LoggedUser;
