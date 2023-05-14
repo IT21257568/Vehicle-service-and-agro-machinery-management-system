@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout, reset } from "../../features/auth/authSlice";
 
+// react icons import
+import { FaTractor } from "react-icons/fa";
+import { FaCar } from "react-icons/fa";
+
 // reactstrap components
 import {
   DropdownMenu,
@@ -79,12 +83,12 @@ const UserNavbar = (props) => {
                   </Media>
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-single-02" />
+                  <DropdownItem to="/user/spareParts" tag={Link}>
+                    <FaCar></FaCar>
                     <span>Spare Parts</span>
                   </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-single-02" />
+                  <DropdownItem to="/user/AgroProducts" tag={Link}>
+                    <FaTractor></FaTractor>
                     <span>Agro Products</span>
                   </DropdownItem>
                 </DropdownMenu>
