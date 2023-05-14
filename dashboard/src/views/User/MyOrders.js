@@ -33,7 +33,7 @@ import {
 } from "reactstrap";
 
 // core components
-import Header from "components/Headers/SparePartHeader";
+import Header from "components/Headers/MyOrdersHeader";
 
 const MyOrders = () => {
   // states
@@ -171,6 +171,7 @@ const MyOrders = () => {
                   <tr>
                     <th scope="col">Product Name</th>
                     <th scope="col">Product Price</th>
+                    <th scope="col">Buying Option</th>
                     <th scope="col">Ordered Date</th>
                     <th scope="col">Updated Date</th>
                     <th scope="col">Actions</th>
@@ -193,6 +194,7 @@ const MyOrders = () => {
                           <span className="mb-0 text-sm">{order.p_name}</span>
                         </th>
                         <td><span className="mb-0 text-sm">{order.p_price}</span></td>
+                        <td><span className="mb-0 text-sm">{order.customer_buying_option}</span></td>
                         <td>{formatDateTime(order.createdAt)}</td>
                         <td>{formatDateTime(order.updatedAt)}</td>
                         <td>

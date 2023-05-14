@@ -92,6 +92,37 @@ const createAgroProduct = async (req, res) => {
     const updateAgroProduct = async (req, res) => {
         const { id } = req.params;
 
+        const { p_name, p_image, p_price, p_discount, p_description, p_status } =
+        req.body;
+
+    let emptyFields = [];
+
+    //validation for empty fields
+    if (!p_name) {
+        emptyFields.push("p_name");
+    }
+    if (!p_image) {
+        emptyFields.push("p_image");
+    }
+    if (!p_price) {
+        emptyFields.push("p_price");
+    }
+    if (!p_discount) {
+        emptyFields.push("p_discount");
+    }
+    if (!p_description) {
+        emptyFields.push("p_description");
+    }
+    if (!p_status) {
+        emptyFields.push("p_status");
+    }
+    if (emptyFields.length > 0) {
+        return res
+            .status(400)
+            .json({ error: "Please fill in all fields:", emptyFields });
+    }
+
+
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(404).json({ error: "No such agroProduct" });
         }

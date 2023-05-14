@@ -45,7 +45,7 @@ const ViewCVSubmissions = () => {
   const [vacancy_applicants, setVacancyApplicants] = useState("");
 
   // set visible rows
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(3);
 
   const navigate = useNavigate();
 
@@ -279,64 +279,14 @@ const ViewCVSubmissions = () => {
                         </td>
                       </tr>
                     ))}
-                  {visible < allApplicants.length && (
-                    <Button color="primary" size="sm" onClick={showMoreItems}>
-                      Load More
-                    </Button>
-                  )}
                 </tbody>
               </Table>
               <CardFooter className="py-4">
-                <nav aria-label="...">
-                  <Pagination
-                    className="pagination justify-content-end mb-0"
-                    listClassName="justify-content-end mb-0"
-                  >
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        tabIndex="-1"
-                      >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        3
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className="fas fa-angle-right" />
-                        <span className="sr-only">Next</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                  </Pagination>
-                </nav>
+                {visible < allApplicants.length && (
+                  <Button color="info" size="sm" onClick={showMoreItems}>
+                    Load More
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </div>
