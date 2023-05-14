@@ -193,12 +193,12 @@ const ViewEmployees = () => {
                   <tr>
                     <th scope="col">Img</th>
                     <th scope="col">Code</th>
-                    <th scope="col">Type</th>
+                    {/* <th scope="col">Type</th> */}
                     <th scope="col">Name</th>
-                    <th scope="col">Username</th>
+                    {/* <th scope="col">Username</th> */}
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
-                    <th scope="col">Dept</th>
+                    {/* <th scope="col">Dept</th> */}
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -235,22 +235,15 @@ const ViewEmployees = () => {
                             {employee.empCode}
                           </span>
                         </th>
-                        <td>
-                          <Badge color="primary">{employee.empType}</Badge>
-                        </td>
+
                         <td>{employee.name}</td>
 
-                        <td>
-                          <div className="d-flex align-items-center">
-                            <span className="mr-2">{employee.username}</span>
-                          </div>
-                        </td>
                         <td>{employee.email}</td>
                         <td>{employee.phone}</td>
-                        <td>
+                        {/* <td>
                           {" "}
                           <Badge color="warning">{employee.empDept}</Badge>
-                        </td>
+                        </td> */}
                         <td>
                           <Button
                             size="sm"

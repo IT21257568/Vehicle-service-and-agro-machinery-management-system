@@ -29,19 +29,16 @@ import {
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
+import { set } from "date-fns";
 
 const UpdateEmployee = () => {
   //password visibility
-  const [showPassword, setShowPassword] = useState(false);
-
   // get vacancy id from url
   const { id } = useParams();
 
   const navigate = useNavigate();
 
-  const [profileImg, setProfileImg] = useState(
-    "https://api.dicebear.com/6.x/initials/svg?seed=AB"
-  );
+  const [profileImg, setProfileImg] = useState("");
 
   const [uploadedImg, setUploadedImg] = useState("");
 
@@ -65,7 +62,11 @@ const UpdateEmployee = () => {
       setEmpCode(res.data.empCode);
       setEmpEmail(res.data.email);
       setEmpPhone(res.data.phone);
-      setUploadedImg(res.data.profileImg);
+      if (res.data.profileImg) {
+        setProfileImg(res.data.profileImg);
+      } else {
+        setProfileImg("https://api.dicebear.com/6.x/initials/svg?seed=AB");
+      }
     };
     getVacancy();
   }, [id]);
@@ -93,7 +94,7 @@ const UpdateEmployee = () => {
         options
       )
       .then((response) => {
-        setUploadedImg(response.data.secure_url);
+        setProfileImg(response.data.secure_url);
         setUploadProgress(0);
       })
       .catch((error) => {
