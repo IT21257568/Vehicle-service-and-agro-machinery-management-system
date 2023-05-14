@@ -8,6 +8,10 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import moment from "moment";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 // reactstrap components
 import {
   Badge,
@@ -39,7 +43,7 @@ import Header from "components/Headers/Header.js";
 
 const ViewEmployees = () => {
   // states
-  const [allVacancies, setAllVacancies] = useState([]);
+
   const [employees, setEmployees] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -76,10 +80,53 @@ const ViewEmployees = () => {
   const handleDelete = (id) => {
     axios.delete(`/api/employees/${id}`).then((res) => {
       console.log(res.data);
-      setAllVacancies((prevData) =>
+      setEmployees((prevData) =>
         prevData.filter((employee) => employee._id !== id)
       );
     });
+  };
+
+  const generateReport = () => {
+    const doc = new jsPDF();
+
+    // Add the report title to the PDF
+    doc.setFontSize(18);
+    doc.text("Vacancies Report", 14, 22);
+
+    // Add the current date to the PDF
+    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    doc.setFontSize(12);
+    doc.text(`Report generated on ${date}`, 14, 32);
+
+    const columns = [
+      "Employee Name",
+      "Employee Email",
+      "EMployee COde",
+      "Employee Phone",
+    ];
+    const rows = employees.map(({ name, empCode, email, phone, createdAt }) => [
+      name,
+      empCode,
+      email,
+      phone,
+      createdAt,
+      new Date(createdAt).toLocaleString("en-US", {
+        dateStyle: "short",
+        timeStyle: "short",
+      }),
+      ,
+    ]);
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+      startY: 40,
+      styles: {
+        fontSize: 12, // Set font size for table content
+        cellPadding: 3, // Set cell padding for table cells
+      },
+    });
+
+    doc.save("Employees.pdf");
   };
 
   return (
@@ -123,6 +170,20 @@ const ViewEmployees = () => {
                       <span className="btn-inner--text">
                         New Employee Account
                       </span>
+                    </Button>
+                    <Button
+                      className="btn-icon btn-3"
+                      color="success"
+                      type="button"
+                      onClick={generateReport}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-folder-17" />
+                      </span>
+                      <span className="btn-inner--text">Generate Report</span>
                     </Button>
                   </div>
                 </Row>
@@ -213,7 +274,7 @@ const ViewEmployees = () => {
                 </tbody>
               </Table>
               <CardFooter className="py-4">
-                {visible < allVacancies.length && (
+                {visible < employees.length && (
                   <Button color="info" size="sm" onClick={showMoreItems}>
                     Load More
                   </Button>

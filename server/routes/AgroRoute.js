@@ -13,7 +13,7 @@ const {
 const { protect } = require("../middleware/authMiddleware");
 
 //GET all AgroProducts
-router.get("/", protect, getAllAgroProducts);
+router.get("/", getAllAgroProducts);
 
 //GET a single AgroProduct
 router.get("/:id", getAgroProduct);

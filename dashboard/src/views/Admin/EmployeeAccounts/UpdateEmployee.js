@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+// import toastify
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
+// import toastotyf container
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 // reactstrap components
@@ -25,20 +31,8 @@ import {
 import Header from "components/Headers/Header.js";
 
 const UpdateEmployee = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
-
-  const [dropdown1Open, setDropdown1Open] = useState(false);
-  const toggle1 = () => setDropdown1Open((prevState) => !prevState);
-  const [dropdown2Open, setDropdown2Open] = useState(false);
-  const toggle2 = () => setDropdown2Open((prevState) => !prevState);
-
   //password visibility
   const [showPassword, setShowPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   // get vacancy id from url
   const { id } = useParams();
@@ -57,29 +51,20 @@ const UpdateEmployee = () => {
   const [data, setData] = useState([]);
   const [empName, setEmpName] = useState("");
   const [empCode, setEmpCode] = useState("");
-  const [empType, setEmpType] = useState("");
   const [empEmail, setEmpEmail] = useState("");
   const [empPhone, setEmpPhone] = useState("");
-  const [empUsername, setEmpUsername] = useState("");
-  const [empDept, setEmpDept] = useState("");
-  const [empPassword, setEmpPassword] = useState("");
 
   // states
 
   useEffect(() => {
     const getVacancy = async () => {
-      const res = await axios.get(`/api/employees/getemployeebyid/${id}`);
+      const res = await axios.get(`/api/employees/${id}`);
       console.log(res.data);
       setData(res.data);
-
       setEmpName(res.data.name);
       setEmpCode(res.data.empCode);
-      setEmpType(res.data.empType);
       setEmpEmail(res.data.email);
       setEmpPhone(res.data.phone);
-      setEmpUsername(res.data.empUsername);
-      setEmpDept(res.data.empDept);
-      setEmpPassword(res.data.password);
       setUploadedImg(res.data.profileImg);
     };
     getVacancy();
@@ -124,12 +109,8 @@ const UpdateEmployee = () => {
       .patch(`/api/employees/${id}`, {
         name: empName,
         empCode: empCode,
-        username: empUsername,
         email: empEmail,
         phone: empPhone,
-        empType: empType,
-        empDept: empDept,
-        password: empPassword,
         profileImg: profileImg,
       })
       .then((res) => {
@@ -173,7 +154,7 @@ const UpdateEmployee = () => {
                             id="input-username"
                             placeholder="Enter Name"
                             type="text"
-                            defaultValue={empName}
+                            defaultValue={data.name}
                             onChange={(e) => {
                               setEmpName(e.target.value);
                               setProfileImg(
@@ -194,10 +175,13 @@ const UpdateEmployee = () => {
                           <Input
                             className="form-control-alternative"
                             //defaultValue="Lucky"
+                            defaultValue={data.phone}
                             id="input-first-name"
                             placeholder="077 123 4567"
                             type="number"
-                            defaultValue={empPhone}
+                            onChange={(e) => {
+                              setEmpPhone(e.target.value);
+                            }}
                           />
                         </FormGroup>
                       </Col>
@@ -214,10 +198,10 @@ const UpdateEmployee = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
+                            defaultValue={data.email}
                             // id="input-first-name"
                             placeholder="Email"
                             type="email"
-                            defaultValue={empEmail}
                             onChange={(e) => {
                               setEmpEmail(e.target.value);
                             }}
@@ -225,40 +209,28 @@ const UpdateEmployee = () => {
                         </FormGroup>
                       </Col>
                       <Col lg="6">
-                        <label
-                          className="form-control-label"
-                          // htmlFor="input-first-name"
-                        >
-                          Account Password
-                        </label>
-                        <FormGroup className="d-flex">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Employee Code
+                          </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={empPassword}
+                            defaultValue={data.empCode}
                             // id="input-first-name"
-                            placeholder="Enter a password"
-                            type={showPassword ? "text" : "password"}
+                            placeholder="Employee Code"
+                            type="text"
                             onChange={(e) => {
-                              setEmpPassword(e.target.value);
+                              setEmpCode(e.target.value);
                             }}
                           />
-                          <Button
-                            style={{
-                              backgroundColor: "transparent",
-                              border: "none",
-                              outline: "none",
-                            }}
-                            // className="tf-button-submit mg-t-15"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              togglePasswordVisibility();
-                            }}
-                          >
-                            {showPassword ? <FaEye /> : <FaEyeSlash />}
-                          </Button>
                         </FormGroup>
                       </Col>
                     </Row>
+
+                    {/* profile image */}
                     <Row>
                       <Col lg="6">
                         <FormGroup className="d-flex flex-column">
@@ -303,140 +275,16 @@ const UpdateEmployee = () => {
                   </div>
 
                   {/* Description */}
-                  <div className="pl-lg-4"></div>
-                  <h6 className="heading-small text-muted mb-4 mt-4">
-                    Role Details
-                  </h6>
+
                   <div className="pl-lg-4">
                     <Col lg="3">
-                      <FormGroup className="d-flex flex-column">
-                        <label
-                          className="form-control-label"
-                          htmlFor="input-email"
-                        >
-                          Employee Type
-                        </label>
-                        <Dropdown
-                          isOpen={dropdown1Open}
-                          color="primary"
-                          toggle={toggle1}
-                        >
-                          <DropdownToggle caret>
-                            {empType ? empType : "Select Type"}
-                          </DropdownToggle>
-                          <DropdownMenu>
-                            <DropdownItem
-                              value="Manager"
-                              onClick={(e) => {
-                                setEmpType(e.target.value);
-                              }}
-                            >
-                              Manager
-                            </DropdownItem>
-                            <DropdownItem
-                              value="Supervisor"
-                              onClick={(e) => {
-                                setEmpType(e.target.value);
-                              }}
-                            >
-                              Supervisor
-                            </DropdownItem>
-                            <DropdownItem
-                              value="Support Agent"
-                              onClick={(e) => {
-                                setEmpType(e.target.value);
-                              }}
-                            >
-                              Support Agent
-                            </DropdownItem>
-                            <DropdownItem
-                              value="Consultant"
-                              onClick={(e) => {
-                                setEmpType(e.target.value);
-                              }}
-                            >
-                              Consultant
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </Dropdown>
-                      </FormGroup>
-                      <FormGroup>
-                        <label
-                          className="form-control-label"
-                          htmlFor="input-first-name"
-                        >
-                          Employee Code
-                        </label>
-                        <Input
-                          className="form-control-alternative"
-                          defaultValue={empCode}
-                          // id="input-first-name"
-                          placeholder="Employee Code"
-                          type="text"
-                          onChange={(e) => {
-                            setEmpCode(e.target.value);
-                          }}
-                        />
-                      </FormGroup>
-                      <FormGroup className="d-flex flex-column">
-                        <label
-                          className="form-control-label"
-                          htmlFor="input-email"
-                        >
-                          Employee Department
-                        </label>
-                        <Dropdown
-                          isOpen={dropdown2Open}
-                          color="primary"
-                          toggle={toggle2}
-                        >
-                          <DropdownToggle caret>
-                            {empDept ? empDept : "Select Department"}
-                          </DropdownToggle>
-                          <DropdownMenu>
-                            <DropdownItem
-                              value="Sales"
-                              onClick={(e) => {
-                                setEmpDept(e.target.value);
-                              }}
-                            >
-                              Sales
-                            </DropdownItem>
-                            <DropdownItem
-                              value="Repairs"
-                              onClick={(e) => {
-                                setEmpDept(e.target.value);
-                              }}
-                            >
-                              Repairs
-                            </DropdownItem>
-                            <DropdownItem
-                              value="Customer Service"
-                              onClick={(e) => {
-                                setEmpDept(e.target.value);
-                              }}
-                            >
-                              Customer Service
-                            </DropdownItem>
-                            <DropdownItem
-                              value="Consultancy"
-                              onClick={(e) => {
-                                setEmpDept(e.target.value);
-                              }}
-                            >
-                              Consultancy
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </Dropdown>
-                      </FormGroup>
                       <Button color="primary" onClick={handleUpdate}>
-                        Update
+                        Create
                       </Button>
                       <Button
                         color="warning"
                         onClick={(e) => {
                           e.preventDefault();
-                          navigate("/admin/vacancies");
                         }}
                       >
                         Cancel
@@ -449,6 +297,7 @@ const UpdateEmployee = () => {
           </Col>
         </Row>
       </Container>
+      <ToastContainer />
     </>
   );
 };
