@@ -37,7 +37,7 @@ const AgroProductsPage = () => {
   const [allAgroProducts, setAllAgroProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(4);
   const [faqQuestion, setFaqQuestion] = useState("");
   const [faqCategory, setFaqCategory] = useState("");
   const [faqAnswer, setFaqAnswer] = useState("");

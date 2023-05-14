@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import moment from "moment";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -83,9 +84,19 @@ const ViewProgressStatus = () => {
     });
   };
 
+  //genarate pdf
   const generateReport = () => {
-
     const doc = new jsPDF();
+
+        // Add the report title to the PDF
+        doc.setFontSize(18);
+        doc.text("Progress Report", 14, 22);
+    
+        // Add the current date to the PDF
+        const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+        doc.setFontSize(12);
+        doc.text(`Report generated on ${date}`, 14, 32);
+
     const columns = [
       "Client Name",
       "Vehicle Number",
@@ -112,9 +123,15 @@ const ViewProgressStatus = () => {
     doc.autoTable({
       head: [columns],
       body: rows,
+      startY: 40,
+      styles: {
+        fontSize: 12, // Set font size for table content
+        cellPadding: 3, // Set cell padding for table cells
+        
+      },
     });
 
-    doc.save("report.pdf");
+    doc.save("progress_report.pdf");
   };
 
 
@@ -145,6 +162,22 @@ const ViewProgressStatus = () => {
                     </InputGroup>
                     </Col>
                   <div className="col text-right">
+                  <Button
+                      className="btn-icon btn-3"
+                      // color="success"
+                      // type="button"
+                      type="button"
+                      style={{color:'#ffa500'}}
+                      onClick={()=>navigate("/admin/create-progress")}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-planet" />
+                      </span>
+                      <span className="btn-inner--text">Add Progress</span>
+                    </Button>
                   {/* genarate report button */}
                   <Button
                       className="btn-icon btn-3"

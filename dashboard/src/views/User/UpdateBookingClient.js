@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -19,15 +19,18 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-
 // core components
-import Header from "components/Headers/BookingHeader";
+import Header from "components/Headers/UpdateBookingHeader";
 
-const CreateBookingClient = () => {
+const UpdateBookingClient = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpen1, setDropdownOpen1] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const toggle1 = () => setDropdownOpen1((prevState) => !prevState);
+
+  // get vacancy id from url
+  const { id } = useParams();
+
   const navigate = useNavigate();
 
   // form states
@@ -39,46 +42,44 @@ const CreateBookingClient = () => {
   const [phone, setPhone] = useState("");
   const [date_time, setDateTime] = useState("");
   const [specialNote, setSpecialNote] = useState("");
-  const [booking_user_id, setBookingUserId] = useState("4200efghid");
-  const [error, setError] = useState(null);
+ 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page refresh
+  useEffect(() => {
+    const getBooking = async () => {
+      const res = await axios.get(`/api/bookings/${id}`);
+      console.log(res.data);
+      setData(res.data);
 
-    try {
-      await axios
-        .post("/api/bookings", {
-          client_name: clientName,
-          service_type: serviceType,
-          location: location,
-          phone: phone,
-          email: email,
-          date_time: date_time,
-          special_note: specialNote,
-          booking_user_id: booking_user_id,
+      setLocation(res.data.location);
+      setServiceType(res.data.service_type);
+      setClientName(res.data.client_name);
+      setEmail(res.data.email);
+      setPhone(res.data.phone);
+      setDateTime(res.data.date_time);
+      setSpecialNote(res.data.special_note);
 
-        })
-        .then((res) => {
-          console.log("New booking added", res.data);
-          setLocation("");
-          setServiceType("");
-          setClientName("");
-          setEmail("");
-          setPhone("");
-          setDateTime("");
-          setSpecialNote("");
-          setError(null);
-          navigate("/user/view-client-booking");
-        });
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        const { error: errorMessage, emptyFields } = error.response.data;
-        const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
-      } else {
-        console.log(error);
-      }
-    }
+
+    };
+    getBooking();
+  }, [id]);
+
+  const handleUpdate = () => {
+    console.log("lol");
+
+    axios
+      .patch(`/api/bookings/${id}`, {
+        location: location,
+        service_type: serviceType,
+        client_name: clientName,
+        email: email,
+        phone: phone,
+        date_time: date_time,
+        special_note: specialNote
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/user/bookings");
+      });
   };
 
   return (
@@ -92,14 +93,14 @@ const CreateBookingClient = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Create Booking</h3>
+                    <h3 className="mb-0">Update Booking</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    Client Name
+                    Booking Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -113,7 +114,7 @@ const CreateBookingClient = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            id="input-username"
+                            defaultValue={data.client_name}
                             placeholder="Client Name"
                             type="text"
                             onChange={(e) => {
@@ -169,8 +170,6 @@ const CreateBookingClient = () => {
                       </Col>
                     </Row>
                     <Row>
-
-
                       <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
@@ -209,7 +208,6 @@ const CreateBookingClient = () => {
                         </FormGroup>
                       </Col>
 
-                     
                       <Col lg="4">
                         <FormGroup>
                           <label
@@ -220,8 +218,7 @@ const CreateBookingClient = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue=""
-                            id="input-first-name"
+                            defaultValue={data.phone}
                             placeholder="Phone"
                             type="text"
                             onChange={(e) => {
@@ -241,18 +238,17 @@ const CreateBookingClient = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue=""
-                            id="input-first-name"
+                            defaultValue={data.email}
                             placeholder="Email"
-                            type="email"
+                            type="text"
                             onChange={(e) => {
                               setEmail(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
 
+                    </Row>
                     <Row>
                     <Col lg="4">
                         <FormGroup>
@@ -264,10 +260,10 @@ const CreateBookingClient = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue=""
+                            defaultValue={data.date_time}
                             id="input-first-name"
                             placeholder="Date and Time"
-                            type="date"
+                            type="Date"
                             onChange={(e) => {
                             setDateTime(e.target.value);
                             }}
@@ -291,36 +287,15 @@ const CreateBookingClient = () => {
                         className="form-control-alternative"
                         placeholder="A brief description about the service type you need"
                         rows="4"
+                        defaultValue={data.special_note}
                         type="textarea"
                         onChange={(e) => {
                           setSpecialNote(e.target.value);
                         }}
                       />
-                      {error && (
-                        <div
-                          style={{
-                            backgroundColor: "#F46D75",
-                            color: "white",
-                            // textAlign:"center",
-                            display: "flex",
-                            justifyContent: "center",
-                            // fontWeight:"bold",
-                            // paddingBottom: "5px",
-                            // paddingTop: "5px",
-                            padding: "10px",
-                            marginTop: "15px",
-                            borderColor: "red",
-                            borderRadius: "20px",
-                          }}
-                        >
-                          <span>
-                            <b>{error}</b>
-                          </span>
-                        </div>
-                      )}
                     </FormGroup>
-                    <Button color="primary" onClick={handleSubmit}>
-                      Create
+                    <Button color="primary" onClick={handleUpdate}>
+                      Save
                     </Button>
                     <Button
                       color="warning"
@@ -342,4 +317,5 @@ const CreateBookingClient = () => {
   );
 };
 
-export default CreateBookingClient;
+
+export default UpdateBookingClient;

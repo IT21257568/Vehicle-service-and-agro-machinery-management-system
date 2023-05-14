@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -35,22 +36,16 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-
-
 const ViewCVSubmissions = () => {
   // states
   const [allApplicants, setAllSubmissions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
-  
-
-  
-
- 
+  const [vacancy_applicants, setVacancyApplicants] = useState("");
 
   // set visible rows
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(3);
 
   const navigate = useNavigate();
 
@@ -58,9 +53,9 @@ const ViewCVSubmissions = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all vacancies from database
+  // retrieve all cv submissions from database
   useEffect(() => {
-    const fetchAllVacancies = async () => {
+    const fetchAllCVSubmissions = async () => {
       try {
         const res = await axios.get("/api/cvSub");
         setAllSubmissions(res.data);
@@ -70,59 +65,98 @@ const ViewCVSubmissions = () => {
         setIsLoading(false);
       }
     };
-    fetchAllVacancies();
+    fetchAllCVSubmissions();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, vId) => {
     axios.delete(`/api/cvSub/${id}`).then((res) => {
       console.log(res.data);
       setAllSubmissions((prevData) =>
         prevData.filter((vacancy) => vacancy._id !== id)
       );
     });
+
+    const updateRecord = async () => {
+      const response = await axios.get(`/api/vacancies/${vId}`);
+      setVacancyApplicants(response.data.vacancy_applicants);
+      console.log(response.data);
+
+      // update vacancy applicants count
+      axios
+        .patch(`/api/vacancies/${vId}`, {
+          vacancy_applicants: response.data.vacancy_applicants - 1,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    updateRecord();
   };
 
-
   const generateReport = () => {
-    
-        const doc = new jsPDF();
-        const columns = [
-          "Applicant Name",
-          "Applied Vacancy",
-          "Age",
-          "Gender",
-          "Contact Number",
-          "Email",
-        ];
-        const rows = allApplicants.map(
-          ({
-            applicant_name,
-            vacancy_name,
-            applicant_age,
-            applicant_gender,
-            applicant_contact,
-            applicant_email,
-          }) => [
-            applicant_name,
-            vacancy_name,
-            applicant_age,
-            applicant_gender,
-            applicant_contact,
-            applicant_email,
-          ]
-        );
-        doc.autoTable({
-          head: [columns],
-          body: rows,
-        });
+    const doc = new jsPDF();
 
-        doc.save("Applicants.pdf");
-      
-  }
+    // Add the report title to the PDF
+    doc.setFontSize(18);
+    doc.text("Applicants Report", 14, 22);
+
+    // Add the current date to the PDF
+    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    doc.setFontSize(12);
+    doc.text(`Report generated on ${date}`, 14, 32);
+
+    const columns = [
+      "Applicant Name",
+      "Applied Vacancy",
+      "Age",
+      "Gender",
+      "Contact Number",
+      "Email",
+      "Submitted Date&Time",
+    ];
+    const rows = allApplicants.map(
+      ({
+        applicant_name,
+        vacancy_name,
+        applicant_age,
+        applicant_gender,
+        applicant_contact,
+        applicant_email,
+        createdAt,
+      }) => [
+        applicant_name,
+        vacancy_name,
+        applicant_age,
+        applicant_gender,
+        applicant_contact,
+        applicant_email,
+        new Date(createdAt).toLocaleString("en-US", {
+          dateStyle: "short",
+          timeStyle: "short",
+        }),
+        ,
+      ]
+    );
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+      startY: 40,
+      styles: {
+        fontSize: 10, // Set font size for table content
+        cellPadding: 3, // Set cell padding for table cells
+      },
+    });
+
+    doc.save("Applicants.pdf");
+  };
+
   return (
     <>
       <Header />
-      
 
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -149,7 +183,6 @@ const ViewCVSubmissions = () => {
                   </Col>
 
                   <div className="col text-right">
-                   
                     <Button
                       className="btn-icon btn-3"
                       color="success"
@@ -176,6 +209,7 @@ const ViewCVSubmissions = () => {
                     <th scope="col">Gender</th>
                     <th scope="col">Contact Number</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Submitted At</th>
                     <th scope="col">CV</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -215,6 +249,14 @@ const ViewCVSubmissions = () => {
                           </div>
                         </td>
                         <td>
+                          <div className="d-flex align-items-center">
+                            {new Date(applicant.createdAt).toLocaleString(
+                              "en-US",
+                              { dateStyle: "short", timeStyle: "short" }
+                            )}
+                          </div>
+                        </td>
+                        <td>
                           <a
                             href={applicant.applicant_CVFile_url}
                             style={{ textDecoration: "none" }}
@@ -228,71 +270,23 @@ const ViewCVSubmissions = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(applicant._id)}
+                            onClick={() =>
+                              handleDelete(applicant._id, applicant.vacancy_id)
+                            }
                           >
                             Delete
                           </Button>
                         </td>
                       </tr>
                     ))}
-                  {visible < allApplicants.length && (
-                    <Button color="primary" size="sm" onClick={showMoreItems}>
-                      Load More
-                    </Button>
-                  )}
                 </tbody>
               </Table>
               <CardFooter className="py-4">
-                <nav aria-label="...">
-                  <Pagination
-                    className="pagination justify-content-end mb-0"
-                    listClassName="justify-content-end mb-0"
-                  >
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        tabIndex="-1"
-                      >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        3
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className="fas fa-angle-right" />
-                        <span className="sr-only">Next</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                  </Pagination>
-                </nav>
+                {visible < allApplicants.length && (
+                  <Button color="info" size="sm" onClick={showMoreItems}>
+                    Load More
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </div>

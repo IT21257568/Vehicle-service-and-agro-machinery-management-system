@@ -2,6 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 // reactstrap components
 import {
@@ -32,30 +35,29 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
- //card
-  function CardRequiremnts({ vacancyd, onClose }) {
-    return (
-      <div Container>
-        <div><br></br>
-          <h5 className="card-title">Requirements</h5>
-          <Input
-            className="form-control-alternative"
-            placeholder="Requirmnets for the vacancy"
-            rows="4"
-            type="textarea"
-            readOnly
-            value={vacancyd}
-          />
-          <br></br>
-          <Button size="sm" color="primary" onClick={onClose}>
-            Close
-          </Button>
-        </div>
+//card
+function CardRequiremnts({ vacancyd, onClose }) {
+  return (
+    <div Container>
+      <div>
+        <br></br>
+        <h5 className="card-title">Requirements</h5>
+        <Input
+          className="form-control-alternative"
+          placeholder="Requirmnets for the vacancy"
+          rows="4"
+          type="textarea"
+          readOnly
+          value={vacancyd}
+        />
+        <br></br>
+        <Button size="sm" color="primary" onClick={onClose}>
+          Close
+        </Button>
       </div>
-    );
-  }
-
-
+    </div>
+  );
+}
 
 const ViewVacancies = () => {
   // states
@@ -66,17 +68,16 @@ const ViewVacancies = () => {
   const [showCard, setShowCard] = useState(false);
   const [query, setQuery] = useState("");
 
+  function handleViewClick() {
+    console.log("View button clicked");
+    setShowCard(true);
+  }
 
-   function handleViewClick() {
-     console.log("View button clicked");
-     setShowCard(true);
-   }
-
-   function handleCloseClick() {
-     console.log("Close button clicked");
-     setShowCard(false);
-   }
-   console.log("Rendering App component with showCard = ", showCard);
+  function handleCloseClick() {
+    console.log("Close button clicked");
+    setShowCard(false);
+  }
+  console.log("Rendering App component with showCard = ", showCard);
 
   // set visible rows
   const [visible, setVisible] = useState(3);
@@ -110,14 +111,58 @@ const ViewVacancies = () => {
         prevData.filter((vacancy) => vacancy._id !== id)
       );
     });
-    // update vacancy applicants
-    axios
-      .patch(`/api/vacancies/${id}`, {
-        vacancy_applicants: vacancy_applicants - 1,
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
+  };
+
+  const generateReport = () => {
+    const doc = new jsPDF();
+
+    // Add the report title to the PDF
+    doc.setFontSize(18);
+    doc.text("Vacancies Report", 14, 22);
+
+    // Add the current date to the PDF
+    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    doc.setFontSize(12);
+    doc.text(`Report generated on ${date}`, 14, 32);
+
+    const columns = [
+      "Vacancy Name",
+      "Vacancy Type",
+      "Available Count",
+      "Applied Count",
+      "Created Date&Time",
+    ];
+    const rows = allVacancies.map(
+      ({
+        vacancy_title,
+        vacancy_type,
+        vacancy_count,
+        vacancy_applicants,
+        createdAt,
+      }) => [
+        vacancy_title,
+        vacancy_type,
+        vacancy_count,
+        vacancy_applicants,
+        new Date(createdAt).toLocaleString("en-US", {
+          dateStyle: "short",
+          timeStyle: "short",
+        }),
+        ,
+      ]
+    );
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+      startY: 40,
+      styles: {
+        fontSize: 12, // Set font size for table content
+        cellPadding: 3, // Set cell padding for table cells
+        
+      },
+    });
+
+    doc.save("Vacancies.pdf");
   };
 
   return (
@@ -145,6 +190,24 @@ const ViewVacancies = () => {
                       />
                     </InputGroup>
                   </Col>
+
+                  <div className="col text-right">
+                    <Button
+                      className="btn-icon btn-3"
+                      color="success"
+                      type="button"
+                      onClick={generateReport}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-folder-17" />
+                      </span>
+                      <span className="btn-inner--text">Generate Report</span>
+                    </Button>
+                  </div>
+
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"

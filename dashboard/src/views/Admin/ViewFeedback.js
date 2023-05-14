@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import moment from "moment";
 
 // reactstrap components
 import {
@@ -12,38 +13,41 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  //DropdownMenu,
-  //DropdownItem,
-  //UncontrolledDropdown,
-  //DropdownToggle,
-  //Media,
+  /* DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  Media, */
   Pagination,
   PaginationItem,
   PaginationLink,
-  Progress,
+  //Progress,
   Table,
   Container,
+  InputGroup,
+  //InputGroupAddon,
+  //InputGroupText,
+  Input,
   Row,
-  //UncontrolledTooltip,
+ // UncontrolledTooltip,
   Button,
   //Chip,
   Col,
-  InputGroup,
-  Input,
 } from "reactstrap";
 
 // core components
 import Header from "components/Headers/Header.js";
 
-const ViewOrderAgroProduct = () => {
+const ViewFeedbacks = () => {
   // states
-  const [allAgroProductOrders, setAllAgroProductOrders] = useState([]);
+  const [allFeedbacks, setAllFeedbacks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
+  const [feedbacks, setFeedbacks] = useState([]);
 
   // set visible rows
-  const [visible, setVisible] = useState(4);
+  const [visible, setVisible] = useState(10);
 
   const navigate = useNavigate();
 
@@ -51,63 +55,79 @@ const ViewOrderAgroProduct = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all agro product orders from database
+  // retrieve all vacancies from database
   useEffect(() => {
-    const fetchAllAgroProductOrders = async () => {
+    const fetchAllFeedbacks = async () => {
       try {
-        const res = await axios.get("/api/orderAgroProduct");
-        setAllAgroProductOrders(res.data);
+        const res = await axios.get("/api/feedback");
+        setAllFeedbacks(res.data);
         setIsLoading(false);
-      } catch (error) {
-        setError(error);
+      } catch (err) {
+        setError(err);
         setIsLoading(false);
       }
     };
-    fetchAllAgroProductOrders();
+    fetchAllFeedbacks();
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`/api/orderAgroProduct/${id}`).then((res) => {
+    axios.delete(`/api/feedback/${id}`).then((res) => {
       console.log(res.data);
-      setAllAgroProductOrders((prevData) =>
-        prevData.filter((orderAgroProduct) => orderAgroProduct._id !== id)
+      setAllFeedbacks((prevData) =>
+        prevData.filter((feedback) => feedback._id !== id)
       );
     });
   };
 
+
   const generateReport = () => {
+
     const doc = new jsPDF();
-    const tableColumn = [
-      "Product Name",
-      "Customer Name",
-      "Customer Contact",
-      "Customer Email",
-      "Customer Address",
-      "Special Note",
+
+     // Add the report title to the PDF
+     doc.setFontSize(18);
+     doc.text("Feedback Report", 14, 22);
+ 
+     // Add the current date to the PDF
+     const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+     doc.setFontSize(12);
+     doc.text(`Report generated on ${date}`, 14, 32);
+
+    const columns = [
+      "Client Feedback",
+      "Service rating",
+      "Service date",    
+      "Created Date&Time",
     ];
-    const tableRows = allAgroProductOrders.map(
+    const rows = allFeedbacks.map(
       ({
-        p_name,
-        customer_name,
-        customer_contact,
-        customer_email,
-        customer_address,
-        customer_note,
+        feedback,
+        rating,
+        fd_date,
+        createdAt,
+     
       }) => [
-        p_name,
-        customer_name,
-        customer_contact,
-        customer_email,
-        customer_address,
-        customer_note,
+        feedback,
+        rating,
+        fd_date,
+        new Date(createdAt).toLocaleString("en-US", {
+          dateStyle: "short",
+          timeStyle: "short",
+        }),    
       ]
     );
+
     doc.autoTable({
-      head: [tableColumn], 
-      body: tableRows,
+      head: [columns],
+      body: rows,
+      startY: 40,
+      styles: {
+        fontSize: 12, // Set font size for table content
+        cellPadding: 3, // Set cell padding for table cells
+      },
     });
 
-    doc.save("agroProductOrders.pdf");
+    doc.save("Feedback_report.pdf");
   };
 
   return (
@@ -122,24 +142,23 @@ const ViewOrderAgroProduct = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">All Agro Product Orders</h3>
-                  </div>
-                  <Col xl="1">
-                    <InputGroup className="input-group-rounded input-group-merge"
-                      style={{width: '25rem'}}>
+                    <h3 className="mb-0">All Feedbacks</h3>
+                    </div>
+                    <Col xl="3">
+                    <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
-                        placeholder="Search by product name"
+                        placeholder="Search by date"
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
                     </InputGroup>
-                  </Col>
+                    </Col>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
-                      color="success"
+                      style={{color: '#ffa500'}}
                       type="button"
                       onClick={generateReport}
                     >
@@ -147,22 +166,20 @@ const ViewOrderAgroProduct = () => {
                         className="btn-inner--icon"
                         style={{ width: "20px" }}
                       >
-                        <i className="ni ni-folder-17" />
+                        <i className="ni ni-planet" />
                       </span>
                       <span className="btn-inner--text">Generate Report</span>
                     </Button>
                   </div>
                 </Row>
               </CardHeader>
+
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Customer Name</th>
-                    <th scope="col">Customer Contact</th>
-                    <th scope="col">Customer Email</th>
-                    <th scope="col">Customer Address</th>
-                    <th scope="col">Special Note</th>
+                    <th scope="col">Client Feedback</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Service Date</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -172,40 +189,46 @@ const ViewOrderAgroProduct = () => {
                       <td>Loading...</td>
                     </tr>
                   )}
-                  {allAgroProductOrders
-                    .filter((order) =>
-                      order.p_name?.toLowerCase().includes(query.toLowerCase())
+                  {allFeedbacks
+                    .filter((feedback) =>
+                      feedback.fd_date 
+                      ?.toLowerCase()
+                      .includes(query.toLowerCase())      
                     )
                     .slice(0, visible)
-                    .map((order, index) => (
-                      <tr key={order._id}>
+                    .map((feedback, index) => (
+                      <tr key={feedback._id}>
                         <th scope="row">
-                          <span className="mb-0 text-sm">{order.p_name}</span>
+                          <span className="mb-0 text-sm">
+                            {feedback.feedback}
+                          </span>
                         </th>
-                        <td>{order.customer_name}</td>
-                        <td>{order.customer_contact}</td>
-                        <td>{order.customer_email}</td>
-                        <td>{order.customer_address}</td>
-                        <td>{order.customer_note}</td>
+                        <td>
+                          <Badge color="success">{feedback.rating} / 5</Badge>
+                        </td>
+                        <td>
+                        {feedback.fd_date}
+                        </td>
                         <td>
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(order._id)}
+                            onClick={() => handleDelete(feedback._id)}
                           >
                             Delete
                           </Button>
                         </td>
                       </tr>
                     ))}
+
+                  {visible < allFeedbacks.length && (
+                    <Button color="primary" size="sm" onClick={showMoreItems}>
+                      Load More
+                    </Button>
+                  )}
                 </tbody>
               </Table>
-              <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
-                {visible < allAgroProductOrders.length && (
-                  <Button color="info" size="sm" onClick={showMoreItems}>
-                    Load More
-                  </Button>
-                )}
+              <CardFooter className="py-4">
               </CardFooter>
             </Card>
           </div>
@@ -215,4 +238,4 @@ const ViewOrderAgroProduct = () => {
   );
 };
 
-export default ViewOrderAgroProduct;
+export default ViewFeedbacks;

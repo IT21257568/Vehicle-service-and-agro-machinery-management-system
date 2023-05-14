@@ -18,6 +18,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Media,
+  CardImg,
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
@@ -153,6 +155,7 @@ const UpdatePromotion = () => {
                             defaultValue={data.promo_title}
                             placeholder="Promotion Title"
                             type="text"
+                            required="true"
                             onChange={(e) => {
                               setPromotionTitle(e.target.value);
                             }}
@@ -172,6 +175,7 @@ const UpdatePromotion = () => {
                             id="update-promo-code"
                             defaultValue={data.promo_code}
                             placeholder="enter promo code"
+                            required="true"
                             type="text"
                             onChange={(e) => {
                               setPromotionCode(e.target.value);
@@ -194,6 +198,7 @@ const UpdatePromotion = () => {
                             id="update-discount"
                             defaultValue={data.promo_discount}
                             placeholder="select discount"
+                            required="true"
                             type="number"
                             onChange={(e) => {
                               setPromotionDiscount(e.target.value);
@@ -215,6 +220,7 @@ const UpdatePromotion = () => {
                             className="form-control-alternative"
                             id="update-start-date"
                             defaultValue={data.promo_startDate}
+                            required="true"
                             type="date"
                             onChange={(e) => {
                               setPromotionStartDate(e.target.value);
@@ -235,6 +241,7 @@ const UpdatePromotion = () => {
                             
                             id="input-end-date"
                             defaultValue={data.promo_endDate}
+                            required="true"
                             type="date"
                             onChange={(e) => {
                               setPromotionEndDate(e.target.value);
@@ -245,36 +252,52 @@ const UpdatePromotion = () => {
                      </Row>
                      <Row>
                      <Col lg="6">
-                        <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
                           >
                             Change Picture
                           </label> <br></br>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Current Picture : {data.promo_picture_url}
-                          </label> <br></br>
+                          <Media className="align-items-center">
+                          <span>
+                            <CardImg
+                              height="50rem"
+                              width="100%"
+                              alt="Technician Picture"
+                              src={data.promo_picture_url}
+                            />
+                          </span>
+                           : Current Picture
+                        </Media>
+                        <br></br>
+                        <Media className="align-items-center">
+                          <span>
+                            <CardImg
+                              height="50rem"
+                              width="100%"
+                              alt=" : Updated Picture Will Appear Here"
+                              src={image}
+                            />
+                          </span>
+                        </Media>
+                        <br></br>
                           <Input
                             type="file"
                             className="form-control-alternative"
                             onChange={handleImageUpload}
-                            defaultValue={data.promo_picture_url}
+                            required="true"
                             
                           />
                           {uploadProgress > 0 && (
                             <div>Uploading... {uploadProgress}%</div>
                           )}
-                        </FormGroup>
+                        
                       </Col>
                     </Row>
                   </div>
 
                    {/* Description */}
-                  <div className="pl-lg-4">
+                  <div className="pl-lg-4" style={{marginTop:'1.8rem'}}>
                     <FormGroup>
                       <label
                         className="form-control-label"
@@ -286,6 +309,7 @@ const UpdatePromotion = () => {
                         className="form-control-alternative"
                         placeholder="A brief description about the promotion"
                         defaultValue={data.promo_description}
+                        required="true"
                         rows="4"
                         type="textarea"
                         onChange={(e) => {

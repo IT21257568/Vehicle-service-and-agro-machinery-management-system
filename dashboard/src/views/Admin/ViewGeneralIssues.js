@@ -53,22 +53,22 @@ const ViewGeneralIssues = () => {
   const [allGeneralIssues, setAllGeneralIssues] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showCard, setShowCard] = useState(false);
+  // const [showCard, setShowCard] = useState(false);
   const [query, setQuery] = useState("");
 
-  function handleViewClick() {
-    console.log("View button clicked");
-    setShowCard(true);
-  }
+  // function handleViewClick() {
+  //   console.log("View button clicked");
+  //   setShowCard(true);
+  // }
 
-  function handleCloseClick() {
-    console.log("Close button clicked");
-    setShowCard(false);
-  }
-  console.log("Rendering App component with showCard = ", showCard);
+  // function handleCloseClick() {
+  //   console.log("Close button clicked");
+  //   setShowCard(false);
+  // }
+  // console.log("Rendering App component with showCard = ", showCard);
 
   // set visible rows
-  const [visible, setVisible] = useState(10);
+  const [visible, setVisible] = useState(3);
 
   const navigate = useNavigate();
 
@@ -99,6 +99,7 @@ const ViewGeneralIssues = () => {
       );
     });
   };
+  
 
   return (
     <>
@@ -186,41 +187,8 @@ const ViewGeneralIssues = () => {
                           </Badge>
                         </td>
                         <td>
-                          <div className="container">
-                            <Button
-                              size="sm"
-                              color="primary"
-                              onClick={handleViewClick}
-                            >
-                              View
-                            </Button>
-                            {showCard && (
-                              <CardRequiremnts
-                                gIssues={generalIssue.GN_discription}
-                                onClose={handleCloseClick}
-                              />
-                            )}
-                          </div>
-                          {/* <td>
-                           <Button
-                            size="sm"
-                            color="warning"
-                            onClick={() =>
-                              navigate(
-                                `/admin/update-general-issues/${generalIssue._id}`
-                              )
-                            }
-                          >
-                            Update
-                          </Button>
-                          <Button
-                            size="sm"
-                            color="danger"
-                            onClick={() => handleDelete(generalIssue._id)}
-                          >
-                            Delete
-                          </Button>
-                          </td> */}
+                        {generalIssue.GN_discription}
+                          
                         </td>
                         <td>
                           <Button
@@ -244,64 +212,16 @@ const ViewGeneralIssues = () => {
                         </td>
                       </tr>
                     ))}
-                  {visible < allGeneralIssues.length && (
+                 
+                </tbody>
+              </Table>
+              <CardFooter className="py-4">
+              {visible < allGeneralIssues.length && (
                     <Button color="primary" size="sm" onClick={showMoreItems}>
                       Load More
                     </Button>
                   )}
-                </tbody>
-              </Table>
-              <CardFooter className="py-4">
-                <nav aria-label="...">
-                  <Pagination
-                    className="pagination justify-content-end mb-0"
-                    listClassName="justify-content-end mb-0"
-                  >
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        tabIndex="-1"
-                      >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem className="active">
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        1
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        3
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <i className="fas fa-angle-right" />
-                        <span className="sr-only">Next</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                  </Pagination>
-                </nav>
+                
               </CardFooter>
             </Card>
           </div>
