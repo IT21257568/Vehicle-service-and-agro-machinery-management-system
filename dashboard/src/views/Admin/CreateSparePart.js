@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // reactstrap components
 import {
   Button,
@@ -42,6 +45,18 @@ const CreateSparePart = () => {
   const [SparePart_status, setSparePartStatus] = useState("");
   const [SparePart_picture_url, setSparePartPictureUrl] = useState("");
   const [error, setError] = useState(null);
+
+  const showErrorToast = (errorMessage) => {
+    toast.error(errorMessage, {
+      position: toast.POSITION.BOTTOM_CENTER,
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -98,13 +113,18 @@ const CreateSparePart = () => {
           setSparePartPictureUrl("");
           setSparePartStatus("");
           setError(null);
+          toast.success("You have successfully added a new Spare Part", {
+            position: toast.POSITION.TOP_CENTER,
+          });
           navigate("/admin/spare-parts");
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        const toastMessage = `Please fill in all fields: ${fields}`;
+        setError(toastMessage);
+        showErrorToast(toastMessage);
       } else {
         console.log(error);
       }
@@ -113,6 +133,7 @@ const CreateSparePart = () => {
 
   return (
     <>
+    <ToastContainer />
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid style={{marginBottom: '3rem'}}>
@@ -289,7 +310,7 @@ const CreateSparePart = () => {
                           setSparePartDescription(e.target.value);
                         }}
                       />
-                      {error && (
+                      {/* {error && (
                         <div
                           style={{
                             backgroundColor: "#ffffff",
@@ -312,7 +333,7 @@ const CreateSparePart = () => {
                             <b>{error}</b>
                           </span>
                         </div>
-                      )}
+                      )} */}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create

@@ -7,6 +7,9 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // reactstrap components
 import {
   Badge,
@@ -75,12 +78,17 @@ const ViewSpareParts = () => {
     fetchAllSpareParts();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, sparePartName) => {
     axios.delete(`/api/spareParts/${id}`).then((res) => {
       console.log(res.data);
       setAllSpareParts((prevData) =>
         prevData.filter((sparePart) => sparePart._id !== id)
       );
+
+      toast.success(`"${sparePartName}" Spare Part deleted successfully`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+      });
     });
   };
 
@@ -296,7 +304,7 @@ const ViewSpareParts = () => {
                         <Button
                           size="sm"
                           color="danger"
-                          onClick={() => handleDelete(sparePart._id)}
+                          onClick={() => handleDelete(sparePart._id, sparePart.sp_name)}
                         >
                           Delete
                         </Button>

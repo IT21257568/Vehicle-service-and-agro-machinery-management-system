@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams,useNavigate } from "react-router-dom";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // reactstrap components
 import {
   Button,
@@ -102,6 +105,13 @@ const UpdateSparePart= () => {
   const handleUpdate = async () => {
     console.log("Update sparePart");
 
+    // Get the original values before updating
+    const originalSparePart_name = SparePart_name;
+    const originalSparePart_price = SparePart_price;
+    const originalSparePart_discount = SparePart_discount;
+    const originalSparePart_description = SparePart_description;
+    const originalSparePart_status = SparePart_status;
+
     try {
       await axios
         .patch(`/api/spareParts/${id}`, {
@@ -114,6 +124,53 @@ const UpdateSparePart= () => {
         })
         .then((res) => {
           console.log("Update sparePart added", res.data);
+          toast.success(`"${SparePart_name}"Spare Part Updated Successfully"`);
+
+          const {
+            sp_name,
+            sp_price,
+            sp_discount,
+            sp_description,
+            sp_status,
+          } = res.data;
+  
+          const changedFields = [];
+  
+          // Compare each field with the original value
+          if (sp_name !== originalSparePart_name) {
+            // changedFields.push(`Vacancy Title: ${vacancy_title}`);
+            changedFields.push(`Spare Part Name`);
+          }
+          if (sp_price !== originalSparePart_price) {
+            // changedFields.push(`Vacancy Type: ${vacancy_type}`);
+            changedFields.push(`Spare Part Price`);
+          }
+          if (sp_discount !== originalSparePart_discount) {
+            // changedFields.push(`Vacancy Count: ${vacancy_count}`);
+            changedFields.push(`Spare Part Discount`);
+          }
+          if (sp_description !== originalSparePart_description) {
+            // changedFields.push(`Vacancy Requirements: ${vacancy_requirements}`);
+            changedFields.push(`Spare Part Description`);
+          }
+          if (sp_status !== SparePart_status) {
+            // changedFields.push(`Vacancy Requirements: ${vacancy_requirements}`);
+            changedFields.push(`Spare Part Status`);
+          }
+  
+          if (changedFields.length > 0) {
+            toast.success(`Updated Fields :: ${changedFields.join(", ")} `, {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 4000, // Optional: Auto-close the toast after 3 seconds
+            });
+          } else {
+            toast.warning("No fields were changed.", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 4000, // Optional: Auto-close the toast after 3 seconds
+            });
+          }
+  
+
           navigate("/admin/spare-parts");
         });
     } catch (error) {
@@ -123,6 +180,7 @@ const UpdateSparePart= () => {
 
   return (
     <>
+     <ToastContainer />
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid style={{marginBottom: '3rem'}}>

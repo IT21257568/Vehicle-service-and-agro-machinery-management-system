@@ -107,7 +107,7 @@ const SparePartsPage = () => {
                 </Row>
               </CardHeader>
               {/* <Container> */}
-               <div className="pl-lg-5">
+               <div className="pl-lg-5" style={{marginLeft: '5rem'}}>
                 <Row style={{ marginTop: "0.5rem" }}>
                   {allSpareParts
                   .filter((sparePart) =>
