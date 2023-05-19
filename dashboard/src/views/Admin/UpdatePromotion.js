@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 // reactstrap components
 import {
@@ -102,6 +103,7 @@ const UpdatePromotion = () => {
   
   const handleUpdate = () => {
     console.log("Promotion updated");
+    toast.success("Promotion updated successfully");
 
     axios
       .patch(`/api/promotions/${id}`, {

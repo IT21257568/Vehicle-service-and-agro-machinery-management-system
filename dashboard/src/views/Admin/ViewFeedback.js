@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
+import { toast } from "react-toastify";
 
 // reactstrap components
 import {
@@ -73,6 +74,7 @@ const ViewFeedbacks = () => {
   const handleDelete = (id) => {
     axios.delete(`/api/feedback/${id}`).then((res) => {
       console.log(res.data);
+      toast.success("Feedback deleted successfully")
       setAllFeedbacks((prevData) =>
         prevData.filter((feedback) => feedback._id !== id)
       );
