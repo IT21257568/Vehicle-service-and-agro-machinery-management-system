@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import moment from "moment";
 
 // reactstrap components
 import {
@@ -17,10 +18,10 @@ import {
   //UncontrolledDropdown,
   //DropdownToggle,
   //Media,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Progress,
+  // Pagination,
+  // PaginationItem,
+  // PaginationLink,
+  // Progress,
   Table,
   Container,
   Row,
@@ -77,6 +78,16 @@ const ViewOrderedSpareParts = () => {
 
   const generateReport = () => {
     const doc = new jsPDF();
+
+    // Add the report title to the PDF
+    doc.setFontSize(18);
+    doc.text("Ordered Spare Parts Report", 14, 22);
+
+    // Add the current date to the PDF
+    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    doc.setFontSize(12);
+    doc.text(`Report generated on ${date}`, 14, 32);
+
     const tableColumn = [
       "Product Name",
       "Customer Name",
@@ -86,7 +97,7 @@ const ViewOrderedSpareParts = () => {
       "Buying Option",
       "Special Note",
       "Ordered Date",
-      "Updated Date",
+      // "Updated Date",
     ];
     const tableRows = allSparePartOrders.map(
       ({
@@ -108,12 +119,17 @@ const ViewOrderedSpareParts = () => {
         customer_buying_option,
         customer_note,
         formatDateTime(createdAt),
-        formatDateTime(updatedAt),
-      ]
+      //   formatDateTime(updatedAt),
+    ]
     );
     doc.autoTable({
-      head: [tableColumn], 
+      head: [tableColumn],
       body: tableRows,
+      startY: 40,
+      styles: {
+        fontSize: 8, // Set font size for table content
+        cellPadding: 2, // Set cell padding for table cells
+      },
     });
 
     doc.save("SparePartOrders.pdf");
@@ -134,7 +150,7 @@ const ViewOrderedSpareParts = () => {
       "September",
       "October",
       "November",
-      "December"
+      "December",
     ];
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -151,7 +167,7 @@ const ViewOrderedSpareParts = () => {
     <>
       <Header />
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7" fluid style={{ marginBottom: "3rem" }}>
         {/* Light Table */}
         <Row>
           <div className="col">
@@ -162,8 +178,10 @@ const ViewOrderedSpareParts = () => {
                     <h3 className="mb-0">All Spare Parts Orders</h3>
                   </div>
                   <Col xl="1">
-                    <InputGroup className="input-group-rounded input-group-merge"
-                      style={{width: '25rem'}}>
+                    <InputGroup
+                      className="input-group-rounded input-group-merge"
+                      style={{ width: "25rem" }}
+                    >
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
@@ -202,7 +220,7 @@ const ViewOrderedSpareParts = () => {
                     <th scope="col">Customer Buying Option</th>
                     <th scope="col">Special Note</th>
                     <th scope="col">Ordered Date</th>
-                    <th scope="col">Updated Date</th>
+                    {/* <th scope="col">Updated Date</th> */}
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -213,9 +231,14 @@ const ViewOrderedSpareParts = () => {
                     </tr>
                   )}
                   {allSparePartOrders
-                    .filter((order) =>
-                      order.p_name?.toLowerCase().includes(query.toLowerCase()) 
-                      ||  order.customer_contact?.toLowerCase().includes(query.toLowerCase())
+                    .filter(
+                      (order) =>
+                        order.p_name
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase()) ||
+                        order.customer_contact
+                          ?.toLowerCase()
+                          .includes(query.toLowerCase())
                     )
                     .slice(0, visible)
                     .map((order, index) => (
@@ -230,7 +253,7 @@ const ViewOrderedSpareParts = () => {
                         <td>{order.customer_buying_option}</td>
                         <td>{order.customer_note}</td>
                         <td>{formatDateTime(order.createdAt)}</td>
-                        <td>{formatDateTime(order.updatedAt)}</td>
+                        {/* <td>{formatDateTime(order.updatedAt)}</td> */}
                         <td>
                           <Button
                             size="sm"
@@ -244,7 +267,10 @@ const ViewOrderedSpareParts = () => {
                     ))}
                 </tbody>
               </Table>
-              <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
+              <CardFooter
+                className="col text-right"
+                style={{ marginTop: "1.8rem" }}
+              >
                 {visible < allSparePartOrders.length && (
                   <Button color="info" size="sm" onClick={showMoreItems}>
                     Load More
