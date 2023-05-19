@@ -68,10 +68,15 @@ const UserNavbar = (props) => {
             {/* removed searchbar */}
 
             <Nav className="align-items-center d-none d-md-flex" navbar>
-            {user && (
+              {user && (
                 <Link className="ml-4 text-gray" to="/user/my-orders">
                   <i className="ni ni-cart" />
-                  <span style={{marginLeft : "8px"}} className="mb-0 text-sm font-weight-bold">My orders</span>
+                  <span
+                    style={{ marginLeft: "8px" }}
+                    className="mb-0 text-sm font-weight-bold"
+                  >
+                    My orders
+                  </span>
                 </Link>
               )}
               {/* Shop */}
@@ -100,21 +105,26 @@ const UserNavbar = (props) => {
                 </DropdownMenu>
               </UncontrolledDropdown>
 
-              <Link className="ml-4 text-gray" to="/user/promotions-page"> 
-                  <span style={{marginLeft : "8px"}} className="mb-0 text-sm font-weight-bold">Promotions</span>
-                </Link>
-              
-                <Link className="ml-4 text-gray" to="/user/carrerpage"> 
-                  <span style={{marginLeft : "8px"}} className="mb-0 text-sm font-weight-bold">Career</span>
-                </Link>
-              
+              <Link className="ml-4 text-gray" to="/user/promotions-page">
+                <span
+                  style={{ marginLeft: "8px" }}
+                  className="mb-0 text-sm font-weight-bold"
+                >
+                  Promotions
+                </span>
+              </Link>
+
+              <Link className="ml-4 text-gray" to="/user/carrerpage">
+                <span
+                  style={{ marginLeft: "8px" }}
+                  className="mb-0 text-sm font-weight-bold"
+                >
+                  Career
+                </span>
+              </Link>
 
               {user && user.email === "admin@wheelmasters.com" && (
-
-
-
                 <Link className="ml-4 text-gray" to="/admin/bookings">
-
                   <span className="mb-0 text-sm font-weight-bold">
                     Dashboard
                   </span>
@@ -128,36 +138,35 @@ const UserNavbar = (props) => {
               )}
 
               {/* services menu */}
-               
-                <UncontrolledDropdown nav className="text-gray">
-                  <DropdownToggle className="pr-0" nav>
-                    <Media className="align-items-start">
-                      <Media className="ml-2 d-none d-lg-block">
-                        <span
-                          className="mb-0 text-sm font-weight-bold text-gray"
-                          // style={{ color: "#525f7f" }}
-                        >
-                          Services
-                        </span>
-                      </Media>
+
+              <UncontrolledDropdown nav className="text-gray">
+                <DropdownToggle className="pr-0" nav>
+                  <Media className="align-items-start">
+                    <Media className="ml-2 d-none d-lg-block">
+                      <span
+                        className="mb-0 text-sm font-weight-bold text-gray"
+                        // style={{ color: "#525f7f" }}
+                      >
+                        Services
+                      </span>
                     </Media>
-                  </DropdownToggle>
-                  <DropdownMenu className="dropdown-menu-arrow" right>
-                    <DropdownItem to="/user/progress-page" tag={Link}>
-                      <i className="ni ni-single-02" />
-                      <span>Service progress</span>
-                    </DropdownItem>
-                    <DropdownItem to="/user/meet-the-team" tag={Link}>
-                      <i className="ni ni-single-02" />
-                      <span>Meet the team</span>
-                    </DropdownItem>
-                    <DropdownItem to="/user/faq-page" tag={Link}>
-                      <i className="ni ni-single-02" />
-                      <span>FAQ section</span>
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              
+                  </Media>
+                </DropdownToggle>
+                <DropdownMenu className="dropdown-menu-arrow" right>
+                  <DropdownItem to="/user/progress-page" tag={Link}>
+                    <i className="ni ni-single-02" />
+                    <span>Service progress</span>
+                  </DropdownItem>
+                  <DropdownItem to="/user/meet-the-team" tag={Link}>
+                    <i className="ni ni-single-02" />
+                    <span>Meet the team</span>
+                  </DropdownItem>
+                  <DropdownItem to="/user/faq-page" tag={Link}>
+                    <i className="ni ni-single-02" />
+                    <span>FAQ section</span>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
 
               {/* pfp display menu */}
               {user && (
@@ -211,9 +220,11 @@ const UserNavbar = (props) => {
                   </Link>
                 </>
               )}
-              <Link to="/user/create-client-booking">
-                <Button color="primary">Book Now</Button>
-              </Link>
+              {user && (
+                <Link to="/user/create-client-booking">
+                  <Button color="primary">Book Now</Button>
+                </Link>
+              )}
             </Nav>
           </div>
         </Container>
