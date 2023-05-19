@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -59,6 +61,13 @@ const UpdateGeneralIssue = () => {
   const handleUpdate = () => {
     console.log("update button clicked");
 
+    // Get the original values before updating
+    const originalCustomer_name = cname;
+    const originalCustomerNIC = customerNIC;
+    const originalContactNumber = contactNumber;
+    const originalGnDescription = gnDescription;
+    const originalIssueStatus = issueStatus;
+
     axios
       .patch(`/api/generalIssues/${id}`, {
         customer_name: cname,
@@ -69,6 +78,51 @@ const UpdateGeneralIssue = () => {
       })
       .then((res) => {
         console.log(res.data);
+        const {
+          customer_name,
+          customer_NIC,
+          contact_number,
+          GN_discription,
+          issue_status,
+        } = res.data;
+
+        const changedFields = [];
+
+        // Compare each field with the original value
+        if (customer_name !== originalCustomer_name) {
+          // changedFields.push(`Vacancy Title: ${vacancy_title}`);
+          changedFields.push(`Customer Name`);
+        }
+        if (customer_NIC !== originalCustomerNIC) {
+          // changedFields.push(`Vacancy Type: ${vacancy_type}`);
+          changedFields.push(`Customer NIC`);
+        }
+        if (contact_number !== originalContactNumber) {
+          // changedFields.push(`Vacancy Count: ${vacancy_count}`);
+          changedFields.push(`Contact Number `);
+        }
+        if (GN_discription !== originalGnDescription) {
+          // changedFields.push(`Vacancy Requirements: ${vacancy_requirements}`);
+          changedFields.push(`General Issue Description`);
+        }
+        if (issue_status !== originalIssueStatus) {
+          // changedFields.push(`Vacancy Requirements: ${vacancy_requirements}`);
+          changedFields.push(`Issue Status`);
+        }
+
+        if (changedFields.length > 0) {
+          toast.success(`Updated Fields :: ${changedFields.join(", ")} `, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+          });
+        } else {
+          toast.warning("No fields were changed.", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+          });
+        }
+
+
         navigate("/admin/view-general-issues");
       });
   };
