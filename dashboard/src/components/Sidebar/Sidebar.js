@@ -102,10 +102,11 @@ const Sidebar = (props) => {
         {/* Brand */}
         {logo ? (
           <NavbarBrand className="pt-0" {...navbarBrandProps}>
-            <img style={{marginTop: '2rem', height: '250px', width: '170px'}}
+            <img
+              style={{ marginTop: "2rem", height: "250px", width: "170px" }}
               alt={logo.imgAlt}
               className="navbar-brand-img"
-              src={require("../../assets/img/brand/WLpy.png")}
+              src={require("../../assets/img/brand/logo-full.png")}
             />
           </NavbarBrand>
         ) : null}
