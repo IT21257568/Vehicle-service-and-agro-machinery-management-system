@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 // reactstrap components
 import {
@@ -107,12 +110,29 @@ const handleCVUpload = (event) => {
 
     
   } else {
-    alert("Please upload a PDF file.");
+    toast.error("Please upload a PDF file.", {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
     return;
   }
 
   
-};
+  };
+  
+
+
+  const showErrorToast = (errorMessage) => {
+    toast.error(errorMessage, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
 
 
   const handleSubmit = async (e) => {
@@ -146,6 +166,9 @@ const handleCVUpload = (event) => {
             })
             .then((res) => {
               console.log(res.data);
+               toast.success("You Have successfully Applied", {
+                 position: toast.POSITION.TOP_CENTER,
+               });
               navigate("/user/carrerpage");
             });
         });
@@ -153,7 +176,9 @@ const handleCVUpload = (event) => {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        const toastMessage = `Please fill in all fields: ${fields}`;
+        setError(toastMessage);
+        showErrorToast(toastMessage);
       } else {
         console.log(error);
       }
@@ -163,6 +188,7 @@ const handleCVUpload = (event) => {
   };
   return (
     <>
+      <ToastContainer />
       <CareerHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -266,7 +292,7 @@ const handleCVUpload = (event) => {
                         </FormGroup>
                       </Col>
                       <Col lg="6">
-                         <FormGroup className="d-flex flex-column">
+                        <FormGroup className="d-flex flex-column">
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
@@ -311,7 +337,7 @@ const handleCVUpload = (event) => {
                               </DropdownItem>
                             </DropdownMenu>
                           </Dropdown>
-                        </FormGroup> 
+                        </FormGroup>
 
                         {/* <FormGroup>
                           <Label>Select Gender</Label>
@@ -350,7 +376,7 @@ const handleCVUpload = (event) => {
                               </Label>
                             </FormGroup> 
                           </div>
-                        </FormGroup> */} 
+                        </FormGroup> */}
                       </Col>
                     </Row>
                     <Row>
@@ -415,7 +441,7 @@ const handleCVUpload = (event) => {
                       )}
                     </Row>
                     <FormGroup>
-                      {error && (
+                      {/* {error && (
                         <div
                           style={{
                             backgroundColor: "#ffffff",
@@ -438,7 +464,7 @@ const handleCVUpload = (event) => {
                             <b>{error}</b>
                           </span>
                         </div>
-                      )}
+                      )} */}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Apply

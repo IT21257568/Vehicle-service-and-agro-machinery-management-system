@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -104,12 +106,17 @@ const ViewVacancies = () => {
     fetchAllVacancies();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, vacancyName) => {
     axios.delete(`/api/vacancies/${id}`).then((res) => {
       console.log(res.data);
       setAllVacancies((prevData) =>
         prevData.filter((vacancy) => vacancy._id !== id)
       );
+
+      toast.success(`"${vacancyName}" Vacancy deleted successfully`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+      });
     });
   };
 
@@ -310,7 +317,9 @@ const ViewVacancies = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(vacancy._id)}
+                            onClick={() =>
+                              handleDelete(vacancy._id, vacancy.vacancy_title)
+                            }
                           >
                             Delete
                           </Button>
