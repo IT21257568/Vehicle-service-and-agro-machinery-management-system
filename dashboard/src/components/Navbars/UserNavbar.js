@@ -211,9 +211,11 @@ const UserNavbar = (props) => {
                   </Link>
                 </>
               )}
-              <Link to="/user/bookings">
-                <Button color="primary">Book Now</Button>
-              </Link>
+              {user && (
+                <Link to="/user/create-client-booking">
+                  <Button color="primary">Book Now</Button>
+                </Link>
+              )}
             </Nav>
           </div>
         </Container>
