@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -52,8 +54,16 @@ const UpdateVacancy = () => {
     getVacancy();
   }, [id]);
 
+
+
   const handleUpdate = () => {
     console.log("Ready to update");
+
+    // Get the original values before updating
+    const originalVacancyTitle = vacancyTitle;
+    const originalVacancyType = vacancyType;
+    const originalVacancyCount = vacancyCount;
+    const originalVacancyRequirements = vacancyRequirements;
 
     axios
       .patch(`/api/vacancies/${id}`, {
@@ -64,12 +74,53 @@ const UpdateVacancy = () => {
       })
       .then((res) => {
         console.log(res.data);
+        const {
+          vacancy_title,
+          vacancy_type,
+          vacancy_count,
+          vacancy_requirements,
+        } = res.data;
+
+        const changedFields = [];
+
+        // Compare each field with the original value
+        if (vacancy_title !== originalVacancyTitle) {
+          // changedFields.push(`Vacancy Title: ${vacancy_title}`);
+          changedFields.push(`Vacancy Title`);
+        }
+        if (vacancy_type !== originalVacancyType) {
+          // changedFields.push(`Vacancy Type: ${vacancy_type}`);
+          changedFields.push(`Vacancy Type`);
+        }
+        if (vacancy_count !== originalVacancyCount) {
+          // changedFields.push(`Vacancy Count: ${vacancy_count}`);
+          changedFields.push(`Vacancy Count`);
+        }
+        if (vacancy_requirements !== originalVacancyRequirements) {
+          // changedFields.push(`Vacancy Requirements: ${vacancy_requirements}`);
+          changedFields.push(`Vacancy Requirements`);
+        }
+
+        if (changedFields.length > 0) {
+          toast.success(`Updated Fields :: ${changedFields.join(", ")} `, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+          });
+        } else {
+          toast.warning("No fields were changed.", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+          });
+        }
+
         navigate("/admin/vacancies");
       });
   };
 
+
   return (
     <>
+      <ToastContainer />
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>

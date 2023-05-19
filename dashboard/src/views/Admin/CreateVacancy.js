@@ -68,7 +68,7 @@ const CreateVacancy = () => {
           setVacancyCount("");
           setVacancyRequirements("");
           setError(null);
-          toast.success("You Have successfully Added New Vacancy", {
+          toast.success("You have successfully added a new vacancy", {
             position: toast.POSITION.TOP_CENTER,
           });
           navigate("/admin/vacancies");
