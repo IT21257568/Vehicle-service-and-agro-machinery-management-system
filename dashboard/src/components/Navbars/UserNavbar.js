@@ -110,7 +110,11 @@ const UserNavbar = (props) => {
               
 
               {user && user.email === "admin@wheelmasters.com" && (
+
+
+
                 <Link className="ml-4 text-gray" to="/admin/bookings">
+
                   <span className="mb-0 text-sm font-weight-bold">
                     Dashboard
                   </span>
