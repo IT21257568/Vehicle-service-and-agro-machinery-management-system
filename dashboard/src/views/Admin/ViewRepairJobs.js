@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 // reactstrap components
@@ -59,12 +61,19 @@ const ViewRepairJobs = () => {
     fetchAllRepairJobs();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id,vehicleNumber) => {
     axios.delete(`/api/damageValuation/${id}`).then((res) => {
       console.log(res.data);
       setAllRepairJobs((prevData) =>
         prevData.filter((damagevaluation) => damagevaluation._id !== id)
       );
+
+      toast.success(`"${vehicleNumber}" RepairJob deleted successfully`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+      });
+
+
     });
   };
 
@@ -264,7 +273,7 @@ const ViewRepairJobs = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(repairJob._id)}
+                            onClick={() => handleDelete(repairJob._id,repairJob.vehicle_Number)}
                           >
                             Delete
                           </Button>
