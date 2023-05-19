@@ -3,6 +3,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import moment from "moment";
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // reactstrap components
 import {
   Badge,
@@ -71,14 +78,100 @@ const ViewSpareParts = () => {
     fetchAllSpareParts();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, sparePartName) => {
     axios.delete(`/api/spareParts/${id}`).then((res) => {
       console.log(res.data);
       setAllSpareParts((prevData) =>
         prevData.filter((sparePart) => sparePart._id !== id)
       );
+
+      toast.success(`"${sparePartName}" Spare Part deleted successfully`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+      });
     });
   };
+
+  const generateReport = () => {
+    const doc = new jsPDF();
+
+    // Add the report title to the PDF
+    doc.setFontSize(18);
+    doc.text("Spare Parts Report", 14, 22);
+
+    // Add the current date to the PDF
+    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    doc.setFontSize(12);
+    doc.text(`Report generated on ${date}`, 14, 32);
+
+    const tableColumn = [
+      "Product Name",
+      "Product Price",
+      "Product Discount",
+      "Product Description",
+      "Product Status",
+      "Created Date",
+      "Updated Date",
+    ];
+    const tableRows = allSpareParts.map(
+      ({
+        sp_name,
+        sp_price,
+        sp_discount,
+        sp_description,
+        sp_status,
+        createdAt,
+        updatedAt,
+      }) => [
+        sp_name,
+        sp_price,
+        sp_discount,
+        sp_description,
+        sp_status,
+        formatDateTime(createdAt),
+        formatDateTime(updatedAt),
+    ]
+    );
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 40,
+      styles: {
+        fontSize: 10, // Set font size for table content
+        cellPadding: 2, // Set cell padding for table cells
+      },
+    });
+
+    doc.save("SpareParts.pdf");
+  };
+
+  //date format
+  function formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedDate = `${date.getDate()} ${
+      months[date.getMonth()]
+    } ${date.getFullYear()}, ${hours % 12}:${minutes
+      .toString()
+      .padStart(2, "0")} ${ampm}`;
+    return formattedDate;
+  }
 
   return (
     <>
@@ -94,9 +187,9 @@ const ViewSpareParts = () => {
                   <div className="col">
                     <h3 className="mb-0">All Spare Parts</h3>
                   </div>
-                  <Col xl = "1">
+                  <Col xl = "3">
                     <InputGroup className="input-group-rounded input-group-merge"
-                      style={{width: '25rem'}}>
+                      style={{width: '15rem'}}>
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
@@ -114,7 +207,7 @@ const ViewSpareParts = () => {
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
-                      color="success"
+                      style={{color: '#ffa500'}}
                       type="button"
                       onClick={() => navigate("/admin/create-spare-part")}
                     >
@@ -125,6 +218,20 @@ const ViewSpareParts = () => {
                         <i className="ni ni-planet" />
                       </span>
                       <span className="btn-inner--text">Add spare parts</span>
+                    </Button>
+                    <Button
+                      className="btn-icon btn-3"
+                      color="success"
+                      type="button"
+                      onClick={generateReport}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px" }}
+                      >
+                        <i className="ni ni-folder-17" />
+                      </span>
+                      <span className="btn-inner--text">Generate Report</span>
                     </Button>
                   </div>
                 </Row>
@@ -197,7 +304,7 @@ const ViewSpareParts = () => {
                         <Button
                           size="sm"
                           color="danger"
-                          onClick={() => handleDelete(sparePart._id)}
+                          onClick={() => handleDelete(sparePart._id, sparePart.sp_name)}
                         >
                           Delete
                         </Button>

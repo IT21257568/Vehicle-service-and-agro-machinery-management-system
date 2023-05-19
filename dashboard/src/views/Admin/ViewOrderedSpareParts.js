@@ -177,7 +177,7 @@ const ViewOrderedSpareParts = () => {
                   <div className="col">
                     <h3 className="mb-0">All Spare Parts Orders</h3>
                   </div>
-                  <Col xl="1">
+                  <Col xl="3">
                     <InputGroup
                       className="input-group-rounded input-group-merge"
                       style={{ width: "25rem" }}
@@ -185,7 +185,7 @@ const ViewOrderedSpareParts = () => {
                       <Input
                         aria-label="Search"
                         className="form-control-rounded form-control-prepended"
-                        placeholder="Search by product name or Customer contact"
+                        placeholder="Search by product name or Customer contact Number"
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
