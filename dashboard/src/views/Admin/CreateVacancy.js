@@ -40,7 +40,7 @@ const CreateVacancy = () => {
 
   const showErrorToast = (errorMessage) => {
     toast.error(errorMessage, {
-      position: toast.POSITION.BOTTOM_LEFT,
+      position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,

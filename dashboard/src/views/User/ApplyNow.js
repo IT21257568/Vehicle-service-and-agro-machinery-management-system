@@ -111,7 +111,7 @@ const handleCVUpload = (event) => {
     
   } else {
     toast.error("Please upload a PDF file.", {
-      position: toast.POSITION.BOTTOM_LEFT,
+      position: toast.POSITION.BOTTOM_RIGHT,
     });
     return;
   }
@@ -123,7 +123,7 @@ const handleCVUpload = (event) => {
 
   const showErrorToast = (errorMessage) => {
     toast.error(errorMessage, {
-      position: toast.POSITION.BOTTOM_LEFT,
+      position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
