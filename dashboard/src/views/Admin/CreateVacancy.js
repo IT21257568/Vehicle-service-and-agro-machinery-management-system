@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -35,6 +37,19 @@ const CreateVacancy = () => {
   const [vacancyRequirements, setVacancyRequirements] = useState("");
   const [error, setError] = useState(null);
 
+
+  const showErrorToast = (errorMessage) => {
+    toast.error(errorMessage, {
+      position: toast.POSITION.BOTTOM_LEFT,
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
@@ -53,13 +68,18 @@ const CreateVacancy = () => {
           setVacancyCount("");
           setVacancyRequirements("");
           setError(null);
+          toast.success("You Have successfully Added New Vacancy", {
+            position: toast.POSITION.TOP_CENTER,
+          });
           navigate("/admin/vacancies");
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        const toastMessage = `Please fill in all fields: ${fields}`;
+        setError(toastMessage);
+        showErrorToast(toastMessage);
       } else {
         console.log(error);
       }
@@ -67,6 +87,7 @@ const CreateVacancy = () => {
   };
   return (
     <>
+      <ToastContainer />
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -194,7 +215,7 @@ const CreateVacancy = () => {
                           setVacancyRequirements(e.target.value);
                         }}
                       />
-                      {error && (
+                      {/* {error && (
                         <div
                           style={{
                             backgroundColor: "#ffffff",
@@ -217,7 +238,7 @@ const CreateVacancy = () => {
                             <b>{error}</b>
                           </span>
                         </div>
-                      )}
+                      )} */}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create
