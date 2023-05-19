@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -64,7 +66,16 @@ const UpdateBooking = () => {
   }, [id]);
 
   const handleUpdate = () => {
-    console.log("lol");
+    console.log("Ready to update");
+
+    const originalBookingLocation = location
+    const originalBookingClientName = clientName
+    const originalBookingServiceType = serviceType
+    const originalBookingEmail = email
+    const originalBookingPhone = phone
+    const originalBookingDateTime = date_time
+    const originalBookingSpecialNote = specialNote
+
 
     axios
       .patch(`/api/bookings/${id}`, {
@@ -78,6 +89,52 @@ const UpdateBooking = () => {
       })
       .then((res) => {
         console.log(res.data);
+        const {
+          location,
+          service_type,
+          client_name,
+          email,
+          phone,
+          date_time,
+          special_note,
+        } = res.data;
+
+        const changedFields = [];
+
+        if(location !== originalBookingLocation){
+          changedFields.push("Location")
+        }
+        if(service_type !== originalBookingServiceType){
+          changedFields.push("Service Type")
+        }
+        if(client_name !== originalBookingClientName){
+          changedFields.push("Client Name")
+        }
+        if(email !== originalBookingEmail){
+          changedFields.push("Email")
+        }
+        if(phone !== originalBookingPhone){
+          changedFields.push("Phone")
+        }
+        if(date_time !== originalBookingDateTime){
+          changedFields.push("Date & Time")
+        }
+        if(special_note !== originalBookingSpecialNote){
+          changedFields.push("Special Note")
+        }
+
+        if (changedFields.length > 0) {
+          toast.success(`Updated Fields :: ${changedFields.join(", ")} `, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+          });
+        } else {
+          toast.warning("No fields were changed.", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+          });
+        }
+
         navigate("/admin/bookings");
       });
   };

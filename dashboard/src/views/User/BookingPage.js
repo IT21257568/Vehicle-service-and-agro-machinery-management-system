@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -42,6 +44,19 @@ const CreateBookingClient = () => {
   const [booking_user_id, setBookingUserId] = useState("4200efghid");
   const [error, setError] = useState(null);
 
+  const showErrorToast = (errorMessage) => {
+    toast.error(errorMessage, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
@@ -68,13 +83,18 @@ const CreateBookingClient = () => {
           setDateTime("");
           setSpecialNote("");
           setError(null);
+          toast.success("Booking Record added successfully", {
+            position: toast.POSITION.TOP_CENTER,
+          });
           navigate("/user/home-page");
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        const toastMessage=(`Please fill in all fields: ${fields}`);
+        setError(toastMessage);
+        showErrorToast(toastMessage);
       } else {
         console.log(error);
       }
