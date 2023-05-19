@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -108,6 +110,16 @@ const UpdateRepairJob = () => {
   const handleUpdate = () => {
     console.log("updated");
 
+
+    // Get the original values before updating
+    const originalCustomer_name = name;
+    const originalVehicle_Model = vehicleModel;
+    const originalCustomer_id = customerId;
+    const originalVehicle_Number = vehicleNumber;
+    const originalCustomer_email = customerEmail;
+    const originalEstimated_cost = estimatedCost;
+    const originalRequired_parts = requiredParts;
+
     axios
       .patch(`/api/damageValuation/${id}`, {
         customer_name: name,
@@ -121,6 +133,60 @@ const UpdateRepairJob = () => {
       })
       .then((res) => {
         console.log(res.data);
+        const {
+          customer_name,
+          vehicle_Model,
+          customer_id,
+          vehicle_Number,
+          customer_email,
+          estimated_cost,
+          required_parts,
+        } = res.data;
+
+        const changedFields = [];
+
+        // Compare each field with the original value
+        if (customer_name !== originalCustomer_name) {
+          // changedFields.push(`Vacancy Title: ${vacancy_title}`);
+          changedFields.push(`Customer Name`);
+        }
+        if (vehicle_Model !== originalVehicle_Model) {
+          // changedFields.push(`Vacancy Type: ${vacancy_type}`);
+          changedFields.push(`Vehicle Model`);
+        }
+        if (customer_id !== originalCustomer_id) {
+          // changedFields.push(`Vacancy Count: ${vacancy_count}`);
+          changedFields.push(`Customer ID `);
+        }
+        if (vehicle_Number !== originalVehicle_Number) {
+          // changedFields.push(`Vacancy Requirements: ${vacancy_requirements}`);
+          changedFields.push(` Vehicle Number`);
+        }
+        if (customer_email !== originalCustomer_email) {
+          // changedFields.push(`Vacancy Requirements: ${vacancy_requirements}`);
+          changedFields.push(`Customer Email`);
+        }
+        if (estimated_cost !== originalEstimated_cost) {
+          // changedFields.push(`Vacancy Requirements: ${vacancy_requirements}`);
+          changedFields.push(`Estimated Cost`);
+        }
+        if (required_parts !== originalRequired_parts) {
+          // changedFields.push(`Vacancy Requirements: ${vacancy_requirements}`);
+          changedFields.push(`Required Parts`);
+        }
+
+        if (changedFields.length > 0) {
+          toast.success(`Updated Fields :: ${changedFields.join(", ")} `, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+          });
+        } else {
+          toast.warning("No fields were changed.", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+          });
+        }
+
         navigate("/admin/view-repair-jobs");
       });
   };
