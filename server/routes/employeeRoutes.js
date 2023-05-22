@@ -1,25 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const {
-  registerEmployee,
-  loginEmployee,
-  getMe,
-  getAllEmployees,
-  updateEmployee,
+  getEmployees,
+  getEmployee,
+  createEmployee,
   deleteEmployee,
-  getEmployeeById,
+  updateEmployee,
 } = require("../controllers/employeeController");
-const { protect } = require("../middleware/authMiddleware");
 
-// const { protect } = require("../middleware/authMiddleware");
+//Get all of the Technicians (1)
+router.get("/", getEmployees);
 
-router
-  .get("/", getAllEmployees)
-  .post("/", registerEmployee)
-  .patch("/:id", updateEmployee)
-  .delete("/:id", deleteEmployee);
-router.post("/login", loginEmployee);
-router.get("/me", getMe);
-router.get("/getemployeebyid/:id", getEmployeeById);
+//Get single Technician (2)
+router.get("/:id", getEmployee);
+
+//Post a new Technician (3)
+router.post("/", createEmployee);
+
+//Delete a Technician (4)
+router.delete("/:id", deleteEmployee);
+
+//Update Technician (5)
+router.patch("/:id", updateEmployee);
 
 module.exports = router;
