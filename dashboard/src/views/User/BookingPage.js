@@ -26,14 +26,18 @@ import Header from "components/Headers/BookingHeader";
 const CreateBookingClient = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpen1, setDropdownOpen1] = useState(false);
+  const [dropdownOpen2, setDropdownOpen2] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const toggle1 = () => setDropdownOpen1((prevState) => !prevState);
+  const toggle2 = () => setDropdownOpen2((prevState) => !prevState);
   const navigate = useNavigate();
 
   // form states
-  const [data, setData] = useState([]);
+  const [allTechnicians, setAllTechnicians] = useState([]);
   const [location, setLocation] = useState("");
   const [serviceType, setServiceType] = useState("");
+  const [technicianName, setTechnicianName] = useState("");
+  const [technicianId, setTechnicianId] = useState("");
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -41,6 +45,19 @@ const CreateBookingClient = () => {
   const [specialNote, setSpecialNote] = useState("");
   const [booking_user_id, setBookingUserId] = useState("4200efghid");
   const [error, setError] = useState(null);
+
+  // retrieve all technicians from database
+  useEffect(() => {
+    const fetchAllTechnicians = async () => {
+      try {
+        const res = await axios.get("/api/mTeams");
+        setAllTechnicians(res.data);
+      } catch (err) {
+        setError(err);
+      }
+    };
+    fetchAllTechnicians();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
@@ -56,7 +73,6 @@ const CreateBookingClient = () => {
           date_time: date_time,
           special_note: specialNote,
           booking_user_id: booking_user_id,
-
         })
         .then((res) => {
           console.log("New booking added", res.data);
@@ -98,9 +114,7 @@ const CreateBookingClient = () => {
               </CardHeader>
               <CardBody>
                 <Form>
-                  <h6 className="heading-small text-muted mb-4">
-                    Client Name
-                  </h6>
+                  <h6 className="heading-small text-muted mb-4">Client Name</h6>
                   <div className="pl-lg-4">
                     <Row>
                       <Col lg="6">
@@ -167,10 +181,43 @@ const CreateBookingClient = () => {
                           </Dropdown>
                         </FormGroup>
                       </Col>
+                      <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Technician Name
+                          </label>
+                          <Dropdown
+                            isOpen={dropdownOpen2}
+                            color="primary"
+                            toggle={toggle2}
+                          >
+                            <DropdownToggle caret>
+                              {technicianName
+                                ? technicianName
+                                : "Select Technician"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              {allTechnicians.map((technician) => (
+                                <DropdownItem
+                                  key={technician._id}
+                                  value={technician.technician_name}
+                                  onClick={(e) => {
+                                    setTechnicianName(e.target.value);
+                                  }}
+                                >
+                                  {technician.technician_name}(
+                                  {technician.technician_specialize_in})
+                                </DropdownItem>
+                              ))}
+                            </DropdownMenu>
+                          </Dropdown>
+                        </FormGroup>
+                      </Col>
                     </Row>
                     <Row>
-
-
                       <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
@@ -191,15 +238,15 @@ const CreateBookingClient = () => {
                               <DropdownItem
                                 value="Auto Wash"
                                 onClick={(e) => {
-                                    setLocation(e.target.value);
+                                  setLocation(e.target.value);
                                 }}
                               >
                                 Auto Wash
-                            </DropdownItem>
+                              </DropdownItem>
                               <DropdownItem
                                 value="Auto Plaza"
                                 onClick={(e) => {
-                                    setLocation(e.target.value);
+                                  setLocation(e.target.value);
                                 }}
                               >
                                 Auto Plaza
@@ -209,7 +256,6 @@ const CreateBookingClient = () => {
                         </FormGroup>
                       </Col>
 
-                     
                       <Col lg="4">
                         <FormGroup>
                           <label
@@ -254,7 +300,7 @@ const CreateBookingClient = () => {
                     </Row>
 
                     <Row>
-                    <Col lg="4">
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -269,13 +315,12 @@ const CreateBookingClient = () => {
                             placeholder="Date and Time"
                             type="date"
                             onChange={(e) => {
-                            setDateTime(e.target.value);
+                              setDateTime(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
-
                   </div>
 
                   {/* Description */}

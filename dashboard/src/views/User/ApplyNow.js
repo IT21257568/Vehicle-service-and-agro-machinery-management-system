@@ -4,7 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 // reactstrap components
 import {
   Button,
@@ -36,8 +35,8 @@ const CreateVacancy = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
-   const [cvFile, setCVFile] = useState(null);
-   const [uploadProgress, setUploadProgress] = useState(0);
+  const [cvFile, setCVFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   // form states
   const [data, setData] = useState([]);
@@ -54,7 +53,7 @@ const CreateVacancy = () => {
 
       setVacancyTitle(res.data.vacancy_title);
       setVacancyRequirements(res.data.vacancy_requirements);
-      setVacancyApplicants(res.data.vacancy_applicants)
+      setVacancyApplicants(res.data.vacancy_applicants);
       setVacancyId(res.data._id);
     };
     getVacancy();
@@ -69,61 +68,51 @@ const CreateVacancy = () => {
   const [applicant_CVFile_url, setApplicantCVFileUrl] = useState("");
   const [error, setError] = useState(null);
 
+  const handleCVUpload = (event) => {
+    const file = event.target.files[0];
 
-const handleCVUpload = (event) => {
-  const file = event.target.files[0];
+    // Check if file is a PDF
+    if (file.type === "application/pdf") {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "agd0dlhj");
+      // formData.append("public_id", "your_public_id");
+      formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
 
-  // Check if file is a PDF
-  if (file.type === "application/pdf") {
+      const options = {
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setUploadProgress(percentCompleted);
+        },
+      };
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "agd0dlhj");
-    // formData.append("public_id", "your_public_id");
-    formData.append("api_key", process.env.REACT_APP_CLOUDINARY_API_KEY);
-
-    const options = {
-      onUploadProgress: (progressEvent) => {
-        const percentCompleted = Math.round(
-          (progressEvent.loaded * 100) / progressEvent.total
-        );
-        setUploadProgress(percentCompleted);
-      },
-    };
-
-    axios
-      .post(
-        `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
-        formData,
-        options
-      )
-      .then((response) => {
-        setCVFile(response.data.secure_url);
-        setUploadProgress(0);
-      })
-      .catch((error) => {
-        console.error(error);
-        setUploadProgress(0);
+      axios
+        .post(
+          `https://api.cloudinary.com/v1_1/dkk0hlcyk/image/upload`,
+          formData,
+          options
+        )
+        .then((response) => {
+          setCVFile(response.data.secure_url);
+          setUploadProgress(0);
+        })
+        .catch((error) => {
+          console.error(error);
+          setUploadProgress(0);
+        });
+    } else {
+      toast.error("Please upload a PDF file.", {
+        position: toast.POSITION.BOTTOM_RIGHT,
       });
-
-
-
-    
-  } else {
-    toast.error("Please upload a PDF file.", {
-      position: toast.POSITION.BOTTOM_RIGHT,
-    });
-    return;
-  }
-
-  
+      return;
+    }
   };
-  
-
 
   const showErrorToast = (errorMessage) => {
     toast.error(errorMessage, {
-      position: toast.POSITION.BOTTOM_RIGHT,
+      position: toast.POSITION.BOTTOM_CENTER,
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -132,8 +121,6 @@ const handleCVUpload = (event) => {
       progress: undefined,
     });
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
@@ -166,12 +153,23 @@ const handleCVUpload = (event) => {
             })
             .then((res) => {
               console.log(res.data);
-               toast.success("You Have successfully Applied", {
-                 position: toast.POSITION.TOP_CENTER,
-               });
+              toast.success("You Have successfully Applied", {
+                position: toast.POSITION.BOTTOM_CENTER,
+              });
               navigate("/user/carrerpage");
             });
         });
+
+      //  const notifyResponse = await axios.post(
+      //    "https://app.notify.lk/api/v1/send",
+      //    {
+      //      message: `You have successfully applied for ${vacancyTitle}`,
+      //      to: applicant_contact, // Replace with your desired phone number
+      //      user_id: "YOUR_USER_ID", // Replace with your Notify.lk user ID
+      //      api_key: "YOUR_API_KEY", // Replace with your Notify.lk API key
+      //    }
+      //  );
+      //   console.log(notifyResponse.data);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
@@ -183,8 +181,6 @@ const handleCVUpload = (event) => {
         console.log(error);
       }
     }
-    
-    
   };
   return (
     <>
