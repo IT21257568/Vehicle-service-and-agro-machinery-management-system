@@ -78,13 +78,8 @@ const UpdateBooking = () => {
 
     axios
       .patch(`/api/bookings/${id}`, {
-        location: location,
-        service_type: serviceType,
-        client_name: clientName,
-        email: email,
-        phone: phone,
-        date_time: date_time,
-        special_note: specialNote,
+        technician_id: technicianId,
+        technician_name: technicianName,
       })
       .then((res) => {
         console.log(res.data);
@@ -189,9 +184,12 @@ const UpdateBooking = () => {
                               {allTechnicians.map((technician) => (
                                 <DropdownItem
                                   key={technician._id}
-                                  value={technician.technician_name}
+                                  value={`${technician._id},${technician.technician_name}`} // Set ID and name as the value
                                   onClick={(e) => {
-                                    setTechnicianName(e.target.value);
+                                    const [technicianId, technicianName] =
+                                      e.target.value.split(",");
+                                    setTechnicianId(technicianId); // Set technician ID
+                                    setTechnicianName(technicianName); // Set technician name
                                   }}
                                 >
                                   {technician.technician_name}(
@@ -244,7 +242,7 @@ const UpdateBooking = () => {
                       />
                     </FormGroup>
                     <Button color="primary" onClick={handleUpdate}>
-                      Save
+                      Assign Technician
                     </Button>
                     <Button
                       color="warning"

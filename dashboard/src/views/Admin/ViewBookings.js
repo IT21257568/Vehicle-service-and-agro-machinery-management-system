@@ -74,19 +74,7 @@ const ViewBookings = () => {
     fetchAllBookings();
   }, []);
 
-  // retrieve all technicians from database
-  useEffect(() => {
-    const fetchAllTechnicians = async () => {
-      try {
-        const res = await axios.get("/api/mTeams");
-        setAllTechnicians(res.data);
-        console.log(res.data);
-      } catch (err) {
-        setError(err);
-      }
-    };
-    fetchAllTechnicians();
-  }, []);
+ 
 
   const handleDelete = (id) => {
     axios.delete(`/api/bookings/${id}`).then((res) => {
@@ -219,6 +207,7 @@ const ViewBookings = () => {
                     <th scope="col">Location</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Assigned Technician</th>
                     <th scope="col">Date and Time</th>
                     <th scope="col">Notes</th>
                     <th scope="col">Actions</th>
@@ -250,6 +239,7 @@ const ViewBookings = () => {
                         <td>{booking.location}</td>
                         <td> {booking.phone} </td>
                         <td> {booking.email} </td>
+                        <td> {booking.technician_name} </td>
                         <td> {booking.date_time} </td>
                         <td> {booking.special_note} </td>
                         <td>
