@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // reactstrap components
 import {
@@ -49,6 +50,7 @@ const ProvideFeedback = () => {
         })
         .then((res) => {
           console.log("New booking added", res.data);
+          toast.success("Feedback submitted successfully")
           setFeedbackTxt("");
           setRatingNum("");
           setFeedDate("");
@@ -59,7 +61,7 @@ const ProvideFeedback = () => {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        toast.error(`Please fill in all fields: ${fields}`);
       } else {
         console.log(error);
       }
