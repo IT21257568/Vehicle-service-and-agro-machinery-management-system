@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
@@ -31,6 +32,7 @@ const CreateBookingClient = () => {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const toggle1 = () => setDropdownOpen1((prevState) => !prevState);
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   // form states
   const [location, setLocation] = useState("");
@@ -40,7 +42,7 @@ const CreateBookingClient = () => {
   const [phone, setPhone] = useState("");
   const [date_time, setDateTime] = useState("");
   const [specialNote, setSpecialNote] = useState("");
-  const [booking_user_id, setBookingUserId] = useState("4200efghid");
+  const [booking_user_id, setBookingUserId] = useState("");
   const [error, setError] = useState(null);
 
   const showErrorToast = (errorMessage) => {
@@ -55,6 +57,11 @@ const CreateBookingClient = () => {
     });
   };
 
+  //set current user id
+    useEffect(() => {
+      setBookingUserId(user._id);
+    }, [user._id]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
