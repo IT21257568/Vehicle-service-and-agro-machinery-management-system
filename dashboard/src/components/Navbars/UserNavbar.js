@@ -79,6 +79,17 @@ const UserNavbar = (props) => {
                   </span>
                 </Link>
               )}
+              {user && (
+                <Link className="ml-4 text-gray" to="/user/view-client-booking">
+                  <i className="ni ni-book-bookmark" />
+                  <span
+                    style={{ marginLeft: "8px" }}
+                    className="mb-0 text-sm font-weight-bold"
+                  >
+                    My Bookings
+                  </span>
+                </Link>
+              )}
               {/* Shop */}
               <UncontrolledDropdown nav className="text-gray">
                 <DropdownToggle className="pr-0" nav>

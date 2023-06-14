@@ -40,7 +40,7 @@ const CreateVacancy = () => {
 
   const showErrorToast = (errorMessage) => {
     toast.error(errorMessage, {
-      position: toast.POSITION.BOTTOM_RIGHT,
+      position: toast.POSITION.BOTTOM_CENTER,
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -69,7 +69,7 @@ const CreateVacancy = () => {
           setVacancyRequirements("");
           setError(null);
           toast.success("You have successfully added a new vacancy", {
-            position: toast.POSITION.TOP_CENTER,
+            position: toast.POSITION.BOTTOM_CENTER,
           });
           navigate("/admin/vacancies");
         });

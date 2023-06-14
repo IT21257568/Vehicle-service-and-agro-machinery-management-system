@@ -33,6 +33,7 @@ import {
   Button,
   //Chip,
   Col,
+  
 } from "reactstrap";
 
 // core components
@@ -45,6 +46,9 @@ const ViewBookings = () => {
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
   const [bookings, setBookings] = useState([]);
+  const [technicianName, setTechnicianName] = useState("");
+  const [technicianId, setTechnicianId] = useState("");
+  const [allTechnicians, setAllTechnicians] = useState([]);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -70,6 +74,8 @@ const ViewBookings = () => {
     fetchAllBookings();
   }, []);
 
+ 
+
   const handleDelete = (id) => {
     axios.delete(`/api/bookings/${id}`).then((res) => {
       console.log(res.data);
@@ -85,7 +91,6 @@ const ViewBookings = () => {
     // Add the report title to the PDF
     doc.setFontSize(18);
     doc.text("Bookings Report", 14, 22);
-    
 
     // Add the current date to the PDF
     const date = moment().format("MMMM Do YYYY, h:mm:ss a");
@@ -125,9 +130,9 @@ const ViewBookings = () => {
     doc.autoTable({
       head: [columns],
       body: rows,
-      startY:40,
-      styles:{
-         fontSize: 10, // Set font size for table content
+      startY: 40,
+      styles: {
+        fontSize: 10, // Set font size for table content
         cellPadding: 3, // Set cell padding for table cells
       },
     });
@@ -163,7 +168,7 @@ const ViewBookings = () => {
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
-                      style={{color: '#ffa500'}}
+                      style={{ color: "#ffa500" }}
                       type="button"
                       onClick={() => navigate("/admin/create-bookings")}
                     >
@@ -202,6 +207,7 @@ const ViewBookings = () => {
                     <th scope="col">Location</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Assigned Technician</th>
                     <th scope="col">Date and Time</th>
                     <th scope="col">Notes</th>
                     <th scope="col">Actions</th>
@@ -217,7 +223,7 @@ const ViewBookings = () => {
                     .filter((booking) =>
                       booking.client_name
                         ?.toLowerCase()
-                        .includes(query.toLowerCase()) 
+                        .includes(query.toLowerCase())
                     )
                     .slice(0, visible)
                     .map((booking, index) => (
@@ -233,9 +239,24 @@ const ViewBookings = () => {
                         <td>{booking.location}</td>
                         <td> {booking.phone} </td>
                         <td> {booking.email} </td>
+                        <td> {booking.technician_name} </td>
                         <td> {booking.date_time} </td>
                         <td> {booking.special_note} </td>
                         <td>
+                          {booking.technician_name === "Not assigned" && (
+                            <Button
+                              size="sm"
+                              color="primary"
+                              onClick={() =>
+                                navigate(
+                                  `/admin/assign-technician/${booking._id}`
+                                )
+                              }
+                            >
+                              Assign Technician
+                            </Button>
+                          )}
+
                           <Button
                             size="sm"
                             color="warning"
