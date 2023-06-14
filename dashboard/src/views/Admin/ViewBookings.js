@@ -243,17 +243,20 @@ const ViewBookings = () => {
                         <td> {booking.date_time} </td>
                         <td> {booking.special_note} </td>
                         <td>
-                          <Button
-                            size="sm"
-                            color="primary"
-                            onClick={() =>
-                              navigate(
-                                `/admin/assign-technician/${booking._id}`
-                              )
-                            }
-                          >
-                            Assign Technician
-                          </Button>
+                          {booking.technician_name === "Not assigned" && (
+                            <Button
+                              size="sm"
+                              color="primary"
+                              onClick={() =>
+                                navigate(
+                                  `/admin/assign-technician/${booking._id}`
+                                )
+                              }
+                            >
+                              Assign Technician
+                            </Button>
+                          )}
+
                           <Button
                             size="sm"
                             color="warning"

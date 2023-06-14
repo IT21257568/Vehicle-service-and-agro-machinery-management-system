@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -83,12 +85,32 @@ const UpdateBooking = () => {
       })
       .then((res) => {
         console.log(res.data);
-        navigate("/admin/bookings");
+        axios.get(`/api/mTeams/${technicianId}`).then((res) => {
+          // Get the current assigned job count from the response data
+          const currentAssignedJobs = res.data.assigned_jobs;
+
+          // Calculate the new assigned job count by incrementing the current count by 1
+          const newAssignedJobs = currentAssignedJobs + 1;
+
+          // Update the assigned job count in the request payload
+          axios
+            .patch(`/api/mTeams/${technicianId}`, {
+              assigned_jobs: newAssignedJobs,
+            })
+            .then((res) => {
+              console.log(res.data);
+              toast.success("You Have successfully Assigned Technician", {
+                position: toast.POSITION.BOTTOM_CENTER,
+              });
+              navigate("/admin/bookings");
+            });
+        });
       });
   };
 
   return (
     <>
+      <ToastContainer />
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -181,21 +203,26 @@ const UpdateBooking = () => {
                                 : "Select Technician"}
                             </DropdownToggle>
                             <DropdownMenu>
-                              {allTechnicians.map((technician) => (
-                                <DropdownItem
-                                  key={technician._id}
-                                  value={`${technician._id},${technician.technician_name}`} // Set ID and name as the value
-                                  onClick={(e) => {
-                                    const [technicianId, technicianName] =
-                                      e.target.value.split(",");
-                                    setTechnicianId(technicianId); // Set technician ID
-                                    setTechnicianName(technicianName); // Set technician name
-                                  }}
-                                >
-                                  {technician.technician_name}(
-                                  {technician.technician_specialize_in})
-                                </DropdownItem>
-                              ))}
+                              {allTechnicians.map((technician) => {
+                                if (technician.assigned_jobs < 3) {
+                                  return (
+                                    <DropdownItem
+                                      key={technician._id}
+                                      value={`${technician._id},${technician.technician_name}`}
+                                      onClick={(e) => {
+                                        const [technicianId, technicianName] =
+                                          e.target.value.split(",");
+                                        setTechnicianId(technicianId);
+                                        setTechnicianName(technicianName);
+                                      }}
+                                    >
+                                      {technician.technician_name} (
+                                      {technician.technician_specialize_in})
+                                    </DropdownItem>
+                                  );
+                                }
+                                return null; // Skip rendering if assigned_jobs >= 3
+                              })}
                             </DropdownMenu>
                           </Dropdown>
                         </FormGroup>
