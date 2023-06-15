@@ -33,7 +33,6 @@ import {
   Button,
   //Chip,
   Col,
-  
 } from "reactstrap";
 
 // core components
@@ -75,8 +74,6 @@ const ViewBookings = () => {
     fetchAllBookings();
   }, []);
 
- 
-
   const handleDelete = (id, tId) => {
     axios.delete(`/api/bookings/${id}`).then((res) => {
       console.log(res.data);
@@ -103,40 +100,59 @@ const ViewBookings = () => {
 
     updateRecord();
   };
-  const removeAssign = (id,tId) => {
-    console.log("Ready to update");
-    axios
-      .patch(`/api/bookings/${id}`, {
+
+//remove assigned technician
+  const removeAssign = async (id, tId) => {
+    try {
+      console.log("Ready to update");
+      await axios.patch(`/api/bookings/${id}`, {
         technician_id: null,
         technician_name: null,
-      })
-      .then((res) => {
-        console.log(res.data);
-        window.location.reload();
-        // setData(res.data); // Update the state with the patched data
+      });
+      setAllBookings((bookings) =>
+        bookings.map((booking) => {
+          if (booking._id === id) {
+            return {
+              ...booking,
+              technician_name: null,
+            };
+          }
+          return booking;
+        })
+      );
+
+        const updateRecord = async () => {
+          const response = await axios.get(`/api/mTeams/${tId}`);
+          console.log(response.data);
+
+          // update vacancy applicants count
+          axios
+            .patch(`/api/mTeams/${tId}`, {
+              assigned_jobs: response.data.assigned_jobs - 1,
+            })
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+
+        updateRecord();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleRemoveAssign = (booking) => {
+    removeAssign(booking._id, booking.technician_id)
+      .then(() => {
+        // Refresh the page without reloading
+        setAllBookings((bookings) => [...bookings]);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-    
-    const updateRecord = async () => {
-      const response = await axios.get(`/api/mTeams/${tId}`);
-      console.log(response.data);
-
-      // update vacancy applicants count
-      axios
-        .patch(`/api/mTeams/${tId}`, {
-          assigned_jobs: response.data.assigned_jobs - 1,
-        })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    updateRecord();
   };
 
   const generateReport = () => {
@@ -320,9 +336,7 @@ const ViewBookings = () => {
                             <Button
                               size="sm"
                               color="danger"
-                              onClick={() =>
-                                removeAssign(booking._id, booking.technician_id)
-                              }
+                              onClick={() => handleRemoveAssign(booking)}
                             >
                               Remove Assign
                             </Button>

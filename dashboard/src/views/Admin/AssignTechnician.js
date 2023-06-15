@@ -76,7 +76,7 @@ const UpdateBooking = () => {
   }, []);
 
   const handleUpdate = () => {
-    console.log("lol");
+   
 
     axios
       .patch(`/api/bookings/${id}`, {
