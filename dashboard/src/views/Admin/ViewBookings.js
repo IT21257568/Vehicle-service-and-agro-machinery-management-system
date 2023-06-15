@@ -239,11 +239,11 @@ const ViewBookings = () => {
                         <td>{booking.location}</td>
                         <td> {booking.phone} </td>
                         <td> {booking.email} </td>
-                        <td> {booking.technician_name} </td>
+                        <td> {booking.technician_name} {booking.technician_name === null &&(<b>Not Assigned</b>)} </td>
                         <td> {booking.date_time} </td>
                         <td> {booking.special_note} </td>
                         <td>
-                          {booking.technician_name === "Not assigned" && (
+                          {booking.technician_name === null && (
                             <Button
                               size="sm"
                               color="primary"
@@ -254,6 +254,19 @@ const ViewBookings = () => {
                               }
                             >
                               Assign Technician
+                            </Button>
+                          )}
+                          {booking.technician_name !== null && (
+                            <Button
+                              size="sm"
+                              color="primary"
+                              onClick={() =>
+                                navigate(
+                                  `/admin/assign-technician/${booking._id}`
+                                )
+                              }
+                            >
+                              Remove Technician
                             </Button>
                           )}
 

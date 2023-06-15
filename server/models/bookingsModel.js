@@ -42,7 +42,8 @@ const bookingSchema = new Schema(
     },
     technician_name: {
       type: String,
-      default:`Not assigned`,
+      // default:`Not assigned`
+      default: null,
     },
   },
   { timestamps: true }
