@@ -192,7 +192,7 @@ const UpdateBooking = () => {
                           >
                             Technician Name
                           </label>
-                          <Dropdown
+                          {/* <Dropdown
                             isOpen={dropdownOpen}
                             color="primary"
                             toggle={toggle}
@@ -225,6 +225,48 @@ const UpdateBooking = () => {
                                   );
                                 }
                                 return null; // Skip rendering if assigned_jobs >= 3
+                              })}
+                            </DropdownMenu>
+                          </Dropdown> */}
+
+                          <Dropdown
+                            isOpen={dropdownOpen}
+                            color="primary"
+                            toggle={toggle}
+                          >
+                            <DropdownToggle caret>
+                              {technicianName
+                                ? technicianName
+                                : "Select Technician"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              {allTechnicians.map((technician) => {
+                                if (
+                                  technician.work_in === data.location
+                                ) {
+                                  return (
+                                    <DropdownItem
+                                      key={technician._id}
+                                      value={`${technician._id},${technician.technician_name}`}
+                                      onClick={(e) => {
+                                        const [technicianId, technicianName] =
+                                          e.target.value.split(",");
+                                        if (technician.assigned_jobs >= 3) {
+                                          toast.error(
+                                            "This technician has too many assigned jobs!"
+                                          );
+                                        } else {
+                                          setTechnicianId(technicianId);
+                                          setTechnicianName(technicianName);
+                                        }
+                                      }}
+                                    >
+                                      {technician.technician_name} (
+                                      {technician.technician_specialize_in})
+                                    </DropdownItem>
+                                  );
+                                }
+                                return null;
                               })}
                             </DropdownMenu>
                           </Dropdown>
