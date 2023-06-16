@@ -17,10 +17,10 @@ import {
   Row,
   Col,
   Media,
-  //Dropdown,
-  //DropdownToggle,
-  //DropdownMenu,
-  //DropdownItem,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   CardImg,
 } from "reactstrap";
 
@@ -28,7 +28,6 @@ import {
 import Header from "components/Headers/Header.js";
 
 const CreateVacancy = () => {
-  
   const navigate = useNavigate();
 
   //const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +35,8 @@ const CreateVacancy = () => {
   const [image, setImage] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
   // form states
   const [technician_name, setTechnicianName] = useState("");
   const [technician_age, setTechnicianAge] = useState("");
@@ -43,6 +44,7 @@ const CreateVacancy = () => {
   const [technician_expertise, setTechnicianExpertise] = useState("");
   const [technician_picture_url, setTechnicianPictureUrl] = useState("");
   const [technician_specialize_in, setTechnicianSpecializeIn] = useState("");
+  const [work_in, setWorkIn] = useState("");
   const [error, setError] = useState(null);
 
   const handleImageUpload = (event) => {
@@ -78,19 +80,17 @@ const CreateVacancy = () => {
       });
   };
 
-
- const showErrorToast = (errorMessage) => {
-   toast.error(errorMessage, {
-     position: toast.POSITION.BOTTOM_RIGHT,
-     autoClose: 5000,
-     hideProgressBar: false,
-     closeOnClick: true,
-     pauseOnHover: true,
-     draggable: true,
-     progress: undefined,
-   });
- };
-
+  const showErrorToast = (errorMessage) => {
+    toast.error(errorMessage, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
@@ -104,6 +104,7 @@ const CreateVacancy = () => {
           technician_expertise: technician_expertise,
           technician_picture_url: image,
           technician_specialize_in: technician_specialize_in,
+          work_in: work_in,
         })
         .then((res) => {
           console.log("New Technician added", res.data);
@@ -113,10 +114,11 @@ const CreateVacancy = () => {
           setTechnicianExpertise("");
           setTechnicianPictureUrl("");
           setTechnicianSpecializeIn("");
+          setWorkIn("");
           setError(null);
-           toast.success("You Have successfully Added New Technician", {
-             position: toast.POSITION.TOP_CENTER,
-           });
+          toast.success("You Have successfully Added New Technician", {
+            position: toast.POSITION.TOP_CENTER,
+          });
           navigate("/admin/technicians");
         });
     } catch (error) {
@@ -267,6 +269,44 @@ const CreateVacancy = () => {
                           {uploadProgress > 0 && (
                             <div>Uploading... {uploadProgress}%</div>
                           )}
+                        </FormGroup>
+                      </Col>
+
+                      <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Work In
+                          </label>
+                          <Dropdown
+                            isOpen={dropdownOpen}
+                            color="primary"
+                            toggle={toggle}
+                          >
+                            <DropdownToggle caret>
+                              {work_in ? work_in : "Select Work Place"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem
+                                value="Auto Wash"
+                                onClick={(e) => {
+                                  setWorkIn(e.target.value);
+                                }}
+                              >
+                                Auto Wash
+                              </DropdownItem>
+                              <DropdownItem
+                                value="Auto Plaza"
+                                onClick={(e) => {
+                                  setWorkIn(e.target.value);
+                                }}
+                              >
+                                Auto Plaza
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
                         </FormGroup>
                       </Col>
                     </Row>

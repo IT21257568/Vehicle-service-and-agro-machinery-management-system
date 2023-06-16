@@ -47,8 +47,8 @@ const mongoose = require('mongoose');
         if (!vehicle_Number) {
             emptyFields.push('Vehicle Number');
         }else {
-            if (!/^[a-zA-Z0-9-]{1,8}$/.test(vehicle_Number)) {
-                emptyFields.push('Vehicle Number should contain a maximum of 7 alphanumeric characters or hyphens');
+            if (!/^[a-zA-Z0-9-]{1,9}$/.test(vehicle_Number)) {
+                emptyFields.push('Vehicle Number should contain a maximum of 8 alphanumeric characters or hyphens');
             }
         }
         if (!vehicle_Model) {

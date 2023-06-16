@@ -47,7 +47,11 @@ const ViewBookings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
-  const [bookings, setBookings] = useState([]);
+  // const [bookings, setBookings] = useState([]);
+  // const [technicianName, setTechnicianName] = useState("");
+  // const [technicianId, setTechnicianId] = useState("");
+  // const [allTechnicians, setAllTechnicians] = useState([]);
+  // const [data, setData] = useState([]);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -74,6 +78,7 @@ const ViewBookings = () => {
   }, []);
 
   const handleDelete = (id, bookingName) => {
+  const handleDelete = (id, tId) => {
     axios.delete(`/api/bookings/${id}`).then((res) => {
       console.log(res.data);
       setAllBookings((prevData) =>
@@ -84,6 +89,78 @@ const ViewBookings = () => {
         autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
       });
     });
+    const updateRecord = async () => {
+      const response = await axios.get(`/api/mTeams/${tId}`);
+      console.log(response.data);
+
+      // update vacancy applicants count
+      axios
+        .patch(`/api/mTeams/${tId}`, {
+          assigned_jobs: response.data.assigned_jobs - 1,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    updateRecord();
+  };
+
+//remove assigned technician
+  const removeAssign = async (id, tId) => {
+    try {
+      console.log("Ready to update");
+      await axios.patch(`/api/bookings/${id}`, {
+        technician_id: null,
+        technician_name: null,
+      });
+      setAllBookings((bookings) =>
+        bookings.map((booking) => {
+          if (booking._id === id) {
+            return {
+              ...booking,
+              technician_name: null,
+            };
+          }
+          return booking;
+        })
+      );
+
+        const updateRecord = async () => {
+          const response = await axios.get(`/api/mTeams/${tId}`);
+          console.log(response.data);
+
+          // update vacancy applicants count
+          axios
+            .patch(`/api/mTeams/${tId}`, {
+              assigned_jobs: response.data.assigned_jobs - 1,
+            })
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+
+        updateRecord();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleRemoveAssign = (booking) => {
+    removeAssign(booking._id, booking.technician_id)
+      .then(() => {
+        // Refresh the page without reloading
+        setAllBookings((bookings) => [...bookings]);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   const generateReport = () => {
@@ -92,7 +169,6 @@ const ViewBookings = () => {
     // Add the report title to the PDF
     doc.setFontSize(18);
     doc.text("Bookings Report", 14, 22);
-    
 
     // Add the current date to the PDF
     const date = moment().format("MMMM Do YYYY, h:mm:ss a");
@@ -132,9 +208,9 @@ const ViewBookings = () => {
     doc.autoTable({
       head: [columns],
       body: rows,
-      startY:40,
-      styles:{
-         fontSize: 10, // Set font size for table content
+      startY: 40,
+      styles: {
+        fontSize: 10, // Set font size for table content
         cellPadding: 3, // Set cell padding for table cells
       },
     });
@@ -170,7 +246,7 @@ const ViewBookings = () => {
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
-                      style={{color: '#ffa500'}}
+                      style={{ color: "#ffa500" }}
                       type="button"
                       onClick={() => navigate("/admin/create-bookings")}
                     >
@@ -209,6 +285,7 @@ const ViewBookings = () => {
                     <th scope="col">Location</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Assigned Technician</th>
                     <th scope="col">Date and Time</th>
                     <th scope="col">Notes</th>
                     <th scope="col">Actions</th>
@@ -224,7 +301,7 @@ const ViewBookings = () => {
                     .filter((booking) =>
                       booking.client_name
                         ?.toLowerCase()
-                        .includes(query.toLowerCase()) 
+                        .includes(query.toLowerCase())
                     )
                     .slice(0, visible)
                     .map((booking, index) => (
@@ -240,9 +317,39 @@ const ViewBookings = () => {
                         <td>{booking.location}</td>
                         <td> {booking.phone} </td>
                         <td> {booking.email} </td>
+                        <td>
+                          {" "}
+                          {booking.technician_name}{" "}
+                          {booking.technician_name === null && (
+                            <b>Not Assigned</b>
+                          )}{" "}
+                        </td>
                         <td> {booking.date_time} </td>
                         <td> {booking.special_note} </td>
                         <td>
+                          {booking.technician_name === null && (
+                            <Button
+                              size="sm"
+                              color="primary"
+                              onClick={() =>
+                                navigate(
+                                  `/admin/assign-technician/${booking._id}`
+                                )
+                              }
+                            >
+                              Assign Technician
+                            </Button>
+                          )}
+                          {booking.technician_name !== null && (
+                            <Button
+                              size="sm"
+                              color="danger"
+                              onClick={() => handleRemoveAssign(booking)}
+                            >
+                              Remove Assign
+                            </Button>
+                          )}
+
                           <Button
                             size="sm"
                             color="warning"
@@ -256,6 +363,9 @@ const ViewBookings = () => {
                             size="sm"
                             color="danger"
                             onClick={() => handleDelete(booking._id,booking.client_name)}
+                            onClick={() =>
+                              handleDelete(booking._id, booking.technician_id)
+                            }
                           >
                             Delete
                           </Button>

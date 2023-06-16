@@ -16,10 +16,10 @@ import {
   Col,
   Media,
   CardImg,
-  //Dropdown,
-  //DropdownToggle,
-  //DropdownMenu,
-  //DropdownItem,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
@@ -35,6 +35,10 @@ const UpdateTechnician = () => {
   //const [image, setImage] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
 
+   
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
   // form states
   const [data, setData] = useState([]);
   const [technician_name, SetTechnicianName] = useState("");
@@ -43,6 +47,7 @@ const UpdateTechnician = () => {
   const [technician_expertise, SetTechnicianExpertise] = useState("");
   const [technician_picture_url, SetTechnicianPictureUrl] = useState("");
   const [technician_specialize_in, setTechnicianSpecializeIn] = useState("");
+  const [work_in, setWorkIn] = useState("");  
 
   useEffect(() => {
     const getTechnician = async () => {
@@ -56,6 +61,7 @@ const UpdateTechnician = () => {
       SetTechnicianExpertise(res.data.technician_expertise);
       SetTechnicianPictureUrl(res.data.technician_picture_url);
       setTechnicianSpecializeIn(res.data.technician_specialize_in);
+      setWorkIn(res.data.work_in);
     };
     getTechnician();
   }, [id]);
@@ -106,6 +112,7 @@ const UpdateTechnician = () => {
         technician_expertise: technician_expertise,
         technician_picture_url: image,
         technician_specialize_in: technician_specialize_in,
+        work_in: work_in,
       })
       .then((res) => {
         console.log(res.data);
@@ -227,7 +234,7 @@ const UpdateTechnician = () => {
                               src={data.technician_picture_url}
                             />
                           </span>
-                           : Current Picture
+                          : Current Picture
                         </Media>
                         <br></br>
 
@@ -250,6 +257,43 @@ const UpdateTechnician = () => {
                         {uploadProgress > 0 && (
                           <div>Uploading... {uploadProgress}%</div>
                         )}
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup className="d-flex flex-column">
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-email"
+                          >
+                            Work In
+                          </label>
+                          <Dropdown
+                            isOpen={dropdownOpen}
+                            color="primary"
+                            toggle={toggle}
+                          >
+                            <DropdownToggle caret>
+                              {work_in ? work_in : "Select Work Place"}
+                            </DropdownToggle>
+                            <DropdownMenu>
+                              <DropdownItem
+                                value="Auto Wash"
+                                onClick={(e) => {
+                                  setWorkIn(e.target.value);
+                                }}
+                              >
+                                Auto Wash
+                              </DropdownItem>
+                              <DropdownItem
+                                value="Auto Plaza"
+                                onClick={(e) => {
+                                  setWorkIn(e.target.value);
+                                }}
+                              >
+                                Auto Plaza
+                              </DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
+                        </FormGroup>
                       </Col>
                     </Row>
                     <br></br>

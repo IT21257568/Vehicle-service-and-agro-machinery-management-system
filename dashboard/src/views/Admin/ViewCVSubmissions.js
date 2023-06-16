@@ -42,7 +42,7 @@ const ViewCVSubmissions = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
-  const [vacancy_applicants, setVacancyApplicants] = useState("");
+  // const [vacancy_applicants, setVacancyApplicants] = useState("");
 
   // set visible rows
   const [visible, setVisible] = useState(3);
@@ -78,7 +78,6 @@ const ViewCVSubmissions = () => {
 
     const updateRecord = async () => {
       const response = await axios.get(`/api/vacancies/${vId}`);
-      setVacancyApplicants(response.data.vacancy_applicants);
       console.log(response.data);
 
       // update vacancy applicants count

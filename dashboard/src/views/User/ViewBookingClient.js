@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 
 // reactstrap components
 import {
@@ -31,7 +31,7 @@ const ViewBookingClient = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
-  const [bookings, setBookings] = useState([]);
+  const { user } = useSelector((state) => state.auth);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -79,8 +79,8 @@ const ViewBookingClient = () => {
                 <Row className="align-items-center">
                   <div className="col">
                     <h3 className="mb-0">All Bookings</h3>
-                    </div>
-                    <Col xl="3">
+                  </div>
+                  <Col xl="3">
                     <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
@@ -90,7 +90,7 @@ const ViewBookingClient = () => {
                         onChange={(e) => setQuery(e.target.value)}
                       />
                     </InputGroup>
-                    </Col>
+                  </Col>
                 </Row>
               </CardHeader>
 
@@ -114,6 +114,7 @@ const ViewBookingClient = () => {
                     </tr>
                   )}
                   {allBookings
+                    .filter((booking) => booking.booking_user_id === user._id) // Add filter based on user ID
                     .filter((booking) =>
                       booking.service_type
                         ?.toLowerCase()
@@ -136,15 +137,16 @@ const ViewBookingClient = () => {
                         <td> {booking.date_time} </td>
                         <td> {booking.special_note} </td>
                         <td>
-                            
                           <Button
                             size="sm"
                             color="warning"
                             onClick={() =>
-                              navigate(`/user/update-client-booking/${booking._id}`)
+                              navigate(
+                                `/user/update-client-booking/${booking._id}`
+                              )
                             }
                           >
-                            Update 
+                            Update
                           </Button>
                           <Button
                             size="sm"

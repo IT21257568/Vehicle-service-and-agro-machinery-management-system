@@ -31,7 +31,10 @@ const createSparePart = async (req, res) => {
 
     //check if all fields are filled
     let emptyFields = [];
-
+    // if(!sp_name && !sp_image && !sp_price && !sp_discount && !sp_description && !sp_status) {
+    //     emptyFields.push('Fill all fields');
+    // }
+    
     if(!sp_name) {
         emptyFields.push('Spare Part Name');
     }
@@ -53,7 +56,6 @@ const createSparePart = async (req, res) => {
     if(emptyFields.length > 0) {
         return res.status(400).json({error: "The following fields are empty: ", emptyFields});
     }
-
     //add doc to db
     try{
         const sparePart = await SparePart.create({sp_name, sp_image,sp_price, sp_discount, sp_description, sp_status,});

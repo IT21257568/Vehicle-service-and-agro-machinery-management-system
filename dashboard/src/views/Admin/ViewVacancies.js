@@ -53,7 +53,7 @@ function CardRequiremnts({ vacancyd, onClose }) {
           value={vacancyd}
         />
         <br></br>
-        <Button size="sm" color="primary" onClick={onClose}>
+        <Button size="sm" color="danger" onClick={onClose}>
           Close
         </Button>
       </div>
@@ -69,15 +69,17 @@ const ViewVacancies = () => {
   const [error, setError] = useState(null);
   const [showCard, setShowCard] = useState(false);
   const [query, setQuery] = useState("");
+  const [expandedVacancyId, setExpandedVacancyId] = useState(null);
 
-  function handleViewClick() {
-    console.log("View button clicked");
-    setShowCard(true);
-  }
+const handleViewClick = (vacancyId) => {
+  console.log("View button clicked");
+  setExpandedVacancyId(vacancyId);
+};
 
   function handleCloseClick() {
     console.log("Close button clicked");
     setShowCard(false);
+    setExpandedVacancyId(null);
   }
   console.log("Rendering App component with showCard = ", showCard);
 
@@ -274,14 +276,29 @@ const ViewVacancies = () => {
                         <td>{vacancy.vacancy_count}</td>
                         <td>
                           <div className="container">
-                            <Button
+                            {/* <Button
                               size="sm"
                               color="primary"
-                              onClick={handleViewClick}
+                              onClick={() => setShowCard(!showCard)}
                             >
-                              View
+                              {showCard ? "Close" : "View"}
                             </Button>
                             {showCard && (
+                              <CardRequiremnts
+                                vacancyd={vacancy.vacancy_requirements}
+                                onClose={handleCloseClick}
+                              />
+                            )} */}
+                            {expandedVacancyId !== vacancy._id && (
+                              <Button
+                                size="sm"
+                                color="primary"
+                                onClick={() => handleViewClick(vacancy._id)}
+                              >
+                                View
+                              </Button>
+                            )}
+                            {expandedVacancyId === vacancy._id && (
                               <CardRequiremnts
                                 vacancyd={vacancy.vacancy_requirements}
                                 onClose={handleCloseClick}

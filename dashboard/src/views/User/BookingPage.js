@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
@@ -31,9 +32,9 @@ const CreateBookingClient = () => {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const toggle1 = () => setDropdownOpen1((prevState) => !prevState);
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   // form states
-  const [data, setData] = useState([]);
   const [location, setLocation] = useState("");
   const [serviceType, setServiceType] = useState("");
   const [clientName, setClientName] = useState("");
@@ -41,7 +42,7 @@ const CreateBookingClient = () => {
   const [phone, setPhone] = useState("");
   const [date_time, setDateTime] = useState("");
   const [specialNote, setSpecialNote] = useState("");
-  const [booking_user_id, setBookingUserId] = useState("4200efghid");
+  const [booking_user_id, setBookingUserId] = useState("");
   const [error, setError] = useState(null);
 
   const showErrorToast = (errorMessage) => {
@@ -56,6 +57,11 @@ const CreateBookingClient = () => {
     });
   };
 
+  //set current user id
+    useEffect(() => {
+      setBookingUserId(user._id);
+    }, [user._id]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
@@ -71,7 +77,6 @@ const CreateBookingClient = () => {
           date_time: date_time,
           special_note: specialNote,
           booking_user_id: booking_user_id,
-
         })
         .then((res) => {
           console.log("New booking added", res.data);
@@ -118,9 +123,7 @@ const CreateBookingClient = () => {
               </CardHeader>
               <CardBody>
                 <Form>
-                  <h6 className="heading-small text-muted mb-4">
-                    Client Name
-                  </h6>
+                  <h6 className="heading-small text-muted mb-4">Client Name</h6>
                   <div className="pl-lg-4">
                     <Row>
                       <Col lg="6">
@@ -189,8 +192,6 @@ const CreateBookingClient = () => {
                       </Col>
                     </Row>
                     <Row>
-
-
                       <Col lg="6">
                         <FormGroup className="d-flex flex-column">
                           <label
@@ -211,15 +212,15 @@ const CreateBookingClient = () => {
                               <DropdownItem
                                 value="Auto Wash"
                                 onClick={(e) => {
-                                    setLocation(e.target.value);
+                                  setLocation(e.target.value);
                                 }}
                               >
                                 Auto Wash
-                            </DropdownItem>
+                              </DropdownItem>
                               <DropdownItem
                                 value="Auto Plaza"
                                 onClick={(e) => {
-                                    setLocation(e.target.value);
+                                  setLocation(e.target.value);
                                 }}
                               >
                                 Auto Plaza
@@ -229,7 +230,6 @@ const CreateBookingClient = () => {
                         </FormGroup>
                       </Col>
 
-                     
                       <Col lg="4">
                         <FormGroup>
                           <label
@@ -274,7 +274,7 @@ const CreateBookingClient = () => {
                     </Row>
 
                     <Row>
-                    <Col lg="4">
+                      <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -289,13 +289,12 @@ const CreateBookingClient = () => {
                             placeholder="Date and Time"
                             type="date"
                             onChange={(e) => {
-                            setDateTime(e.target.value);
+                              setDateTime(e.target.value);
                             }}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
-
                   </div>
 
                   {/* Description */}

@@ -16,6 +16,7 @@ import UserRegister from "views/User/UserRegister";
 import CreateBooking from "views/Admin/CreateBookings";
 import ViewBookings from "views/Admin/ViewBookings";
 import UpdateBooking from "views/Admin/UpdateBooking";
+import AssignTechnican from "views/Admin/AssignTechnician";
 
 import CreatePromotion from "views/Admin/CreatePromotion";
 import ViewPromotions from "views/Admin/ViewPromotions";
@@ -255,6 +256,13 @@ const routes = [
     name: "Update Bookings",
     icon: "ni ni-ruler-pencil text-purple",
     component: UpdateBooking,
+    layout: "/admin",
+  },
+  {
+    path: "/assign-technician/:id",
+    name: "Update Bookings",
+    icon: "ni ni-ruler-pencil text-purple",
+    component: AssignTechnican,
     layout: "/admin",
   },
   //Janindu user views

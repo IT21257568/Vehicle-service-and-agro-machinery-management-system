@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // reactstrap components
 import {
@@ -57,6 +58,8 @@ const UpdateFAQ = () => {
 
   const handleUpdate = async (e) => {
     console.log("FAQ updated");
+    toast.success("FAQ updated successfully.")
+
     axios
       .patch(`/api/faqs/${id}`, {
         faq_question: faqQuestion,
