@@ -28,6 +28,10 @@ const mTeamSchema = new Schema(
       type: String,
       required: true,
     },
+    work_in: {
+      type: String,
+      required: true,
+    },
     assigned_jobs: {
       type: Number,
       default: 0,

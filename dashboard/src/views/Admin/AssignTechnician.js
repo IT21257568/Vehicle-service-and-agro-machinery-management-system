@@ -76,7 +76,7 @@ const UpdateBooking = () => {
   }, []);
 
   const handleUpdate = () => {
-    console.log("lol");
+   
 
     axios
       .patch(`/api/bookings/${id}`, {
@@ -204,7 +204,10 @@ const UpdateBooking = () => {
                             </DropdownToggle>
                             <DropdownMenu>
                               {allTechnicians.map((technician) => {
-                                if (technician.assigned_jobs < 3) {
+                                if (
+                                  technician.assigned_jobs < 3 &&
+                                  technician.work_in === data.location
+                                ) {
                                   return (
                                     <DropdownItem
                                       key={technician._id}

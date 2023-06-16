@@ -33,7 +33,6 @@ import {
   Button,
   //Chip,
   Col,
-  
 } from "reactstrap";
 
 // core components
@@ -45,10 +44,11 @@ const ViewBookings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
-  const [bookings, setBookings] = useState([]);
-  const [technicianName, setTechnicianName] = useState("");
-  const [technicianId, setTechnicianId] = useState("");
-  const [allTechnicians, setAllTechnicians] = useState([]);
+  // const [bookings, setBookings] = useState([]);
+  // const [technicianName, setTechnicianName] = useState("");
+  // const [technicianId, setTechnicianId] = useState("");
+  // const [allTechnicians, setAllTechnicians] = useState([]);
+  // const [data, setData] = useState([]);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -74,15 +74,85 @@ const ViewBookings = () => {
     fetchAllBookings();
   }, []);
 
- 
-
-  const handleDelete = (id) => {
+  const handleDelete = (id, tId) => {
     axios.delete(`/api/bookings/${id}`).then((res) => {
       console.log(res.data);
       setAllBookings((prevData) =>
         prevData.filter((booking) => booking._id !== id)
       );
     });
+    const updateRecord = async () => {
+      const response = await axios.get(`/api/mTeams/${tId}`);
+      console.log(response.data);
+
+      // update vacancy applicants count
+      axios
+        .patch(`/api/mTeams/${tId}`, {
+          assigned_jobs: response.data.assigned_jobs - 1,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    updateRecord();
+  };
+
+//remove assigned technician
+  const removeAssign = async (id, tId) => {
+    try {
+      console.log("Ready to update");
+      await axios.patch(`/api/bookings/${id}`, {
+        technician_id: null,
+        technician_name: null,
+      });
+      setAllBookings((bookings) =>
+        bookings.map((booking) => {
+          if (booking._id === id) {
+            return {
+              ...booking,
+              technician_name: null,
+            };
+          }
+          return booking;
+        })
+      );
+
+        const updateRecord = async () => {
+          const response = await axios.get(`/api/mTeams/${tId}`);
+          console.log(response.data);
+
+          // update vacancy applicants count
+          axios
+            .patch(`/api/mTeams/${tId}`, {
+              assigned_jobs: response.data.assigned_jobs - 1,
+            })
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        };
+
+        updateRecord();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleRemoveAssign = (booking) => {
+    removeAssign(booking._id, booking.technician_id)
+      .then(() => {
+        // Refresh the page without reloading
+        setAllBookings((bookings) => [...bookings]);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   const generateReport = () => {
@@ -239,11 +309,17 @@ const ViewBookings = () => {
                         <td>{booking.location}</td>
                         <td> {booking.phone} </td>
                         <td> {booking.email} </td>
-                        <td> {booking.technician_name} </td>
+                        <td>
+                          {" "}
+                          {booking.technician_name}{" "}
+                          {booking.technician_name === null && (
+                            <b>Not Assigned</b>
+                          )}{" "}
+                        </td>
                         <td> {booking.date_time} </td>
                         <td> {booking.special_note} </td>
                         <td>
-                          {booking.technician_name === "Not assigned" && (
+                          {booking.technician_name === null && (
                             <Button
                               size="sm"
                               color="primary"
@@ -254,6 +330,15 @@ const ViewBookings = () => {
                               }
                             >
                               Assign Technician
+                            </Button>
+                          )}
+                          {booking.technician_name !== null && (
+                            <Button
+                              size="sm"
+                              color="danger"
+                              onClick={() => handleRemoveAssign(booking)}
+                            >
+                              Remove Assign
                             </Button>
                           )}
 
@@ -269,7 +354,9 @@ const ViewBookings = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(booking._id)}
+                            onClick={() =>
+                              handleDelete(booking._id, booking.technician_id)
+                            }
                           >
                             Delete
                           </Button>
