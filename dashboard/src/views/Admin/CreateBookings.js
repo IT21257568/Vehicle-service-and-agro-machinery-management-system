@@ -46,7 +46,7 @@ const CreateBooking = () => {
 
   const showErrorToast = (errorMessage) => {
     toast.error(errorMessage, {
-      position: toast.POSITION.BOTTOM_RIGHT,
+      position: toast.POSITION.TOP_RIGHT,
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -347,7 +347,7 @@ const CreateBooking = () => {
                           setSpecialNote(e.target.value);
                         }}
                       />
-                      {error && (
+                      {/* {error && (
                         <div
                           style={{
                             backgroundColor: "#F46D75",
@@ -368,7 +368,7 @@ const CreateBooking = () => {
                             <b>{error}</b>
                           </span>
                         </div>
-                      )}
+                      )} */}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create

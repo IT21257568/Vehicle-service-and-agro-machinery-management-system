@@ -7,6 +7,9 @@ import moment from "moment";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // reactstrap components
 import {
   Badge,
@@ -70,12 +73,16 @@ const ViewBookings = () => {
     fetchAllBookings();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, bookingName) => {
     axios.delete(`/api/bookings/${id}`).then((res) => {
       console.log(res.data);
       setAllBookings((prevData) =>
         prevData.filter((booking) => booking._id !== id)
       );
+      toast.success(`"${bookingName}" Booking deleted successfully`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+      });
     });
   };
 
@@ -248,7 +255,7 @@ const ViewBookings = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(booking._id)}
+                            onClick={() => handleDelete(booking._id,booking.client_name)}
                           >
                             Delete
                           </Button>
