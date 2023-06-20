@@ -70,7 +70,7 @@ const AgroProductsPage = () => {
     <>
       <AgroProductHeader />
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7" fluid style={{marginBottom: '3rem'}}>
         <Row>
           <div className="col">
             <Card className="shadow" color="lighter">
@@ -82,41 +82,6 @@ const AgroProductsPage = () => {
                   <div className="col">
                     <h3 className="mb-0">All Agro Products</h3>
                   </div>
-                  <Col xl = "3">
-                    <label
-                            className="form-control-label mr-2"
-                            htmlFor="input-email"
-                          >
-                            Sort By: 
-                          </label>
-                          <Dropdown
-                            isOpen={dropdownOpen}
-                            color="primary"
-                            toggle={toggle}
-                          >
-                            <DropdownToggle caret>
-                              {faqCategory ? faqCategory : "Select Category"}
-                            </DropdownToggle>
-                            <DropdownMenu>
-                              <DropdownItem
-                                value="Price Low to High"
-                                onClick={(e) => {
-                                  setFaqCategory(e.target.value);
-                                }}
-                              >
-                                Price Low to High
-                              </DropdownItem>
-                              <DropdownItem
-                                value="Price High to Low"
-                                onClick={(e) => {
-                                  setFaqCategory(e.target.value);
-                                }}
-                              >
-                                Price High to Low
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </Dropdown>
-                  </Col>
                   <div className="col text-right">
                   {/* <Form className="mt-4 mb-3 d-md-none"> */}
                   <InputGroup className="input-group-rounded input-group-merge">
@@ -137,7 +102,7 @@ const AgroProductsPage = () => {
                   </div>
                 </Row>
               </CardHeader>
-              <div className="pl-lg-5">
+              <div className="pl-lg-5" style={{marginLeft: '5rem'}}>
                 <Row>
                   {allAgroProducts
                   .filter((agroProduct) =>

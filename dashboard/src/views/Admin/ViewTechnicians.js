@@ -39,7 +39,6 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 
-
 /* //card
   function CardRatings({ ratings, onClose }) {
     return (
@@ -55,10 +54,7 @@ import Header from "components/Headers/Header.js";
     );
   } */
 
-
 const ViewTechnicians = () => {
- 
-
   // states
   const [allTechnicians, setAllTechnicians] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -66,9 +62,7 @@ const ViewTechnicians = () => {
   const [showCard, setShowCard] = useState(false);
   const [query, setQuery] = useState("");
 
-  
-
- /*  function handleViewClick() {
+  /*  function handleViewClick() {
     console.log("View button clicked");
     setShowCard(true);
   }
@@ -79,16 +73,14 @@ const ViewTechnicians = () => {
   }
   console.log("Rendering App component with showCard = ", showCard); */
 
- 
-
   // set visible rows
   const [visible, setVisible] = useState(3);
 
   const navigate = useNavigate();
 
- const showMoreItems = () => {
-   setVisible((prevValue) => prevValue + 3);
- };
+  const showMoreItems = () => {
+    setVisible((prevValue) => prevValue + 3);
+  };
 
   // retrieve all technicians from database
   useEffect(() => {
@@ -201,6 +193,9 @@ const ViewTechnicians = () => {
                           <CardText className="mb-1 text-muted" tag="h4">
                             Year of Experience :{" "}
                             {technician.technician_experiences} Years
+                          </CardText>
+                          <CardText className="mb-1 text-muted" tag="h4">
+                            Work Place : {technician.work_in}
                           </CardText>
                           <CardText className="mb-2 text-muted" tag="h4">
                             Expertice :

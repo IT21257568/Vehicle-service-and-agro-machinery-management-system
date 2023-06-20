@@ -27,9 +27,7 @@ const Header = () => {
         style={{
           minHeight: "500px",
           backgroundImage:
-            "url(" +
-            require("../../assets/img/theme/wheelmasterImg1.jpg") +
-            ")",
+            "url(" + require("../../assets/img/theme/dash-header.jpg") + ")",
           backgroundSize: "100% 110%",
         }}
       >

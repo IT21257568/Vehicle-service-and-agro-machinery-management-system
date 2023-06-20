@@ -48,35 +48,35 @@ MERN is one of several variations of the MEAN stack (MongoDB Express Angular Nod
 ## Developing Team
    1. IT21259470 
    Pehesarani W.K.A
-   0760589370
+   
 
    2. IT21259302
    Narasinghe N.M.N.N
-   0776223206
+   
 
    3. IT21259098
    Dilshan K.H.T
-   0702793307
+   
 
    4. IT21263262
    Abeykoon A.M.P.N
-   0760598525
+   
 
    5. IT21257568
    Panangala P.A.D.S.S
-   0770618812
+   
 
    6. IT21264016
    Helapalla K.O.P.S
-   0775520022
+   
 
    7. IT21310478
    Saranasuriya N.V
-   0765944049
+   
    
    8. IT21258626
    Munasinghe J.R 
-   0768472460
+   
    
    
    

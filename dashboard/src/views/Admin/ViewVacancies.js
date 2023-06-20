@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -51,7 +53,7 @@ function CardRequiremnts({ vacancyd, onClose }) {
           value={vacancyd}
         />
         <br></br>
-        <Button size="sm" color="primary" onClick={onClose}>
+        <Button size="sm" color="danger" onClick={onClose}>
           Close
         </Button>
       </div>
@@ -67,15 +69,17 @@ const ViewVacancies = () => {
   const [error, setError] = useState(null);
   const [showCard, setShowCard] = useState(false);
   const [query, setQuery] = useState("");
+  const [expandedVacancyId, setExpandedVacancyId] = useState(null);
 
-  function handleViewClick() {
-    console.log("View button clicked");
-    setShowCard(true);
-  }
+const handleViewClick = (vacancyId) => {
+  console.log("View button clicked");
+  setExpandedVacancyId(vacancyId);
+};
 
   function handleCloseClick() {
     console.log("Close button clicked");
     setShowCard(false);
+    setExpandedVacancyId(null);
   }
   console.log("Rendering App component with showCard = ", showCard);
 
@@ -104,12 +108,17 @@ const ViewVacancies = () => {
     fetchAllVacancies();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, vacancyName) => {
     axios.delete(`/api/vacancies/${id}`).then((res) => {
       console.log(res.data);
       setAllVacancies((prevData) =>
         prevData.filter((vacancy) => vacancy._id !== id)
       );
+
+      toast.success(`"${vacancyName}" Vacancy deleted successfully`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+      });
     });
   };
 
@@ -156,7 +165,7 @@ const ViewVacancies = () => {
       body: rows,
       startY: 40,
       styles: {
-        fontSize: 12, // Set font size for table content
+        fontSize: 10, // Set font size for table content
         cellPadding: 3, // Set cell padding for table cells
         
       },
@@ -196,23 +205,6 @@ const ViewVacancies = () => {
                       className="btn-icon btn-3"
                       color="success"
                       type="button"
-                      onClick={generateReport}
-                    >
-                      <span
-                        className="btn-inner--icon"
-                        style={{ width: "20px" }}
-                      >
-                        <i className="ni ni-folder-17" />
-                      </span>
-                      <span className="btn-inner--text">Generate Report</span>
-                    </Button>
-                  </div>
-
-                  <div className="col text-right">
-                    <Button
-                      className="btn-icon btn-3"
-                      color="success"
-                      type="button"
                       onClick={() => navigate("/admin/create-vacancy")}
                     >
                       <span
@@ -223,7 +215,24 @@ const ViewVacancies = () => {
                       </span>
                       <span className="btn-inner--text">Add</span>
                     </Button>
+
+                    <Button
+                      className="btn-icon btn-3"
+                      style={{ color: "#ffa500" }}
+                      type="button"
+                      onClick={generateReport}
+                    >
+                      <span
+                        className="btn-inner--icon"
+                        style={{ width: "20px", color: "#ffa500" }}
+                      >
+                        <i className="ni ni-folder-17" />
+                      </span>
+                      <span className="btn-inner--text">Generate Report</span>
+                    </Button>
                   </div>
+
+                  {/* <div className="col text-right"></div> */}
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
@@ -267,14 +276,29 @@ const ViewVacancies = () => {
                         <td>{vacancy.vacancy_count}</td>
                         <td>
                           <div className="container">
-                            <Button
+                            {/* <Button
                               size="sm"
                               color="primary"
-                              onClick={handleViewClick}
+                              onClick={() => setShowCard(!showCard)}
                             >
-                              View
+                              {showCard ? "Close" : "View"}
                             </Button>
                             {showCard && (
+                              <CardRequiremnts
+                                vacancyd={vacancy.vacancy_requirements}
+                                onClose={handleCloseClick}
+                              />
+                            )} */}
+                            {expandedVacancyId !== vacancy._id && (
+                              <Button
+                                size="sm"
+                                color="primary"
+                                onClick={() => handleViewClick(vacancy._id)}
+                              >
+                                View
+                              </Button>
+                            )}
+                            {expandedVacancyId === vacancy._id && (
                               <CardRequiremnts
                                 vacancyd={vacancy.vacancy_requirements}
                                 onClose={handleCloseClick}
@@ -310,7 +334,9 @@ const ViewVacancies = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(vacancy._id)}
+                            onClick={() =>
+                              handleDelete(vacancy._id, vacancy.vacancy_title)
+                            }
                           >
                             Delete
                           </Button>
