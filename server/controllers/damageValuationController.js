@@ -45,12 +45,17 @@ const mongoose = require('mongoose');
             emptyFields.push('Customer Name');
         }
         if (!vehicle_Number) {
-            emptyFields.push('Vehicle Number');
-        }else {
-            if (!/^[a-zA-Z0-9-]{1,9}$/.test(vehicle_Number)) {
-                emptyFields.push('Vehicle Number should contain a maximum of 8 alphanumeric characters or hyphens');
-            }
+          emptyFields.push("Vehicle Number");
+        } else {
+          const vehicleNumberPattern =
+            /^([a-zA-Z]{3}|[a-zA-Z]{2}|\d{2}|\d{3})-\d{4}$/;
+          if (!vehicleNumberPattern.test(vehicle_Number)) {
+            emptyFields.push(
+              "Vehicle Number should have the format XXX-NNNN, XX-NNNN, NN-NNNN, or NNN-NNNN"
+            );
+          }
         }
+
         if (!vehicle_Model) {
             emptyFields.push('Vehicle Type');
         }
