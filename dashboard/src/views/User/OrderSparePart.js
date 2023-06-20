@@ -96,7 +96,7 @@ const OrderSparePart = () => {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`${fields}`);
+        setError(`Please fill in all fields: ${fields}`);
       } else {
         console.log(error);
       }
@@ -108,7 +108,7 @@ const OrderSparePart = () => {
     <>
       <SparePartHeader/>
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7" fluid style={{marginBottom: '3rem'}}>
         <Row>
           <Col className="order-xl-1" xl="12">
             <Card className="bg-secondary shadow">

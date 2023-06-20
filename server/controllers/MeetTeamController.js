@@ -32,6 +32,7 @@ const ceatemTeam = async(req, res) => {
       technician_expertise,
       technician_picture_url,
       technician_specialize_in,
+      work_in,
     } = req.body;
 
     let emptyFields = [];
@@ -53,6 +54,8 @@ const ceatemTeam = async(req, res) => {
       emptyFields.push("Technician Image");
     } if (!technician_specialize_in) {
       emptyFields.push("Specialize In");
+    }if (!work_in) {
+      emptyFields.push("Worked In");
     }
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all fields:', emptyFields });
@@ -67,6 +70,7 @@ const ceatemTeam = async(req, res) => {
           technician_expertise,
           technician_picture_url,
           technician_specialize_in,
+          work_in,
         });
         res.status(200).json({ mTeam });
     } catch (error) {

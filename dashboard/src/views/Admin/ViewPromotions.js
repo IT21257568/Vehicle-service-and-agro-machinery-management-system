@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { toast } from "react-toastify";
 
 // reactstrap components
 import {
@@ -72,6 +73,7 @@ const ViewPromotions = () => {
   const handleDelete = (id) => {
     axios.delete(`/api/promotions/${id}`).then((res) => {
       console.log(res.data);
+      toast.success("Promotion deleted successfully");
       setAllPromotions((prevData) =>
         prevData.filter((promotion) => promotion._id !== id)
       );

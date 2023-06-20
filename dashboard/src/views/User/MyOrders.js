@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import { useSelector } from "react-redux";
+
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -36,6 +38,7 @@ import {
 import Header from "components/Headers/MyOrdersHeader";
 
 const MyOrders = () => {
+  const { user } = useSelector((state) => state.auth);
   // states
   const [sparepart_user_id, setSparePartUserId] = useState("4200");
   const [allSparePartOrders, setAllSparePartOrders] = useState([]);
@@ -58,7 +61,7 @@ const MyOrders = () => {
     setVisibleAgro((prevValue) => prevValue + 3);
   };
 
-  // retrieve all agro product orders from database
+  // retrieve all spare parts orders from database
   useEffect(() => {
     const fetchAllSparePartOrders = async () => {
       try {
@@ -124,7 +127,7 @@ const MyOrders = () => {
       "September",
       "October",
       "November",
-      "December"
+      "December",
     ];
     const hours = date.getHours();
     const minutes = date.getMinutes();
@@ -137,171 +140,208 @@ const MyOrders = () => {
     return formattedDate;
   }
 
-    return (
-      <>
-        <Header/>
-        {/* Page content */}
-        <Container className="mt--7" fluid style={{marginBottom: '3rem'}}>
-          <Row>
-            <Col className="order-xl-2 mb-5 mb-xl-0" xl="6">
+  return (
+    <>
+      <Header />
+      {/* Page content */}
+      <Container className="mt--7" fluid style={{ marginBottom: "3rem" }}>
+        <Row>
+          <Col className="order-xl-2 mb-5 mb-xl-0" xl="6">
             <Row>
-          <div className="col">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Ordered Spare parts</h3>
-                  </div>
-                  {/* <Col xl="2"> */}
-                    <InputGroup className="input-group-rounded input-group-merge"
-                      style={{width: '25rem'}}>
-                      <Input
-                        aria-label="Search"
-                        className="form-control-rounded form-control-prepended"
-                        placeholder="Search by product name"
-                        type="search"
-                        onChange={(e) => setQuery(e.target.value)}
-                      />
-                    </InputGroup>
-                  {/* </Col> */}
-                </Row>
-              </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Product Price</th>
-                    <th scope="col">Buying Option</th>
-                    <th scope="col">Ordered Date</th>
-                    <th scope="col">Updated Date</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {isLoading && (
-                    <tr>
-                      <td>Loading...</td>
-                    </tr>
-                  )}
-                  {allSparePartOrders
-                    .filter((order) =>
-                      order.p_name?.toLowerCase().includes(query.toLowerCase())
-                    )
-                    .slice(0, visible)
-                    .map((order, index) => (
-                      <tr key={order._id}>
-                        <th scope="row">
-                          <span className="mb-0 text-sm">{order.p_name}</span>
-                        </th>
-                        <td><span className="mb-0 text-sm">{order.p_price}</span></td>
-                        <td><span className="mb-0 text-sm">{order.customer_buying_option}</span></td>
-                        <td>{formatDateTime(order.createdAt)}</td>
-                        <td>{formatDateTime(order.updatedAt)}</td>
-                        <td>
-                          <Button
-                            size="sm"
-                            color="danger"
-                            onClick={() => handleDeleteSparePart(order._id)}
-                          >
-                            Delete
-                          </Button>
-                        </td>
+              <div className="col">
+                <Card className="shadow">
+                  <CardHeader className="border-0">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        <h3 className="mb-0">Ordered Spare parts</h3>
+                      </div>
+                      {/* <Col xl="2"> */}
+                      <InputGroup
+                        className="input-group-rounded input-group-merge"
+                        style={{ width: "25rem" }}
+                      >
+                        <Input
+                          aria-label="Search"
+                          className="form-control-rounded form-control-prepended"
+                          placeholder="Search by product name"
+                          type="search"
+                          onChange={(e) => setQuery(e.target.value)}
+                        />
+                      </InputGroup>
+                      {/* </Col> */}
+                    </Row>
+                  </CardHeader>
+                  <Table className="align-items-center table-flush" responsive>
+                    <thead className="thead-light">
+                      <tr>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Product Price</th>
+                        <th scope="col">Buying Option</th>
+                        <th scope="col">Ordered Date</th>
+                        <th scope="col">Updated Date</th>
+                        <th scope="col">Actions</th>
                       </tr>
-                    ))}
-                </tbody>
-              </Table>
-              <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
-                {visible < allSparePartOrders.length && (
-                  <Button color="info" size="sm" onClick={showMoreItemsSpareParts}>
-                    Load More
-                  </Button>
-                )}
-              </CardFooter>
-            </Card>
-          </div>
-        </Row>
-            </Col>
-            <Col className="order-xl-1" xl="6">
+                    </thead>
+                    <tbody>
+                      {isLoading && (
+                        <tr>
+                          <td>Loading...</td>
+                        </tr>
+                      )}
+                      {allSparePartOrders
+                        .filter((order) =>
+                          order.p_name
+                            ?.toLowerCase()
+                            .includes(query.toLowerCase())
+                        )
+                        .slice(0, visible)
+                        .map((order, index) => (
+                          <tr key={order._id}>
+                            <th scope="row">
+                              <span className="mb-0 text-sm">
+                                {order.p_name}
+                              </span>
+                            </th>
+                            <td>
+                              <span className="mb-0 text-sm">
+                                {order.p_price}
+                              </span>
+                            </td>
+                            <td>
+                              <span className="mb-0 text-sm">
+                                {order.customer_buying_option}
+                              </span>
+                            </td>
+                            <td>{formatDateTime(order.createdAt)}</td>
+                            <td>{formatDateTime(order.updatedAt)}</td>
+                            <td>
+                              <Button
+                                size="sm"
+                                color="danger"
+                                onClick={() => handleDeleteSparePart(order._id)}
+                              >
+                                Delete
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </Table>
+                  <CardFooter
+                    className="col text-right"
+                    style={{ marginTop: "1.8rem" }}
+                  >
+                    {visible < allSparePartOrders.length && (
+                      <Button
+                        color="info"
+                        size="sm"
+                        onClick={showMoreItemsSpareParts}
+                      >
+                        Load More
+                      </Button>
+                    )}
+                  </CardFooter>
+                </Card>
+              </div>
+            </Row>
+          </Col>
+          <Col className="order-xl-1" xl="6">
             <Row>
-          <div className="col">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Ordered Agro Products</h3>
-                  </div>
-                  {/* <Col xl="2"> */}
-                    <InputGroup className="input-group-rounded input-group-merge"
-                      style={{width: '25rem'}}>
-                      <Input
-                        aria-label="Search"
-                        className="form-control-rounded form-control-prepended"
-                        placeholder="Search by product name"
-                        type="search"
-                        onChange={(e) => setQuery(e.target.value)}
-                      />
-                    </InputGroup>
-                  {/* </Col> */}
-                </Row>
-              </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Product Price</th>
-                    <th scope="col">Ordered Date</th>
-                    <th scope="col">Updated Date</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {isLoading && (
-                    <tr>
-                      <td>Loading...</td>
-                    </tr>
-                  )}
-                  {allAgroProductOrders
-                    .filter((order) =>
-                      order.p_name?.toLowerCase().includes(query.toLowerCase())
-                    )
-                    .slice(0, visible)
-                    .map((order, index) => (
-                      <tr key={order._id}>
-                        <th scope="row">
-                          <span className="mb-0 text-sm">{order.p_name}</span>
-                        </th>
-                        <td><span className="mb-0 text-sm">{order.p_price}</span></td>
-                        <td>{formatDateTime(order.createdAt)}</td>
-                        <td>{formatDateTime(order.updatedAt)}</td>
-                        <td>
-                          <Button
-                            size="sm"
-                            color="danger"
-                            onClick={() => handleDeleteAgro(order._id)}
-                          >
-                            Delete
-                          </Button>
-                        </td>
+              <div className="col">
+                <Card className="shadow">
+                  <CardHeader className="border-0">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        <h3 className="mb-0">Ordered Agro Products</h3>
+                      </div>
+                      {/* <Col xl="2"> */}
+                      <InputGroup
+                        className="input-group-rounded input-group-merge"
+                        style={{ width: "25rem" }}
+                      >
+                        <Input
+                          aria-label="Search"
+                          className="form-control-rounded form-control-prepended"
+                          placeholder="Search by product name"
+                          type="search"
+                          onChange={(e) => setQuery(e.target.value)}
+                        />
+                      </InputGroup>
+                      {/* </Col> */}
+                    </Row>
+                  </CardHeader>
+                  <Table className="align-items-center table-flush" responsive>
+                    <thead className="thead-light">
+                      <tr>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Product Price</th>
+                        <th scope="col">Ordered Date</th>
+                        <th scope="col">Updated Date</th>
+                        <th scope="col">Actions</th>
                       </tr>
-                    ))}
-                </tbody>
-              </Table>
-              <CardFooter className="col text-right" style={{marginTop: '1.8rem'}}>
-                {visibleAgro < allAgroProductOrders.length && (
-                  <Button color="info" size="sm" onClick={showMoreItemsAgro}>
-                    Load More
-                  </Button>
-                )}
-              </CardFooter>
-            </Card>
-          </div>
+                    </thead>
+                    <tbody>
+                      {isLoading && (
+                        <tr>
+                          <td>Loading...</td>
+                        </tr>
+                      )}
+                      {allAgroProductOrders
+                        .filter((order) =>
+                          order.p_name
+                            ?.toLowerCase()
+                            .includes(query.toLowerCase())
+                        )
+                        .slice(0, visible)
+                        .map((order, index) => (
+                          <tr key={order._id}>
+                            <th scope="row">
+                              <span className="mb-0 text-sm">
+                                {order.p_name}
+                              </span>
+                            </th>
+                            <td>
+                              <span className="mb-0 text-sm">
+                                {order.p_price}
+                              </span>
+                            </td>
+                            <td>{formatDateTime(order.createdAt)}</td>
+                            <td>{formatDateTime(order.updatedAt)}</td>
+                            <td>
+                              <Button
+                                size="sm"
+                                color="danger"
+                                onClick={() => handleDeleteAgro(order._id)}
+                              >
+                                Delete
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </Table>
+                  <CardFooter
+                    className="col text-right"
+                    style={{ marginTop: "1.8rem" }}
+                  >
+                    {visibleAgro < allAgroProductOrders.length && (
+                      <Button
+                        color="info"
+                        size="sm"
+                        onClick={showMoreItemsAgro}
+                      >
+                        Load More
+                      </Button>
+                    )}
+                  </CardFooter>
+                </Card>
+              </div>
+            </Row>
+          </Col>
         </Row>
-        </Col>
-        </Row>
-        </Container>
-      </>
-    );
-  };
-  
-  export default MyOrders;
-  
+      </Container>
+    </>
+  );
+};
+
+export default MyOrders;

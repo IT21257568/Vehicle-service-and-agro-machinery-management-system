@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // reactstrap components
 import {
@@ -91,12 +93,19 @@ const ViewGeneralIssues = () => {
     fetchAllGeneralIssues();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id,cusNIC) => {
     axios.delete(`/api/generalIssues/${id}`).then((res) => {
       console.log(res.data);
       setAllGeneralIssues((prevData) =>
         prevData.filter((generalissues) => generalissues._id !== id)
       );
+
+      toast.success(`"${cusNIC}" Issue deleted successfully`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000, // Optional: Auto-close the toast after 3 seconds
+      });
+
+
     });
   };
   
@@ -205,7 +214,7 @@ const ViewGeneralIssues = () => {
                           <Button
                             size="sm"
                             color="danger"
-                            onClick={() => handleDelete(generalIssue._id)}
+                            onClick={() => handleDelete(generalIssue._id,generalIssue.customer_NIC)}
                           >
                             Delete
                           </Button>

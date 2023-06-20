@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // reactstrap components
 import {
@@ -103,6 +104,7 @@ const ViewFAQs = () => {
   const handleDelete = (id) => {
     axios.delete(`/api/faqs/${id}`).then((res) => {
       console.log(res.data);
+      toast.success("FAQ deleted successfully");
       setAllFaqs((prevData) => prevData.filter((faq) => faq._id !== id));
     });
   };

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 // reactstrap components
 import {
@@ -80,6 +81,18 @@ const CreateRepairjob = () => {
       });
   };
 
+  const showErrorToast = (errorMessage) => {
+    toast.error(errorMessage, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
 
@@ -106,13 +119,18 @@ const CreateRepairjob = () => {
           setRequiredParts("");
           setImageUrl("");
           setError(null);
+          toast.success("You have successfully added a new Repair Job", {
+            position: toast.POSITION.TOP_CENTER,
+          });
           navigate("/admin/view-repair-jobs");
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        const toastMessage = `Please fill in all fields: ${fields}`;
+        setError(toastMessage);
+        showErrorToast(toastMessage);
       } else {
         console.log(error);
       }
@@ -121,6 +139,7 @@ const CreateRepairjob = () => {
 
   return (
     <>
+    <ToastContainer />
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -243,7 +262,7 @@ const CreateRepairjob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Enter Customer NIC"
-                                type="text"
+                                type="number"
                                 onChange={(e) => {
                                 setCustomerId(e.target.value);
                                 }}
@@ -283,7 +302,7 @@ const CreateRepairjob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Enter Customer Email"
-                                type="text"
+                                type="email"
                                 onChange={(e) => {
                                 setCustomerEmail(e.target.value);
                                 }}
@@ -302,7 +321,7 @@ const CreateRepairjob = () => {
                                 className="form-control-alternative"
                                 id="input-username"
                                 placeholder="Enter Estimated Cost"
-                                type="text"
+                                type="number"
                                 onChange={(e) => {
                                 setEstimatedCost(e.target.value);
                                 }}
@@ -350,7 +369,7 @@ const CreateRepairjob = () => {
                           setRequiredParts(e.target.value);
                         }}
                       />
-                      {error && (
+                      {/* {error && (
                         <div
                           style={{
                             backgroundColor: "#ffffff",
@@ -373,7 +392,7 @@ const CreateRepairjob = () => {
                             <b>{error}</b>
                           </span>
                         </div>
-                      )}
+                      )} */}
                     </FormGroup>
                     <Button color="primary" onClick={handleSubmit}>
                       Create

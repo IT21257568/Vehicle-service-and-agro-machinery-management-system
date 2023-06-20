@@ -23,6 +23,7 @@ import {
 
 // core components
 import Header from "components/Headers/Header.js";
+import { toast } from "react-toastify";
 
 const CreateBooking = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -42,6 +43,18 @@ const CreateBooking = () => {
   const [specialNote, setSpecialNote] = useState("");
   const [booking_user_id, setBookingUserId] = useState("4200efghid");
   const [error, setError] = useState(null);
+
+  const showErrorToast = (errorMessage) => {
+    toast.error(errorMessage, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page refresh
@@ -68,18 +81,25 @@ const CreateBooking = () => {
           setDateTime("");
           setSpecialNote("");
           setError(null);
+          toast.success("New booking added Successfully", {
+            position: toast.POSITION.TOP_CENTER,
+          });
           navigate("/admin/bookings");
         });
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: errorMessage, emptyFields } = error.response.data;
         const fields = emptyFields.join(", ");
-        setError(`Please fill in all fields: ${fields}`);
+        const toastMessage=(`Please fill in all fields: ${fields}`);
+        setError(toastMessage);
+        showErrorToast(toastMessage);
       } else {
         console.log(error);
       }
     }
   };
+
+
 
   return (
     <>
