@@ -3,6 +3,8 @@ import { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
+import { Accordion } from "react-bootstrap-accordion";
+import "react-bootstrap-accordion/dist/index.css";
 
 // reactstrap components
 import {
@@ -34,6 +36,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { MdPadding } from "react-icons/md";
 
 var ps;
 
@@ -84,13 +87,23 @@ const Sidebar = (props) => {
     };
   }
 
+  const [active, setActive] = useState("1");
+  const toggle = (id) => {
+    if (active === id) {
+      setActive();
+    } else {
+      setActive(id);
+    }
+  };
+
   return (
     <Navbar
       className="navbar-vertical fixed-left navbar-light bg-white"
       expand="md"
       id="sidenav-main"
+      style={{ borderRadius: "8px" }}
     >
-      <Container fluid>
+      <Container style={{ padding: "10px" }}>
         {/* Toggler */}
         <button
           className="navbar-toggler"
@@ -214,135 +227,151 @@ const Sidebar = (props) => {
           </Form>
           {/* Navigation */}
           <Nav navbar>
-          <NavItem>
+            <NavItem>
               <NavLink href="/user/home-page">
                 <i className="ni ni-bell-55 text-default" />
                 User Homepage
               </NavLink>
-          </NavItem>
-          <NavItem>
-              <NavLink href="/admin/bookings">
-                <i className="ni ni-bell-55 text-teal" />
-                Bookings
-              </NavLink>
-          </NavItem>
-          <hr className="my-1" />
-          <NavItem>
-              <NavLink href="/admin/spare-parts">
-                <i className="ni ni-ruler-pencil text-pink" />
-                Spare parts
-              </NavLink>
-          </NavItem>
-          <NavItem>
-              <NavLink href="/admin/agro-products">
-                <i className="ni ni-ruler-pencil text-pink" />
-                Agro products
-              </NavLink>
-          </NavItem>
-          <NavItem>
-              <NavLink href="/admin/spare-part-orders">
-                <i className="ni ni-ruler-pencil text-pink" />
-                Spare part orders
-              </NavLink>
-          </NavItem>
-          <NavItem>
-              <NavLink href="/admin/agro-products-orders">
-                <i className="ni ni-ruler-pencil text-pink" />
-                Agro products orders
-              </NavLink>
-          </NavItem>
-          <hr className="my-1" />
-          <NavItem>
-              <NavLink href="/admin/view-general-issues">
-                <i className="ni ni-single-copy-04 text-purple" />
-                 General issues 
-              </NavLink>
-          </NavItem>
-          <NavItem>
-              <NavLink href="/admin/view-emergency-issues">
-                <i className="ni ni-single-copy-04 text-purple" />
-                 Emergency issues
-              </NavLink>
-          </NavItem>
-          <hr className="my-1" />
-          <NavItem>
-              <NavLink href="/admin/view-repair-jobs">
-                <i className="ni ni-active-40 text-yellow" />
-                 Repair jobs
-              </NavLink>
-          </NavItem>
-          <hr className="my-1" />
-          <NavItem>
-              <NavLink href="/admin/vacancies">
-                <i className="ni ni-notification-70 text-red" />
-                Vacancies
-              </NavLink>
-          </NavItem>
-          <NavItem>
-              <NavLink href="/admin/technicians">
-                <i className="ni ni-notification-70 text-red" />
-                Technicians
-              </NavLink>
-          </NavItem>
-          <NavItem>
-              <NavLink href="/admin/cv-submission">
-                <i className="ni ni-notification-70 text-red" />
-                CV Submissions
-              </NavLink>
-          </NavItem>
-          <hr className="my-1" />
-          <NavItem>
-              <NavLink href="/admin/progress">
-                <i className="ni ni-notification-70 text-green" />
-                Progress
-              </NavLink>
-          </NavItem>       
-          <hr className="my-1" />
-          <NavItem>
-              <NavLink href="/admin/promotions">
-                <i className="ni ni-notification-70 text-orange" />
-                Promotions
-              </NavLink>
-          </NavItem>
-          <NavItem>
-              <NavLink href="/admin/faqs">
-                <i className="ni ni-notification-70 text-orange" />
-                FAQs
-              </NavLink>
-          </NavItem>
-          <NavItem>
-              <NavLink href="/admin/view-feedback-page">
-                <i className="ni ni-notification-70 text-orange" />
-                Feedback
-              </NavLink>
-          </NavItem>
+            </NavItem>
+            <Accordion
+              title={"Booking Management"}
+              open={active}
+              toggle={toggle}
+              style={{
+                backgroundColor: "lightgray",
+                padding: "10px",
+                borderRadius: "5px",
+                marginBottom: "10px",
+                // Add more styles as needed
+              }}
+            >
+              <NavItem>
+                <NavLink href="/admin/bookings">
+                  <i className="ni ni-bell-55 text-teal" />
+                  Bookings
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/admin/progress">
+                  <i className="ni ni-notification-70 text-green" />
+                  Progress
+                </NavLink>
+              </NavItem>
+            </Accordion>
+            <hr className="my-1" />
+            <Accordion
+              title={"Product Management"}
+              open={active}
+              toggle={toggle}
+            >
+              <NavItem>
+                <NavLink href="/admin/spare-parts">
+                  <i className="ni ni-ruler-pencil text-pink" />
+                  Spare parts
+                </NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink href="/admin/agro-products">
+                  <i className="ni ni-ruler-pencil text-pink" />
+                  Agro products
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/admin/spare-part-orders">
+                  <i className="ni ni-ruler-pencil text-pink" />
+                  Spare part orders
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/admin/agro-products-orders">
+                  <i className="ni ni-ruler-pencil text-pink" />
+                  Agro products orders
+                </NavLink>
+              </NavItem>
+            </Accordion>
+            <hr className="my-1" />
+            <Accordion title={"Issue Management"} open={active} toggle={toggle}>
+              <NavItem>
+                <NavLink href="/admin/view-general-issues">
+                  <i className="ni ni-single-copy-04 text-purple" />
+                  General issues
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/admin/view-emergency-issues">
+                  <i className="ni ni-single-copy-04 text-purple" />
+                  Emergency issues
+                </NavLink>
+              </NavItem>
+            </Accordion>
+            <hr className="my-1" />
+            <Accordion
+              title={"Damage Evaluation"}
+              open={active}
+              toggle={toggle}
+            >
+              <NavItem>
+                <NavLink href="/admin/view-repair-jobs">
+                  <i className="ni ni-active-40 text-yellow" />
+                  Repair jobs
+                </NavLink>
+              </NavItem>
+            </Accordion>
+            <hr className="my-1" />
+            <Accordion title={"Staff Managment"} open={active} toggle={toggle}>
+              <NavItem>
+                <NavLink href="/admin/vacancies">
+                  <i className="ni ni-notification-70 text-red" />
+                  Vacancies
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/admin/technicians">
+                  <i className="ni ni-notification-70 text-red" />
+                  Technicians
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/admin/cv-submission">
+                  <i className="ni ni-notification-70 text-red" />
+                  CV Submissions
+                </NavLink>
+              </NavItem>
+            </Accordion>
+            <hr className="my-1" />
+
+            <Accordion
+              title={"Promotion & Customer Services"}
+              open={active}
+              toggle={toggle}
+            >
+              <NavItem>
+                <NavLink href="/admin/promotions">
+                  <i className="ni ni-notification-70 text-orange" />
+                  Promotions
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/admin/faqs">
+                  <i className="ni ni-notification-70 text-orange" />
+                  FAQs
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/admin/view-feedback-page">
+                  <i className="ni ni-notification-70 text-orange" />
+                  Feedback
+                </NavLink>
+              </NavItem>
+            </Accordion>
           </Nav>
           {/* <Nav navbar>{createLinks(routes)}</Nav> */}
           {/* Divider */}
           <hr className="my-3" />
           {/* Heading */}
-          <h6 className="navbar-heading text-muted">Documentation</h6>
-          {/* Navigation */}
-          <Nav className="mb-md-3" navbar>
-            <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/overview?ref=adr-admin-sidebar">
-                <i className="ni ni-spaceship" />
-                Getting started
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/colors?ref=adr-admin-sidebar">
-                <i className="ni ni-palette" />
-                Foundation
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/alerts?ref=adr-admin-sidebar">
-                <i className="ni ni-ui-04" />
-                Components
-              </NavLink>
-            </NavItem>
-          </Nav>
+          
+          
         </Collapse>
       </Container>
     </Navbar>
