@@ -1,7 +1,14 @@
 const express = require('express')
 const Booking = require('../models/bookingsModel')
 const router = express.Router()
-const { getBookings, getBooking, createBooking, deleteBooking, updateBooking } = require('../controllers/bookingsController')
+const {
+  getBookings,
+  getBooking,
+  createBooking,
+  deleteBooking,
+  updateBooking,
+  countBookings,
+} = require("../controllers/bookingsController");
 
 
 //Get all the bookings
@@ -18,6 +25,9 @@ router.delete('/:id', deleteBooking)
 
 //update booking
 router.patch('/:id', updateBooking)
+
+//count bookings
+router.get('/get/count', countBookings)
 
 
 module.exports = router

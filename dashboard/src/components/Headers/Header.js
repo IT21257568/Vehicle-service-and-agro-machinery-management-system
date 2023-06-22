@@ -18,8 +18,34 @@
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import React from "react";
 
 const Header = () => {
+
+  const [bookingCount, setBookingCount] = useState(0);
+
+useEffect(() => {
+  const fetchAllBookings = async () => {
+    try {
+      
+      
+      // Fetch booking count
+      const countResponse = await axios.get("/api/bookings/get/count");
+      setBookingCount(countResponse.data.count);
+      console.log(countResponse.data.count);
+
+      
+    } catch (err) {
+      console.error("Error fetching booking count:", err);
+    }
+  };
+
+  fetchAllBookings();
+}, []);
+  
+
   return (
     <>
       <div
@@ -46,7 +72,9 @@ const Header = () => {
                         >
                           Bookings
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">625</span>
+                        <span className="h2 font-weight-bold mb-0">
+                          {bookingCount}
+                        </span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
