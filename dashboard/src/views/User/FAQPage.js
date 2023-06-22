@@ -116,7 +116,7 @@ const FAQs = () => {
     setVisible((prevValue) => prevValue + 3);
   };
 
-  // retrieve all technicians from database
+  // retrieve all FAQs from database
   useEffect(() => {
     const fetchAllFAQs = async () => {
       try {

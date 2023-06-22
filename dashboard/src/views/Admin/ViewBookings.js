@@ -31,8 +31,14 @@ import {
   Row,
   // UncontrolledTooltip,
   Button,
+  InputGroupAddon,
+  InputGroupText,
   //Chip,
   Col,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 
 // core components
@@ -44,11 +50,15 @@ const ViewBookings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
+  const [querySortLocation, setQuerySortLocation] = useState("");
+  const [querySortType, setQuerySortType] = useState("");
   // const [bookings, setBookings] = useState([]);
   // const [technicianName, setTechnicianName] = useState("");
   // const [technicianId, setTechnicianId] = useState("");
   // const [allTechnicians, setAllTechnicians] = useState([]);
   // const [data, setData] = useState([]);
+  const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
+  const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
 
   // set visible rows
   const [visible, setVisible] = useState(10);
@@ -58,6 +68,10 @@ const ViewBookings = () => {
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 3);
   };
+
+  const toggleSortLocation = () =>
+    setLocationDropdownOpen((prevState) => !prevState);
+  const toggleSortType = () => setTypeDropdownOpen((prevState) => !prevState);
 
   // retrieve all vacancies from database
   useEffect(() => {
@@ -101,7 +115,7 @@ const ViewBookings = () => {
     updateRecord();
   };
 
-//remove assigned technician
+  //remove assigned technician
   const removeAssign = async (id, tId) => {
     try {
       console.log("Ready to update");
@@ -121,24 +135,24 @@ const ViewBookings = () => {
         })
       );
 
-        const updateRecord = async () => {
-          const response = await axios.get(`/api/mTeams/${tId}`);
-          console.log(response.data);
+      const updateRecord = async () => {
+        const response = await axios.get(`/api/mTeams/${tId}`);
+        console.log(response.data);
 
-          // update vacancy applicants count
-          axios
-            .patch(`/api/mTeams/${tId}`, {
-              assigned_jobs: response.data.assigned_jobs - 1,
-            })
-            .then((res) => {
-              console.log(res.data);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        };
+        // update vacancy applicants count
+        axios
+          .patch(`/api/mTeams/${tId}`, {
+            assigned_jobs: response.data.assigned_jobs - 1,
+          })
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
 
-        updateRecord();
+      updateRecord();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -220,11 +234,11 @@ const ViewBookings = () => {
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
+                <div className="col" style={{ marginBottom: "1rem" }}>
+                  <h3 className="mb-0">All Bookings</h3>
+                </div>
                 <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">All Bookings</h3>
-                  </div>
-                  <Col xl="3">
+                  <Col xl="3" style={{ marginLeft: "1rem" }}>
                     <InputGroup className="input-group-rounded input-group-merge">
                       <Input
                         aria-label="Search"
@@ -233,12 +247,90 @@ const ViewBookings = () => {
                         type="search"
                         onChange={(e) => setQuery(e.target.value)}
                       />
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText style={{ color: "#ffa500" }}>
+                          <span className="fa fa-search" />
+                        </InputGroupText>
+                      </InputGroupAddon>
                     </InputGroup>
                   </Col>
+                  <label
+                    className="form-control-label mr-2"
+                    htmlFor="input-email"
+                    style={{marginTop: "0.4rem"}}
+                  >
+                    Sort By:
+                  </label>
+                  <Dropdown
+                    isOpen={locationDropdownOpen}
+                    color="primary"
+                    toggle={toggleSortLocation}
+                    style={{ width: "5rem", marginLeft: "0.5rem" }}
+                  >
+                    <DropdownToggle style={{ color: "#ffa500" }} caret>
+                      {querySortLocation
+                        ? querySortLocation
+                        : "Select Location"}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem
+                        value="Auto Plaza"
+                        onClick={(e) => {
+                          setQuerySortLocation(e.target.value);
+                        }}
+                      >
+                        Auto Plaza
+                      </DropdownItem>
+                      <DropdownItem
+                        value="Auto Wash"
+                        onClick={(e) => {
+                          setQuerySortLocation(e.target.value);
+                        }}
+                      >
+                        Auto Wash
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                  <Dropdown
+                    isOpen={typeDropdownOpen}
+                    color="primary"
+                    toggle={toggleSortType}
+                    style={{ marginLeft: "6rem" }}
+                  >
+                    <DropdownToggle style={{ color: "#ffa500" }} caret>
+                      {querySortType ? querySortType : "Select Type"}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem
+                        value="Vehicle Repair"
+                        onClick={(e) => {
+                          setQuerySortType(e.target.value);
+                        }}
+                      >
+                        Vehicle Repair
+                      </DropdownItem>
+                      <DropdownItem
+                        value="Wheel Alignment"
+                        onClick={(e) => {
+                          setQuerySortType(e.target.value);
+                        }}
+                      >
+                        Wheel Alignment
+                      </DropdownItem>
+                      <DropdownItem
+                        value="Body Wash"
+                        onClick={(e) => {
+                          setQuerySortType(e.target.value);
+                        }}
+                      >
+                        Body Wash
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
                   <div className="col text-right">
                     <Button
                       className="btn-icon btn-3"
-                      style={{ color: "#ffa500" }}
+                      style={{ color: "#fb6340", marginRight: "1rem" }}
                       type="button"
                       onClick={() => navigate("/admin/create-bookings")}
                     >
@@ -290,6 +382,16 @@ const ViewBookings = () => {
                     </tr>
                   )}
                   {allBookings
+                    .filter((booking) =>
+                      booking.location
+                        ?.toLowerCase()
+                        .includes(querySortLocation.toLowerCase())
+                    )
+                    .filter((booking) =>
+                      booking.service_type
+                        ?.toLowerCase()
+                        .includes(querySortType.toLowerCase())
+                    )
                     .filter((booking) =>
                       booking.client_name
                         ?.toLowerCase()
