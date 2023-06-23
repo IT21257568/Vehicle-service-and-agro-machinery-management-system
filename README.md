@@ -161,12 +161,12 @@ In the project directory, you can run:
 ### `npm run-script dev`
 
 Runs both the client app and the server app in development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
+
 
 ### `npm start`
 
 Runs just the client app in development mode.<br>
-Open [http://localhost:4000](http://localhost:4000) to view the client in the browser.
+
 
 
 ### `npm run dev`
@@ -184,10 +184,3 @@ npm i react-router-dom
 npm i date-fns
 
 
-### Nisal
-1.Career section Admin section CRUD
-    insert : POST :localhost:4000/api/vacancies/
-    selectAll : GET : localhost:4000/api/vacancies/
-    selectOne : GET : localhost:4000/api/vacancies/:id
-    update : PATCH : localhost:4000/api/vacancies/:id
-    delete : DELETE : localhost:4000/api/vacancies/:id
